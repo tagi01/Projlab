@@ -1,17 +1,36 @@
 package skeletonPackage;
 
 public class Plumber extends Character{
+	
 	//A szerelőnél lévő cső vagy pumpa referenciája
 	private BreakableField inventory;
 	
+	//konstruktor
+	public Plumber(Field f, Network n) {
+		super(f, n);
+		inventory=null;
+	}
 	/*
 	 * Megjavítja az elromlott mezőt, amin éppen a játékos áll
 	 */
-	public void repair() {}
+	public void repair() {
+		currentField.getRepaired();
+	}
 	/*
-	 * : Az inventory-ból lerakja a csőnek az egyik végét ciszternához, forráshoz vagy pumpához
+	 * Az inventory-ból lerakja a csőnek az egyik végét ciszternához, forráshoz vagy pumpához
 	 */
-	public void placePipe() {}
+	public void placePipe() {
+		if(inventory!=null) {
+			if(currentField.acceptField(inventory)) {
+				currentField.addNeighbour(inventory);
+				inventory.addNeighbour(currentField);
+			}else {
+				System.out.println("Nem sikerult learakni a cso veget");
+			}		
+		}else {
+			System.out.println("Inventory ures");
+		}
+	}
 	/*
 	 * Felvesz egy pumpát a ciszternáról
 	 */

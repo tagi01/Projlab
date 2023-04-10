@@ -22,7 +22,7 @@ public class Cistern extends Field {
 	 *ha nincs, akkor csak visszatér a metódus
 	 */
 	public Pump removePump() {
-		//TODO
+		hasPump = false;
 		return pu;
 		}
 	/*
@@ -32,14 +32,14 @@ public class Cistern extends Field {
 	 *az érték
 	 */
 	public Pipe removePipe() {
-		//TODO
+		hasPipe = false;
 		return pi;
 	}
 	/*
 	 * Egy Pipe-ot hozzá lehet-e csatlakoztatni a meghívott
 	 *mezőhöz. Ha igen True-val tér vissza, egyébként False-szal
 	 */
-	public boolean acceptField() {
+	public boolean acceptField(Field f) {
 		//TODO
 		return true;
 	}

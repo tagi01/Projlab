@@ -12,20 +12,22 @@ public class Skeleton {
 				         + "|      |      |             |      \\        |       |\n"
 				         + "|      |      ------    ----     -----      |       |\n"
 				         + "-----------------------------------------------------\n");
-		System.out.println("1. Pipe felvétele egy pumpánál.\n"
-						 + "2. Pumpa beállítása szerelőként\\szabotorkent.\n"
-						 + "3. Szerelő, szabotor mozgatasa másik mezore.\n"
-						 + "4. Pumpa vagy Pipe felvétele cisternánál\n"
-						 + "5. Pumpa lerakása.\n"
+		System.out.println("1. Pipe felvetele egy pumpanal.\n"
+						 + "2. Pumpa beallitasa szerelokent\\szabotorkent.\n"
+						 + "3. Szerelo, szabotor mozgatasa masik mezore.\n"
+						 + "4. Pumpa vagy Pipe felvetele cisternanal\n"
+						 + "5. Pumpa lerakasa.\n"
 						 + "6. Pumpa viz mozgatasa.\n"
 						 + "7. Cisterna viz fogadasa.\n"
 						 + "8. Forras viz adasa.\n"
 						 + "9. Pumpa eltorese.\n"
 						 + "10. Szabotor pipe kilyukasztasa.\n"
-						 + "11. Szerelo pumpa/pipe megjavítása.\n");
+						 + "11. Szerelo pumpa/pipe megjavitasa.\n"
+						 + "12. Exit.\n");
 		Scanner input = new Scanner(System.in);
-		int numb = input.nextInt();
+		int numb=0;
 		do {
+		numb = input.nextInt();
 			try {		
 				switch(numb) {
 				case 1:
@@ -61,16 +63,19 @@ public class Skeleton {
 				case 11:
 					eleven();
 					break;
+				case 12:
+					System.out.println("Tesztek vege!");
+					break;
 				default:
-					System.out.println("Valassz jot");
+					System.out.println("Valassz a megadott menupontok kozul.");
 				}
 				
 			}catch (InputMismatchException e) {
                     e.printStackTrace();
             }
-			
-		numb = input.nextInt();
-		}while(numb <= 11 && numb >= 1);
+		}while( numb != 12);
+		
+		input.close();
 	}
 	
 	//Ha elsot valasztottak akkor idelep es ebben a fuggvényben lehet majd beállítani a paramétereket
