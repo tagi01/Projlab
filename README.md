@@ -1,4 +1,4 @@
 # Projlab
 
-Ez a targy egy szar szemet fos senki ne vegye fel menjen eltere 
-Ne bme-re
+Csak az osztályok és az atributumok lettek megirva.
+Skeleton/skeletonPackage
