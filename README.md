@@ -1,6 +1,14 @@
 # Projlab
 
-Csak az osztályok és az atributumok lettek megirva.
-Skeleton/skeletonPackage
+#### Modell osztályai - felelős
 
-2023.04.12. elkeszult network es source osztaly (Soma)
+- [x] BreakableField - Fanni
+- [ ] Character - Robi
+- [ ] Cistern - Robi
+- [ ] Field - Fanni
+- [x] Network - Soma
+- [ ] Pipe - Ági
+- [ ] Plumber - Zsófi
+- [ ] Pump - Zsófi
+- [ ] Saboteur - Ági
+- [x] Source - Soma
