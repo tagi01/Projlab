@@ -1,17 +1,29 @@
 package skeletonPackage;
 
 public class Pipe extends BreakableField {
-	// Egész szám változó. A lyukas csőből kifolyó víz mennyiségét tárolja
+	/**
+	 *  Egesz szam valtozo. A lyukas csobol kifolyo viz mennyiseget tarolja
+	 */
 	private int lostWater;
-	//A csőbe vizet pumpáló pumpa referenciája
+	/**
+	 * A csobe vizet pumpalo pumpa referenciaja
+	 */
 	private Pump in;
-	// A csőből vizet kérő pumpa referenciája
+	/**
+	 *  A csobol vizet kero pumpa referenciaja
+	 */
 	private Pump out;
-	// Egész szám, ami jellemzi a cső vízbefogadó mértékét
+	/**
+	 *  Egesz szam, ami jellemzi a cso vizbefogado merteket
+	 */
 	private int size;
-	//Logikai érték. True, ha valamelyik szerelőnél van az egyik vége, False, ha nem mozgatják egyik végét sem
+	/**
+	 * Logikai ertek. True, ha valamelyik szerelonel van az egyik vege, False, ha nem mozgatjak egyik veget sem
+	 */
 	private boolean taken;
-	//Egész szám, megadja, hogy a csőben épp mennyi víz van
+	/**
+	 * Egesz szam, megadja, hogy a csoben epp mennyi viz van
+	 */
 	private int water;
 	
 	public Pipe() {
@@ -23,7 +35,7 @@ public class Pipe extends BreakableField {
 		taken=false;
 		water=0;
 	}
-	public Pipe(int lwater, Pump i, Pump o, int siz, boolean take, int wat) {
+	public Pipe(Pump i, Pump o, int siz, boolean take, int wat) {
 		super();
 		lostWater=0;
 		in=i;
@@ -33,44 +45,58 @@ public class Pipe extends BreakableField {
 		water=wat;
 	}
 	
-	//csobe pumpalo pumpa bemenetet allitja be
-	public void setIn(Pump p) {in=p;}
-	//a csobe vizet pumpalo pumpa referenciajat adja meg
-	@Override
-	public Pump getIn() {return in;}
-	//a csobol vizet kero pumpa referenciajat adja vissza
-	@Override
-	public Pump getOut() {return out;}
-	//amelyik pumpaba folyik a viz, annak referenciajat allitja be
-	public void setOut(Pump p) {out=p;}
-	/*
-	 *Logikai változóval tér vissza. Megmondja, hogy a játékos ráléphet-e a csőre. True, ha igen, False, ha nem. Field-ben szereplő metódus
-	 *felülírása
+	/**
+	 * Csobe pumpalo pumpa bemenetet allitja be
+	 * @param p Az uj bemeneti pumpa
 	 */
-	public boolean acceptField(Field f) {
-		//TODO:
-		return true;
+	public void setIn(Pump p) {in=p;}
+	/**
+	 * A csobe vizet pumpalo pumpa referenciajat adja meg
+	 * @return A cso bemeneti pumpaja
+	 */
+	public Pump getIn() {return in;}
+	/**
+	 * A csobol vizet kero pumpa referenciajat adja vissza
+	 * @return A cso kimeneti pumpaja
+	 */
+	public Pump getOut() {return out;}
+	/**
+	 * Amelyik pumpaba folyik a viz, annak referenciajat allitja be
+	 * @param p A cso uj kimeneti pumpaja
+	 */
+	public void setOut(Pump p) {out=p;}
+	/**
+	 * Logikai valtozoval ter vissza. Megmondja, hogy a jatekos ralephet-e a csore. True, ha igen, False, ha nem.
+	 */
+	@Override
+	public boolean acceptCharacter() {
+		if(currentCharacter == null && taken == false) {
+			return true;
+		}
+		return false;
 	}
 	
-	/*
-	 *A pumpa kimenetén lévő csőbe adódik oda a paraméterben lévő egész szám
+	/**
+	 * Vizet ad a csobe
+	 * @param amount A csobe kerulo viz mennyisege
 	 */
 	@Override
 	public void flowWater(int amount) {
 		//nem kell megvizsgalni, hogy a cso tulcsordulna, mert csak annyi vizet pumpal majd a pumpa(amount) amennyit tud meg ahhoz, hogy cso ne csorduljon tul
 		water+=amount;
 	}
-	/*
-	 *  Egész számot ad vissza meghívásakor, pontosan mennyi vizet tud még befogadni
+	/**
+	 *  Egesz szamot ad vissza, megmondja, pontosan mennyi vizet tud meg befogadni
+	 *  @return A cso szabad kapacitasa
 	 */
 	@Override
 	public int getCapacity() {
 		return size-water;
 	}
-	/*
-	 * A metódus meghívásakor maximum a paraméterként
-	 *kapott vízzel kevesebb lesz a csőben (water attribútum). Visszaadja, hogy ténylegesen
-	 *mennyit tudott ebből adni
+	/**
+	 * Maximum a parameterkent kapott vizzel kevesebb lesz a csoben (water attributum). Visszaadja, hogy tenylegesen
+	 * mennyit tudott ebbol adni
+	 * @return Az atadott viz mennyisege
 	 */
 	public int takeWater(int amount){
 		if(water==0) {
@@ -91,5 +117,13 @@ public class Pipe extends BreakableField {
 			water=0;
 			return temp_water;
 		}	
+	}
+	/**
+	 * 
+	 */
+	@Override
+	public boolean acceptField(Field f) {
+		// TODO Auto-generated method stub
+		return true;
 	}
 }
