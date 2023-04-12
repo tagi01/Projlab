@@ -120,6 +120,13 @@ public class Pipe extends BreakableField {
 	}
 	/**
 	 * 
+	 * @return a csoben levo viz mennyisege
+	 */
+	public int getWater() {
+		return water;
+	}
+	/**
+	 * 
 	 */
 	@Override
 	public boolean acceptField(Field f) {
