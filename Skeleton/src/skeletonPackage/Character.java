@@ -28,10 +28,10 @@ public abstract class Character {
 					f.setCurrentCharacter(this);
 					currentField=f;
 				}else {
-					System.out.println("Nem tudsz rálépni a mezoe, mert már állnak rajta");
+					System.out.println("Nem tudsz ralepni a mezoe, mert mar allnak rajta");
 				}		
 			}else {
-				System.out.println("nem szomszédos s valasztott mezo, igy nem tudsz ralepni");
+				System.out.println("nem szomszedos s valasztott mezo, igy nem tudsz ralepni");
 			}
 	}
 	/*

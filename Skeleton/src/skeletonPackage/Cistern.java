@@ -1,51 +1,74 @@
 package skeletonPackage;
 
 public class Cistern extends Field {
-	//Egész szám változó. Az egy játékos köre alatt összegyűjtött víz mennyiségét tárolja
+	//Egesz szam vatozo. Az egy jatekos kore alatt osszegy�jt�tt viz mennyiseget tarolja
 	private int collectedWater;
-	//Egy logikai változó, van-e felvehető pumpa a ciszternán. True, ha igen, False, ha nem
+	//Egy logikai valtozo, van-e felveheto pumpa a ciszternan. True, ha igen, False, ha nem
 	private boolean hasPump;
-	//Egy logikai változó, van-e felvehető cső a ciszternán. True, ha igen, False, ha nem
+	//Egy logikai valtozo, van-e felveheto cso a ciszternan. True, ha igen, False, ha nem
 	private boolean hasPipe;
 	
-	private Pump pu;
-	private Pipe pi;
+	//private Pump pu;
+	//private Pipe pi;
 	
 	/*
-	 * hasPump és hasPipe értékeket True-ra állítja, vagyis most már a
-	 *ciszternáról fel lehet venni pumpát és csövet egyaránt
-	 */
-	public void resetItems() {}
-	/*
-	 * A meghívója egy pumpát venne fel a ciszternáról, ekkor, ha
-	 *még van pumpa, akkor átállítja a hasPump értéket False-ra és visszaadja az új pumpát,
-	 *ha nincs, akkor csak visszatér a metódus
-	 */
-	public Pump removePump() {
-		hasPump = false;
-		return pu;
-		}
-	/*
-	 * Metódus meghívásakor a ciszternáról csövet szeretnénk felvenni,
-	 *ha lehetséges (mert a hasPipe True) ekkor ezt a hasPipe értéket False-ra állítja és
-	 *visszaadja az új csövet, ha nem, mert már felvettek róla csövet, akkor marad False ez
-	 *az érték
-	 */
-	public Pipe removePipe() {
-		hasPipe = false;
-		return pi;
+	 * hasPump es hasPipe ertekeket True-ra allitja, vagyis most mar a
+	 *ciszternarol fel lehet venni pumpat es csovet egyarant
+	*/
+	public void resetItems() {
+		hasPump = true;
+		hasPipe = true;
 	}
+	
 	/*
-	 * Egy Pipe-ot hozzá lehet-e csatlakoztatni a meghívott
-	 *mezőhöz. Ha igen True-val tér vissza, egyébként False-szal
-	 */
+	 * A meghivoja egy pumpat venne fel a ciszternarol, ekkor, ha
+	 *meg van pumpa, akkor atallitja a hasPump erteket False-ra es visszaadja az uj pumpat,
+	 *ha nincs, akkor csak visszater a metodus
+	*/
+	public Pump removePump() {
+		if(hasPump == true) {
+			hasPump = false;
+			Pump pu = new Pump(null, null);
+			return pu;
+		}
+		else
+			return null;
+	}
+	
+	/*
+	 * Metodus meghivasakor a ciszternarol csovet szeretnenk felvenni,
+	 *ha lehetseges (mert a hasPipe True) ekkor ezt a hasPipe erteket False-ra allatja es
+	 *visszaadja az uj csovet, ha nem, mert mar felvettek rola csovet, akkor marad False ez az ertek
+	*/
+	public Pipe removePipe() {
+		if(hasPump == true) {
+			hasPipe = false;
+			//Pipe pi = new Pipe(0, null, null, 9999, true, 0); //size-t allitani kell meg, meg a ciszternahoz hozza van kotve 
+			//return pi;
+			return null;
+		}
+		else
+			return null;
+	}
+	
+	/*
+	 * Egy Pipe-ot hozza lehet-e csatlakoztatni a meghivott
+	 *mezohoz. Ha igen True-val ter vissza, egyebkent False-szal
+	*/
 	public boolean acceptField(Field f) {
 		//TODO
 		return true;
 	}
+	
 	/*
-	 * Metódus meghívásakor a ciszterna elveszi a hozzá beérkező
-	 *csövektől az összes vizet és eltárolja.
-	 */
-	public void collectWater() {}
+	 * Metodus meghovasakor a ciszterna elveszi a hozza beerkezo
+	 *csovektol az osszes vizet es eltarolja.
+	*/
+	public void collectWater() {
+		for(int i = 0; i < neighbours.size() ; i++) {
+			Pipe tmp = (Pipe) neighbours.get(i);
+			int mennyit = 0;// = tmp.getWater();
+			collectedWater += tmp.takeWater(mennyit);
+		}
+	}
 }
