@@ -1,11 +1,19 @@
 package skeletonPackage;
 
+/** Plumber osztály */
 public class Plumber extends Character {
-	
-	//A szerelőnél lévő cső vagy pumpa referenciája
+
+	/**
+	 * Privát, egy BreakableField-ből származó objektum referenciát tárol, amely éppen a szerelő birtokában van. (Cső vagy pumpa)
+	 */
 	private BreakableField inventory;
-	
-	//konstruktor
+
+	/**
+	 * Publikus metódus, Plumber kétparaméteres konstruktora, hasonlóan a Character konstruktorához.
+	 * Beállítja, hogy a szerelőnek létrehozásakor nincs az inventory-ban semmi.
+	 * @param f, Field-ből származót típusú mező, amelyen a karakter áll
+	 * @param n, Network, amely hálózatban a karakter és a mező van
+	 */
 	public Plumber(Field f, Network n) {
 		super(f, n);
 		inventory = null;
@@ -16,23 +24,24 @@ public class Plumber extends Character {
 	public void addInventory(BreakableField bf) {
 		inventory = bf;
 	}
-	
+
 	// nem kell, nem?
 	@Override
 	public void removeInventory() {
 		inventory = null;
 	}
-	
-	/*
-	 * Megjavítja az elromlott mezőt, amin éppen a játékos áll
+	*/
+
+	/**
+	 * Publikus metódus, meghívásakor a szerelő megjavítja az elromlott mezőt, amin éppen a játékos áll.
 	 */
 	public void repair() {
 		currentField.getRepaired();
 		//TODO:karakter interakcio, hogy mit szeretne csinalni mivel
 	}
-	
-	/*
-	 * Az inventory-ból lerakja a csőnek az egyik végét ciszternához, forráshoz vagy pumpához
+
+	/**
+	 * Publikus metódus, meghívásakor az inventory-ból lerakja a csőnek az egyik végét ciszternához, forráshoz vagy pumpához.
 	 */
 	public void placePipe() {
 		if(inventory != null) {
@@ -48,27 +57,29 @@ public class Plumber extends Character {
 			System.out.println("Az inventory ures");
 		}
 	}
-	
-	/*
-	 * Felvesz egy pumpát a ciszternáról
+
+	/**
+	 * Publikus metódus, meghívásakor felvesz egy pumpát a ciszternáról.
 	 */
 	public void getPump() {
 		if(inventory == null) {
-			inventory = currentField.removePump();	
+			inventory = currentField.removePump();
 		}
 	}
-	
-	/*
-	 * A ciszternán állva meghívható, hogy felvegyen egy csövet
+
+	/**
+	 * Publikus metódus, meghívásakor felvesz egy csövet.
+	 * (Ciszternán állva ajánlott meghívni, csak onnan lehet felvenni)
 	 */
 	public void getPipe() {
 		if(inventory == null) {
 			inventory = currentField.removePipe();
 		}
 	}
-	
-	/*
-	 * A szerelő felveszi a cső egyik végét, ami bekerül az inventory-jába
+
+	/**
+	 * Publikus metódus, meghívásakor a szerelő felveszi a cső egyik végét, ami bekerül az inventory-jába.
+	 * @param p, Pipe típusú objektum referenciája, amelyik csövet vesszük fel
 	 */
 	public void grabPipe(Pipe p) {
 		if(inventory == null) {
@@ -76,9 +87,9 @@ public class Plumber extends Character {
 			inventory = p;
 		}
 	}
-	
-	/*
-	 * Lerak egy pumpát az aktuális cső közepére
+
+	/**
+	 * Publikus metódus, meghívásakor lerak egy pumpát az aktuális cső közepére.
 	 */
 	public void placePump() {
 		if(inventory != null) {		// && Pump :(

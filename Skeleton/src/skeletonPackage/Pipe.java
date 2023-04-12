@@ -2,25 +2,31 @@ package skeletonPackage;
 
 import java.util.ArrayList;
 
+/** Pipe osztály */
 public class Pipe extends BreakableField {
+
 	/**
-	 *  Egesz szam valtozo. A lyukas csobol kifolyo viz mennyiseget tarolja
+	 * Privát integer, a lyukas csőből kifolyó víz mennyiségét tárolja.
 	 */
 	private int lostWater;
-	
+
 	private int size;
+
 	/**
-	 * Logikai ertek. True, ha valamelyik szerelonel van az egyik vege, False, ha nem mozgatjak egyik veget sem
+	 * Privát boolean, megadja, hogy mozgatják-e már bármelyik végét.
+	 * Értéke true, ha valamelyik szerelőnél van az egyik vége,
+	 *     false, ha nem mozgatják egyik végét sem.
 	 */
 	private boolean taken;
+
 	/**
-	 * Egesz szam, megadja, hogy a csoben epp mennyi viz van
+	 * Privát integer, megadja, hogy a csőben épp mennyi víz van.
 	 */
 	private int water;
-	
+
 	private ArrayList<Field> neighbours;
 	//TODO szomszédok amik lehetnek fieldek, mivel barmilyen szomszedja lehet.
-	
+
 	public Pipe() {
 		super();
 		lostWater=0;
@@ -28,6 +34,8 @@ public class Pipe extends BreakableField {
 		taken=false;
 		water=0;
 	}
+
+	// TODO javadoc
 	public Pipe(Pump i, Pump o, int siz, boolean take, int wat) {
 		super();
 		lostWater=0;
@@ -43,16 +51,20 @@ public class Pipe extends BreakableField {
 			return true;
 		}
 	}
-	
+
 	public boolean removeNeighbour(Field f) {
 		if(neighbours.contains(f) && f!=null) {
 			neighbours.remove(f);
 			return true;
-		} else { 
-			return true; 
+		} else {
+			return true;
 			}
 	}
-	
+
+	/**
+	 * Publikus metódus, Field-ből örökölt függvény felülírása. Meghívásakor megadja, hogy a karakter ráléphet-e a ciszternára.
+	 * @return boolean, true, ha ráléphet a ciszternára, false ha nem
+	 */
 	@Override
 	public boolean acceptCharacter() {
 		if(currentCharacters.size() == 0 && taken == false) {
@@ -60,26 +72,28 @@ public class Pipe extends BreakableField {
 		}
 		return false;
 	}
-	
+
 	/**
-	 * Vizet ad a csobe
-	 * @param amount A csobe kerulo viz mennyisege
+	 * Publikus metódus, meghívásakor a pumpa kimenetén lévő csőbe odaadódik a paraméterben lévő egész szám.
+	 * @param amount, integer, amennyi víz kerül át a pumpa kimenetén lévő csőbe
 	 */
 	public void flowWater(int amount) {
 		//nem kell megvizsgalni, hogy a cso tulcsordulna, mert csak annyi vizet pumpal majd a pumpa(amount) amennyit tud meg ahhoz, hogy cso ne csorduljon tul
 		water+=amount;
 	}
+
 	/**
-	 *  Egesz szamot ad vissza, megmondja, pontosan mennyi vizet tud meg befogadni
-	 *  @return A cso szabad kapacitasa
+	 * Publikus metódus, megadja, hogy pontosan mennyi vizet tud még befogadni.
+	 * @return integer, amennyi vizet tud még befogadni
 	 */
 	public int getCapacity() {
 		return size-water;
 	}
+
 	/**
-	 * Maximum a parameterkent kapott vizzel kevesebb lesz a csoben (water attributum). Visszaadja, hogy tenylegesen
-	 * mennyit tudott ebbol adni
-	 * @return Az atadott viz mennyisege
+	 * A metódus meghívásakor maximum a paraméterként kapott vízzel kevesebb lesz a csőben.
+	 * @param amount, integer, .....
+	 * @return integer, ténylegesen ennyit tudott ebből adni.
 	 */
 	public int takeWater(int amount){
 		if(water==0) {
@@ -108,26 +122,26 @@ public class Pipe extends BreakableField {
 	public int getWater() {
 		return water;
 	}
-	
+
 	@Override
 	public boolean acceptField(Field f) {
 		//TODO:csovet nem lehet hozzakotni azt valahogy meg kell tiltani
 		return true;
 	}
-	
+
 	@Override
 	public ArrayList<? extends Field> getNeighbours() {
 		// TODO Auto-generated method stub
 		return neighbours;
 	}
 	//TODO javadoc
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
 	//Ez a resz csak a netwrok miatt kerul bele
 	private Pump in;
 	private Pump out;
@@ -140,6 +154,6 @@ public class Pipe extends BreakableField {
 		neighbours.remove(p);
 		neighbours.add(pump);
 	}
-	
-	
+
+
 }

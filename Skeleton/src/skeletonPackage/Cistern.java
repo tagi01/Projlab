@@ -2,20 +2,30 @@ package skeletonPackage;
 
 import java.util.ArrayList;
 
+/** Cistern osztály */
 public class Cistern extends Field {
-	//Egesz szam vatozo. Az egy jatekos kore alatt osszegyï¿½jtï¿½tt viz mennyiseget tarolja
+
+	/**
+	 * Privát integer, amely egy játékos köre alatt összegy?jtött víz mennyiségét tárolja
+	 */
 	private int collectedWater;
-	//Egy logikai valtozo, van-e felveheto pumpa a ciszternan. True, ha igen, False, ha nem
+
+	/**
+	 * Privát boolean, amely megadja, hogy van-e felvehet? pumpa a ciszternán. True ha igen, false ha nincs.
+	 */
 	private boolean hasPump;
-	//Egy logikai valtozo, van-e felveheto cso a ciszternan. True, ha igen, False, ha nem
+
+	/**
+	 * Private boolean, amely megadja, hogy van-e felvehet? cs? a ciszternán. True ha igen, false ha nincs.
+	 */
 	private boolean hasPipe;
 	
 	private ArrayList<Pipe> neighbours;
-	
+
 	//TODO: Ezt miert vettuk ki?(Pump es Pipe ot?)
 	//private Pump pu;
 	//private Pipe pi;
-	
+
 	//TODO javaodc
 	public boolean addNeighbour(Pipe p) {
 		if(neighbours.contains(p) && p == null) { return false; }
@@ -29,11 +39,11 @@ public class Cistern extends Field {
 		if(neighbours.contains(p) && p!=null) {
 			neighbours.remove(p);
 			return true;
-		} else { 
-			return true; 
+		} else {
+			return true;
 			}
 	}
-	
+
 	/*
 	 * hasPump es hasPipe ertekeket True-ra allitja, vagyis most mar a
 	 *ciszternarol fel lehet venni pumpat es csovet egyarant
@@ -42,12 +52,11 @@ public class Cistern extends Field {
 		hasPump = true;
 		hasPipe = true;
 	}
-	
-	/*
-	 * A meghivoja egy pumpat venne fel a ciszternarol, ekkor, ha
-	 *meg van pumpa, akkor atallitja a hasPump erteket False-ra es visszaadja az uj pumpat,
-	 *ha nincs, akkor csak visszater a metodus
-	*/
+
+	/**
+	 * Publikus metódus, meghívásakor a ciszternáról pumpát szeretnénk felvenni, ekkor, ha még van pumpa, akkor visszaadja az új pumpát, ha nincs, akkor egy null-lal visszatér a metódus.
+	 * @return Pump a felvett pumpa referenciája (null, ha nincs felvehet? pumpa)
+	 */
 	public Pump removePump() {
 		if(hasPump == true) {
 			hasPump = false;
@@ -57,12 +66,11 @@ public class Cistern extends Field {
 		else
 			return null;
 	}
-	
-	/*
-	 * Metodus meghivasakor a ciszternarol csovet szeretnenk felvenni,
-	 *ha lehetseges (mert a hasPipe True) ekkor ezt a hasPipe erteket False-ra allatja es
-	 *visszaadja az uj csovet, ha nem, mert mar felvettek rola csovet, akkor marad False ez az ertek
-	*/
+
+	/**
+	 * Publikus metódus, meghívásakor a ciszternáról csövet szeretnénk felvenni, ha lehetséges, ekkor visszaadja az új csövet, ha nincs, akkor egy null-lal visszatér a metódus.
+	 * @return Pipe, a felvett cs? referenciája (null, ha nincs felvehet? cs?)
+	 */
 	public Pipe removePipe() {
 		if(hasPump == true) {
 			hasPipe = false;
@@ -73,21 +81,30 @@ public class Cistern extends Field {
 		else
 			return null;
 	}
-	
-	/*
-	 * Egy Pipe-ot hozza lehet-e csatlakoztatni a meghivott
-	 *mezohoz. Ha igen True-val ter vissza, egyebkent False-szal
-	*/
+
+	/**
+	 * Publikus metódus, Field-b?l örökölt függvény felülírása. Meghívásakor megadja, hogy a karakter ráléphet-e a ciszternára.
+	 * @return boolean, true, ha ráléphet a ciszternára, false ha nem
+	 */
+	@Override
+	public boolean acceptCharacter() {
+		return false;
+	}
+
+	/**
+	 * Publikus metódus, Field-b?l örökölt függvény felülírása. Meghívásakor megadja, hogy a paraméterben kapott mez? hozzáadató-e szomszédnak.
+	 * @param f, Field-b?l leszármazó típusú változó, amelyet hozzácsatlakoztatnánk a meghívott mez?höz
+	 * @return boolean, true ha a paraméter hozzácsatlakoztatható, false ha nem
+	 */
 	public boolean acceptField(Field f) {
 		//TODO cistern melle nem tehetunk pumpot.
 		//egy megoldas, hogyha a networkben a Field, az benne van e pump arraylistben
 		return true;
 	}
-	
-	/*
-	 * Metodus meghovasakor a ciszterna elveszi a hozza beerkezo
-	 *csovektol az osszes vizet es eltarolja.
-	*/
+
+	/**
+	 * Publikus metódus, meghívásakor a ciszterna elveszi a hozzá beérkez? csövekt?l az összes vizet és eltárolja.
+	 */
 	public void collectWater() {
 		for(int i = 0; i < neighbours.size() ; i++) {
 			Pipe tmp = (Pipe) neighbours.get(i);

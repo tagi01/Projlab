@@ -1,18 +1,19 @@
 package skeletonPackage;
 
+/** Saboteur osztály */
 public class Saboteur extends Character{
+
 	/**
-	 * Konstruktor
-	 * 
-	 * @param f a mezo amin all a szabotor
-	 * @param n a halozat
+	 * Publikus metódus, Saboteur kétparaméteres konstruktora, Character konstruktorához hasonlóan.
+	 * @param f, Field-ből származót típusú mező, amelyen a karakter áll
+	 * @param n, Network, amely hálózatban a karakter és a mező van
 	 */
 	public Saboteur(Field f, Network n) {
 		super(f, n);
 	}
 
 	/**
-	 * Kilyukasztja a csovet, amin all
+	 * Publikus metódus, meghívásakor kilyukasztja a csövet, amelyen áll.
 	 */
 	public void puncturePipe() {
 		currentField.breakField();

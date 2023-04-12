@@ -1,6 +1,5 @@
 package skeletonPackage;
 import java.util.ArrayList;
-import java.util.Collection;
 /** Field absztrakt osztály */
 public abstract class Field {
 

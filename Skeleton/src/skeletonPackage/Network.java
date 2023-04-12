@@ -2,16 +2,26 @@ package skeletonPackage;
 
 import java.util.*;
 
+/** Network osztály */
 public class Network {
-		//Character típusú változó referenciája. Az éppen aktív játékos az értéke, ő tud cselekedni
+
+	/**
+	 * Privát, az éppen aktív játékos referenciája, ő tud cselekedni.
+	 */
 	private Character activeCharacter;
-		//A pályán található karakterek listája
+
+	/**
+	 * Privát, a pályán látható karakterek listája.
+	 */
 	private ArrayList<Character> characters;
-		//A pályát alkotó mezők listája
+
+	/**
+	 * Privát, a pályát alkotó mezők listája.
+	 */
 	private ArrayList<Field> fields;
-	
+
 	private ArrayList<Pump> pumplist;
-	
+
 	//TODO azert hogy break majd mukodjon
 	/*
 	 *Az adott csőre(currentField)
@@ -21,20 +31,20 @@ public class Network {
 	public void addPump(Pump pump, Pipe currentField) {
 		Pipe p_new = new Pipe();
 		fields.add(p_new);
-		
+
 		p_new.addNeighbour(pump);
 		pump.addNeighbour(p_new);
-		
+
 		activeCharacter.removeInventory();
 		//kerdes? itt adjuk hozza  pumplisthez, vagy amikor berakjuk inventoryba?
-		
+
 		//Mivel nem emlekszem mit beszeltunk, ezét ide ket változatot csinalok, egyik ahol be is allitom a pumpot
-		//viszont itt ugy csinaltam, hogy a pipe-nak visszatettem a kett atibutumot (Pump in/out) és par getter setter. Ezt a Pipe osztály aljan lesz majd 
+		//viszont itt ugy csinaltam, hogy a pipe-nak visszatettem a kett atibutumot (Pump in/out) és par getter setter. Ezt a Pipe osztály aljan lesz majd
 		//ha mégse mi állítsuk majd be ezeket. akkor konnyi lesz kitorolni.
 		
 		//az egyik szomszed pumpa, mihez viszonyitjuk a beallitast
 		//a pipe szomszédait megvizsgaljuk, és ha van koztuk pump(egynek muszáj lenni, akkor beéllítom a segédváltozoba)
-		
+
 		//AZ A VALTOZAT, AHOL AUTOATIKUSAN BEALLITJUK A SZOMSZEDOKAT ES  FOLYAST IS
 		/*
 		Pump p = new Pump();
@@ -55,7 +65,7 @@ public class Network {
 		else {
 			temp_set=0;
 		}
-				
+
 		if(temp_set == 1) {
 			p_new.addNeighbour(p);
 			p_new.setOut(p);
@@ -86,7 +96,7 @@ public class Network {
 			currentField.setIn(pump);
 			pump.setOut(currentField);
 			
-		}else {
+		} else {
 			p_new.addNeighbour(p);
 			p_new.setOut(p);
 			p_new.setIn(pump);
@@ -117,11 +127,12 @@ public class Network {
 			p.addNeighbour(p_new);
 			currentField.changeNeighbour(p, pump);
 			pump.addNeighbour(currentField);
-			
+
 		
 	}
-	/*
-	 *  Véletlenszerűen eltör egy pumpát a pályán
+
+	/**
+	 * Publikus metódus, meghívásakor véletlenszerűen eltör egy pumpát a pályán.
 	 */
 	public void breakPump() {
 		Random rn = new Random();
@@ -133,5 +144,5 @@ public class Network {
 				break_succed = true;
 		}while(break_succed != true);
 	}
-	
+
 }

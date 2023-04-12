@@ -2,14 +2,14 @@ package skeletonPackage;
 
 import java.util.*;
 
-public class Source extends Field{
-	
+public class Source extends Field {
+
 	private ArrayList<Pipe> neighbours;
 
 	public Source() {
 		neighbours=new ArrayList<Pipe>();
 	}
-	
+
 	//TODO javaodc
 	public boolean addNeighbour(Pipe p) {
 		if(neighbours.contains(p) && p == null) { return false; }
@@ -23,11 +23,11 @@ public class Source extends Field{
 		if(neighbours.contains(p) && p!=null) {
 			neighbours.remove(p);
 			return true;
-		} else { 
-			return true; 
+		} else {
+			return true;
 			}
 	}
-	
+
 	/*
 	 * Field metódus felülírása. Logikai változó a visszatérési
 	 *értéke. True, ha hozzá lehet csatlakoztatni a mezőt, False, ha nem
@@ -49,7 +49,7 @@ public class Source extends Field{
 			neighbours.get(i).flowWater(j);
 		}
 	}
-	
+
 	@Override
 	public ArrayList<? extends Field> getNeighbours() {
 		return neighbours;
