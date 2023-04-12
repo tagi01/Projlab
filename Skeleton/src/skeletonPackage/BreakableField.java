@@ -1,26 +1,38 @@
 package skeletonPackage;
-
+/** BreakableField osztály */
 public abstract class BreakableField extends Field {
-	protected boolean isBroken;
-	
-	public BreakableField(){
+	/**
+	 * Privát tulajdonsága a mezőnek, hogy elvan-e törve, vagy nem.
+	 */
+	private boolean isBroken;
+
+	/**
+	 * Publikus metódus, BreakableField konstruktora.
+	 */
+	public BreakableField() {
 		isBroken = false;
-	};
-	
-	/*
-	 * megjavítj azt a mezőt, amin a játékos áll
-	 */
-	final public boolean getRepaired(){
-		isBroken=false;
-		return true;
 	}
-	/*
-	 * metódus meghívasakor elromlik egy mező
+
+	/**
+	 * Publikus metódus, amely meghívásakor megjavítja a mezőt.
+	 * @return boolean, vagyis true ha sikerült megjavítani, egyébként false
 	 */
-	@Override
-	final public boolean bReak(){
-		isBroken=true;
-		return true;
+	public boolean getRepaired() {
+		if(isBroken==true) { // elvan-e torve a field
+			isBroken=false;
+			return true; // sikeresen eltortuk
+		} else return false; // sikertelen
+	}
+
+	/**
+	 * Publikus metódus, amely meghívásakor eltörik a mező.
+	 * @return boolean, vagyis true ha sikerült eltörni, egyébként false
+	 */
+	public boolean breakField() {
+		if(isBroken==false) { // elvan-e torve a field
+			isBroken=true;
+			return true; // sikeresen eltoruk
+		} else return false; // sikertelen
 	}
 	
 }

@@ -1,113 +1,93 @@
 package skeletonPackage;
-
-import java.util.*;
-
+import java.util.ArrayList;
+/** Field absztrakt osztály */
 public abstract class Field {
-	//szomszédokat egy fieldnek tárolo lista
-	protected ArrayList<Field> neighbours;
-	//A mezon aktuálisan álló karaktert
-	protected Character currentCharacter;
-	
-	
-	//TODO: Konstruktorok+
-	public Field() {
-		neighbours=null;
-		currentCharacter=null;
-	}
-	
-	public Field(ArrayList<Field> n, Character c) {
-		neighbours=n;
-		currentCharacter=c;
-	}
-	
-	/*
-	 *Egy logikai változó a visszatérési értéke. Character ráléphet-e a mezőre, True ha igen 
+
+	/**
+	 * Privát, a szomszédos mezők referenciáját tároló lista
 	 */
-	public boolean acceptCharacter() {
-		if(currentCharacter != null) {
-			return false;
-		}
-		return true;
-	}
-	/*
-	 *Egy Field-et hozzá lehet-e csatlakoztatni a meghívott
-	 *mezőhöz. Absztrakt metódus, logikai változó a visszatérési értéke, True ha igen, False
-	 *ha nem
+	private ArrayList<Field> neighbours = new ArrayList<Field>();
+
+	/**
+	 * Privát, a mezőn aktuálisan tartózkodó karakterek referenciájának listája
+	 */
+	private ArrayList<Character> currentCharacters = new ArrayList<Character>();
+
+	/**
+	 * Absztrakt metódus. Megadja, hogy egy karakter ráléphet-e a mezőre. True ha igen, false ha nem.
+	 * @return boolean, true ha ráléphet, false ha nem
+	 */
+	public abstract boolean acceptCharacter();
+
+	/**
+	 * Absztrakt metódus, egy Field-et hozzá lehet-e csatlakoztatni a meghívott mezőhöz.
+	 * @param f, Field-ből leszármazó típusú változó, amelyet hozzácsatlakoztatnánk a meghívott mezőhöz
+	 * @return boolean, true ha a paraméter hozzácsatlakoztatható, false ha nem
 	 */
 	public abstract boolean acceptField(Field f);
-	//visszaadja egy Fieldnek a szomszédsági listáját
-	public ArrayList<Field> getNeighbours(){return neighbours;}
-	//az aktualis karakter referenciajat adja vissza, aki a mezon all
-	public Character getCurrentCharacter() {return currentCharacter;}
-	//beallitja az aktualis karaktert, aki eppen ralepett a mezore
-	public void setCurrentCharacter(Character newChar) {currentCharacter=newChar;}
-	
-	
-	/*
-	 *Hozzáadja a paraméterben kapott mezőt a szomszédjainak listájához, (neighbours lista)
+
+	// TODO getterek és setterek átnézése
+	public ArrayList<Field> getNeighbours() { return neighbours; }
+
+	public ArrayList<Character> getCurrentCharacter() { return currentCharacters; }
+
+	public void setCurrentCharacters(Character newChar) { currentCharacters.add(newChar); }
+
+	/**
+	 * Hozzáadja a paraméterben kapott mezőt a szomszédjainak listájához
+	 * @param f, Field-ből leszármazó típusú változó, amelyet hozzáadnánk a meghívott mező szomszédaihoz
+	 * @return boolean, true ha sikeres volt a hozzáadás, false ha nem
 	 */
 	public boolean addNeighbour(Field f) {
-		//TODO:......
-		return true;
+		if(neighbours.contains(f)) { return false; }
+		else {
+			neighbours.add(f);
+			return true;
 		}
-	/*
-	 * Egy mezőnek eltávolítja az paraméterként kapott mezőt, mint szomszédot (a neighbours listából)
+	}
+
+	/**
+	 * Egy mezőnek eltávolítja az paraméterként kapott mezőt, mint szomszédot
+	 * @param f, Field-ből leszármazó típusú változó, amelyet kitörölnénk a meghívott mező szomszédai közül
+	 * @return boolean, true ha sikeres volt a törlés, false ha nem
 	 */
 	public boolean removeNeighbour(Field f) {
-		//TODO
-		return true;
-		}
-	/*
-	 * A régi szomszédos mezőt kicseréli egy új mezőre a szomszédok listájában
-	 */
-	public void changeNeighbour(Field oldfield, Field newfield) {}
-	/*
-	 * A Charactert a mezőre teszi, bekerül a currentCharacters listába
-	 */
-	public void onField(Character c) {}
-	/*
-	 * A Charactert leveszi a mezőről, kiveszi a currentCharacters listából
-	 */
-	public void offField(Character c) {}
-	
-	
-	
-	
-	
-	/*
-	 *  a pumpa beállításához, majd a pumpa osztály overrideolja
-	 */
-	public boolean setPump(Pipe from, Pipe to) {
-		System.out.println("Pumpanak tudod beallitani");
-		return false;
-	}
-	
-	
-	/*
-	 * pipenal kell mivel a source fieldet lat es nem pipeot s
-	 */
-	public int getCapacity() {return 0;}
-	public void flowWater(int j) {}
-	public Object getIn() {return null;}
-	public Object getOut() {return null;}
-
-	/*
-	 * A BreakableField metodusai miatt kellettek
-	 */
-	public boolean getRepaired() {
-		System.out.println("Nem sikerult javitas");
-		return false;
-	}
-	public boolean bReak(){
-		System.out.println("Nem sikerult a mezo elrontasa");
-		return false;
+		if(neighbours.contains(f)) {
+			neighbours.remove(f);
+			return true;
+		} else { return true; }
 	}
 
-	
+	/**
+	 * A régi szomszédos mezőt kicseréli egy új mezőre a szomszédok listájában.
+	 * @param oldField, Field-ből leszármazó típusú változó, amelyik mezőt szerenténk kicserélni egy másikra
+	 * @param newField, Field-ből leszármazó típusú változó, amelyik mezőre szeretnénk kicserélni a régit
+	 */
+	public void changeNeighbour(Field oldField, Field newField) {
+		// akkor kell lecserélni, ha az oldField benne van, a newField még nincs
+		if (neighbours.contains(oldField)== true || neighbours.contains(newField)== false) {
+			neighbours.remove(oldField);
+			neighbours.add(newField);
+			//return true;
+		} //else { //return false; }
+		// TODO changeNeighbour visszatérési értéke ne legyen boolean?
+	}
 
+	/**
+	 * A karaktert a mezőre teszi, bekerül a mezőn lévő karakterek listájába.
+	 * @param c Character, aki a meghívott mezőre lépne
+	 */
+	public void onField(Character c) {
+		if(currentCharacters.contains(c) == false) { currentCharacters.add(c); }
+		// TODO visszateresi ertek itt is
+	}
 
-
-
-	
-	
+	/**
+	 * A karaktert leveszi a mezőről, kikekerül a mezőn lévő karakterek listájából.
+	 * @param c Character, aki a meghívott mezőre lelépne
+	 */
+	public void offField(Character c) {
+		if (currentCharacters.contains(c)) { currentCharacters.remove(c); }
+		// TODO visszateresi ertek itt is, itt is
+	}
 }

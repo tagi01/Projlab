@@ -24,13 +24,14 @@ public abstract class Character {
 		ArrayList<Field> field = new ArrayList<Field>(currentField.getNeighbours());
 			if(field.contains(currentField)){
 				if(f.acceptCharacter()) {
-					currentField.setCurrentCharacter(null);
-					f.setCurrentCharacter(this);
+					// FIXME ez egy onField függvényhívás csak
+					currentField.setCurrentCharacters(null);
+					f.setCurrentCharacters(this);
 					currentField=f;
-				}else {
+				} else {
 					System.out.println("Nem tudsz ralepni a mezoe, mert mar allnak rajta");
 				}		
-			}else {
+			} else {
 				System.out.println("nem szomszedos s valasztott mezo, igy nem tudsz ralepni");
 			}
 	}
