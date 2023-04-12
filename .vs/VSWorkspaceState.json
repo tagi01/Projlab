@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Skeleton",
+    "\\Skeleton\\src",
+    "\\Skeleton\\src\\skeletonPackage"
   ],
   "SelectedNode": "\\C:\\Users\\Soma\\Source\\Repos\\Projlab",
   "PreviewInSolutionExplorer": false
