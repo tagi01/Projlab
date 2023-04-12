@@ -6,6 +6,20 @@ public class Pump extends BreakableField{
 	//Egy Pipe típusú változó. Cső referenciáját tárolja, amerre folyik a víz a pumpából
 	private Pipe out;
 	
+	public Pump() {
+		in=null;
+		out=null;
+	}
+	
+	public void setIn(Pipe new_p) {in=new_p;}
+	@Override
+	public Pipe getIn() {return in;}
+	@Override
+	public Pipe getOut() {return out;}
+	
+	public void setOut(Pipe new_p) {out=new_p;}
+
+	
 	public Pump(Pipe i, Pipe o) {
 		super();
 		in=i;

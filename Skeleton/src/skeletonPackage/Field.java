@@ -1,15 +1,24 @@
 package skeletonPackage;
 
-import java.util.List;
+import java.util.*;
 
 public abstract class Field {
 	//szomszédokat egy fieldnek tárolo lista
-	protected List<Field> neighbours;
+	protected ArrayList<Field> neighbours;
 	//A mezon aktuálisan álló karaktert
 	protected Character currentCharacter;
 	
 	
 	//TODO: Konstruktorok+
+	public Field() {
+		neighbours=null;
+		currentCharacter=null;
+	}
+	
+	public Field(ArrayList<Field> n, Character c) {
+		neighbours=n;
+		currentCharacter=c;
+	}
 	
 	/*
 	 *Egy logikai változó a visszatérési értéke. Character ráléphet-e a mezőre, True ha igen 
@@ -27,7 +36,7 @@ public abstract class Field {
 	 */
 	public abstract boolean acceptField(Field f);
 	//visszaadja egy Fieldnek a szomszédsági listáját
-	public List<Field> getNeighbours(){return neighbours;}
+	public ArrayList<Field> getNeighbours(){return neighbours;}
 	//az aktualis karakter referenciajat adja vissza, aki a mezon all
 	public Character getCurrentCharacter() {return currentCharacter;}
 	//beallitja az aktualis karaktert, aki eppen ralepett a mezore
@@ -73,6 +82,15 @@ public abstract class Field {
 		return false;
 	}
 	
+	
+	/*
+	 * pipenal kell mivel a source fieldet lat es nem pipeot s
+	 */
+	public int getCapacity() {return 0;}
+	public void flowWater(int j) {}
+	public Object getIn() {return null;}
+	public Object getOut() {return null;}
+
 	/*
 	 * A BreakableField metodusai miatt kellettek
 	 */
@@ -84,6 +102,12 @@ public abstract class Field {
 		System.out.println("Nem sikerult a mezo elrontasa");
 		return false;
 	}
+
+	
+
+
+
+
 	
 	
 }

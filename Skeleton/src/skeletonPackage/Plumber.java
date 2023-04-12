@@ -10,6 +10,15 @@ public class Plumber extends Character{
 		super(f, n);
 		inventory=null;
 	}
+	
+	@Override
+	public void addInventory(BreakableField bf) {
+		inventory=bf;
+	}
+	@Override
+	public void removeInventory() {
+		inventory=null;
+	}
 	/*
 	 * Megjavítja az elromlott mezőt, amin éppen a játékos áll
 	 */

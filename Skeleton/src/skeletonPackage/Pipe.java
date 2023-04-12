@@ -14,6 +14,15 @@ public class Pipe extends BreakableField {
 	//Egész szám, megadja, hogy a csőben épp mennyi víz van
 	private int water;
 	
+	public Pipe() {
+		super();
+		lostWater=0;
+		in=null;
+		out=null;
+		size=1; //default size
+		taken=false;
+		water=0;
+	}
 	public Pipe(int lwater, Pump i, Pump o, int siz, boolean take, int wat) {
 		super();
 		lostWater=0;
@@ -27,8 +36,10 @@ public class Pipe extends BreakableField {
 	//csobe pumpalo pumpa bemenetet allitja be
 	public void setIn(Pump p) {in=p;}
 	//a csobe vizet pumpalo pumpa referenciajat adja meg
+	@Override
 	public Pump getIn() {return in;}
 	//a csobol vizet kero pumpa referenciajat adja vissza
+	@Override
 	public Pump getOut() {return out;}
 	//amelyik pumpaba folyik a viz, annak referenciajat allitja be
 	public void setOut(Pump p) {out=p;}
@@ -44,6 +55,7 @@ public class Pipe extends BreakableField {
 	/*
 	 *A pumpa kimenetén lévő csőbe adódik oda a paraméterben lévő egész szám
 	 */
+	@Override
 	public void flowWater(int amount) {
 		//nem kell megvizsgalni, hogy a cso tulcsordulna, mert csak annyi vizet pumpal majd a pumpa(amount) amennyit tud meg ahhoz, hogy cso ne csorduljon tul
 		water+=amount;
@@ -51,6 +63,7 @@ public class Pipe extends BreakableField {
 	/*
 	 *  Egész számot ad vissza meghívásakor, pontosan mennyi vizet tud még befogadni
 	 */
+	@Override
 	public int getCapacity() {
 		return size-water;
 	}

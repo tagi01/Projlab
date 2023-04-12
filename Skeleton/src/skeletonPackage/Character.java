@@ -45,4 +45,11 @@ public abstract class Character {
 		}
 	}
 	
+	
+	/*
+	 * Plumer inventory miatt kell, mivel a network csak charactereket tarol
+	 */
+	public void removeInventory() {}
+	public void addInventory(BreakableField bf) {}
+	
 }
