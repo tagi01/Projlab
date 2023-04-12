@@ -70,7 +70,7 @@ public class Pipe extends BreakableField {
 	 */
 	@Override
 	public boolean acceptCharacter() {
-		if(currentCharacter == null && taken == false) {
+		if(currentCharacters.size() == 0 && taken == false) {
 			return true;
 		}
 		return false;
@@ -80,7 +80,6 @@ public class Pipe extends BreakableField {
 	 * Vizet ad a csobe
 	 * @param amount A csobe kerulo viz mennyisege
 	 */
-	@Override
 	public void flowWater(int amount) {
 		//nem kell megvizsgalni, hogy a cso tulcsordulna, mert csak annyi vizet pumpal majd a pumpa(amount) amennyit tud meg ahhoz, hogy cso ne csorduljon tul
 		water+=amount;
@@ -89,7 +88,6 @@ public class Pipe extends BreakableField {
 	 *  Egesz szamot ad vissza, megmondja, pontosan mennyi vizet tud meg befogadni
 	 *  @return A cso szabad kapacitasa
 	 */
-	@Override
 	public int getCapacity() {
 		return size-water;
 	}

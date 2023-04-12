@@ -6,12 +6,12 @@ public abstract class Field {
 	/**
 	 * Privát, a szomszédos mezők referenciáját tároló lista
 	 */
-	private ArrayList<Field> neighbours = new ArrayList<Field>();
+	protected ArrayList<Field> neighbours = new ArrayList<Field>();
 
 	/**
 	 * Privát, a mezőn aktuálisan tartózkodó karakterek referenciájának listája
 	 */
-	private ArrayList<Character> currentCharacters = new ArrayList<Character>();
+	protected ArrayList<Character> currentCharacters = new ArrayList<Character>();
 
 	/**
 	 * Absztrakt metódus. Megadja, hogy egy karakter ráléphet-e a mezőre. True ha igen, false ha nem.
