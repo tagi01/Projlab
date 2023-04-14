@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Skeleton {
+	
 	public static void main(String[] args) {
 		System.out.println("-----------------------------------------------------\n"
 				         + "|    -----    ------    -----    -----    ------    |\n"
@@ -12,22 +13,23 @@ public class Skeleton {
 				         + "|      |      |             |      \\        |       |\n"
 				         + "|      |      ------    ----     -----      |       |\n"
 				         + "-----------------------------------------------------\n");
-		System.out.println("1. Pipe felvetele egy pumpanal.\n"
-						 + "2. Pumpa beallitasa szerelokent\\szabotorkent.\n"
-						 + "3. Szerelo, szabotor mozgatasa masik mezore.\n"
-						 + "4. Pumpa vagy Pipe felvetele cisternanal\n"
-						 + "5. Pumpa lerakasa.\n"
-						 + "6. Pumpa viz mozgatasa.\n"
-						 + "7. Cisterna viz fogadasa.\n"
-						 + "8. Forras viz adasa.\n"
-						 + "9. Pumpa eltorese.\n"
-						 + "10. Szabotor pipe kilyukasztasa.\n"
-						 + "11. Szerelo pumpa/pipe megjavitasa.\n"
-						 + "12. Exit.\n");
+		System.out.println("1.  Pumpa vagy cso felvetele ciszternanal\n"
+						 + "2.  Pumpa lerakasa\n"
+						 + "3.  Szerelo, szabotor mozgatasa masik mezore.\n"
+						 + "4.  Pumpaban viz mozgatasa\n"
+						 + "5.  Ciszterna viz fogadasa\n"
+						 + "6.  Forras vizet ad\n"
+						 + "7.  Pumpa eltorese\n"
+						 + "8.  Szabotor kilyukaszt egy csovet\n"
+						 + "9.  Cso felvetele egy pumpanal\n"
+						 + "10. Pumpa beallitasa szerelokent/szabotorkent.\n"
+						 + "11. Szerelo megjavitja egy csovet/pumpat\n"
+						 + "12. Kilepes\n");
 		Scanner input = new Scanner(System.in);
-		int numb=0;
+		int numb = 0;
+		
 		do {
-		numb = input.nextInt();
+			numb = input.nextInt();
 			try {		
 				switch(numb) {
 				case 1:
@@ -65,72 +67,197 @@ public class Skeleton {
 					break;
 				case 12:
 					System.out.println("Tesztek vege!");
-					break;
+					System.exit(0);
 				default:
-					System.out.println("Valassz a megadott menupontok kozul.");
+					System.out.print("Valassz a megadott menupontok kozul: ");
 				}
 				
-			}catch (InputMismatchException e) {
+			} catch (InputMismatchException e) {
                     e.printStackTrace();
             }
-		}while( numb != 12);
+		} while(numb != 12);
 		
 		input.close();
 	}
 	
-	//Ha elsot valasztottak akkor idelep es ebben a fuggvényben lehet majd beállítani a paramétereket
+	/** TEST 1 - Pumpa vagy Pipe felvetele ciszternanal */
 	public static void one() {
+		System.out.println("TEST 1 - Pumpa vagy Pipe felvetele ciszternanal");
 		
+		System.out.println("\tVan pumpa a ciszternan? (i, n) ");
+		// egy karakter bevetele, ha nem akkor ellenorzese
+		System.out.println("\tVan cso a ciszternan? (i, n) ");
+		// egy karakter bevetele
+		
+		// TODO Test 1, Get pipe or pump on cistern tesztkornyezet
+		
+		// fuggveny meghivasa
+		
+		
+		System.out.println("Teszt vege");
 	}
-	
-	//Ha másodikat valasztottak akkor idelep es ebben a fuggvényben lehet majd beállítani a paramétereket
+
+	/** TEST 2 - Pumpa lerakasa */
 	public static void two() {
+		System.out.println("TEST 2 - Pumpa lerakasa");
+		
+		System.out.println("\tVan pumpa a szerelonel? (i, n) ");
+		// egy karakter bekerese, ellenorzes
+		
+		// TODO Test 2, Place Pump tesztk�rnyezet
+		
+		// fuggveny meghivasa
+		
+		
+		System.out.println("Teszt vege");
 		
 	}
 	
-	//Ha harmadikat valasztottak akkor idelep es ebben a fuggvényben lehet majd beállítani a paramétereket
+	/** TEST 3 - Szerelo, szabotor mozgatasa masik mezore */
 	public static void three() {
+		System.out.println("TEST 3 - Szerelo, szabotor mozgatasa masik mezore");
 		
+		System.out.println("\tMelyik karakterrel szerentel lepni: szerelovel(p) vagy szabotorrel(s)? ");
+		// egy karakter bekerese
+		System.out.println("\tMelyik mezon van a karaktered?\n\tForrason(s), elso csovon(p1), pumpan(p), masodik csovon(p2) vagy ciszternan(c)? ");
+		// sor bekerese
+		
+		System.out.println("\tMelyik mezore szeretnel lepni?\\n\\tForrasra(s), elso csore(p1), pumpan(p), masodik csore(p2) vagy ciszternara(c)? ");
+		// sor bekerese
+		
+		// TODO Test 3, Move Plumber and Saboteur to Fields teszkornyezet
+		
+		// fuggveny meghivasa
+		
+		
+		System.out.println("Teszt vege");
 	}
 	
-	//Ha negyediket valasztottak akkor idelep es ebben a fuggvényben lehet majd beállítani a paramétereket
+	/** TEST 4 - Pumpaban viz mozgatasa */
 	public static void four() {
+		System.out.println("TEST 4 - Pumpaban viz mozgatasa");
+		System.out.println("\tMekkora a bemeneti cso merete? (egesz szam) ");
+		// szam beolvasasa
+		System.out.println("\tMennyi viz van a bemeneti csoben? (egesz szam) ");
+		// szam beolvasasa
 		
+		System.out.println("\tMekkora a kimeneti cso merete? (egesz szam) ");
+		// szam beolvasasa
+		System.out.println("\tMennyi viz van a kimeneti csoben? (egesz szam) ");
+		// szam beolvasasa
+		
+		// TODO Test 4, Pump moves water tesztkornyezet
+		
+		// fuggveny meghivasa
+		
+		
+		System.out.println("Teszt vege");
 	}
 	
-	//Ha ötödiket valasztottak akkor idelep es ebben a fuggvényben lehet majd beállítani a paramétereket
+	/***/
 	public static void five() {
+		System.out.println("TEST 5 - Ciszterna viz fogadasa");
+		System.out.println("\tVan cso csatlakoztatva a ciszternahoz? (i, n) ");
+		// karakter beolvasasa
 		
+		// TODO Test 5, Cistern takes water tesztkornyezet
+		
+		// fuggveny meghivasa
+		
+		
+		System.out.println("Teszt vege");
 	}
 	
-	//Ha hatodikat valasztottak akkor idelep es ebben a fuggvényben lehet majd beállítani a paramétereket
+	/** TEST 6 - Forras vizet ad */
 	public static void six() {
+		System.out.println("TEST 6 - Forras vizet ad");
 		
+		System.out.println("\tVan cso csatlakoztatva a forrashoz? (i, n) ");
+		// karakter beolvasasa
+		
+		// TODO Test 6, Source gives water tesztkornyezet
+		
+		// fuggveny meghivasa
+		
+		
+		System.out.println("Teszt vege");
 	}
 	
-	//Ha hetediket valasztottak akkor idelep es ebben a fuggvényben lehet majd beállítani a paramétereket
+	/** TEST 7 - Pumpa eltorese */
 	public static void seven() {
+		System.out.println("TEST 7 - Pumpa eltorese");
+		System.out.println("\tElvan torve a pumpa? (i, n) ");
+		// karakter beolvasasa
 		
+		// TODO Test 7, Break pump tesztkornyezet
+		
+		// fuggveny meghivasa
+		
+	
+		System.out.println("Teszt vege");
 	}
 	
-	//Ha nyolcadikat valasztottak akkor idelep es ebben a fuggvényben lehet majd beállítani a paramétereket
+	/** TEST 8 - Szabotor kilyukaszt egy csovet */
 	public static void eight() {
+		System.out.println("TEST 8 - Szabotor kilyukaszt egy csovet");
+		System.out.println("\tElvan torve a cso? (i, n) ");
+		// karakter beolvasasa
 		
+		//TODO Test 8, Saboteur punctures pipe tesztkornyezet
+		
+		// fuggveny meghivasa
+		
+		
+		System.out.println("Teszt vege");
 	}
 	
-	//Ha kilencediket valasztottak akkor idelep es ebben a fuggvényben lehet majd beállítani a paramétereket
+	/** TEST 9 - Cso felvetele egy pumpanal */
 	public static void nine() {
+		System.out.println("TEST 9 - Cso felvetele egy pumpanal");
+		System.out.println("\tUres az inventory-ja? (i, n) ");
+		// karakter beolvasasa
+		System.out.println("\tHasznalja a pumpa ezt a csovet? (i, n) ");
+		// karakter beolvasasa
 		
+		// TODO Test 9, Grab pipe tesztkornyezet
+		
+		// fuggveny meghivasa
+		
+		System.out.println("Teszt vege");
 	}
 	
-	//Ha tizediket valasztottak akkor idelep es ebben a fuggvényben lehet majd beállítani a paramétereket
+	/** TEST 10 - Pumpa beallitasa szerelokent/szabotorkent */
 	public static void ten() {
+		System.out.println("TEST 10 - Pumpa beallitasa szerelokent/szabotorkent");
+		System.out.println("\tMelyik karakterrel szerentel lepni: szerelovel(p) vagy szabotorrel(s)? ");
+		// karakter beolvasasa
+		System.out.println("\t4 cso kozul melyik legyen a pumpa bemenete? (1-4) ");
+		// szam beolvasasa
+		System.out.println("\t4 cso kozul melyik legyen a pumpa kimenete? (1-4) ");
+		// szam beolvasasa, ellenorzese, elozovel megegyezik-e
 		
+		// TODO Test 10, Plumber sets pump tesztkornyezet
+		// TODO Test 10, Saboteur sets pump tesztkornyezet
+		
+		// fuggveny meghivasa
+		
+		
+		System.out.println("Teszt vege");
 	}
 	
-	//Ha tizenegyediket valasztottak akkor idelep es ebben a fuggvényben lehet majd beállítani a paramétereket
+	/** TEST 11 - Szerelo megjavit egy csovet/pumpat */
 	public static void eleven() {
+		System.out.println("TEST 11 - Szerelo megjavit egy csovet/pumpat");
+		System.out.println("\tEl van romolva a cso? (i, n) ");
+		// karakter beolvasasa
 		
+		// TODO Test 11, Plumber repairs pump tesztkornyezet
+		// TODO Test 11, Plumber repairs pipe tesztkornyezet
+		
+		// fuggveny meghivasa
+		
+		
+		System.out.println("Teszt vege");
 	}
 
 }
