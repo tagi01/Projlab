@@ -72,7 +72,7 @@ public class Cistern extends Field {
 	 * @return Pipe, a felvett cs? referenciája (null, ha nincs felvehet? cs?)
 	 */
 	public Pipe removePipe() {
-		if(hasPump == true) {
+		if(hasPipe == true) {
 			hasPipe = false;
 			//Pipe pi = new Pipe(0, null, null, 9999, true, 0); //size-t allitani kell meg, meg a ciszternahoz hozza van kotve 
 			//return pi;

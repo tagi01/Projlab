@@ -42,7 +42,8 @@ public class Pump extends BreakableField {
 			neighbours.add(p);
 			return true;
 		}
-
+	}
+	
 	//TODO javadoc
 	public boolean removeNeighbour(Pipe p) {
 		if(neighbours.contains(p) && p!=null) {

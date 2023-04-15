@@ -1,5 +1,8 @@
 package skeletonPackage;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -28,7 +31,7 @@ public class Skeleton {
 		Scanner input = new Scanner(System.in);
 		int numb = 0;
 		
-		do {
+		while(true) {
 			numb = input.nextInt();
 			try {		
 				switch(numb) {
@@ -67,6 +70,7 @@ public class Skeleton {
 					break;
 				case 12:
 					System.out.println("Tesztek vege!");
+					input.close();
 					System.exit(0);
 				default:
 					System.out.print("Valassz a megadott menupontok kozul: ");
@@ -75,9 +79,8 @@ public class Skeleton {
 			} catch (InputMismatchException e) {
                     e.printStackTrace();
             }
-		} while(numb != 12);
+		}
 		
-		input.close();
 	}
 	
 	/** TEST 1 - Pumpa vagy Pipe felvetele ciszternanal */
@@ -258,6 +261,32 @@ public class Skeleton {
 		
 		
 		System.out.println("Teszt vege");
+	}
+	
+	public boolean askQuestion(String question) {
+		boolean answer = false;
+		System.out.println("\t" + question + "I/N");
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		try {
+			boolean validAnswer = false;
+			while(!validAnswer){
+				String line = bf.readLine();
+				if(line.equals("i") || line.equals("I")){
+					answer = true;
+					validAnswer = true;
+				} else if(line.equals("n") || line.equals("N")) {
+					answer = false;
+					validAnswer = true;
+				} else {
+					System.out.println("\t Hibas valasz");
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return answer;
 	}
 
 }
