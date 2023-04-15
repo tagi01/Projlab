@@ -1,6 +1,7 @@
 package skeletonPackage;
 import java.util.ArrayList;
 import java.util.Collection;
+
 /** Field absztrakt osztály */
 public abstract class Field {
 
@@ -26,16 +27,28 @@ public abstract class Field {
 		return true;
 	}
 
+	/**
+	 * Publikus metódus, Field osztály gettere, meghívásakor visszaadja a mezőn álló karakterek listáját
+	 * @return ArrayList, amiben a mezőn álló karakterek vannak
+	 */
 	public ArrayList<Character> getCurrentCharacter() { return currentCharacters; }
+
+	/**
+	 * Publikus metódus, Field osztály settere, meghívásakor hozzáad a mezőn álló karakterek listájához
+	 * @param newChar új Character referenciája, amely a mezőn fog állni
+	 */
+
+	public abstract boolean addNeighbour();
+
+	public abstract void removeNeighbour(Pipe p);
 
 	public void setCurrentCharacters(Character newChar) { currentCharacters.add(newChar); }
 
+	public abstract boolean interact();
 
-	/**
-	 * Egy mezőnek eltávolítja az paraméterként kapott mezőt, mint szomszédot
-	 * @param f, Field-ből leszármazó típusú változó, amelyet kitörölnénk a meghívott mező szomszédai közül
-	 * @return boolean, true ha sikeres volt a törlés, false ha nem
-	 */
+	public abstract boolean interact(Pipe from, Pipe to);
+
+	public abstract boolean interactPlumber(Plumber p); // TODO itt még kéne egy paraméter, hogy majd pumpát vagy csövet venne fel
 
 	/**
 	 * A karaktert a mezőre teszi, bekerül a mezőn lévő karakterek listájába.
@@ -55,6 +68,7 @@ public abstract class Field {
 		// TODO visszateresi ertek itt is, itt is
 	}
 
-	public abstract ArrayList<? extends Field> getNeighbours();
+	public abstract boolean addNeighbour(Field f);
 
+	public abstract ArrayList<? extends Field> getNeighbours();
 }

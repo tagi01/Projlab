@@ -2,15 +2,26 @@ package skeletonPackage;
 
 import java.util.*;
 
-public class Source extends Field{
-	
+/** Source osztály */
+public class Source extends Field {
+
+	/**
+	 * Privát, a forrás szomszédos csöveit tároló lista.
+	 */
 	private ArrayList<Pipe> neighbours;
 
+	/**
+	 * Publikus metódus, Source paraméter nélküli konstruktora.
+	 */
 	public Source() {
 		neighbours=new ArrayList<Pipe>();
 	}
-	
-	//TODO javaodc
+
+	/**
+	 * Publikus metódus, meghívásakor a paraméterben kapott csövet a szomszédsági listához adja.
+	 * @param p, Pipe amit hozzáadnánk a forrás szomszédaihoz
+	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
+	 */
 	public boolean addNeighbour(Pipe p) {
 		if(neighbours.contains(p) && p == null) { return false; }
 		else {
@@ -18,7 +29,12 @@ public class Source extends Field{
 			return true;
 		}
 	}
-	//TODO javadoc
+
+	/**
+	 * Publikus metódus,  meghívásakor a paraméterben kapott csövet kitöröljük a szomszédsági listából.
+	 * @param p, Pipe amit törölnénk a forrás szomszédaiból
+	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
+	 */
 	public boolean removeNeighbour(Pipe p) {
 		if(neighbours.contains(p) && p!=null) {
 			neighbours.remove(p);
@@ -27,21 +43,19 @@ public class Source extends Field{
 			return true; 
 			}
 	}
-	
-	/*
-	 * Field metódus felülírása. Logikai változó a visszatérési
-	 *értéke. True, ha hozzá lehet csatlakoztatni a mezőt, False, ha nem
+
+	/**
+	 * Publikus metódus, meghívásakor megadja, hogy hozzá lehet-e csatlakoztatni mezőt vagy nem. Field metódus felülírása.
+	 * @return boolean, true, ha hozzá lehet csatlakoztatni a mezőt, false, ha nem.
 	 */
 	public boolean acceptField(Field f) {
 		//TODO source mellé nem tehetunkk pumppot
 		//egy megoldas, hogyha a networkben a Field, az benne van e pump arraylistben
 		return true;
 	}
-	
-	/*
-	 * A metódus meghívásakor a hozzá csatlakoztatott csöveknek
-	 *maximális mennyiségű vizet ad (a csövek pedig beállítják maguknak, hogy a water a
-	 *kapacitásuk szerint a legtöbb legyen)
+
+	/**
+	 * Publikus metódus, meghívásakor a hozzá csatlakoztatott csöveknek maximális mennyiségű vizet ad.
 	 */
 	public void getWater() {
 		for(int i=0 ; i < neighbours.size() ; i++) {

@@ -2,21 +2,26 @@ package skeletonPackage;
 
 import java.util.*;
 
+/** Network osztály */
 public class Network {
-		//Character típusú változó referenciája. Az éppen aktív játékos az értéke, ő tud cselekedni
+
+	/** Privát, Character típusú változó referenciája. Az éppen aktív játékos az értéke, ő tud cselekedni */
 	private Character activeCharacter;
-		//A pályán található karakterek listája
+	/** Privát, a pályán található karakterek listája */
 	private ArrayList<Character> characters;
-		//A pályát alkotó mezők listája
+
+	/** Privát, a pályát alkotó mezők listája */
 	private ArrayList<Field> fields;
-	
+
+	/** Privát, pumpák referenciáit tároló lista. */
 	private ArrayList<Pump> pumplist;
 	
 	//TODO azert hogy break majd mukodjon
-	/*
-	 *Az adott csőre(currentField)
-	 *lerakja a pumpát, beállítja az új mezők szomszédságait, létrehozza a plusz csövet, ami
-	 *az új pumpa és az egyik régi pumpa közt lesz
+
+	/**
+	 * Az adott csőre lerakja a pumpát, beállítja az új mezők szomszédságait, létrehozza a plusz csövet, ami az új pumpa és az egyik régi pumpa közt lesz.
+	 * @param pump, a Pump típusú változó referenciája, amelyik pumpát letesszük a csőre
+	 * @param currentField, olyan Pipe típusú változó referenciája, amelyik csőre tennénk le a pumpát
 	 */
 	public void addPump(Pump pump, Pipe currentField) {
 		Pipe p_new = new Pipe();
@@ -120,8 +125,9 @@ public class Network {
 			
 		
 	}
-	/*
-	 *  Véletlenszerűen eltör egy pumpát a pályán
+
+	/**
+	 * Meghívásakor véletlenszerűen eltör egy pumpát a pályán.
 	 */
 	public void breakPump() {
 		Random rn = new Random();

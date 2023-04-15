@@ -1,25 +1,41 @@
 package skeletonPackage;
 
-import java.util.*;
+import java.util.ArrayList;
 
+/** Character osztály */
 public abstract class Character {
-	//Az aktuális mező referenciája, amin a karakter áll
-	//valahonnan tudnunk kell mi a current Field,
+
+	/**
+	 * Privát Field típusú referencia, amely tárolja, hogy ezen a mezőn van épp a karakter.
+	 */
 	protected Field currentField;
-	//Az aktuális hálózat referenciája
+
+	/**
+	 * Privát Network típusú referencia, amely tárolja, hogy ebben a hálózatban van a karakter.
+	 */
 	protected Network network;
 	
-	//konstruktor
+	/** Publikus metódus, Character konstruktora */
 	public Character(Field f, Network n) {
-		currentField=f;
-		network=n;
+		currentField = f;
+		network = n;
 	}
-	//setter Field-re
-	public void setCurrentField(Field f) {currentField=f;}
-	//getter Fieldre
-	public Field getField() {return currentField;}
-	/*
-	 * Lépteti a játékost a pályán a paraméterként megadott mezőre
+
+	/**
+	 * Publikus metódus, meghívásakor beállítja a paraméterben kapott mezőt, ezen áll a karakter.
+	 * @param f, olyan Field-ből származó típus, amely mezőn áll a karakter
+	 */
+	public void setCurrentField(Field f) { currentField = f; }
+
+	/**
+	 * Publikus metódus, meghívásakor megadja, melyik mezőn áll a karakter.
+	 * @return Field-ből leszármazó típusú objektum referenciáját, amelyen a karakter áll.
+	 */
+	public Field getField() { return currentField; }
+
+	/**
+	 * Publikus metódus, amely meghívásával a karaktert mozgatni lehet.
+	 * @param f Field típusú mező, amelyre szerente lépni
 	 */
 	public void move(Field f) {
 		ArrayList<Field> field = new ArrayList<Field>(currentField.getNeighbours());
@@ -35,21 +51,24 @@ public abstract class Character {
 				System.out.println("nem szomszedos s valasztott mezo, igy nem tudsz ralepni");
 			}
 	}
-	/*
-	 * Beállítja az adott pumpa mezőn, hogy melyik csőből melyik csőbe pumpáljon a pumpa
+
+	/**
+	 * Beállítja az adott pumpa mezőn, hogy melyik csőből melyik csőbe pumpáljon a pumpa.
+	 * @param from Pipe típusú mező, amelyik csőből pumpál majd a pumpa
+	 * @param to Pipe típusú mező, amelyik csőbe fog a pumpa pumpálni
 	 */
 	public void setPump(Pipe from , Pipe to) {
-		if(currentField.setPump(from,to)) {
+		if(currentField.interact(from,to)) {
 			//TODO:karakter interakcio 
 			System.out.println("Sikerult atallitani a pumpat");
-		}else {
+		} else {
 			System.out.println("Nem Sikerult beallitani a pumpat");
 		}
 	}
 	
 	
 	/*
-	 * Plumer inventory miatt kell, mivel a network csak charactereket tarol
+	 * Plumber inventory miatt kell, mivel a network csak charactereket tarol
 	 */
 	public void removeInventory() {}
 	public void addInventory(BreakableField bf) {}

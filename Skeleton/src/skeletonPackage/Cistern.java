@@ -3,20 +3,35 @@ package skeletonPackage;
 import java.util.ArrayList;
 
 public class Cistern extends Field {
-	//Egesz szam vatozo. Az egy jatekos kore alatt osszegy�jt�tt viz mennyiseget tarolja
+	/**
+	 * Privát integer, amely egy játékos köre alatt összegyűjtött víz mennyiségét tárolja
+	 */
 	private int collectedWater;
-	//Egy logikai valtozo, van-e felveheto pumpa a ciszternan. True, ha igen, False, ha nem
+
+	/**
+	 * Privát boolean, amely megadja, hogy van-e felvehető pumpa a ciszternán. True ha igen, false ha nincs.
+	 */
 	private boolean hasPump;
-	//Egy logikai valtozo, van-e felveheto cso a ciszternan. True, ha igen, False, ha nem
+
+	/**
+	 * Private boolean, amely megadja, hogy van-e felvehető cső a ciszternán. True ha igen, false ha nincs.
+	 */
 	private boolean hasPipe;
-	
+
+	/**
+	 * Privát, a ciszterna szomszédos csöveit tárolja.
+	 */
 	private ArrayList<Pipe> neighbours;
 	
-	//TODO: Ezt miert vettuk ki?(Pump es Pipe ot?)
+	// Ezt miert vettuk ki?(Pump es Pipe ot?) - ciszternanak nem lesz ki-es bemenete pump
 	//private Pump pu;
 	//private Pipe pi;
-	
-	//TODO javaodc
+
+	/**
+	 * Publikus metódus, meghívásakor a paraméterben kapott csövet a szomszédsági listához adja.
+	 * @param p, Pipe amit hozzáadnánk a ciszterna szomszédaihoz
+	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
+	 */
 	public boolean addNeighbour(Pipe p) {
 		if(neighbours.contains(p) && p == null) { return false; }
 		else {
@@ -24,7 +39,12 @@ public class Cistern extends Field {
 			return true;
 		}
 	}
-	//TODO javadoc
+
+	/**
+	 * Publikus metódus,  meghívásakor a paraméterben kapott csövet kitöröljük a szomszédsági listából.
+	 * @param p, Pipe amit törölnénk a ciszterna szomszédaiból
+	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
+	 */
 	public boolean removeNeighbour(Pipe p) {
 		if(neighbours.contains(p) && p!=null) {
 			neighbours.remove(p);
@@ -33,21 +53,19 @@ public class Cistern extends Field {
 			return true; 
 			}
 	}
-	
-	/*
-	 * hasPump es hasPipe ertekeket True-ra allitja, vagyis most mar a
-	 *ciszternarol fel lehet venni pumpat es csovet egyarant
-	*/
+
+	/**
+	 * Publikus metódus, amely a hasPump és hasPipe értékeket True-ra állítja, vagyis most már a ciszternáról fel lehet venni pumpát és csövet egyaránt.
+	 */
 	public void resetItems() {
 		hasPump = true;
 		hasPipe = true;
 	}
-	
-	/*
-	 * A meghivoja egy pumpat venne fel a ciszternarol, ekkor, ha
-	 *meg van pumpa, akkor atallitja a hasPump erteket False-ra es visszaadja az uj pumpat,
-	 *ha nincs, akkor csak visszater a metodus
-	*/
+
+	/**
+	 * Publikus metódus, meghívásakor a ciszternáról pumpát szeretnénk felvenni, ekkor, ha még van pumpa, akkor visszaadja az új pumpát, ha nincs, akkor egy null-lal visszatér a metódus.
+	 * @return Pump a felvett pumpa referenciája (null, ha nincs felvehető pumpa)
+	 */
 	public Pump removePump() {
 		if(hasPump == true) {
 			hasPump = false;
@@ -57,12 +75,10 @@ public class Cistern extends Field {
 		else
 			return null;
 	}
-	
-	/*
-	 * Metodus meghivasakor a ciszternarol csovet szeretnenk felvenni,
-	 *ha lehetseges (mert a hasPipe True) ekkor ezt a hasPipe erteket False-ra allatja es
-	 *visszaadja az uj csovet, ha nem, mert mar felvettek rola csovet, akkor marad False ez az ertek
-	*/
+
+	/**
+	 * Publikus metódus, meghívásakor a ciszternáról csövet szeretnénk felvenni, ha lehetséges, ekkor visszaadja az új csövet, ha nincs, akkor egy null-lal visszatér a metódus.
+	 */
 	public Pipe removePipe() {
 		if(hasPump == true) {
 			hasPipe = false;
@@ -73,21 +89,21 @@ public class Cistern extends Field {
 		else
 			return null;
 	}
-	
-	/*
-	 * Egy Pipe-ot hozza lehet-e csatlakoztatni a meghivott
-	 *mezohoz. Ha igen True-val ter vissza, egyebkent False-szal
-	*/
+
+	/**
+	 * Egy Pipe-ot hozzá lehet-e csatlakoztatni a meghívott mezőhöz. Ha igen True-val tér vissza, egyébként False-szal.
+	 * @param f, Field-ből leszármazó objektum, amelyik mezőt csatlakoztatni szeretnénk a meghívott ciszternához
+	 * @return boolean, true, ha hozzá lehet csatlakoztatni, false ha nem
+	 */
 	public boolean acceptField(Field f) {
 		//TODO cistern melle nem tehetunk pumpot.
 		//egy megoldas, hogyha a networkben a Field, az benne van e pump arraylistben
 		return true;
 	}
-	
-	/*
-	 * Metodus meghovasakor a ciszterna elveszi a hozza beerkezo
-	 *csovektol az osszes vizet es eltarolja.
-	*/
+
+	/**
+	 * Publikus metódus, meghívásakor a ciszterna elveszi a hozzá beérkező csövektől az összes vizet és eltárolja.
+	 */
 	public void collectWater() {
 		for(int i = 0; i < neighbours.size() ; i++) {
 			Pipe tmp = (Pipe) neighbours.get(i);
@@ -100,4 +116,8 @@ public class Cistern extends Field {
 		return neighbours;
 	}
 
+	public boolean interact(String s) {
+
+		return false;
+	}
 }

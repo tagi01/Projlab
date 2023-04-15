@@ -2,8 +2,7 @@ package skeletonPackage;
 
 public class Saboteur extends Character{
 	/**
-	 * Konstruktor
-	 * 
+	 * Publikus metódus, Saboteur konstruktora, Character-hez hasonló.
 	 * @param f a mezo amin all a szabotor
 	 * @param n a halozat
 	 */
@@ -12,7 +11,7 @@ public class Saboteur extends Character{
 	}
 
 	/**
-	 * Kilyukasztja a csovet, amin all
+	 * Publikus metódus, meghívásakor kilyukasztja a csövet, amelyen áll.
 	 */
 	public void puncturePipe() {
 		currentField.breakField();

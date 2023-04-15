@@ -34,5 +34,9 @@ public abstract class BreakableField extends Field {
 			return true; // sikeresen eltortuk
 		} else return false; // sikertelen
 	}
-	
+
+	/**
+	 * Publikus absztrakt metódus, amely meghívásakor a karakter interakcióba lép a mezővel, így az állapotát változtatja.
+	 */
+	public abstract boolean interact();
 }
