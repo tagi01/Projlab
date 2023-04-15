@@ -3,9 +3,29 @@ package skeletonPackage;
 import java.util.*;
 
 public class Source extends Field{
+	
+	private ArrayList<Pipe> neighbours;
 
-	public Source(ArrayList<Field> n, Character c) {
-		super(n,c);
+	public Source() {
+		neighbours=new ArrayList<Pipe>();
+	}
+	
+	//TODO javaodc
+	public boolean addNeighbour(Pipe p) {
+		if(neighbours.contains(p) && p == null) { return false; }
+		else {
+			neighbours.add(p);
+			return true;
+		}
+	}
+	//TODO javadoc
+	public boolean removeNeighbour(Pipe p) {
+		if(neighbours.contains(p) && p!=null) {
+			neighbours.remove(p);
+			return true;
+		} else { 
+			return true; 
+			}
 	}
 	
 	/*
@@ -13,14 +33,8 @@ public class Source extends Field{
 	 *értéke. True, ha hozzá lehet csatlakoztatni a mezőt, False, ha nem
 	 */
 	public boolean acceptField(Field f) {
-		//tipus elleneorzes nem szep, de kell
-		if(f instanceof Pipe) {
-			if( f.getNeighbours().get(0) instanceof Cistern) {
-				return false;
-			}
-		}else if(f instanceof Pump) {
-			return false;
-		}
+		//TODO source mellé nem tehetunkk pumppot
+		//egy megoldas, hogyha a networkben a Field, az benne van e pump arraylistben
 		return true;
 	}
 	
@@ -35,4 +49,10 @@ public class Source extends Field{
 			neighbours.get(i).flowWater(j);
 		}
 	}
+	
+	@Override
+	public ArrayList<? extends Field> getNeighbours() {
+		return neighbours;
+	}
+	//TODO: javadoc
 }

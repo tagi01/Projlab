@@ -1,21 +1,13 @@
 package skeletonPackage;
 
+import java.util.ArrayList;
+
 public class Pipe extends BreakableField {
 	/**
 	 *  Egesz szam valtozo. A lyukas csobol kifolyo viz mennyiseget tarolja
 	 */
 	private int lostWater;
-	/**
-	 * A csobe vizet pumpalo pumpa referenciaja
-	 */
-	private Pump in;
-	/**
-	 *  A csobol vizet kero pumpa referenciaja
-	 */
-	private Pump out;
-	/**
-	 *  Egesz szam, ami jellemzi a cso vizbefogado merteket
-	 */
+	
 	private int size;
 	/**
 	 * Logikai ertek. True, ha valamelyik szerelonel van az egyik vege, False, ha nem mozgatjak egyik veget sem
@@ -26,11 +18,12 @@ public class Pipe extends BreakableField {
 	 */
 	private int water;
 	
+	private ArrayList<Field> neighbours;
+	//TODO szomszédok amik lehetnek fieldek, mivel barmilyen szomszedja lehet.
+	
 	public Pipe() {
 		super();
 		lostWater=0;
-		in=null;
-		out=null;
 		size=1; //default size
 		taken=false;
 		water=0;
@@ -38,36 +31,28 @@ public class Pipe extends BreakableField {
 	public Pipe(Pump i, Pump o, int siz, boolean take, int wat) {
 		super();
 		lostWater=0;
-		in=i;
-		out=o;
 		size=siz;
 		taken=take;
 		water=wat;
 	}
 	
-	/**
-	 * Csobe pumpalo pumpa bemenetet allitja be
-	 * @param p Az uj bemeneti pumpa
-	 */
-	public void setIn(Pump p) {in=p;}
-	/**
-	 * A csobe vizet pumpalo pumpa referenciajat adja meg
-	 * @return A cso bemeneti pumpaja
-	 */
-	public Pump getIn() {return in;}
-	/**
-	 * A csobol vizet kero pumpa referenciajat adja vissza
-	 * @return A cso kimeneti pumpaja
-	 */
-	public Pump getOut() {return out;}
-	/**
-	 * Amelyik pumpaba folyik a viz, annak referenciajat allitja be
-	 * @param p A cso uj kimeneti pumpaja
-	 */
-	public void setOut(Pump p) {out=p;}
-	/**
-	 * Logikai valtozoval ter vissza. Megmondja, hogy a jatekos ralephet-e a csore. True, ha igen, False, ha nem.
-	 */
+	public boolean addNeighbour(Field f) {
+		if(neighbours.contains(f) && f == null) { return false; }
+		else {
+			neighbours.add(f);
+			return true;
+		}
+	}
+	
+	public boolean removeNeighbour(Field f) {
+		if(neighbours.contains(f) && f!=null) {
+			neighbours.remove(f);
+			return true;
+		} else { 
+			return true; 
+			}
+	}
+	
 	@Override
 	public boolean acceptCharacter() {
 		if(currentCharacters.size() == 0 && taken == false) {
@@ -123,12 +108,38 @@ public class Pipe extends BreakableField {
 	public int getWater() {
 		return water;
 	}
-	/**
-	 * 
-	 */
+	
 	@Override
 	public boolean acceptField(Field f) {
-		// TODO Auto-generated method stub
+		//TODO:csovet nem lehet hozzakotni azt valahogy meg kell tiltani
 		return true;
 	}
+	
+	@Override
+	public ArrayList<? extends Field> getNeighbours() {
+		// TODO Auto-generated method stub
+		return neighbours;
+	}
+	//TODO javadoc
+	
+	
+	
+	
+	
+	
+	
+	//Ez a resz csak a netwrok miatt kerul bele
+	private Pump in;
+	private Pump out;
+
+	public void setIn(Pump pump) { in=pump;}
+	public void setOut(Pump pump) { out=pump;}
+	public Pump getIn() {return in;}
+	public Pump getOut() {return out;}
+	public void changeNeighbour(Pump p, Pump pump) {
+		neighbours.remove(p);
+		neighbours.add(pump);
+	}
+	
+	
 }

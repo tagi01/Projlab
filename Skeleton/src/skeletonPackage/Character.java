@@ -4,6 +4,7 @@ import java.util.*;
 
 public abstract class Character {
 	//Az aktuális mező referenciája, amin a karakter áll
+	//valahonnan tudnunk kell mi a current Field,
 	protected Field currentField;
 	//Az aktuális hálózat referenciája
 	protected Network network;
@@ -24,7 +25,6 @@ public abstract class Character {
 		ArrayList<Field> field = new ArrayList<Field>(currentField.getNeighbours());
 			if(field.contains(currentField)){
 				if(f.acceptCharacter()) {
-					// FIXME ez egy onField függvényhívás csak
 					currentField.setCurrentCharacters(null);
 					f.setCurrentCharacters(this);
 					currentField=f;
@@ -40,6 +40,7 @@ public abstract class Character {
 	 */
 	public void setPump(Pipe from , Pipe to) {
 		if(currentField.setPump(from,to)) {
+			//TODO:karakter interakcio 
 			System.out.println("Sikerult atallitani a pumpat");
 		}else {
 			System.out.println("Nem Sikerult beallitani a pumpat");

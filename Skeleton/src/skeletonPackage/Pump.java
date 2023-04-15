@@ -1,10 +1,14 @@
 package skeletonPackage;
 
+import java.util.ArrayList;
+
 public class Pump extends BreakableField {
 	//Egy Pipe típusú változó. Cső referenciáját tárolja, amelyikből folyik be a víz a pumpába
 	private Pipe in;
 	//Egy Pipe típusú változó. Cső referenciáját tárolja, amerre folyik a víz a pumpából
 	private Pipe out;
+	
+	private ArrayList<Pipe> neighbours;
 	
 	public Pump() {
 		super();
@@ -26,10 +30,23 @@ public class Pump extends BreakableField {
 	
 	public void setOut(Pipe new_p) { out = new_p; }
 	
-	// TODO ez nem kell ide, a Field-beli jo neki
-	@Override
-	public boolean acceptCharacter() {
-		return true;
+	
+	//TODO javaodc
+	public boolean addNeighbour(Pipe p) {
+		if(neighbours.contains(p) && p == null) { return false; }
+		else {
+			neighbours.add(p);
+			return true;
+		}
+	}
+	//TODO javadoc
+	public boolean removeNeighbour(Pipe p) {
+		if(neighbours.contains(p) && p!=null) {
+			neighbours.remove(p);
+			return true;
+		} else { 
+			return true; 
+			}
 	}
 	
 	/*
@@ -49,13 +66,9 @@ public class Pump extends BreakableField {
 		}
 		
 		if(from.equals(in)) {
-			from.removeOut(this);	// kene!!!!
-			to.setOut(this);
 			in = to;
 			return true;
 		} else if(from.equals(out)) {
-			from.removeIn(this);	// kene!!!!!
-			to.setIn(this);
 			out = to;
 			return true;
 		} else {
@@ -83,4 +96,10 @@ public class Pump extends BreakableField {
 		int in_sizeOfWater = in.takeWater(out_capacity);
 		out.flowWater(in_sizeOfWater);
 	}
+	
+	@Override
+	public ArrayList<? extends Field> getNeighbours() {
+		return neighbours;
+	}
+	//TODO javadoc
 }

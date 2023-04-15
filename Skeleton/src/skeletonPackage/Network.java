@@ -9,6 +9,10 @@ public class Network {
 	private ArrayList<Character> characters;
 		//A pályát alkotó mezők listája
 	private ArrayList<Field> fields;
+	
+	private ArrayList<Pump> pumplist;
+	
+	//TODO azert hogy break majd mukodjon
 	/*
 	 *Az adott csőre(currentField)
 	 *lerakja a pumpát, beállítja az új mezők szomszédságait, létrehozza a plusz csövet, ami
@@ -16,50 +20,66 @@ public class Network {
 	 */
 	public void addPump(Pump pump, Pipe currentField) {
 		Pipe p_new = new Pipe();
+		fields.add(p_new);
+		
 		p_new.addNeighbour(pump);
 		pump.addNeighbour(p_new);
+		
 		activeCharacter.removeInventory();
+		//kerdes? itt adjuk hozza  pumplisthez, vagy amikor berakjuk inventoryba?
 		
-		//egyszeruseg kedveert egy rovidebb változoban ami a currentField szomszedsagi listabol kivalasztja azt a szomszedot, ami pump.
-		//0 v 1 fix pump, mert mashogy pumpat lerakni nem lehet 
-		Pump p= new Pump();
+		//Mivel nem emlekszem mit beszeltunk, ezét ide ket változatot csinalok, egyik ahol be is allitom a pumpot
+		//viszont itt ugy csinaltam, hogy a pipe-nak visszatettem a kett atibutumot (Pump in/out) és par getter setter. Ezt a Pipe osztály aljan lesz majd 
+		//ha mégse mi állítsuk majd be ezeket. akkor konnyi lesz kitorolni.
 		
-		if(currentField.neighbours.get(0) instanceof Pump) 
-			p = (Pump)currentField.neighbours.get(0);		
-		else
-			p = (Pump)currentField.neighbours.get(1);
-		//ahhoz kell, hogy megnezzem a pumpa a currentFieldnek ad/kap vizet, vagy semmit nem csinal (kap=1,ad=2,semmi=0)
-		int temp_sett = 0;
-		if(p.getIn().equals(currentField))
-			temp_sett=1;
-		else if(p.equals(currentField))
-			temp_sett=2;
-		else
-			temp_sett=0;
+		//az egyik szomszed pumpa, mihez viszonyitjuk a beallitast
+		//a pipe szomszédait megvizsgaljuk, és ha van koztuk pump(egynek muszáj lenni, akkor beéllítom a segédváltozoba)
 		
-		p.addNeighbour(p_new);
-		p_new.addNeighbour(p);
-		
-		if(temp_sett == 1) {
+		//AZ A VALTOZAT, AHOL AUTOATIKUSAN BEALLITJUK A SZOMSZEDOKAT ES  FOLYAST IS
+		/*
+		Pump p = new Pump();
+		for(int i=0; i< currentField.getNeighbours().size(); i++) {
+			for(int j = 0; j< pumplist.size(); j++) {
+			if(currentField.getNeighbours().get(i) == pumplist.get(j)) {
+					p=pumplist.get(j);
+				}
+			}
+		}
+		int temp_set = 0;
+		if(currentField.getIn().equals(p)) {
+			temp_set=2;
+		}
+		else if(currentField.getOut().equals(p)) {
+			temp_set=1;
+		}
+		else {
+			temp_set=0;
+		}
+				
+		if(temp_set == 1) {
+			p_new.addNeighbour(p);
 			p_new.setOut(p);
 			p_new.setIn(pump);
 			p.setIn(p_new);
 			pump.setOut(p_new);
 			
 			p.removeNeighbour(currentField);
+			p.addNeighbour(p_new);
 			currentField.changeNeighbour(p, pump);
 			pump.addNeighbour(currentField);
 			
 			currentField.setOut(pump);
 			pump.setIn(currentField);
 		}
-		else if(temp_sett == 2) {
+		else if(temp_set == 2) {
+			p_new.addNeighbour(p);
 			p_new.setIn(p);
 			p_new.setOut(pump);
 			p.setOut(p_new);
 			pump.setIn(p_new);
 			
 			p.removeNeighbour(currentField);
+			p.addNeighbour(p_new);
 			currentField.changeNeighbour(p, pump);
 			pump.addNeighbour(currentField);
 			
@@ -67,18 +87,37 @@ public class Network {
 			pump.setOut(currentField);
 			
 		}else {
+			p_new.addNeighbour(p);
 			p_new.setOut(p);
 			p_new.setIn(pump);
 			p.setIn(p_new);
 			pump.setOut(p_new);
 			
 			p.removeNeighbour(currentField);
+			p.addNeighbour(p_new);
 			currentField.changeNeighbour(p, pump);
 			pump.addNeighbour(currentField);
 			
 			currentField.setOut(pump);
 			pump.setIn(currentField);
-		}	
+		}
+		*/
+		//AZ A VÁLTOZAT, AHOL NEM ES ITT NEM IS KELLENEK A PIPEBAN FELVETT PLUSZ ATIBUTUM ES METPDUSOK
+		Pump p = new Pump();
+		for(int i=0; i< currentField.getNeighbours().size(); i++) {
+			for(int j = 0; j< pumplist.size(); j++) {
+			if(currentField.getNeighbours().get(i) == pumplist.get(j)) {
+					p=pumplist.get(j);
+				}
+			}
+		}
+
+			p_new.addNeighbour(p);
+			p.removeNeighbour(currentField);
+			p.addNeighbour(p_new);
+			currentField.changeNeighbour(p, pump);
+			pump.addNeighbour(currentField);
+			
 		
 	}
 	/*
@@ -89,11 +128,10 @@ public class Network {
 		boolean break_succed = false;
 		
 		do {
-		int random = rn.nextInt((fields.size()-0)+1)+0;
-			if(fields.get(random) instanceof Pump) {
-				fields.get(random).bReak();
+		int random = rn.nextInt((pumplist.size()-0)+1)+0;
+				pumplist.get(random).breakField();
 				break_succed = true;
-			}
 		}while(break_succed != true);
 	}
+	
 }

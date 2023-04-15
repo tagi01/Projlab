@@ -28,6 +28,7 @@ public class Plumber extends Character {
 	 */
 	public void repair() {
 		currentField.getRepaired();
+		//TODO:karakter interakcio, hogy mit szeretne csinalni mivel
 	}
 	
 	/*
@@ -37,6 +38,7 @@ public class Plumber extends Character {
 		if(inventory != null) {
 			if(currentField.acceptField(inventory)) {
 				currentField.addNeighbour(inventory);
+				//TODO: interakcio
 				inventory.addNeighbour(currentField);	// (szekvencia diagramon nem igy volt)
 				inventory = null;
 			} else {

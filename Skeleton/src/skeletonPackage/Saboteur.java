@@ -15,6 +15,6 @@ public class Saboteur extends Character{
 	 * Kilyukasztja a csovet, amin all
 	 */
 	public void puncturePipe() {
-		currentField.bReak();
+		currentField.breakField();
 	}
 }

@@ -1,15 +1,38 @@
 package skeletonPackage;
 
+import java.util.ArrayList;
+
 public class Cistern extends Field {
-	//Egesz szam vatozo. Az egy jatekos kore alatt osszegyûjtött viz mennyiseget tarolja
+	//Egesz szam vatozo. Az egy jatekos kore alatt osszegyï¿½jtï¿½tt viz mennyiseget tarolja
 	private int collectedWater;
 	//Egy logikai valtozo, van-e felveheto pumpa a ciszternan. True, ha igen, False, ha nem
 	private boolean hasPump;
 	//Egy logikai valtozo, van-e felveheto cso a ciszternan. True, ha igen, False, ha nem
 	private boolean hasPipe;
 	
+	private ArrayList<Pipe> neighbours;
+	
+	//TODO: Ezt miert vettuk ki?(Pump es Pipe ot?)
 	//private Pump pu;
 	//private Pipe pi;
+	
+	//TODO javaodc
+	public boolean addNeighbour(Pipe p) {
+		if(neighbours.contains(p) && p == null) { return false; }
+		else {
+			neighbours.add(p);
+			return true;
+		}
+	}
+	//TODO javadoc
+	public boolean removeNeighbour(Pipe p) {
+		if(neighbours.contains(p) && p!=null) {
+			neighbours.remove(p);
+			return true;
+		} else { 
+			return true; 
+			}
+	}
 	
 	/*
 	 * hasPump es hasPipe ertekeket True-ra allitja, vagyis most mar a
@@ -56,7 +79,8 @@ public class Cistern extends Field {
 	 *mezohoz. Ha igen True-val ter vissza, egyebkent False-szal
 	*/
 	public boolean acceptField(Field f) {
-		//TODO
+		//TODO cistern melle nem tehetunk pumpot.
+		//egy megoldas, hogyha a networkben a Field, az benne van e pump arraylistben
 		return true;
 	}
 	
@@ -71,4 +95,9 @@ public class Cistern extends Field {
 			collectedWater += tmp.takeWater(mennyit);
 		}
 	}
+	@Override
+	public ArrayList<? extends Field> getNeighbours() {
+		return neighbours;
+	}
+
 }
