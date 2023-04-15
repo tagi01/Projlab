@@ -2,21 +2,21 @@ package skeletonPackage;
 
 import java.util.ArrayList;
 
-/** Cistern osztály */
+/** Cistern osztÃ¡ly */
 public class Cistern extends Field {
 
 	/**
-	 * Privát integer, amely egy játékos köre alatt összegy?jtött víz mennyiségét tárolja
+	 * PrivÃ¡t integer, amely egy jÃ¡tÃ©kos kÃ¶re alatt Ã¶sszegyÅ±jtÃ¶tt vÃ­z mennyisÃ©gÃ©t tÃ¡rolja
 	 */
 	private int collectedWater;
 
 	/**
-	 * Privát boolean, amely megadja, hogy van-e felvehet? pumpa a ciszternán. True ha igen, false ha nincs.
+	 * PrivÃ¡t boolean, amely megadja, hogy van-e felvehetÅ‘ pumpa a ciszternÃ¡n. True ha igen, false ha nincs.
 	 */
 	private boolean hasPump;
 
 	/**
-	 * Private boolean, amely megadja, hogy van-e felvehet? cs? a ciszternán. True ha igen, false ha nincs.
+	 * Private boolean, amely megadja, hogy van-e felvehetÅ‘ csÅ‘ a ciszternÃ¡n. True ha igen, false ha nincs.
 	 */
 	private boolean hasPipe;
 	
@@ -28,7 +28,7 @@ public class Cistern extends Field {
 
 	//TODO javaodc
 	public boolean addNeighbour(Pipe p) {
-		if(neighbours.contains(p) && p == null) { return false; }
+		if(neighbours.contains(p) || p == null) { return false; }
 		else {
 			neighbours.add(p);
 			return true;
@@ -54,8 +54,8 @@ public class Cistern extends Field {
 	}
 
 	/**
-	 * Publikus metódus, meghívásakor a ciszternáról pumpát szeretnénk felvenni, ekkor, ha még van pumpa, akkor visszaadja az új pumpát, ha nincs, akkor egy null-lal visszatér a metódus.
-	 * @return Pump a felvett pumpa referenciája (null, ha nincs felvehet? pumpa)
+	 * Publikus metÃ³dus, meghÃ­vÃ¡sakor a ciszternÃ¡rÃ³l pumpÃ¡t szeretnÃ©nk felvenni, ekkor, ha mÃ©g van pumpa, akkor visszaadja az Ãºj pumpÃ¡t, ha nincs, akkor egy null-lal visszatÃ©r a metÃ³dus.
+	 * @return Pump a felvett pumpa referenciÃ¡ja (null, ha nincs felvehetÅ‘ pumpa)
 	 */
 	public Pump removePump() {
 		if(hasPump == true) {
@@ -68,8 +68,8 @@ public class Cistern extends Field {
 	}
 
 	/**
-	 * Publikus metódus, meghívásakor a ciszternáról csövet szeretnénk felvenni, ha lehetséges, ekkor visszaadja az új csövet, ha nincs, akkor egy null-lal visszatér a metódus.
-	 * @return Pipe, a felvett cs? referenciája (null, ha nincs felvehet? cs?)
+	 * Publikus metÃ³dus, meghÃ­vÃ¡sakor a ciszternÃ¡rÃ³l csÃ¶vet szeretnÃ©nk felvenni, ha lehetsÃ©ges, ekkor visszaadja az Ãºj csÃ¶vet, ha nincs, akkor egy null-lal visszatÃ©r a metÃ³dus.
+	 * @return Pipe, a felvett csÅ‘ referenciÃ¡ja (null, ha nincs felvehetÅ‘ csÅ‘)
 	 */
 	public Pipe removePipe() {
 		if(hasPipe == true) {
@@ -83,18 +83,9 @@ public class Cistern extends Field {
 	}
 
 	/**
-	 * Publikus metódus, Field-b?l örökölt függvény felülírása. Meghívásakor megadja, hogy a karakter ráléphet-e a ciszternára.
-	 * @return boolean, true, ha ráléphet a ciszternára, false ha nem
-	 */
-	@Override
-	public boolean acceptCharacter() {
-		return false;
-	}
-
-	/**
-	 * Publikus metódus, Field-b?l örökölt függvény felülírása. Meghívásakor megadja, hogy a paraméterben kapott mez? hozzáadató-e szomszédnak.
-	 * @param f, Field-b?l leszármazó típusú változó, amelyet hozzácsatlakoztatnánk a meghívott mez?höz
-	 * @return boolean, true ha a paraméter hozzácsatlakoztatható, false ha nem
+	 * Publikus metÃ³dus, Field-bÅ‘l Ã¶rÃ¶kÃ¶lt fÃ¼ggvÃ©ny felÃ¼lÃ­rÃ¡sa. MeghÃ­vÃ¡sakor megadja, hogy a paramÃ©terben kapott mezÅ‘ hozzÃ¡adatÃ³-e szomszÃ©dnak.
+	 * @param f, Field-bÅ‘l leszÃ¡rmazÃ³ tÃ­pusÃº vÃ¡ltozÃ³, amelyet hozzÃ¡csatlakoztatnÃ¡nk a meghÃ­vott mezÅ‘hÃ¶z
+	 * @return boolean, true ha a paramÃ©ter hozzÃ¡csatlakoztathatÃ³, false ha nem
 	 */
 	public boolean acceptField(Field f) {
 		//TODO cistern melle nem tehetunk pumpot.
@@ -103,7 +94,7 @@ public class Cistern extends Field {
 	}
 
 	/**
-	 * Publikus metódus, meghívásakor a ciszterna elveszi a hozzá beérkez? csövekt?l az összes vizet és eltárolja.
+	 * Publikus metÃ³dus, meghÃ­vÃ¡sakor a ciszterna elveszi a hozzÃ¡ beÃ©rkezÅ‘ csÃ¶vektÅ‘l az Ã¶sszes vizet Ã©s eltÃ¡rolja.
 	 */
 	public void collectWater() {
 		for(int i = 0; i < neighbours.size() ; i++) {
