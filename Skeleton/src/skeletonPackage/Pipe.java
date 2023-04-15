@@ -27,6 +27,9 @@ public class Pipe extends BreakableField {
 	 */
 	private int water;
 
+	/**
+	 * A cso szomszedai
+	 */
 	private ArrayList<Field> neighbours;
 	//TODO szomszédok amik lehetnek fieldek, mivel barmilyen szomszedja lehet.
 
@@ -38,12 +41,12 @@ public class Pipe extends BreakableField {
 		water=0;
 	}
 
-	public Pipe(Pump i, Pump o, int siz, boolean take, int wat) {
+	public Pipe(int siz, boolean take) {
 		super();
 		lostWater=0;
 		size=siz;
 		taken=take;
-		water=wat;
+		water=0;
 	}
 	
 	public boolean addNeighbour(Field f) {
@@ -125,9 +128,25 @@ public class Pipe extends BreakableField {
 		return water;
 	}
 
-	@Override
-	public boolean acceptField(Field f) {
+	//@Override
+	//public boolean acceptField(Pump pump) {
 		//TODO:csovet nem lehet hozzakotni azt valahogy meg kell tiltani
+		//return true;
+	//}
+	
+	public boolean acceptField(Pipe pipe) {
+		return false;
+	}
+	
+	public boolean acceptField(Cistern cistern) {
+		return true;
+	}
+	
+	public boolean acceptField(Source source) {
+		return true;
+	}
+	
+	public boolean acceptField(Pump pump) {
 		return true;
 	}
 
