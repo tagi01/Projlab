@@ -10,6 +10,9 @@ public class Pipe extends BreakableField {
 	 */
 	private int lostWater;
 
+	/**
+	 * Privát integer, a cső vízbefogadó mértékét tárolja.
+	 */
 	private int size;
 
 	/**
@@ -35,7 +38,6 @@ public class Pipe extends BreakableField {
 		water=0;
 	}
 
-	// TODO javadoc
 	public Pipe(Pump i, Pump o, int siz, boolean take, int wat) {
 		super();
 		lostWater=0;
@@ -116,8 +118,8 @@ public class Pipe extends BreakableField {
 		}	
 	}
 	/**
-	 * 
-	 * @return a csoben levo viz mennyisege
+	 * Publikus metódus, meghíváskor visszaadja, a csőben lévő víz mennyiségét
+	 * @return integer, a csőben lévő víz mennyisége
 	 */
 	public int getWater() {
 		return water;
@@ -136,13 +138,7 @@ public class Pipe extends BreakableField {
 	}
 	//TODO javadoc
 
-
-
-
-
-
-
-	//Ez a resz csak a netwrok miatt kerul bele
+	// FIXME Ez a resz csak a netwrok miatt kerul bele
 	private Pump in;
 	private Pump out;
 
@@ -154,6 +150,6 @@ public class Pipe extends BreakableField {
 		neighbours.remove(p);
 		neighbours.add(pump);
 	}
-
-
+	
+	
 }

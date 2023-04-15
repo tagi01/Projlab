@@ -1,4 +1,5 @@
 package skeletonPackage;
+
 /** BreakableField osztály */
 public abstract class BreakableField extends Field {
 	/**
