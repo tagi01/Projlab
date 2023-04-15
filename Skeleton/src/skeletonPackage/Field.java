@@ -1,6 +1,5 @@
 package skeletonPackage;
 import java.util.ArrayList;
-import java.util.Collection;
 
 /** Field absztrakt osztály */
 public abstract class Field {
@@ -11,7 +10,7 @@ public abstract class Field {
 	protected ArrayList<Character> currentCharacters = new ArrayList<Character>();
 
 	/**
-	 * Absztrakt metódus. Megadja, hogy egy karakter ráléphet-e a mezőre. True ha igen, false ha nem.
+	 * Publikus metódus. Megadja, hogy egy karakter ráléphet-e a mezőre. True ha igen, false ha nem.
 	 * @return boolean, true ha ráléphet, false ha nem
 	 */
 	public boolean acceptCharacter() {
@@ -19,7 +18,7 @@ public abstract class Field {
 	}
 
 	/**
-	 * Absztrakt metódus, egy Field-et hozzá lehet-e csatlakoztatni a meghívott mezőhöz.
+	 * Publikus metódus, egy Field-et hozzá lehet-e csatlakoztatni a meghívott mezőhöz.
 	 * @param f, Field-ből leszármazó típusú változó, amelyet hozzácsatlakoztatnánk a meghívott mezőhöz
 	 * @return boolean, true ha a paraméter hozzácsatlakoztatható, false ha nem
 	 */
@@ -33,15 +32,19 @@ public abstract class Field {
 	 */
 	public ArrayList<Character> getCurrentCharacter() { return currentCharacters; }
 
+	public abstract boolean addNeighbour();
+
+	/** NEM JO JAVADOC
+	 * Egy mezőnek eltávolítja az paraméterként kapott mezőt, mint szomszédot
+	 * @param p, Field-ből leszármazó típusú változó, amelyet kitörölnénk a meghívott mező szomszédai közül
+	 * @return boolean, true ha sikeres volt a törlés, false ha nem
+	 */
+	public abstract void removeNeighbour(Pipe p);
+
 	/**
 	 * Publikus metódus, Field osztály settere, meghívásakor hozzáad a mezőn álló karakterek listájához
 	 * @param newChar új Character referenciája, amely a mezőn fog állni
 	 */
-
-	public abstract boolean addNeighbour();
-
-	public abstract void removeNeighbour(Pipe p);
-
 	public void setCurrentCharacters(Character newChar) { currentCharacters.add(newChar); }
 
 	public abstract boolean interact();

@@ -26,10 +26,7 @@ public class Pipe extends BreakableField {
 	 * Privát integer, megadja, hogy a csőben épp mennyi víz van.
 	 */
 	private int water;
-
-	/**
-	 * A cso szomszedai
-	 */
+	
 	private ArrayList<Field> neighbours;
 	//TODO szomszédok amik lehetnek fieldek, mivel barmilyen szomszedja lehet.
 
@@ -50,17 +47,20 @@ public class Pipe extends BreakableField {
 	}
 
 	public boolean addNeighbour(Field f) {
-		if(neighbours.contains(f) && f == null) { return false; }
+		if(neighbours.contains(f) || f == null) { return false; }
 		else {
 			neighbours.add(f);
 			return true;
 		}
 	}
 
-	public void removeNeighbour(Field f) {
+	public boolean removeNeighbour(Field f) {
 		if(neighbours.contains(f) && f!=null) {
 			neighbours.remove(f);
-		}
+			return true;
+		} else {
+			return true;
+			}
 	}
 
 	/**
@@ -132,8 +132,8 @@ public class Pipe extends BreakableField {
 
 	//@Override
 	//public boolean acceptField(Pump pump) {
-	//TODO:csovet nem lehet hozzakotni azt valahogy meg kell tiltani
-	//return true;
+		//TODO:csovet nem lehet hozzakotni azt valahogy meg kell tiltani
+		//return true;
 	//}
 
 	public boolean acceptField(Pipe pipe) {

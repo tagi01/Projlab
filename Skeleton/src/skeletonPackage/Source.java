@@ -2,6 +2,8 @@ package skeletonPackage;
 
 import java.util.*;
 
+public class Source extends Field {
+
 /** Source osztály */
 public class Source extends Field {
 
@@ -23,7 +25,7 @@ public class Source extends Field {
 	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
 	 */
 	public boolean addNeighbour(Pipe p) {
-		if(neighbours.contains(p) && p == null) { return false; }
+		if(neighbours.contains(p) || p == null) { return false; }
 		else {
 			neighbours.add(p);
 			return true;
@@ -39,8 +41,8 @@ public class Source extends Field {
 		if(neighbours.contains(p) && p!=null) {
 			neighbours.remove(p);
 			return true;
-		} else { 
-			return true; 
+		} else {
+			return true;
 			}
 	}
 
@@ -57,13 +59,13 @@ public class Source extends Field {
 	/**
 	 * Publikus metódus, meghívásakor a hozzá csatlakoztatott csöveknek maximális mennyiségű vizet ad.
 	 */
-	public void getWater() {
+	public void giveWater() {
 		for(int i=0 ; i < neighbours.size() ; i++) {
 			int j = neighbours.get(i).getCapacity();
 			neighbours.get(i).flowWater(j);
 		}
 	}
-	
+
 	@Override
 	public ArrayList<? extends Field> getNeighbours() {
 		return neighbours;

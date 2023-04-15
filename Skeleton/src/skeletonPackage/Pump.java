@@ -3,9 +3,9 @@ package skeletonPackage;
 import java.util.ArrayList;
 
 public class Pump extends BreakableField {
-	//Egy Pipe típusú változó. Cső referenciáját tárolja, amelyikből folyik be a víz a pumpába
+	/** Privát, Pipe típusú cső referenciáját tárolja, amelyikből folyik be a víz a pumpába. */
 	private Pipe in;
-	//Egy Pipe típusú változó. Cső referenciáját tárolja, amerre folyik a víz a pumpából
+	/** Privát, Pipe típusú cső referenciáját tárolja, amerre folyik a víz a pumpából*/
 	private Pipe out;
 	
 	private ArrayList<Pipe> neighbours;
@@ -15,47 +15,50 @@ public class Pump extends BreakableField {
 		in = null;
 		out = null;
 	}
-	
+
+	/**
+	 * Publikus metódus, Pump kétparaméteres konstruktora, beállítja a pumpa be- és kimeneteit.
+	 * @param i, Pipe cső, amelyik a pumpa bemenete, innen jön a víz a pumpába
+	 * @param o, Pipe cső, amelyik a pumpa kimenete, ide megy a víz a pumpából
+	 */
 	public Pump(Pipe i, Pipe o) {
 		super();
 		in = i;
 		out = o;
 	}
-	
+
 	public void setIn(Pipe new_p) { in = new_p; }
-	
+
 	public Pipe getIn() { return in; }
-	
+
 	public Pipe getOut() { return out; }
 	
 	public void setOut(Pipe new_p) { out = new_p; }
-	
-	
+
 	//TODO javaodc
 	public boolean addNeighbour(Pipe p) {
-		if(neighbours.contains(p) && p == null) { return false; }
+		if(neighbours.contains(p) || p == null) { return false; }
 		else {
 			neighbours.add(p);
 			return true;
 		}
 	}
+	
 	//TODO javadoc
 	public boolean removeNeighbour(Pipe p) {
 		if(neighbours.contains(p) && p!=null) {
 			neighbours.remove(p);
 			return true;
-		} else { 
-			return true; 
+		} else {
+			return true;
 			}
 	}
-	
-	/*
-	 * Megmondja, hogy lehetséges-e a csövek
-	 *cseréje. Egy logikai változó a visszatérési értéke. True, ha igen, False, ha nem. Ha
-	 *True, akkor az egyik cső csatlakozását átállítja másikra (“from” csőről a “to” csőre),
-	 *ha ugye megegyezik a kettő, akkor nem történik semmi
+
+	/**
+	 * Publikus metódus, Field-ből örökölt függvény felülírása. Meghívásakor megadja, hogy a karakter ráléphet-e a ciszternára.
+	 * @return boolean, true, ha ráléphet a ciszternára, false ha nem
 	 */
-	public boolean setPump(Pipe from , Pipe to) {		
+	public boolean setPump(Pipe from , Pipe to) {
 		if(!neighbours.contains(to)) {
 			System.out.println("A beallitando cso nem a pumpa szomszedja");
 			return false;
@@ -64,7 +67,7 @@ public class Pump extends BreakableField {
 			System.out.println("A lecserelendo cso nem a pumpa szomszedja");
 			return false;
 		}
-		
+
 		if(from.equals(in)) {
 			in = to;
 			return true;
@@ -75,11 +78,11 @@ public class Pump extends BreakableField {
 			return false;	// from nem aktiv csove a pumpanak
 		}
 	}
-	
-	/*
-	 * Field metódus felülírása. Egy Field-et hozzá lehet-e
-	 *csatlakoztatni a meghívott pumpához
-	 */
+
+		/*
+		 * Field metódus felülírása. Egy Field-et hozzá lehet-e
+		 *csatlakoztatni a meghívott pumpához
+		 */
 	public boolean acceptField(Field f) {
 		if(neighbours.size() < 8) {		//TODO mennyi a max, vagy mi a feltetel??
 			return true;
@@ -87,16 +90,16 @@ public class Pump extends BreakableField {
 			return false;
 		}
 	}
-	
-	/*
-	 * A pumpa a bemenetéből átpumpálja a megfelelő mennyiségű vizet a kimenetén lévő csőbe
-	 */
+
+		/**
+		 * Publikus metódus, meghívásakor a pumpa a bemenetéből átpumpálja a megfelelő mennyiségű vizet a kimenetén lévő csőbe.
+		 */
 	public void pumpWater() {
 		int out_capacity = out.getCapacity();
 		int in_sizeOfWater = in.takeWater(out_capacity);
 		out.flowWater(in_sizeOfWater);
 	}
-	
+
 	@Override
 	public ArrayList<? extends Field> getNeighbours() {
 		return neighbours;

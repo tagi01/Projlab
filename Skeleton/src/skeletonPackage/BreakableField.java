@@ -1,10 +1,11 @@
 package skeletonPackage;
+
 /** BreakableField osztály */
 public abstract class BreakableField extends Field {
 	/**
 	 * Privát tulajdonsága a mezőnek, hogy elvan-e törve, vagy nem.
 	 */
-	private boolean isBroken;
+	protected boolean isBroken;
 
 	/**
 	 * Publikus metódus, BreakableField konstruktora.

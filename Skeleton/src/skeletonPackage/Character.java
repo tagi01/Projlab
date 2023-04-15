@@ -14,8 +14,12 @@ public abstract class Character {
 	 * Privát Network típusú referencia, amely tárolja, hogy ebben a hálózatban van a karakter.
 	 */
 	protected Network network;
-	
-	/** Publikus metódus, Character konstruktora */
+
+	/**
+	 * Publikus metódus, Character kétparaméteres konstruktora, amellyel beállítható az aktuális mező és hálózat.
+	 * @param f, Field-ből származót típusú mező, amelyen a karakter áll
+	 * @param n, Network, amely hálózatban a karakter és a mező van
+	 */
 	public Character(Field f, Network n) {
 		currentField = f;
 		network = n;

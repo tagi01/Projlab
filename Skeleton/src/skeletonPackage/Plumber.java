@@ -29,6 +29,7 @@ public class Plumber extends Character {
 	public void addInventory(BreakableField bf) {
 		inventory = bf;
 	}
+
 	// nem kell, nem?
 	@Override
 	public void removeInventory() {
@@ -40,7 +41,7 @@ public class Plumber extends Character {
 	 * Publikus metódus, meghívásakor a szerelő megjavítja az elromlott mezőt, amin éppen a játékos áll.
 	 */
 	public void repair() {
-		currentField.interactPlumber(this);
+		currentField.getRepaired();
 		//TODO:karakter interakcio, hogy mit szeretne csinalni mivel
 	}
 
@@ -56,7 +57,7 @@ public class Plumber extends Character {
 				inventoryPipe = null;
 			} else {
 				System.out.println("Nem sikerult learakni a csovet");
-			}
+			}		
 		} else {
 			System.out.println("Nincs cso az inventory-ban");
 		}
@@ -66,8 +67,8 @@ public class Plumber extends Character {
 	 * Publikus metódus, meghívásakor felvesz egy pumpát a ciszternáról.
 	 */
 	public void getPump() {
-		if(inventoryPump == null) {
-			inventoryPump = currentField.interactPlumber();
+		if(inventoryPump == null && inventoryPipe == null) {
+			inventoryPump = currentField.removePump();
 		}
 	}
 
@@ -76,8 +77,8 @@ public class Plumber extends Character {
 	 * (Ciszternán állva ajánlott meghívni, csak onnan lehet felvenni)
 	 */
 	public void getPipe() {
-		if(inventoryPipe == null) {
-			inventoryPipe = currentField.interactPlumber();
+		if(inventoryPipe == null && inventoryPump == null) {
+			inventoryPipe = currentField.removePipe();
 		}
 	}
 
@@ -86,7 +87,7 @@ public class Plumber extends Character {
 	 * @param p, Pipe típusú objektum referenciája, amelyik csövet vesszük fel
 	 */
 	public void grabPipe(Pipe p) {
-		if(inventoryPipe == null) {
+		if(inventoryPipe == null && inventoryPump == null) {
 			currentField.removeNeighbour(p);
 			inventoryPipe = p;
 		}
@@ -97,7 +98,7 @@ public class Plumber extends Character {
 	 */
 	public void placePump() {
 		if(inventoryPump != null) {
-			network.addPump(inventoryPump, currentField); // FIXME itt megint kasztolni kéne
+			network.addPump(inventoryPump, currentField);
 			inventoryPump = null;
 		}
 	}
