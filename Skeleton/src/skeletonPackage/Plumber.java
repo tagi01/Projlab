@@ -2,11 +2,14 @@ package skeletonPackage;
 
 /** Plumber osztály */
 public class Plumber extends Character {
-
 	/**
-	 * Privát, egy BreakableField-ből származó objektum referenciát tárol, amely éppen a szerelő birtokában van. (Cső vagy pumpa)
+	 * Privát, egy Pipe referenciát tárol, amely éppen a szerelő birtokában van.
 	 */
-	private BreakableField inventory;
+	private Pipe inventoryPipe;
+	/**
+	 * Privát, egy Pump referenciát tárol, amely éppen a szerelő birtokában van.
+	 */
+	private Pump inventoryPump;
 
 	/**
 	 * Publikus metódus, Plumber kétparaméteres konstruktora, hasonlóan a Character konstruktorához.
@@ -16,9 +19,11 @@ public class Plumber extends Character {
 	 */
 	public Plumber(Field f, Network n) {
 		super(f, n);
-		inventory = null;
+		inventoryPipe = null;
+		inventoryPump = null;
 	}
 	
+	/*
 	// nem kell, nem?
 	@Override
 	public void addInventory(BreakableField bf) {
@@ -44,17 +49,17 @@ public class Plumber extends Character {
 	 * Publikus metódus, meghívásakor az inventory-ból lerakja a csőnek az egyik végét ciszternához, forráshoz vagy pumpához.
 	 */
 	public void placePipe() {
-		if(inventory != null) {
-			if(currentField.acceptField(inventory)) {
-				currentField.addNeighbour(inventory);
+		if(inventoryPipe != null) {
+			if(currentField.acceptField(inventoryPipe)) {
+				currentField.addNeighbour(inventoryPipe);
 				//TODO: interakcio
-				inventory.addNeighbour(currentField);	// (szekvencia diagramon nem igy volt)
-				inventory = null;
+				inventoryPipe.addNeighbour(currentField);	// (szekvencia diagramon nem igy volt)
+				inventoryPipe = null;
 			} else {
-				System.out.println("Nem sikerult learakni az inventory tartalmat");
+				System.out.println("Nem sikerult learakni a csovet");
 			}		
 		} else {
-			System.out.println("Az inventory ures");
+			System.out.println("Nincs cso az inventory-ban");
 		}
 	}
 
@@ -62,8 +67,8 @@ public class Plumber extends Character {
 	 * Publikus metódus, meghívásakor felvesz egy pumpát a ciszternáról.
 	 */
 	public void getPump() {
-		if(inventory == null) {
-			inventory = currentField.removePump();
+		if(inventoryPump == null) {
+			inventoryPump = currentField.removePump();
 		}
 	}
 
@@ -72,8 +77,8 @@ public class Plumber extends Character {
 	 * (Ciszternán állva ajánlott meghívni, csak onnan lehet felvenni)
 	 */
 	public void getPipe() {
-		if(inventory == null) {
-			inventory = currentField.removePipe();
+		if(inventoryPipe == null) {
+			inventoryPipe = currentField.removePipe();
 		}
 	}
 
@@ -82,9 +87,9 @@ public class Plumber extends Character {
 	 * @param p, Pipe típusú objektum referenciája, amelyik csövet vesszük fel
 	 */
 	public void grabPipe(Pipe p) {
-		if(inventory == null) {
+		if(inventoryPipe == null) {
 			currentField.removeNeighbour(p);
-			inventory = p;
+			inventoryPipe = p;
 		}
 	}
 
@@ -92,9 +97,9 @@ public class Plumber extends Character {
 	 * Publikus metódus, meghívásakor lerak egy pumpát az aktuális cső közepére.
 	 */
 	public void placePump() {
-		if(inventory != null) {		// && Pump :(
-			network.addPump(inventory, currentField);
-			inventory = null;
+		if(inventoryPump != null) {
+			network.addPump(inventoryPump, currentField);
+			inventoryPump = null;
 		}
 	}
 }
