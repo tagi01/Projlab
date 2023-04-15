@@ -12,7 +12,7 @@ public class Source extends Field {
 
 	//TODO javaodc
 	public boolean addNeighbour(Pipe p) {
-		if(neighbours.contains(p) && p == null) { return false; }
+		if(neighbours.contains(p) || p == null) { return false; }
 		else {
 			neighbours.add(p);
 			return true;
@@ -43,7 +43,7 @@ public class Source extends Field {
 	 *maximális mennyiségű vizet ad (a csövek pedig beállítják maguknak, hogy a water a
 	 *kapacitásuk szerint a legtöbb legyen)
 	 */
-	public void getWater() {
+	public void giveWater() {
 		for(int i=0 ; i < neighbours.size() ; i++) {
 			int j = neighbours.get(i).getCapacity();
 			neighbours.get(i).flowWater(j);

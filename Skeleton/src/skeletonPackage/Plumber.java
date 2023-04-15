@@ -67,7 +67,7 @@ public class Plumber extends Character {
 	 * Publikus metódus, meghívásakor felvesz egy pumpát a ciszternáról.
 	 */
 	public void getPump() {
-		if(inventoryPump == null) {
+		if(inventoryPump == null && inventoryPipe == null) {
 			inventoryPump = currentField.removePump();
 		}
 	}
@@ -77,7 +77,7 @@ public class Plumber extends Character {
 	 * (Ciszternán állva ajánlott meghívni, csak onnan lehet felvenni)
 	 */
 	public void getPipe() {
-		if(inventoryPipe == null) {
+		if(inventoryPipe == null && inventoryPump == null) {
 			inventoryPipe = currentField.removePipe();
 		}
 	}
@@ -87,7 +87,7 @@ public class Plumber extends Character {
 	 * @param p, Pipe típusú objektum referenciája, amelyik csövet vesszük fel
 	 */
 	public void grabPipe(Pipe p) {
-		if(inventoryPipe == null) {
+		if(inventoryPipe == null && inventoryPump == null) {
 			currentField.removeNeighbour(p);
 			inventoryPipe = p;
 		}

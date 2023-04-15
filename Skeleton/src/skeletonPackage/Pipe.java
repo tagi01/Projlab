@@ -50,7 +50,7 @@ public class Pipe extends BreakableField {
 	}
 	
 	public boolean addNeighbour(Field f) {
-		if(neighbours.contains(f) && f == null) { return false; }
+		if(neighbours.contains(f) || f == null) { return false; }
 		else {
 			neighbours.add(f);
 			return true;

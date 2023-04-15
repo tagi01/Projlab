@@ -37,7 +37,7 @@ public class Pump extends BreakableField {
 
 	//TODO javaodc
 	public boolean addNeighbour(Pipe p) {
-		if(neighbours.contains(p) && p == null) { return false; }
+		if(neighbours.contains(p) || p == null) { return false; }
 		else {
 			neighbours.add(p);
 			return true;
