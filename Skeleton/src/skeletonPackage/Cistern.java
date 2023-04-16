@@ -169,7 +169,8 @@ public class Cistern extends Field {
 	 * @param: plumber, aki meghívta a függényt
 	 * @return: boolean, true ha feltudta venni a csövet, false ha nem
 	 */
-	public boolean interact(Plumber plumber, Pipe p) {
+	@Override
+	public boolean interactPlumber(Plumber plumber, Pipe p) {
 		Skeleton.printMethod(this, "interact");
 		if(hasPipe == true) {
 			p = removePipe();
@@ -186,7 +187,8 @@ public class Cistern extends Field {
 	 * @param: plumber, aki meghívta a függényt
 	 * @return: boolean, true ha feltudta venni a pumpát, false ha nem
 	 */
-	public boolean interact(Plumber plumber, Pump p) {
+	@Override
+	public boolean interactPlumber(Plumber plumber, Pump p) {
 		Skeleton.printMethod(this, "interact");
 		if(hasPipe == true) {
 			p = removePump();
