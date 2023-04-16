@@ -154,7 +154,7 @@ public class Skeleton {
 			names.put(inventoryPump, "inventoryPump");
 			Pump pump2 = new Pump();
 			names.put(pump2, "pump2");
-			plumber.addInventory(inventoryPump);
+			plumber.setInventoryPump(inventoryPump);
 			currentField.addNeighbour(pump2);
 			pump2.addNeighbour(currentField);
 			network.addField(currentField);
