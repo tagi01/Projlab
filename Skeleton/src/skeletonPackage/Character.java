@@ -54,7 +54,7 @@ public abstract class Character {
 	public void move(Field f) {
 		Skeleton.printMethod(this, "move");
 		ArrayList<Field> field = new ArrayList<Field>(currentField.getNeighbours());
-		if(field.contains(currentField)){
+		if(field.contains(f)){
 			if(f.acceptCharacter()) {
 				currentField.setCurrentCharacters(null);
 				f.setCurrentCharacters(this);

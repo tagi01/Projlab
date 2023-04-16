@@ -189,7 +189,7 @@ public class Skeleton {
 		fields.add(pump);
 		fields.add(p1);
 		source.addNeighbour(p1);
-		p1.addNeighbour(p1);
+		p1.addNeighbour(source);
 		p1.addNeighbour(pump);
 		pump.addNeighbour(p1);
 		pump.addNeighbour(p2);
@@ -227,26 +227,31 @@ public class Skeleton {
 		switch(numb) {
 		case 1:
 			plumber = new Plumber(p2, network);
+			names.put(plumber, "plumber");
 			p2.onField(plumber);
 			plumber.move(cistern);
 			break;
 		case 2:
 			saboteur = new Saboteur(p2, network);
+			names.put(saboteur, "saboteur");
 			p2.onField(saboteur);
 			saboteur.move(cistern);
 			break;
 		case 3:
 			plumber = new Plumber(p1, network);
+			names.put(plumber, "plumber");
 			p1.onField(plumber);
 			plumber.move(source);
 			break;
 		case 4:
 			saboteur = new Saboteur(p1, network);
+			names.put(saboteur, "saboteur");
 			p1.onField(saboteur);
 			saboteur.move(source);
 			break;
 		case 5:
 			plumber = new Plumber(pump, network);
+			names.put(plumber, "plumber");
 			pump.onField(plumber);
 			boolean pipeIsNotEmpty = askQuestion("Van mar valaki a csovon?");
 			if(pipeIsNotEmpty) {
@@ -258,6 +263,7 @@ public class Skeleton {
 			break;
 		case 6:
 			saboteur = new Saboteur(pump, network);
+			names.put(saboteur, "saboteur");
 			pump.onField(saboteur);
 			pipeIsNotEmpty = askQuestion("Van mar valaki a csovon?");
 			if(pipeIsNotEmpty) {
@@ -269,11 +275,13 @@ public class Skeleton {
 			break;
 		case 7:
 			plumber = new Plumber(p1, network);
+			names.put(plumber, "plumber");
 			p1.onField(plumber);
 			plumber.move(pump);
 			break;
 		case 8:
 			saboteur = new Saboteur(p1, network);
+			names.put(saboteur, "saboteur");
 			p1.onField(saboteur);
 			saboteur.move(pump);
 			break;
