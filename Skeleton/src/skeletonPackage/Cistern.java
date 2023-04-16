@@ -194,7 +194,7 @@ public class Cistern extends Field {
 	@Override
 	public boolean interactPlumber(Plumber plumber, Pump p) {
 		Skeleton.printMethod(this, "interactPlumber");
-		if(hasPipe == true) {
+		if(hasPump == true) {
 			p = removePump();
 			plumber.setInventoryPump(p);
 			return true;
