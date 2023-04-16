@@ -10,6 +10,11 @@ public abstract class Field {
 	 */
 	protected ArrayList<Character> currentCharacters = new ArrayList<Character>();
 
+	/**
+	 * Privát, Network típuső referenciát tárol, vagyis a mező melyik hálózat része
+	 */
+	protected Network network;
+
 // GETTER, SETTER
 
 	/**
@@ -23,6 +28,9 @@ public abstract class Field {
 	 * @param newChar új Character referenciája, amely a mezőn fog állni
 	 */
 	public void setCurrentCharacters(Character newChar) { currentCharacters.add(newChar); }
+
+	public Network getNetwork() { return network; }
+	public void setNetwork(Network n) { network = n; }
 
 // METODUSOK
 	// ACCEPT
