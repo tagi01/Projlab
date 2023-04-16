@@ -35,101 +35,33 @@ public class Network {
 
 		p_new.addNeighbour(pump);
 		pump.addNeighbour(p_new);
-
-		activeCharacter.removeInventory();
-		//kerdes? itt adjuk hozza  pumplisthez, vagy amikor berakjuk inventoryba?
-
-		//Mivel nem emlekszem mit beszeltunk, ezét ide ket változatot csinalok, egyik ahol be is allitom a pumpot
-		//viszont itt ugy csinaltam, hogy a pipe-nak visszatettem a kett atibutumot (Pump in/out) és par getter setter. Ezt a Pipe osztály aljan lesz majd
-		//ha mégse mi állítsuk majd be ezeket. akkor konnyi lesz kitorolni.
 		
-		//az egyik szomszed pumpa, mihez viszonyitjuk a beallitast
-		//a pipe szomszédait megvizsgaljuk, és ha van koztuk pump(egynek muszáj lenni, akkor beéllítom a segédváltozoba)
-
-		//AZ A VALTOZAT, AHOL AUTOATIKUSAN BEALLITJUK A SZOMSZEDOKAT ES  FOLYAST IS
-		/*
-		Pump p = new Pump();
-		for(int i=0; i< currentField.getNeighbours().size(); i++) {
-			for(int j = 0; j< pumplist.size(); j++) {
-			if(currentField.getNeighbours().get(i) == pumplist.get(j)) {
-					p=pumplist.get(j);
-				}
-			}
-		}
-		int temp_set = 0;
-		if(currentField.getIn().equals(p)) {
-			temp_set=2;
-		}
-		else if(currentField.getOut().equals(p)) {
-			temp_set=1;
-		}
-		else {
-			temp_set=0;
-		}
-
-		if(temp_set == 1) {
-			p_new.addNeighbour(p);
-			p_new.setOut(p);
-			p_new.setIn(pump);
-			p.setIn(p_new);
-			pump.setOut(p_new);
-			
-			p.removeNeighbour(currentField);
-			p.addNeighbour(p_new);
-			currentField.changeNeighbour(p, pump);
-			pump.addNeighbour(currentField);
-			
-			currentField.setOut(pump);
-			pump.setIn(currentField);
-		}
-		else if(temp_set == 2) {
-			p_new.addNeighbour(p);
-			p_new.setIn(p);
-			p_new.setOut(pump);
-			p.setOut(p_new);
-			pump.setIn(p_new);
-			
-			p.removeNeighbour(currentField);
-			p.addNeighbour(p_new);
-			currentField.changeNeighbour(p, pump);
-			pump.addNeighbour(currentField);
-			
-			currentField.setIn(pump);
-			pump.setOut(currentField);
-			
-		} else {
-			p_new.addNeighbour(p);
-			p_new.setOut(p);
-			p_new.setIn(pump);
-			p.setIn(p_new);
-			pump.setOut(p_new);
-			
-			p.removeNeighbour(currentField);
-			p.addNeighbour(p_new);
-			currentField.changeNeighbour(p, pump);
-			pump.addNeighbour(currentField);
-			
-			currentField.setOut(pump);
-			pump.setIn(currentField);
-		}
-		*/
-		//AZ A VÁLTOZAT, AHOL NEM ES ITT NEM IS KELLENEK A PIPEBAN FELVETT PLUSZ ATIBUTUM ES METPDUSOK
-		Pump p = new Pump();
-		for(int i=0; i< currentField.getNeighbours().size(); i++) {
-			for(int j = 0; j< pumplist.size(); j++) {
-			if(currentField.getNeighbours().get(i) == pumplist.get(j)) {
-					p=pumplist.get(j);
-				}
-			}
-		}
-
-			p_new.addNeighbour(p);
-			p.removeNeighbour(currentField);
-			p.addNeighbour(p_new);
-			currentField.changeNeighbour(p, pump);
-			pump.addNeighbour(currentField);
-
 		
+		p_new.addNeighbour(currentField.getNeighbours().get(0));
+		currentField.getNeighbours().get(0).addNeighbour(p_new);
+		
+		currentField.removeNeighbour(currentField.getNeighbours().get(0));
+		currentField.getNeighbours().get(0).removeNeighbour(currentField);
+		
+		currentField.addNeighbour(pump);
+		pump.addNeighbour(currentField);
+		
+	}
+	
+	public void addField(Field f) {
+		fields.add(f);
+	}
+	
+	public void addField(Pump p) {
+		pumplist.add(p);
+	}
+	
+	public void setField(ArrayList<Field> f) {
+		fields=f;
+	}
+	
+	public void setPumpList(ArrayList<Pump> p) {
+		pumplist=p;
 	}
 
 	/**
