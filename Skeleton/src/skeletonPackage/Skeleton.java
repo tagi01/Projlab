@@ -335,6 +335,7 @@ public class Skeleton {
 		//System.out.println("\tVan cso csatlakoztatva a ciszternahoz? (i, n) ");
 		System.out.println("\t Mennyi viz van a csoben?");
 		int water = input.nextInt();
+		names = new HashMap<Object, String>();
 		Cistern cistern = new Cistern();
 		names.put(cistern, "cistern");
 		Pipe p = new Pipe(water, water);
@@ -358,6 +359,7 @@ public class Skeleton {
 			System.out.println("\tNem megfelelo ertek");
 			water = input.nextInt();
 		}
+		names = new HashMap<Object, String>();
 		Pipe p = new Pipe(size, water);
 		names.put(p, "p");
 		Source s = new Source();
@@ -373,6 +375,7 @@ public class Skeleton {
 		System.out.println("TEST 7 - Pumpa eltorese");
 		indentation = 1;
 		boolean broken = askQuestion("El van mar torve a pumpa?");
+		names = new HashMap<Object, String>();
 		Network n = new Network();
 		names.put(n, "n");
 		Pump p = new Pump();
