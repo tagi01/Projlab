@@ -134,15 +134,26 @@ public class Skeleton {
 	/** TEST 2 - Pumpa lerakasa */
 	public static void two() {
 		System.out.println("TEST 2 - Pumpa lerakasa");
-		
-		System.out.println("\tVan pumpa a szerelonel? (i, n) ");
-		// egy karakter bekerese, ellenorzes
-		
-		// TODO Test 2, Place Pump tesztkörnyezet
-		
-		// fuggveny meghivasa
-		
-		
+		names = new HashMap<Object, String>();
+		Network network = new Network();
+		names.put(network, "network");
+		Pipe currentField = new Pipe();
+		names.put(currentField, "currentField");
+		Plumber plumber = new Plumber(currentField, network);
+		names.put(plumber, "plumber");
+		boolean hasPump = askQuestion("Van pumpa a szerelonek?");
+		if(hasPump) {
+			Pump inventoryPump = new Pump();
+			names.put(inventoryPump, "inventoryPump");
+			Pump pump2 = new Pump();
+			names.put(pump2, "pump2");
+			plumber.addInventory(inventoryPump);
+			currentField.addNeighbour(pump2);
+			pump2.addNeighbour(currentField);
+			network.addField(currentField);
+			network.addField(pump2);
+		}
+		plumber.placePump();
 		System.out.println("Teszt vege");
 		
 	}

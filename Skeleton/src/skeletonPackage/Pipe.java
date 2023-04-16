@@ -23,6 +23,13 @@ public class Pipe extends BreakableField {
 	private boolean taken;
 
 	/**
+	 * @param taken az uj ertek
+	 */
+	public void setTaken(boolean taken) {
+		this.taken = taken;
+	}
+
+	/**
 	 * Privát integer, megadja, hogy a csőben épp mennyi víz van.
 	 */
 	private int water;
@@ -72,11 +79,6 @@ public class Pipe extends BreakableField {
 		if(currentCharacters.size() == 0 && taken == false) {
 			return true;
 		}
-		return false;
-	}
-
-	@Override
-	public boolean addNeighbour() {
 		return false;
 	}
 
@@ -130,12 +132,6 @@ public class Pipe extends BreakableField {
 		return water;
 	}
 
-	//@Override
-	//public boolean acceptField(Pump pump) {
-		//TODO:csovet nem lehet hozzakotni azt valahogy meg kell tiltani
-		//return true;
-	//}
-
 	public boolean acceptField(Pipe pipe) {
 		return false;
 	}
@@ -184,6 +180,11 @@ public class Pipe extends BreakableField {
 	}
 
 	public boolean interactPlumber(Plumber p) {
+		return false;
+	}
+
+	@Override
+	public boolean removeNeighbour(Pipe p) {	
 		return false;
 	}
 
