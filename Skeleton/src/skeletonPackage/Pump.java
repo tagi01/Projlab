@@ -30,6 +30,7 @@ public class Pump extends BreakableField {
 	}
 
 	public void setIn(Pipe new_p) {
+		Skeleton.printMethod(this, "setIn");
 		if(in == null)		// cserelni nem ezzel kell
 			in = new_p; 
 	}
@@ -39,6 +40,7 @@ public class Pump extends BreakableField {
 	public Pipe getOut() { return out; }
 	
 	public void setOut(Pipe new_p) {
+		Skeleton.printMethod(this, "setOut");
 		if(out == null)		// cserelni nem ezzel kell
 			out = new_p;
 	}
@@ -46,6 +48,7 @@ public class Pump extends BreakableField {
 	//TODO javaodc
 	@Override
 	public boolean addNeighbour(Pipe p) {
+		Skeleton.printMethod(this, "addNeighbour");
 		if(neighbours.contains(p) || p == null || !acceptField(p)) { return false; }
 		else {
 			neighbours.add(p);
@@ -56,6 +59,7 @@ public class Pump extends BreakableField {
 	//TODO javadoc
 	@Override
 	public boolean removeNeighbour(Pipe p) {
+		Skeleton.printMethod(this, "removeNeighbour");
 		if(p == null || !neighbours.contains(p)) {
 			return false;
 		} else if(p == in || p == out || neighbours.size() <= 2) {
@@ -72,6 +76,7 @@ public class Pump extends BreakableField {
 	 * @return boolean, true, ha ráléphet a ciszternára, false ha nem
 	 */
 	private boolean setPump(Pipe from , Pipe to) {
+		Skeleton.printMethod(this, "setPump");
 		if(!neighbours.contains(to)) {
 			System.out.println("A beallitando cso nem a pumpa szomszedja");
 			return false;
@@ -112,6 +117,7 @@ public class Pump extends BreakableField {
 	 */
 	@Override
 	public boolean acceptField(Field f) {
+		Skeleton.printMethod(this, "acceptField");
 		if(neighbours.size() < 8) {		//TODO mennyi a max, vagy mi a feltetel??
 			return true;
 		} else {
@@ -123,6 +129,7 @@ public class Pump extends BreakableField {
 	 * Publikus metódus, meghívásakor a pumpa a bemenetéből átpumpálja a megfelelő mennyiségű vizet a kimenetén lévő csőbe.
 	 */
 	public void pumpWater() {
+		Skeleton.printMethod(this, "pumpWater");
 		int out_capacity = out.getCapacity();
 		int in_sizeOfWater = in.takeWater(out_capacity);
 		out.flowWater(in_sizeOfWater);
@@ -136,23 +143,27 @@ public class Pump extends BreakableField {
 
 	@Override
 	public boolean addNeighbour(Field f) {
+		Skeleton.printMethod(this, "addNeighbour");
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean removeNeighbour(Field f) {
+		Skeleton.printMethod(this, "removeNeighbour");
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean interact(Pipe from, Pipe to) {
+		Skeleton.printMethod(this, "interact");
 		return setPump(from, to);
 	}
 
 	@Override
 	public boolean interactPlumber(Plumber p, Pipe pipe) {
+		Skeleton.printMethod(this, "interactPlumber");
 		if(neighbours.contains(pipe)) {
 			boolean removed = removeNeighbour(pipe);
 			if(removed) {

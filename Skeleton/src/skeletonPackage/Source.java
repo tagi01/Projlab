@@ -23,6 +23,7 @@ public class Source extends Field {
 	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
 	 */
 	public boolean addNeighbour(Pipe p) {
+		Skeleton.printMethod(this, "addNeighbour");
 		if(neighbours.contains(p) || p == null) { return false; }
 		else {
 			neighbours.add(p);
@@ -36,6 +37,7 @@ public class Source extends Field {
 	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
 	 */
 	public boolean removeNeighbour(Pipe p) {
+		Skeleton.printMethod(this, "removeNeighbour");
 		if(neighbours.contains(p) && p!=null) {
 			neighbours.remove(p);
 			return true;
@@ -49,6 +51,7 @@ public class Source extends Field {
 	 * @return boolean, true, ha hozzá lehet csatlakoztatni a mezőt, false, ha nem.
 	 */
 	public boolean acceptField(Field f) {
+		Skeleton.printMethod(this, "acceptField");
 		//TODO source mellé nem tehetunkk pumppot
 		//egy megoldas, hogyha a networkben a Field, az benne van e pump arraylistben
 		return true;
@@ -58,6 +61,7 @@ public class Source extends Field {
 	 * Publikus metódus, meghívásakor a hozzá csatlakoztatott csöveknek maximális mennyiségű vizet ad.
 	 */
 	public void giveWater() {
+		Skeleton.printMethod(this, "giveWater");
 		for(int i=0 ; i < neighbours.size() ; i++) {
 			int j = neighbours.get(i).getCapacity();
 			neighbours.get(i).flowWater(j);
@@ -66,6 +70,7 @@ public class Source extends Field {
 
 	@Override
 	public ArrayList<? extends Field> getNeighbours() {
+		Skeleton.printMethod(this, "getNeighbours");
 		return neighbours;
 	}
 	//TODO: javadoc
@@ -73,6 +78,7 @@ public class Source extends Field {
 	
 	@Override
 	public boolean interactPlumber(Plumber p, Pipe pipe) {
+		Skeleton.printMethod(this, "addNeighbour");
 		if(neighbours.contains(pipe)) {
 			boolean removed = removeNeighbour(pipe);
 			if(removed) {
@@ -96,12 +102,14 @@ public class Source extends Field {
 
 	@Override
 	public boolean addNeighbour(Field f) {
+		Skeleton.printMethod(this, "addNeighbour");
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean removeNeighbour(Field f) {
+		Skeleton.printMethod(this, "removeNeighbour");
 		// TODO Auto-generated method stub
 		return false;
 	}
