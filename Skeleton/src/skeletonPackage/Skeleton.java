@@ -335,15 +335,22 @@ public class Skeleton {
 	/** TEST 6 - Forras vizet ad */
 	public static void six() {
 		System.out.println("TEST 6 - Forras vizet ad");
-		
-		System.out.println("\tVan cso csatlakoztatva a forrashoz? (i, n) ");
-		// karakter beolvasasa
-		
-		// TODO Test 6, Source gives water tesztkornyezet
-		
-		// fuggveny meghivasa
-		
-		
+		//System.out.println("\tVan cso csatlakoztatva a forrashoz? (i, n) ");
+		System.out.println("\t Mennyi vizet bir el a cso?");
+		int size = input.nextInt();
+		System.out.println("\t Mennyi viz van mar a csoben?");
+		int water = input.nextInt();
+		while(water > size || water < 0) {
+			System.out.println("\tNem megfelelo ertek");
+			water = input.nextInt();
+		}
+		Pipe p = new Pipe(size, water);
+		names.put(p, "p");
+		Source s = new Source();
+		names.put(s, "s");
+		p.addNeighbour(s);
+		s.addNeighbour(p);
+		s.giveWater();
 		System.out.println("Teszt vege");
 	}
 	
