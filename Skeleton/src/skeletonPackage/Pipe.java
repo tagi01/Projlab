@@ -26,6 +26,7 @@ public class Pipe extends BreakableField {
 	 * @param taken az uj ertek
 	 */
 	public void setTaken(boolean taken) {
+		Skeleton.printMethod(this, "setTaken");
 		this.taken = taken;
 	}
 
@@ -57,6 +58,7 @@ public class Pipe extends BreakableField {
 
 	@Override
 	public boolean addNeighbour(Field f) {
+		Skeleton.printMethod(this, "addNeighbour");
 		if(neighbours.contains(f) || f == null) {
 			return false;
 		}else {
@@ -67,10 +69,12 @@ public class Pipe extends BreakableField {
 
 	@Override
 	public boolean addNeighbour(Pipe p) {
+		Skeleton.printMethod(this, "addNeighbour");
 		return false;
 	}
 
 	public boolean removeNeighbour(Field f) {
+		Skeleton.printMethod(this, "removeNeighbour");
 		if(neighbours.contains(f) && f!=null) {
 			neighbours.remove(f);
 			return true;
@@ -85,6 +89,7 @@ public class Pipe extends BreakableField {
 	 */
 	@Override
 	public boolean acceptCharacter() {
+		Skeleton.printMethod(this, "acceptCharacter");
 		if(currentCharacters.size() == 0 && taken == false) {
 			return true;
 		}
@@ -96,6 +101,7 @@ public class Pipe extends BreakableField {
 	 * @param amount, integer, amennyi víz átkerül a pumpa kimenetén lévő csőbe
 	 */
 	public void flowWater(int amount) {
+		Skeleton.printMethod(this, "flowWater");
 		//nem kell megvizsgalni, hogy a cso tulcsordulna, mert csak annyi vizet pumpal majd a pumpa(amount) amennyit tud meg ahhoz, hogy cso ne csorduljon tul
 		water+=amount;
 	}
@@ -105,6 +111,7 @@ public class Pipe extends BreakableField {
 	 * @return integer, amennyi vizet be tud még fogadni
 	 */
 	public int getCapacity() {
+		Skeleton.printMethod(this, "getCapacity");
 		return size-water;
 	}
 
@@ -114,6 +121,7 @@ public class Pipe extends BreakableField {
 	 * @return integer, ténylegesen ennyit tudott ebből adni.
 	 */
 	public int takeWater(int amount){
+		Skeleton.printMethod(this, "takeWater");
 		if(water==0) {
 			return 0;
 		}
@@ -138,26 +146,32 @@ public class Pipe extends BreakableField {
 	 * @return integer, a csőben lévő víz mennyisége
 	 */
 	public int getWater() {
+		Skeleton.printMethod(this, "getWater");
 		return water;
 	}
 
 	public boolean acceptField(Pipe pipe) {
+		Skeleton.printMethod(this, "acceptField");
 		return false;
 	}
 
 	public boolean acceptField(Cistern cistern) {
+		Skeleton.printMethod(this, "acceptField");
 		return true;
 	}
 
 	public boolean acceptField(Source source) {
+		Skeleton.printMethod(this, "acceptField");
 		return true;
 	}
 
 	public boolean acceptField(Pump pump) {
+		Skeleton.printMethod(this, "acceptField");
 		return true;
 	}
 
 	public ArrayList<? extends Field> getNeighbours() {
+		Skeleton.printMethod(this, "getNeighbours");
 		return neighbours;
 	}
 	//TODO javadoc
@@ -174,14 +188,17 @@ public class Pipe extends BreakableField {
 	public void changeNeighbour(Pump p, Pump pump) {
 		neighbours.remove(p);
 		neighbours.add(pump);
+		Skeleton.printMethod(this, "changeNeighbour");
 	}
 	@Override
-	public boolean removeNeighbour(Pipe p) {	
+	public boolean removeNeighbour(Pipe p) {
+		Skeleton.printMethod(this, "removeNeighbour");
 		return false;
 	}
 
 	@Override
 	public boolean interactPlumber(Plumber p, Pump pump) {
+		Skeleton.printMethod(this, "interactPlumber");
 		if(isBroken) {
 			return false;
 		} else {
