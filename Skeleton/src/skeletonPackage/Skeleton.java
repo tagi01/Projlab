@@ -223,13 +223,14 @@ public class Skeleton {
 
 		indentation = 2;
 		Plumber plumber = new Plumber(p2, network);
-		Saboteur saboteur = new Saboteur(p2, network);
+		Saboteur saboteur = new Saboteur(p1, network);
 		switch(numb) {
 		case 1:
 			p2.onField(plumber);
 			plumber.move(cistern);
 			break;
 		case 2:
+			saboteur.setCurrentField(p2);
 			p2.onField(saboteur);
 			saboteur.move(cistern);
 			break;
@@ -247,20 +248,35 @@ public class Skeleton {
 			plumber.setCurrentField(pump);
 			pump.onField(plumber);
 			boolean pipeIsNotEmpty = askQuestion("Van mar valaki a csovon?");
+			if(pipeIsNotEmpty) {
+				saboteur.setCurrentField(p1);
+				p1.onField(saboteur);
+			}
+			indentation = 3;
+			plumber.move(p1);
+			break;
+		case 6:
+			saboteur.setCurrentField(pump);
+			pump.onField(saboteur);
+			pipeIsNotEmpty = askQuestion("Van mar valaki a csovon?");
+			if(pipeIsNotEmpty) {
+				plumber.setCurrentField(p1);
+				p1.onField(plumber);
+			}
+			indentation = 3;
+			saboteur.move(p1);
+			break;
+		case 7:
+			plumber.setCurrentField(p1);
+			p1.onField(plumber);
+			plumber.move(pump);
+			break;
+		case 8:
+			saboteur.setCurrentField(p1);
+			p1.onField(saboteur);
+			saboteur.move(pump);
+			break;
 		}
-		System.out.println("\tMelyik karakterrel szerentel lepni: szerelovel(p) vagy szabotorrel(s)? ");
-		// egy karakter bekerese
-		System.out.println("\tMelyik mezon van a karaktered?\n\tForrason(s), elso csovon(p1), pumpan(p), masodik csovon(p2) vagy ciszternan(c)? ");
-		// sor bekerese
-		
-		System.out.println("\tMelyik mezore szeretnel lepni?\\n\\tForrasra(s), elso csore(p1), pumpan(p), masodik csore(p2) vagy ciszternara(c)? ");
-		// sor bekerese
-		
-		// TODO Test 3, Move Plumber and Saboteur to Fields teszkornyezet
-		
-		// fuggveny meghivasa
-		
-		
 		System.out.println("Teszt vege");
 	}
 	
@@ -299,7 +315,7 @@ public class Skeleton {
 		System.out.println("Teszt vege");
 	}
 	
-	/***/
+	/** TEST 5 - Ciszterna begyűjti a vizet*/
 	public static void five() {
 		System.out.println("TEST 5 - Ciszterna viz fogadasa");
 		System.out.println("\tVan cso csatlakoztatva a ciszternahoz? (i, n) ");

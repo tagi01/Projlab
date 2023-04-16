@@ -40,25 +40,37 @@ public class Cistern extends Field {
 	 */
 	private ArrayList<Pipe> neighbours;
 	
-	// Ezt miert vettuk ki?(Pump es Pipe ot?) - ciszternanak nem lesz ki-es bemenete pump
-	//private Pump pu;
-	//private Pipe pi;
+	//
+	//METÓDUSOK
+	//
 
 	/**
 	 * Publikus metódus, meghívásakor a paraméterben kapott csövet a szomszédsági listához adja.
 	 * @param p, Pipe amit hozzáadnánk a ciszterna szomszédaihoz
 	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
 	 */
+	@Override
 	public boolean addNeighbour(Pipe p) {
+		Skeleton.printMethod(this, "addNeighbour");
 		if(neighbours.contains(p) || p == null) { 
-			System.out.println("Nem sikerült hozzáadni a szomszédot a ciszternához.");
 			return false; 
 		}
 		else {
 			neighbours.add(p);
-			System.out.println("Sikerült hozzáadni a szomszédot a ciszternához.");
 			return true;
 		}
+	}
+	
+	@Override
+	public boolean addNeighbour(Field f) {
+		Skeleton.printMethod(this, "addNeighbour");
+		return false;
+	}
+
+	@Override
+	public boolean removeNeighbour(Field f) {
+		Skeleton.printMethod(this, "removeNeighbour");
+		return false;
 	}
 
 	/**
@@ -66,14 +78,15 @@ public class Cistern extends Field {
 	 * @param p, Pipe amit törölnénk a ciszterna szomszédaiból
 	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
 	 */
-	//TODO Ennek most booleannal kéne visszatérnie vagy nem? + a kiírás
-	public void removeNeighbour(Pipe p) {
+	@Override
+	public boolean removeNeighbour(Pipe p) {
+		Skeleton.printMethod(this, "removeNeighbour");
 		if(neighbours.contains(p) && p!=null) {
 			neighbours.remove(p);
-			//return true;
+			return true;
 		} 
 		else {
-			//return false;
+			return false;
 		}
 	}
 
@@ -81,9 +94,9 @@ public class Cistern extends Field {
 	 * Publikus metódus, amely a hasPump és hasPipe értékeket True-ra állítja, vagyis most már a ciszternáról fel lehet venni pumpát és csövet egyaránt.
 	 */
 	public void resetItems() {
+		Skeleton.printMethod(this, "resetItems");
 		hasPump = true;
 		hasPipe = true;
-		System.out.println("Újralett töltve a ciszterna csővel és pumpával.");
 	}
 
 	/**
@@ -91,14 +104,14 @@ public class Cistern extends Field {
 	 * @return Pump a felvett pumpa referenciája (null, ha nincs felvehető pumpa)
 	 */
 	public Pump removePump() {
+		Skeleton.printMethod(this, "removePipe");
 		if(hasPump == true) {
 			hasPump = false;
 			Pump pu = new Pump(null, null);
-			System.out.println("Sikerült felvenni a pumpát.");
+			network.addField(pu);
 			return pu;
 		}
 		else
-			System.out.println("Nem sikerült felvenni a pumpát.");
 			return null;
 	}
 
@@ -107,15 +120,17 @@ public class Cistern extends Field {
 	 * @return Pipe, a felvett cső referenciája (null, ha nincs felvehető cső)
 	 */
 	public Pipe removePipe() {
+		Skeleton.printMethod(this, "removePipe");
 		if(hasPipe == true) {
 			hasPipe = false;
-			//TODO A pipe rendes létrehozása és a ciszterna szomszéd beállitása
+			//TODO A pipe rendes létrehozása?
 			Pipe pi = new Pipe();
-			System.out.println("Sikerült felvenni a csövet.");
+			pi.setTaken(true);
+			pi.addNeighbour(this);
+			network.addField(pi);
 			return pi;
 		}
 		else
-			System.out.println("Nem sikerült felvenni a csövet.");
 			return null;
 	}
 
@@ -124,73 +139,68 @@ public class Cistern extends Field {
 	 * @param f, Field-ből leszármazó típusú változó, amelyet hozzácsatlakoztatnánk a meghívott mezőhöz
 	 * @return boolean, true ha a paraméter hozzácsatlakoztatható, false ha nem
 	 */
-	public boolean acceptField(Field f) {
-		//TODO cistern melle nem tehetunk pumpot.
-		//egy megoldas, hogyha a networkben a Field, az benne van e pump arraylistben
-		//if(pumplist.contains(f) && f!=null) {
-		//	return false;
-		//} 
-		//else {
+	public boolean acceptField(Pipe p) {
+		Skeleton.printMethod(this, "acceptField"); 
+		if(neighbours.contains(p) && p!=null) {
+			return false;
+		} 
+		else {
 			return true;
-		//}
+		}
+	}
+	public boolean acceptField(Field f) {
+		Skeleton.printMethod(this, "acceptField");
+		return false;
 	}
 
 	/**
 	 * Publikus metódus, meghívásakor a ciszterna elveszi a hozzá beérkező csövektől az összes vizet és eltárolja.
 	 */
 	public void collectWater() {
+		Skeleton.printMethod(this, "collectWater");
 		for(int i = 0; i < neighbours.size() ; i++) {
 			int mennyit = neighbours.get(i).getWater();
 			collectedWater += neighbours.get(i).takeWater(mennyit);
 		}
-		System.out.println("Begyűjtöttem a vizet a csövekből.");
 	}
 	
+	/**
+	 * Publikus metódus, meghívásakor a plumber inventory-ba helyez egy pipe-ot, ha van a ciszternán pipe. 
+	 * @param: plumber, aki meghívta a függényt
+	 * @return: boolean, true ha feltudta venni a csövet, false ha nem
+	 */
+	public boolean interact(Plumber plumber, Pipe p) {
+		Skeleton.printMethod(this, "interact");
+		if(hasPipe == true) {
+			p = removePipe();
+			plumber.setInventoryPipe(p);
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Publikus metódus, meghívásakor a plumber inventory-ba helyez egy pump-át, ha van a ciszternán pumpa. 
+	 * @param: plumber, aki meghívta a függényt
+	 * @return: boolean, true ha feltudta venni a pumpát, false ha nem
+	 */
+	public boolean interact(Plumber plumber, Pump p) {
+		Skeleton.printMethod(this, "interact");
+		if(hasPipe == true) {
+			p = removePump();
+			plumber.setInventoryPump(p);
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	@Override
 	public ArrayList<? extends Field> getNeighbours() {
+		Skeleton.printMethod(this, "getNeighbours");
 		return neighbours;
 	}
-
-	public boolean interactPump(Plumber p) {
-		
-		return false;
-	}
-	
-	public boolean interactPipe(Plumber p) {
-		
-		return false;
-	}
-	//asd
-
-	@Override
-	public boolean addNeighbour() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean interact() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean interact(Pipe from, Pipe to) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean interactPlumber(Plumber p) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean addNeighbour(Field f) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }
-//asd
-
