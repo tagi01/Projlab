@@ -21,8 +21,7 @@ public abstract class BreakableField extends Field {
 
 	// Network itt ront el pumpat
 	public void breakField() {
-		if (isBroken) { isBroken = false; }
-		else { isBroken = true; }
+		if (!isBroken) { isBroken = true; }
 	}
 
 	@Override
