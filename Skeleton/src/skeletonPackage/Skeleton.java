@@ -37,7 +37,7 @@ public class Skeleton {
 						 + "8.  Szabotor kilyukaszt egy csovet\n"
 						 + "9.  Cso felvetele egy pumpanal\n"
 						 + "10. Pumpa beallitasa szerelokent/szabotorkent.\n"
-						 + "11. Szerelo megjavitja egy csovet/pumpat\n"
+						 + "11. Szerelo megjavit egy csovet/pumpat\n"
 						 + "12. Kilepes\n");
 		input = new Scanner(System.in);
 		int numb = 0;
@@ -409,15 +409,46 @@ public class Skeleton {
 	/** TEST 11 - Szerelo megjavit egy csovet/pumpat */
 	public static void eleven() {
 		System.out.println("TEST 11 - Szerelo megjavit egy csovet/pumpat");
-		System.out.println("\tEl van romolva a cso? (i, n) ");
-		// karakter beolvasasa
-		
-		// TODO Test 11, Plumber repairs pump tesztkornyezet
-		// TODO Test 11, Plumber repairs pipe tesztkornyezet
-		
-		// fuggveny meghivasa
-		
-		
+		names = new HashMap<Object, String>();
+		Plumber p = new Plumber(null, null);
+		names.put(p, "p");
+		System.out.println("\t1. Cso megjavitasa\n"
+						+ "\t2. Pumpa megjavitasa");
+		int numb = 0;
+		try {
+		boolean validAnswer = false;
+		while(!validAnswer){
+			numb = input.nextInt();
+			if(numb == 1 || numb == 2){
+				validAnswer = true;
+			} else {
+				System.out.println("\tValassz a megadott menupontok kozul!");
+			}
+		}
+		} catch (InputMismatchException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}	
+		indentation = 2;
+		if(numb == 1) {
+			Pipe currentField = new Pipe();
+			names.put(currentField, "currentField");
+			p.setCurrentField(currentField);
+			currentField.setCurrentCharacters(p);
+			boolean broken = askQuestion("El van romolva a cso?");
+			indentation = 3;
+			if(broken) currentField.breakField();
+			p.repair();
+		} else if(numb == 2) {
+			Pump currentField = new Pump();
+			names.put(currentField, "currentField");
+			p.setCurrentField(currentField);
+			currentField.setCurrentCharacters(p);
+			boolean broken = askQuestion("El van romolva a pumpa?");
+			indentation = 3;
+			if(broken) currentField.breakField();
+			p.repair();
+		}
 		System.out.println("Teszt vege");
 	}
 	

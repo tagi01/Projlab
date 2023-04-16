@@ -44,7 +44,7 @@ public class Pump extends BreakableField {
 	//TODO javaodc
 	@Override
 	public boolean addNeighbour(Pipe p) {
-		if(neighbours.contains(p) || p == null) { return false; }
+		if(neighbours.contains(p) || p == null || !acceptField(p)) { return false; }
 		else {
 			neighbours.add(p);
 			return true;
@@ -108,6 +108,7 @@ public class Pump extends BreakableField {
 	 * Field metódus felülírása. Egy Field-et hozzá lehet-e
 	 *csatlakoztatni a meghívott pumpához
 	 */
+	@Override
 	public boolean acceptField(Field f) {
 		if(neighbours.size() < 8) {		//TODO mennyi a max, vagy mi a feltetel??
 			return true;
@@ -158,8 +159,7 @@ public class Pump extends BreakableField {
 				pipe.setTaken(true);
 			}
 			return removed;
-		}
-		else {
+		} else {
 			boolean added = addNeighbour(pipe);
 			if(added) {
 				pipe.addNeighbour(this);
