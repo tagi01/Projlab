@@ -89,7 +89,7 @@ public class Network {
 		boolean break_succed = false;
 		
 		do {
-		int random = rn.nextInt((pumplist.size()-0)+1)+0;
+		int random = rn.nextInt((pumplist.size()));
 				pumplist.get(random).breakField();
 				break_succed = true;
 		}while(break_succed != true);
