@@ -33,12 +33,14 @@ public abstract class BreakableField extends Field {
 
 	@Override
 	public boolean interact(Plumber plumber) {
+		Skeleton.printMethod(this, "puncturePipe(Plumber)");
 		if(isBroken) { isBroken = false; return true; }
 		else { return false; }
 	}
 
 	@Override
 	public boolean interact(Saboteur saboteur) {
+		Skeleton.printMethod(this, "puncturePipe(Saboteur)");
 		if(!isBroken) { isBroken = true; return true; }
 		else { return false; }
 	}
