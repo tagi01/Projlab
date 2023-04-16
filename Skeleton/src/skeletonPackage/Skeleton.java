@@ -357,14 +357,16 @@ public class Skeleton {
 	/** TEST 7 - Pumpa eltorese */
 	public static void seven() {
 		System.out.println("TEST 7 - Pumpa eltorese");
-		System.out.println("\tElvan torve a pumpa? (i, n) ");
-		// karakter beolvasasa
-		
-		// TODO Test 7, Break pump tesztkornyezet
-		
-		// fuggveny meghivasa
-		
-	
+		indentation = 1;
+		boolean broken = askQuestion("El van mar torve a pumpa?");
+		Network n = new Network();
+		names.put(n, "n");
+		Pump p = new Pump();
+		names.put(p, "p");
+		n.addField(p);
+		p.setBroken(broken);
+		indentation = 2;
+		n.breakPump();
 		System.out.println("Teszt vege");
 	}
 	

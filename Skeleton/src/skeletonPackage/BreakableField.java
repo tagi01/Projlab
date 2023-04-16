@@ -9,7 +9,14 @@ public abstract class BreakableField extends Field {
 	 */
 	protected boolean isBroken;
 
-// GETTER, SETTER
+/**
+	 * @param isBroken az uj ertek
+	 */
+	public void setBroken(boolean isBroken) {
+		this.isBroken = isBroken;
+	}
+
+	// GETTER, SETTER
 	/**
 	 * Publikus metódus, BreakableField konstruktora.
 	 */
