@@ -143,18 +143,6 @@ public class Pump extends BreakableField {
 		return false;
 	}
 
-	// TODO delete, BreakableField-beli jó
-	@Override
-	public boolean interact(Plumber plumber) {
-		
-		return false;
-	}
-	
-	@Override
-	public boolean interact(Saboteur saboteur) {		
-		return false;
-	}
-
 	@Override
 	public boolean interact(Pipe from, Pipe to) {
 		return setPump(from, to);
@@ -180,10 +168,5 @@ public class Pump extends BreakableField {
 			}
 			return added;
 		}
-	}
-
-	@Override
-	public boolean interactPlumber(Plumber p, Pump pump) {
-		return false;
 	}
 }
