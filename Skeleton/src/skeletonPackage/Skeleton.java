@@ -37,7 +37,7 @@ public class Skeleton {
 						 + "8.  Szabotor kilyukaszt egy csovet\n"
 						 + "9.  Cso felvetele egy pumpanal\n"
 						 + "10. Pumpa beallitasa szerelokent/szabotorkent.\n"
-						 + "11. Szerelo megjavitja egy csovet/pumpat\n"
+						 + "11. Szerelo megjavit egy csovet/pumpat\n"
 						 + "12. Kilepes\n");
 		input = new Scanner(System.in);
 		int numb = 0;
@@ -154,7 +154,7 @@ public class Skeleton {
 			names.put(inventoryPump, "inventoryPump");
 			Pump pump2 = new Pump();
 			names.put(pump2, "pump2");
-			plumber.addInventory(inventoryPump);
+			plumber.setInventoryPump(inventoryPump);
 			currentField.addNeighbour(pump2);
 			pump2.addNeighbour(currentField);
 			network.addField(currentField);
@@ -318,72 +318,95 @@ public class Skeleton {
 	/** TEST 5 - Ciszterna begyűjti a vizet*/
 	public static void five() {
 		System.out.println("TEST 5 - Ciszterna viz fogadasa");
-		System.out.println("\tVan cso csatlakoztatva a ciszternahoz? (i, n) ");
-		// karakter beolvasasa
-		
-		// TODO Test 5, Cistern takes water tesztkornyezet
-		
-		// fuggveny meghivasa
-		
-		
+		//System.out.println("\tVan cso csatlakoztatva a ciszternahoz? (i, n) ");
+		System.out.println("\t Mennyi viz van a csoben?");
+		int water = input.nextInt();
+		Cistern cistern = new Cistern();
+		names.put(cistern, "cistern");
+		Pipe p = new Pipe(water, water);
+		names.put(p, "p");
+		cistern.addNeighbour(p);
+		p.addNeighbour(cistern);
+		indentation = 2;
+		cistern.collectWater();
 		System.out.println("Teszt vege");
 	}
 	
 	/** TEST 6 - Forras vizet ad */
 	public static void six() {
 		System.out.println("TEST 6 - Forras vizet ad");
-		
-		System.out.println("\tVan cso csatlakoztatva a forrashoz? (i, n) ");
-		// karakter beolvasasa
-		
-		// TODO Test 6, Source gives water tesztkornyezet
-		
-		// fuggveny meghivasa
-		
-		
+		//System.out.println("\tVan cso csatlakoztatva a forrashoz? (i, n) ");
+		System.out.println("\t Mennyi vizet bir el a cso?");
+		int size = input.nextInt();
+		System.out.println("\t Mennyi viz van mar a csoben?");
+		int water = input.nextInt();
+		while(water > size || water < 0) {
+			System.out.println("\tNem megfelelo ertek");
+			water = input.nextInt();
+		}
+		Pipe p = new Pipe(size, water);
+		names.put(p, "p");
+		Source s = new Source();
+		names.put(s, "s");
+		p.addNeighbour(s);
+		s.addNeighbour(p);
+		s.giveWater();
 		System.out.println("Teszt vege");
 	}
 	
 	/** TEST 7 - Pumpa eltorese */
 	public static void seven() {
 		System.out.println("TEST 7 - Pumpa eltorese");
-		System.out.println("\tElvan torve a pumpa? (i, n) ");
-		// karakter beolvasasa
-		
-		// TODO Test 7, Break pump tesztkornyezet
-		
-		// fuggveny meghivasa
-		
-	
+		indentation = 1;
+		boolean broken = askQuestion("El van mar torve a pumpa?");
+		Network n = new Network();
+		names.put(n, "n");
+		Pump p = new Pump();
+		names.put(p, "p");
+		n.addField(p);
+		p.setBroken(broken);
+		indentation = 2;
+		n.breakPump();
 		System.out.println("Teszt vege");
 	}
 	
 	/** TEST 8 - Szabotor kilyukaszt egy csovet */
 	public static void eight() {
 		System.out.println("TEST 8 - Szabotor kilyukaszt egy csovet");
-		System.out.println("\tElvan torve a cso? (i, n) ");
-		// karakter beolvasasa
-		
-		//TODO Test 8, Saboteur punctures pipe tesztkornyezet
-		
-		// fuggveny meghivasa
-		
-		
+		names = new HashMap<Object, String>();
+		Pipe currentField = new Pipe();
+		names.put(currentField, "currentField");
+		Saboteur s = new Saboteur(null, null);
+		names.put(s, "s");
+		s.setCurrentField(currentField);
+		currentField.setCurrentCharacters(s);
+		indentation = 2;		
+		boolean broken = askQuestion("El van torve a cso?");
+		indentation = 3;
+		if(broken) currentField.breakField();
+		s.puncturePipe();
 		System.out.println("Teszt vege");
 	}
 	
 	/** TEST 9 - Cso felvetele egy pumpanal */
 	public static void nine() {
 		System.out.println("TEST 9 - Cso felvetele egy pumpanal");
-		System.out.println("\tUres az inventory-ja? (i, n) ");
-		// karakter beolvasasa
-		System.out.println("\tHasznalja a pumpa ezt a csovet? (i, n) ");
-		// karakter beolvasasa
-		
-		// TODO Test 9, Grab pipe tesztkornyezet
-		
-		// fuggveny meghivasa
-		
+		names = new HashMap<Object, String>();
+		Pipe pipe = new Pipe();
+		names.put(pipe, "pipe");
+		Pump pump = new Pump();
+		names.put(pump, "pump");
+		Plumber plumber = new Plumber(pump, null);
+		names.put(plumber, "plumber");
+		pump.addNeighbour(pipe);
+		pipe.addNeighbour(pump);	
+		indentation = 2;		
+		boolean empty = askQuestion("Ures az inventory-ja?");		
+		boolean inUse = askQuestion("Hasznalja a pumpa ezt a csovet?");
+		indentation = 3;
+		if(!empty) plumber.setInventoryPipe(new Pipe());
+		if(inUse) pump.setIn(pipe);
+		plumber.grabPipe(pipe);
 		System.out.println("Teszt vege");
 	}
 	
@@ -409,15 +432,46 @@ public class Skeleton {
 	/** TEST 11 - Szerelo megjavit egy csovet/pumpat */
 	public static void eleven() {
 		System.out.println("TEST 11 - Szerelo megjavit egy csovet/pumpat");
-		System.out.println("\tEl van romolva a cso? (i, n) ");
-		// karakter beolvasasa
-		
-		// TODO Test 11, Plumber repairs pump tesztkornyezet
-		// TODO Test 11, Plumber repairs pipe tesztkornyezet
-		
-		// fuggveny meghivasa
-		
-		
+		names = new HashMap<Object, String>();
+		Plumber p = new Plumber(null, null);
+		names.put(p, "p");
+		System.out.println("\t1. Cso megjavitasa\n"
+						+ "\t2. Pumpa megjavitasa");
+		int numb = 0;
+		try {
+		boolean validAnswer = false;
+		while(!validAnswer){
+			numb = input.nextInt();
+			if(numb == 1 || numb == 2){
+				validAnswer = true;
+			} else {
+				System.out.println("\tValassz a megadott menupontok kozul!");
+			}
+		}
+		} catch (InputMismatchException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}	
+		indentation = 2;
+		if(numb == 1) {
+			Pipe currentField = new Pipe();
+			names.put(currentField, "currentField");
+			p.setCurrentField(currentField);
+			currentField.setCurrentCharacters(p);
+			boolean broken = askQuestion("El van romolva a cso?");
+			indentation = 3;
+			if(broken) currentField.breakField();
+			p.repair();
+		} else if(numb == 2) {
+			Pump currentField = new Pump();
+			names.put(currentField, "currentField");
+			p.setCurrentField(currentField);
+			currentField.setCurrentCharacters(p);
+			boolean broken = askQuestion("El van romolva a pumpa?");
+			indentation = 3;
+			if(broken) currentField.breakField();
+			p.repair();
+		}
 		System.out.println("Teszt vege");
 	}
 	

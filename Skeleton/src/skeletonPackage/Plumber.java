@@ -55,12 +55,12 @@ public class Plumber extends Character {
 	 */
 	public void placePipe() {
 		if(inventoryPipe != null) {
-			if(currentField.acceptField(inventoryPipe)) {
+			//if(currentField.acceptField(inventoryPipe)) {
 				boolean placed = currentField.interactPlumber(this, inventoryPipe);
 				if(!placed) System.out.println("Nem sikerult learakni a csovet");
-			} else {
-				System.out.println("Nem sikerult learakni a csovet");
-			}		
+			//} else {
+				//System.out.println("Nem sikerult learakni a csovet");
+			//}		
 		} else {
 			System.out.println("Nincs cso az inventory-ban");
 		}

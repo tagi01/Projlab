@@ -20,6 +20,14 @@ public class Network {
 	 */
 	private ArrayList<Field> fields;
 
+	/**
+	 * Csak a teszteléshez kell
+	 * @param fields az uj ertek
+	 */
+	public void setFields(ArrayList<Field> fields) {
+		this.fields = fields;
+	}
+
 	private ArrayList<Pump> pumplist;
 
 	//TODO azert hogy break majd mukodjon
