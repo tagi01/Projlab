@@ -23,20 +23,6 @@ public class Plumber extends Character {
 		inventoryPump = null;
 	}
 	
-	/*
-	// nem kell, nem?
-	@Override
-	public void addInventory(BreakableField bf) {
-		inventory = bf;
-	}
-
-	// nem kell, nem?
-	@Override
-	public void removeInventory() {
-		inventory = null;
-	}
-	*/
-	
 	// TODO visszateres?
 	public boolean setInventoryPump(Pump p) {
 		if(inventoryPump == null && inventoryPipe == null) {
@@ -114,7 +100,7 @@ public class Plumber extends Character {
 	 */
 	public void placePump() {
 		if(inventoryPump != null) {
-			currentField.interactPlumber(this, inventoryPump);	// TODO cso adja at a Networknek, akit nem ismer!!! :( 
+			currentField.interactPlumber(this, inventoryPump);	// TODO cso adja at a Networknek
 		}
 	}
 }

@@ -27,15 +27,22 @@ public class Pump extends BreakableField {
 		out = o;
 	}
 
-	public void setIn(Pipe new_p) { in = new_p; }
+	public void setIn(Pipe new_p) {
+		if(in == null)		// cserelni nem ezzel kell
+			in = new_p; 
+	}
 
 	public Pipe getIn() { return in; }
 
 	public Pipe getOut() { return out; }
 	
-	public void setOut(Pipe new_p) { out = new_p; }
+	public void setOut(Pipe new_p) {
+		if(out == null)		// cserelni nem ezzel kell
+			out = new_p;
+	}
 
 	//TODO javaodc
+	@Override
 	public boolean addNeighbour(Pipe p) {
 		if(neighbours.contains(p) || p == null) { return false; }
 		else {
@@ -45,11 +52,15 @@ public class Pump extends BreakableField {
 	}
 	
 	//TODO javadoc
+	@Override
 	public boolean removeNeighbour(Pipe p) {
-		if(neighbours.contains(p) && p!=null) {
-			neighbours.remove(p);
-			return true;
+		if(p == null || !neighbours.contains(p)) {
+			return false;
+		} else if(p == in || p == out || neighbours.size() <= 2) {
+			System.out.println("Nem tavolithato el a cso, mert aktiv");
+			return false;
 		} else {
+			neighbours.remove(p);
 			return true;
 		}
 	}
@@ -67,7 +78,21 @@ public class Pump extends BreakableField {
 			System.out.println("A lecserelendo cso nem a pumpa szomszedja");
 			return false;
 		}
-
+		
+		if(neighbours.size() == 2) {	// ha csak ket cso van
+			if(from.equals(in) && to.equals(out)) {
+				in = to;
+				out = from;
+			} else if(from.equals(out) && to.equals(in)) {
+				out = to;
+				in = from;
+			}
+		}
+		
+		if(to.equals(in) || to.equals(out)) {
+			return false; // to aktiv csove a pumpanak
+		}
+		
 		if(from.equals(in)) {
 			in = to;
 			return true;
@@ -107,7 +132,7 @@ public class Pump extends BreakableField {
 	//TODO javadoc
 
 	@Override
-	public boolean addNeigbhour(Field f) {
+	public boolean addNeighbour(Field f) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -149,7 +174,7 @@ public class Pump extends BreakableField {
 		else {
 			boolean added = addNeighbour(pipe);
 			if(added) {
-				pipe.addNeigbhour(this);
+				pipe.addNeighbour(this);
 				p.setInventoryPipe(null);
 				pipe.setTaken(false);
 			}
