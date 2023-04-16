@@ -360,12 +360,12 @@ public class Skeleton {
 			water = input.nextInt();
 		}
 		names = new HashMap<Object, String>();
-		Pipe p = new Pipe(size, water);
-		names.put(p, "p");
 		Source s = new Source();
 		names.put(s, "s");
-		p.addNeighbour(s);
+		Pipe p = new Pipe(size, water);
+		names.put(p, "p");
 		s.addNeighbour(p);
+		p.addNeighbour(s);
 		s.giveWater();
 		System.out.println("Teszt vege");
 	}
