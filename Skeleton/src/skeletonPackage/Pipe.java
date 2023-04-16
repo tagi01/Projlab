@@ -23,6 +23,7 @@ public class Pipe extends BreakableField {
 	private boolean taken;
 
 	/**
+	 * taken settere
 	 * @param taken az uj ertek
 	 */
 	public void setTaken(boolean taken) {
@@ -34,9 +35,15 @@ public class Pipe extends BreakableField {
 	 */
 	private int water;
 	
+	/**
+	 * A cső szomszédait tárolja
+	 */
 	private ArrayList<Field> neighbours;
 	//TODO szomszédok amik lehetnek fieldek, mivel barmilyen szomszedja lehet.
 
+	/**
+	 * Konstruktor
+	 */
 	public Pipe() {
 		super();
 		lostWater = 0;
@@ -46,6 +53,11 @@ public class Pipe extends BreakableField {
 		neighbours = new ArrayList<Field>();
 	}
 
+	/**
+	 * Konstruktor
+	 * @param siz a cső mérete
+	 * @param water a csőben lévő víz mennyisége
+	 */
 	public Pipe(int siz, int water) {
 		super();
 		lostWater = 0;
@@ -55,6 +67,9 @@ public class Pipe extends BreakableField {
 		neighbours = new ArrayList<Field>();
 	}
 
+	/** Hozzáad egy szomszédot a neighbours listához
+	 * @param f Az új szomszéd
+	 */
 	@Override
 	public boolean addNeighbour(Field f) {
 		Skeleton.printMethod(this, "addNeighbour");
@@ -66,12 +81,18 @@ public class Pipe extends BreakableField {
 		}
 	}
 
+	/** Hozzáad egy szomszédot a neighbours listához
+	 * @param f Az új szomszéd
+	 */
 	@Override
 	public boolean addNeighbour(Pipe p) {
 		Skeleton.printMethod(this, "addNeighbour");
 		return false;
 	}
 
+	/** Kivesz egy szomszédot a neighbours listából
+	 * @param f Az eltávolítandó szomszéd
+	 */
 	public boolean removeNeighbour(Field f) {
 		Skeleton.printMethod(this, "removeNeighbour");
 		if(neighbours.contains(f) && f!=null) {
@@ -101,7 +122,8 @@ public class Pipe extends BreakableField {
 	 */
 	public void flowWater(int amount) {
 		Skeleton.printMethod(this, "flowWater");
-		//nem kell megvizsgalni, hogy a cso tulcsordulna, mert csak annyi vizet pumpal majd a pumpa(amount) amennyit tud meg ahhoz, hogy cso ne csorduljon tul
+		//nem kell megvizsgalni, hogy a cso tulcsordulna, mert csak annyi vizet pumpal majd a pumpa(amount) amennyit tud meg ahhoz,
+		//hogy cso ne csorduljon tul
 		water+=amount;
 	}
 
@@ -149,52 +171,76 @@ public class Pipe extends BreakableField {
 		return water;
 	}
 
+	/** Megmondja hogy hozzá lehet-e adni szomszédként a paramétert
+	 * @param pipe a lehetséges új szomszéd
+	 * @return true ha igen, false ha nem
+	 */
 	public boolean acceptField(Pipe pipe) {
 		Skeleton.printMethod(this, "acceptField");
 		return false;
 	}
 
+	/** Megmondja hogy hozzá lehet-e adni szomszédként a paramétert
+	 * @param cistern a lehetséges új szomszéd
+	 * @return true ha igen, false ha nem
+	 */
 	public boolean acceptField(Cistern cistern) {
 		Skeleton.printMethod(this, "acceptField");
 		return true;
 	}
 
+	/** Megmondja hogy hozzá lehet-e adni szomszédként a paramétert
+	 * @param source a lehetséges új szomszéd
+	 * @return true ha igen, false ha nem
+	 */
 	public boolean acceptField(Source source) {
 		Skeleton.printMethod(this, "acceptField");
 		return true;
 	}
 
+	/** Megmondja hogy hozzá lehet-e adni szomszédként a paramétert
+	 * @param pump a lehetséges új szomszéd
+	 * @return true ha igen, false ha nem
+	 */
 	public boolean acceptField(Pump pump) {
 		Skeleton.printMethod(this, "acceptField");
 		return true;
 	}
 
+	/** Visszaadja a szomszédokat
+	 * @return a pipe szomszédai
+	 */
 	public ArrayList<? extends Field> getNeighbours() {
 		Skeleton.printMethod(this, "getNeighbours");
 		return neighbours;
 	}
-	//TODO javadoc
-
-	// FIXME Ez a resz csak a netwrok miatt kerul bele
-	//private Pump in;
-	//private Pump out;
-
-	//public void setIn(Pump pump) { in=pump;}
-	//public void setOut(Pump pump) { out=pump;}
-	//public Pump getIn() {return in;}
-	//public Pump getOut() {return out;}
 	
-	public void changeNeighbour(Pump p, Pump pump) {
-		neighbours.remove(p);
-		neighbours.add(pump);
+	/**
+	 * Kicserél két szomszédot a listában
+	 * @param f az eltávolítandó mező
+	 * @param pump a hozzáadandó mező
+	 */
+	public void changeNeighbour(Field f, Field field) {
+		if(neighbours.contains(f) && field != null) {
+			neighbours.remove(f);
+			neighbours.add(field);
+		}
 		Skeleton.printMethod(this, "changeNeighbour");
 	}
+	
+	/** Kivesz egy szomszédot a neighbours listából
+	 * @param p Az eltávolítandó szomszéd
+	 */
 	@Override
 	public boolean removeNeighbour(Pipe p) {
 		Skeleton.printMethod(this, "removeNeighbour");
 		return false;
 	}
 
+	/** A szerelő használja a képességét, lerak egy pumpát
+	 * @param p a szerelő
+	 * @param pump a lerakni való pumpa
+	 */
 	@Override
 	public boolean interactPlumber(Plumber p, Pump pump) {
 		Skeleton.printMethod(this, "interactPlumber");
