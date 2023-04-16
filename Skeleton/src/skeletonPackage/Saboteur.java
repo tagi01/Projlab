@@ -16,6 +16,6 @@ public class Saboteur extends Character{
 	 * Publikus metódus, meghívásakor kilyukasztja a csövet, amelyen áll.
 	 */
 	public void puncturePipe() {
-		currentField.breakField();
+		currentField.interact(this);
 	}
 }
