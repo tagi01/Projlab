@@ -196,7 +196,7 @@ public class Skeleton {
 		p2.addNeighbour(pump);
 		p2.addNeighbour(cistern);
 		cistern.addNeighbour(p2);
-		network.setFields(fields);
+		network.setField(fields);
 		System.out.println("\t1. Szerelo lep ciszternara\n"
 							+ "\t2, Szabotor lep ciszternara\n"
 							+ "\t3. Szerelo lep forrasra\n"

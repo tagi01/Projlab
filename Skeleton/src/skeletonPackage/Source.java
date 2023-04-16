@@ -70,36 +70,7 @@ public class Source extends Field {
 	}
 	//TODO: javadoc
 
-	@Override
-	public boolean addNeighbour(Field f) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean removeNeighbour(Field f) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean interact(Plumber plumber) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean interact(Saboteur saboteur) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean interact(Pipe from, Pipe to) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	
 	@Override
 	public boolean interactPlumber(Plumber p, Pipe pipe) {
 		if(neighbours.contains(pipe)) {
@@ -122,8 +93,15 @@ public class Source extends Field {
 		}
 	}
 
+
 	@Override
-	public boolean interactPlumber(Plumber p, Pump pump) {
+	public boolean addNeighbour(Field f) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean removeNeighbour(Field f) {
 		// TODO Auto-generated method stub
 		return false;
 	}
