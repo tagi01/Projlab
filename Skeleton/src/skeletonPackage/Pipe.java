@@ -93,7 +93,7 @@ public class Pipe extends BreakableField {
 
 	/**
 	 * Publikus metódus, meghívásakor a pumpa kimenetén lévő csőbe odaadódik a paraméterben lévő egész szám.
-	 * @param amount, integer, amennyi víz kerül át a pumpa kimenetén lévő csőbe
+	 * @param amount, integer, amennyi víz átkerül a pumpa kimenetén lévő csőbe
 	 */
 	public void flowWater(int amount) {
 		//nem kell megvizsgalni, hogy a cso tulcsordulna, mert csak annyi vizet pumpal majd a pumpa(amount) amennyit tud meg ahhoz, hogy cso ne csorduljon tul
@@ -102,7 +102,7 @@ public class Pipe extends BreakableField {
 
 	/**
 	 * Publikus metódus, megadja, hogy pontosan mennyi vizet tud még befogadni.
-	 * @return integer, amennyi vizet tud még befogadni
+	 * @return integer, amennyi vizet be tud még fogadni
 	 */
 	public int getCapacity() {
 		return size-water;
@@ -110,7 +110,7 @@ public class Pipe extends BreakableField {
 
 	/**
 	 * A metódus meghívásakor maximum a paraméterként kapott vízzel kevesebb lesz a csőben.
-	 * @param amount, integer, .....
+	 * @param amount, integer, ennyit kér tőle a pumpa
 	 * @return integer, ténylegesen ennyit tudott ebből adni.
 	 */
 	public int takeWater(int amount){
@@ -158,7 +158,6 @@ public class Pipe extends BreakableField {
 	}
 
 	public ArrayList<? extends Field> getNeighbours() {
-		// TODO Auto-generated method stub
 		return neighbours;
 	}
 	//TODO javadoc
@@ -176,22 +175,6 @@ public class Pipe extends BreakableField {
 		neighbours.remove(p);
 		neighbours.add(pump);
 	}
-
-	/**
-	 * Publikus metódus, meghívásakor a karakter megváltoztatja az állapotát.
-	 */
-	public boolean interact() {
-		return false;
-	}
-
-	public boolean interact(Pipe from, Pipe to) {
-		return false;
-	}
-
-	public boolean interactPlumber(Plumber p) {
-		return false;
-	}
-
 	@Override
 	public boolean removeNeighbour(Pipe p) {	
 		return false;
