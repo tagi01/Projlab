@@ -318,14 +318,17 @@ public class Skeleton {
 	/** TEST 5 - Ciszterna begyűjti a vizet*/
 	public static void five() {
 		System.out.println("TEST 5 - Ciszterna viz fogadasa");
-		System.out.println("\tVan cso csatlakoztatva a ciszternahoz? (i, n) ");
-		// karakter beolvasasa
-		
-		// TODO Test 5, Cistern takes water tesztkornyezet
-		
-		// fuggveny meghivasa
-		
-		
+		//System.out.println("\tVan cso csatlakoztatva a ciszternahoz? (i, n) ");
+		System.out.println("\t Mennyi viz van a csoben?");
+		int water = input.nextInt();
+		Cistern cistern = new Cistern();
+		names.put(cistern, "cistern");
+		Pipe p = new Pipe(water, water);
+		names.put(p, "p");
+		cistern.addNeighbour(p);
+		p.addNeighbour(cistern);
+		indentation = 2;
+		cistern.collectWater();
 		System.out.println("Teszt vege");
 	}
 	
