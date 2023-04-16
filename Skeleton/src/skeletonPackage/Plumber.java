@@ -25,6 +25,7 @@ public class Plumber extends Character {
 	
 	// TODO visszateres?
 	public boolean setInventoryPump(Pump p) {
+		Skeleton.printMethod(this, "setInventoryPump");
 		if(p == null || (inventoryPump == null && inventoryPipe == null)) {
 			inventoryPump = p;
 			return true;
@@ -35,6 +36,7 @@ public class Plumber extends Character {
 
 	// TODO visszateres?
 	public boolean setInventoryPipe(Pipe p) {
+		Skeleton.printMethod(this, "setInventoryPipe");
 		if(p == null || (inventoryPipe == null && inventoryPump == null)) {
 			inventoryPipe = p;
 			return true;
@@ -47,6 +49,7 @@ public class Plumber extends Character {
 	 * Publikus metódus, meghívásakor a szerelő megjavítja az elromlott mezőt, amin éppen a játékos áll.
 	 */
 	public void repair() {
+		Skeleton.printMethod(this, "repair");
 		currentField.interact(this);
 	}
 
@@ -54,6 +57,7 @@ public class Plumber extends Character {
 	 * Publikus metódus, meghívásakor az inventory-ból lerakja a csőnek az egyik végét ciszternához, forráshoz vagy pumpához.
 	 */
 	public void placePipe() {
+		Skeleton.printMethod(this, "placePipe");
 		if(inventoryPipe != null) {
 			//if(currentField.acceptField(inventoryPipe)) {
 				boolean placed = currentField.interactPlumber(this, inventoryPipe);
@@ -70,6 +74,7 @@ public class Plumber extends Character {
 	 * Publikus metódus, meghívásakor felvesz egy pumpát a ciszternáról.
 	 */
 	public void getPump() {
+		Skeleton.printMethod(this, "getPump");
 		if(inventoryPump == null && inventoryPipe == null) {
 			currentField.interactPlumber(this, inventoryPump); // TODO adja hozza a Cistern
 		}
@@ -80,6 +85,7 @@ public class Plumber extends Character {
 	 * (Ciszternán állva ajánlott meghívni, csak onnan lehet felvenni)
 	 */
 	public void getPipe() {
+		Skeleton.printMethod(this, "getPipe");
 		if(inventoryPipe == null && inventoryPump == null) {
 			currentField.interactPlumber(this, inventoryPipe);	// TODO adja hozza a Cistern
 		}
@@ -90,6 +96,7 @@ public class Plumber extends Character {
 	 * @param p, Pipe típusú objektum referenciája, amelyik csövet vesszük fel
 	 */
 	public void grabPipe(Pipe p) {
+		Skeleton.printMethod(this, "grabPipe");
 		if(inventoryPipe == null && inventoryPump == null) {
 			currentField.interactPlumber(this, inventoryPipe);
 		}
@@ -99,6 +106,7 @@ public class Plumber extends Character {
 	 * Publikus metódus, meghívásakor lerak egy pumpát az aktuális cső közepére.
 	 */
 	public void placePump() {
+		Skeleton.printMethod(this, "placePump");
 		if(inventoryPump != null) {
 			currentField.interactPlumber(this, inventoryPump);
 		}

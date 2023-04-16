@@ -42,6 +42,7 @@ public class Network {
 	 * @param currentField, olyan Pipe típusú változó referenciája, amelyik csőre tennénk le a pumpát
 	 */
 	public void addPump(Pump pump, Pipe currentField) {
+		Skeleton.printMethod(this, "addPump");
 		Pipe p_new = new Pipe();
 		fields.add(p_new);
 
@@ -61,10 +62,12 @@ public class Network {
 	}
 	
 	public void addField(Field f) {
+		Skeleton.printMethod(this, "addField");
 		fields.add(f);
 	}
 	
 	public void addField(Pump p) {
+		Skeleton.printMethod(this, "addField");
 		pumplist.add(p);
 	}
 	
@@ -80,6 +83,7 @@ public class Network {
 	 * Publikus metódus, meghívásakor véletlenszerűen eltör egy pumpát a pályán.
 	 */
 	public void breakPump() {
+		Skeleton.printMethod(this, "breakPump");
 		Random rn = new Random();
 		boolean break_succed = false;
 		

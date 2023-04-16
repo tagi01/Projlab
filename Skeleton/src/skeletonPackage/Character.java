@@ -34,7 +34,6 @@ public abstract class Character {
 	 * @param f, olyan Field-ből származó típus, amely mezőn áll a karakter
 	 */
 	public void setCurrentField(Field f) { 
-		Skeleton.printMethod(this, "setCurrentField");
 		currentField = f; 
 	}
 
