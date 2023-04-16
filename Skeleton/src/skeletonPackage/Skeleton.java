@@ -105,6 +105,7 @@ public class Skeleton {
 		Plumber p = new Plumber(c, n);
 		names.put(p, "p");
 		n.addField(c);
+		c.setNetwork(n);
 		System.out.println("\t1. Pumpa felvetele ciszternanal\n"
 							+ "\t2. Cso felvetele ciszternanal");
 		int numb = 0;
