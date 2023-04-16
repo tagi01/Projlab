@@ -15,9 +15,25 @@ public class Cistern extends Field {
 	private boolean hasPump;
 
 	/**
+	 * Csak a skeletonba kell
+	 * @param hasPump az uj ertek
+	 */
+	public void setHasPump(boolean hasPump) {
+		this.hasPump = hasPump;
+	}
+
+	/**
 	 * Private boolean, amely megadja, hogy van-e felvehető cső a ciszternán. True ha igen, false ha nincs.
 	 */
 	private boolean hasPipe;
+
+	/**
+	 * Csak a skeletonba kell
+	 * @param hasPipe az uj ertek
+	 */
+	public void setHasPipe(boolean hasPipe) {
+		this.hasPipe = hasPipe;
+	}
 
 	/**
 	 * Privát, a ciszterna szomszédos csöveit tárolja.

@@ -1,12 +1,20 @@
 package skeletonPackage;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Skeleton {
+	
+	/**
+	 * A felhasznalo inputjainak beolvasasahoz
+	 */
+	private static Scanner input;
+	/**
+	 * az objektumok neveit tartalmazo map
+	 */
+	private static Map<Object, String> names;
 	
 	public static void main(String[] args) {
 		System.out.println("-----------------------------------------------------\n"
@@ -28,7 +36,7 @@ public class Skeleton {
 						 + "10. Pumpa beallitasa szerelokent/szabotorkent.\n"
 						 + "11. Szerelo megjavitja egy csovet/pumpat\n"
 						 + "12. Kilepes\n");
-		Scanner input = new Scanner(System.in);
+		input = new Scanner(System.in);
 		int numb = 0;
 		
 		while(true) {
@@ -86,17 +94,40 @@ public class Skeleton {
 	/** TEST 1 - Pumpa vagy Pipe felvetele ciszternanal */
 	public static void one() {
 		System.out.println("TEST 1 - Pumpa vagy Pipe felvetele ciszternanal");
-		
-		System.out.println("\tVan pumpa a ciszternan? (i, n) ");
-		// egy karakter bevetele, ha nem akkor ellenorzese
-		System.out.println("\tVan cso a ciszternan? (i, n) ");
-		// egy karakter bevetele
-		
-		// TODO Test 1, Get pipe or pump on cistern tesztkornyezet
-		
-		// fuggveny meghivasa
-		
-		
+		names = new HashMap<Object, String>();
+		Cistern c = new Cistern();
+		names.put(c, "c");
+		Network n = new Network();
+		names.put(n, "n");
+		Plumber p = new Plumber(c, n);
+		names.put(p, "p");
+		n.addField(c);
+		System.out.println("\t1. Pumpa felvetele ciszternanal\n"
+							+ "\t2. Cso felvetele ciszternanal");
+		int numb = 0;
+		try {
+			boolean validAnswer = false;
+			while(!validAnswer){
+				numb = input.nextInt();
+				if(numb == 1 || numb == 2){
+					validAnswer = true;
+				} else {
+					System.out.println("\tValassz a megadott menupontok kozul!");
+				}
+			}
+		} catch (InputMismatchException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(numb == 1) {
+			boolean hasPump = askQuestion("\tVan pumpa a ciszternan?");
+			c.setHasPump(hasPump);
+			p.getPump();
+		} else if(numb == 2) {
+			boolean hasPipe = askQuestion("\tVan cso a ciszternan?");
+			c.setHasPipe(hasPipe);
+			p.getPipe();
+		}
 		System.out.println("Teszt vege");
 	}
 
@@ -263,14 +294,19 @@ public class Skeleton {
 		System.out.println("Teszt vege");
 	}
 	
-	public boolean askQuestion(String question) {
+	/**
+	 * A felhasznalotol kerdez egy eldontendo kerdest
+	 * @param question Az eldontendo kerdes
+	 * @return a valasz
+	 */
+	public static boolean askQuestion(String question) {
 		boolean answer = false;
-		System.out.println("\t" + question + "I/N");
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("\t" + question + " I/N");
+		String line;
+		boolean validAnswer = false;
 		try {
-			boolean validAnswer = false;
 			while(!validAnswer){
-				String line = bf.readLine();
+				line = input.next();
 				if(line.equals("i") || line.equals("I")){
 					answer = true;
 					validAnswer = true;
@@ -281,12 +317,22 @@ public class Skeleton {
 					System.out.println("\t Hibas valasz");
 				}
 			}
-		} catch (IOException e) {
+		} catch (InputMismatchException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return answer;
+	}
+	
+	/**
+	 * Visszaadja egy objektum tipusat es nevet
+	 * @param object a keresett objektum
+	 * @return az objektum tipusa es neve egy stringben
+	 */
+	public static String getName(Object object) {
+		String name;
+		name = object.getClass().getSimpleName() + " " + names.get(object);
+		return name;
 	}
 
 }

@@ -2,8 +2,6 @@ package skeletonPackage;
 
 import java.util.*;
 
-public class Source extends Field {
-
 /** Source osztály */
 public class Source extends Field {
 
