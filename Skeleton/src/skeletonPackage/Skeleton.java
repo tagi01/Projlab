@@ -336,14 +336,14 @@ public class Skeleton {
 		System.out.println("\t Mennyi viz van a csoben?");
 		int water = input.nextInt();
 		names = new HashMap<Object, String>();
-		Cistern cistern = new Cistern();
-		names.put(cistern, "cistern");
 		Pipe p = new Pipe(water, water);
 		names.put(p, "p");
-		cistern.addNeighbour(p);
-		p.addNeighbour(cistern);
+		Cistern c = new Cistern();
+		names.put(c, "c");
+		p.addNeighbour(c);
+		c.addNeighbour(p);
 		indentation = 2;
-		cistern.collectWater();
+		c.collectWater();
 		System.out.println("Teszt vege");
 	}
 	
