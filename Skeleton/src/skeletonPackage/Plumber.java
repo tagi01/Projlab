@@ -25,7 +25,7 @@ public class Plumber extends Character {
 	
 	// TODO visszateres?
 	public boolean setInventoryPump(Pump p) {
-		if(inventoryPump == null && inventoryPipe == null) {
+		if(p == null || (inventoryPump == null && inventoryPipe == null)) {
 			inventoryPump = p;
 			return true;
 		} else {
@@ -35,7 +35,7 @@ public class Plumber extends Character {
 
 	// TODO visszateres?
 	public boolean setInventoryPipe(Pipe p) {
-		if(inventoryPipe == null && inventoryPump == null) {
+		if(p == null || (inventoryPipe == null && inventoryPump == null)) {
 			inventoryPipe = p;
 			return true;
 		} else {
