@@ -1,5 +1,6 @@
 package skeletonPackage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Map;
@@ -171,6 +172,82 @@ public class Skeleton {
 		names = new HashMap<Object, String>();
 		Network network = new Network();
 		names.put(network, "network");
+		Source source = new Source();
+		names.put(source, "source");
+		Pipe p1 = new Pipe();
+		names.put(p1, "p1");
+		Pump pump = new Pump();
+		names.put(pump, "pump");
+		Pipe p2 = new Pipe();
+		names.put(p2, "p2");
+		Cistern cistern = new Cistern();
+		names.put(cistern, "cistern");
+		ArrayList<Field> fields = new ArrayList<Field>();
+		fields.add(cistern);
+		fields.add(source);
+		fields.add(p2);
+		fields.add(pump);
+		fields.add(p1);
+		source.addNeighbour(p1);
+		p1.addNeighbour(p1);
+		p1.addNeighbour(pump);
+		pump.addNeighbour(p1);
+		pump.addNeighbour(p2);
+		p2.addNeighbour(pump);
+		p2.addNeighbour(cistern);
+		cistern.addNeighbour(p2);
+		network.setFields(fields);
+		System.out.println("\t1. Szerelo lep ciszternara\n"
+							+ "\t2, Szabotor lep ciszternara\n"
+							+ "\t3. Szerelo lep forrasra\n"
+							+ "\t4. Szabotor lep forrasra\n"
+							+ "\t5. Szerelo lep csore\n"
+							+ "\t6. Szabotor lep csore\n"
+							+ "\t7. Szerelo lep pumpara\n"
+							+ "\t8. Szerelo lep pumpara");
+		int numb = 0;
+		try {
+			boolean validAnswer = false;
+			while(!validAnswer){
+				numb = input.nextInt();
+				if(numb > 0 && numb <9){
+					validAnswer = true;
+				} else {
+					System.out.println("\tValassz a megadott menupontok kozul!");
+				}
+			}
+		} catch (InputMismatchException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		indentation = 2;
+		Plumber plumber = new Plumber(p2, network);
+		Saboteur saboteur = new Saboteur(p2, network);
+		switch(numb) {
+		case 1:
+			p2.onField(plumber);
+			plumber.move(cistern);
+			break;
+		case 2:
+			p2.onField(saboteur);
+			saboteur.move(cistern);
+			break;
+		case 3:
+			plumber.setCurrentField(p1);
+			p1.onField(plumber);
+			plumber.move(source);
+			break;
+		case 4:
+			saboteur.setCurrentField(p1);
+			p1.onField(saboteur);
+			saboteur.move(source);
+			break;
+		case 5:
+			plumber.setCurrentField(pump);
+			pump.onField(plumber);
+			boolean pipeIsNotEmpty = askQuestion("Van mar valaki a csovon?");
+		}
 		System.out.println("\tMelyik karakterrel szerentel lepni: szerelovel(p) vagy szabotorrel(s)? ");
 		// egy karakter bekerese
 		System.out.println("\tMelyik mezon van a karaktered?\n\tForrason(s), elso csovon(p1), pumpan(p), masodik csovon(p2) vagy ciszternan(c)? ");
@@ -369,16 +446,15 @@ public class Skeleton {
 	}
 	
 	/**
-	 * Visszaadja egy objektum tipusat es nevet
-	 * @param object a keresett objektum
-	 * @return az objektum tipusa es neve egy stringben
+	 * Kiírja az objetum típusát, nevét, és a rajta meghívott függvényt
+	 * @param object a kiírandó objektum
+	 * @param method a kiírandó függvény
 	 */
-	public static String getName(Object object, String method) {
+	public static void printMethod(Object object, String method) {
 		String name;
 		name = object.getClass().getSimpleName() + " " + names.get(object);
 		indent();
 		System.out.println(name + "." + method + "()");
-		return name;
 	}
 
 }
