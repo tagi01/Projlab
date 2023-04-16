@@ -41,6 +41,46 @@ public class Network {
 	 * @param pump, a Pump típusú változó referenciája, amelyik pumpát letesszük a csőre
 	 * @param currentField, olyan Pipe típusú változó referenciája, amelyik csőre tennénk le a pumpát
 	 */
+		activeCharacter=null;
+		Skeleton.printMethod(this, "addPump");
+		fields=new ArrayList<Field>();
+		pumplist = new ArrayList<Pump>();
+	}
+		activeCharacter=null;
+		characters= new ArrayList<Character>();
+		fields=new ArrayList<Field>();
+		pumplist = new ArrayList<Pump>();
+	}
+		activeCharacter=null;
+		characters= new ArrayList<Character>();
+		fields=new ArrayList<Field>();
+		pumplist = new ArrayList<Pump>();
+	}
+		activeCharacter=null;
+		characters= new ArrayList<Character>();
+		fields=new ArrayList<Field>();
+		pumplist = new ArrayList<Pump>();
+	}
+		activeCharacter=null;
+		characters= new ArrayList<Character>();
+		fields=new ArrayList<Field>();
+		pumplist = new ArrayList<Pump>();
+	}
+		activeCharacter=null;
+		characters= new ArrayList<Character>();
+		fields=new ArrayList<Field>();
+		pumplist = new ArrayList<Pump>();
+	}
+		activeCharacter=null;
+		characters= new ArrayList<Character>();
+		fields=new ArrayList<Field>();
+		pumplist = new ArrayList<Pump>();
+	}
+		activeCharacter=null;
+		characters= new ArrayList<Character>();
+		fields=new ArrayList<Field>();
+		pumplist = new ArrayList<Pump>();
+	}
 	public void addPump(Pump pump, Pipe currentField) {
 		Skeleton.printMethod(this, "addPump");
 		Pipe p_new = new Pipe();
