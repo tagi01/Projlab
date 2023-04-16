@@ -385,15 +385,22 @@ public class Skeleton {
 	/** TEST 9 - Cso felvetele egy pumpanal */
 	public static void nine() {
 		System.out.println("TEST 9 - Cso felvetele egy pumpanal");
-		System.out.println("\tUres az inventory-ja? (i, n) ");
-		// karakter beolvasasa
-		System.out.println("\tHasznalja a pumpa ezt a csovet? (i, n) ");
-		// karakter beolvasasa
-		
-		// TODO Test 9, Grab pipe tesztkornyezet
-		
-		// fuggveny meghivasa
-		
+		names = new HashMap<Object, String>();
+		Pipe pipe = new Pipe();
+		names.put(pipe, "pipe");
+		Pump pump = new Pump();
+		names.put(pump, "pump");
+		Plumber plumber = new Plumber(pump, null);
+		names.put(plumber, "plumber");
+		pump.addNeighbour(pipe);
+		pipe.addNeighbour(pump);	
+		indentation = 2;		
+		boolean empty = askQuestion("Ures az inventory-ja?");		
+		boolean inUse = askQuestion("Hasznalja a pumpa ezt a csovet?");
+		indentation = 3;
+		if(!empty) plumber.setInventoryPipe(new Pipe());
+		if(inUse) pump.setIn(pipe);
+		plumber.grabPipe(pipe);
 		System.out.println("Teszt vege");
 	}
 	
