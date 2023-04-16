@@ -145,6 +145,7 @@ public class Skeleton {
 		names.put(network, "network");
 		Pipe currentField = new Pipe();
 		names.put(currentField, "currentField");
+		currentField.setNetwork(network);
 		Plumber plumber = new Plumber(currentField, network);
 		names.put(plumber, "plumber");
 		indentation = 1;
@@ -152,10 +153,13 @@ public class Skeleton {
 		if(hasPump) {
 			Pump inventoryPump = new Pump();
 			names.put(inventoryPump, "inventoryPump");
+			plumber.setInventoryPump(inventoryPump);
 			Pump pump2 = new Pump();
 			names.put(pump2, "pump2");
-			plumber.setInventoryPump(inventoryPump);
+			Pump pump1 = new Pump();
+			names.put(pump1, "pump1");
 			currentField.addNeighbour(pump2);
+			currentField.addNeighbour(pump1);
 			pump2.addNeighbour(currentField);
 			network.addField(currentField);
 			network.addField(pump2);

@@ -108,7 +108,7 @@ public class Cistern extends Field {
 	 * @return Pump a felvett pumpa referenciája (null, ha nincs felvehető pumpa)
 	 */
 	public Pump removePump() {
-		Skeleton.printMethod(this, "removePipe");
+		Skeleton.printMethod(this, "removePump");
 		if(hasPump == true) {
 			hasPump = false;
 			Pump pu = new Pump(null, null);
