@@ -371,14 +371,18 @@ public class Skeleton {
 	/** TEST 8 - Szabotor kilyukaszt egy csovet */
 	public static void eight() {
 		System.out.println("TEST 8 - Szabotor kilyukaszt egy csovet");
-		System.out.println("\tElvan torve a cso? (i, n) ");
-		// karakter beolvasasa
-		
-		//TODO Test 8, Saboteur punctures pipe tesztkornyezet
-		
-		// fuggveny meghivasa
-		
-		
+		names = new HashMap<Object, String>();
+		Pipe currentField = new Pipe();
+		names.put(currentField, "currentField");
+		Saboteur s = new Saboteur(null, null);
+		names.put(s, "s");
+		s.setCurrentField(currentField);
+		currentField.setCurrentCharacters(s);
+		indentation = 2;		
+		boolean broken = askQuestion("El van torve a cso?");
+		indentation = 3;
+		if(broken) currentField.breakField();
+		s.puncturePipe();
 		System.out.println("Teszt vege");
 	}
 	
