@@ -39,26 +39,35 @@ public class Pipe extends BreakableField {
 
 	public Pipe() {
 		super();
-		lostWater=0;
-		size=1; //default size
-		taken=false;
-		water=0;
+		lostWater = 0;
+		size = 1; //default size
+		taken = false;
+		water = 0;
+		neighbours = new ArrayList<Field>();
 	}
 
-	public Pipe(int siz, boolean take) {
+	public Pipe(int siz, int water) {
 		super();
-		lostWater=0;
-		size=siz;
-		taken=take;
-		water=0;
+		lostWater = 0;
+		size = siz;
+		taken = false;
+		this.water = water;
+		neighbours = new ArrayList<Field>();
 	}
 
+	@Override
 	public boolean addNeighbour(Field f) {
-		if(neighbours.contains(f) || f == null) { return false; }
-		else {
+		if(neighbours.contains(f) || f == null) {
+			return false;
+		}else {
 			neighbours.add(f);
 			return true;
 		}
+	}
+
+	@Override
+	public boolean addNeighbour(Pipe p) {
+		return false;
 	}
 
 	public boolean removeNeighbour(Field f) {
@@ -148,7 +157,6 @@ public class Pipe extends BreakableField {
 		return true;
 	}
 
-	@Override
 	public ArrayList<? extends Field> getNeighbours() {
 		// TODO Auto-generated method stub
 		return neighbours;
@@ -156,13 +164,14 @@ public class Pipe extends BreakableField {
 	//TODO javadoc
 
 	// FIXME Ez a resz csak a netwrok miatt kerul bele
-	private Pump in;
-	private Pump out;
+	//private Pump in;
+	//private Pump out;
 
-	public void setIn(Pump pump) { in=pump;}
-	public void setOut(Pump pump) { out=pump;}
-	public Pump getIn() {return in;}
-	public Pump getOut() {return out;}
+	//public void setIn(Pump pump) { in=pump;}
+	//public void setOut(Pump pump) { out=pump;}
+	//public Pump getIn() {return in;}
+	//public Pump getOut() {return out;}
+	
 	public void changeNeighbour(Pump p, Pump pump) {
 		neighbours.remove(p);
 		neighbours.add(pump);

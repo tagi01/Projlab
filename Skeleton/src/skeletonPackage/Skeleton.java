@@ -182,20 +182,32 @@ public class Skeleton {
 	public static void four() {
 		System.out.println("TEST 4 - Pumpaban viz mozgatasa");
 		System.out.println("\tMekkora a bemeneti cso merete? (egesz szam) ");
-		// szam beolvasasa
+		int inSize = input.nextInt();
 		System.out.println("\tMennyi viz van a bemeneti csoben? (egesz szam) ");
-		// szam beolvasasa
-		
+		int inWater = input.nextInt();
+		while(inWater > inSize || inWater < 0) {
+			System.out.println("Nem megfelelo ertek");
+			inWater = input.nextInt();
+		}
 		System.out.println("\tMekkora a kimeneti cso merete? (egesz szam) ");
-		// szam beolvasasa
+		int outSize = input.nextInt();
 		System.out.println("\tMennyi viz van a kimeneti csoben? (egesz szam) ");
-		// szam beolvasasa
-		
-		// TODO Test 4, Pump moves water tesztkornyezet
-		
-		// fuggveny meghivasa
-		
-		
+		int outWater = input.nextInt();
+		while(outWater > outSize || outWater < 0) {
+			System.out.println("Nem megfelelo ertek");
+			outWater = input.nextInt();
+		}
+		Pipe in = new Pipe(inSize, inWater);
+		names.put(in, "in");
+		Pipe out = new Pipe(outSize, outWater);
+		names.put(out, "out");
+		Pump pump = new Pump();
+		names.put(pump, "pump");
+		pump.addNeighbour(in);
+		pump.setIn(in);
+		pump.addNeighbour(out);
+		pump.setOut(out);
+		pump.pumpWater();
 		System.out.println("Teszt vege");
 	}
 	
@@ -340,9 +352,10 @@ public class Skeleton {
 	 * @param object a keresett objektum
 	 * @return az objektum tipusa es neve egy stringben
 	 */
-	public static String getName(Object object) {
+	public static String getName(Object object, String method) {
 		String name;
 		name = object.getClass().getSimpleName() + " " + names.get(object);
+		System.out.println(name + "." + method + "()");
 		return name;
 	}
 
