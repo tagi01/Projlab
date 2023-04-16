@@ -40,6 +40,10 @@ public class Cistern extends Field {
 	 */
 	private ArrayList<Pipe> neighbours;
 	
+	public Cistern() {
+		neighbours = new ArrayList<Pipe>();
+	}
+	
 	//
 	//METÓDUSOK
 	//

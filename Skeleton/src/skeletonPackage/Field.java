@@ -14,6 +14,10 @@ public abstract class Field {
 	 * Privát, Network típuső referenciát tárol, vagyis a mező melyik hálózat része
 	 */
 	protected Network network;
+	
+	public Field() {
+		currentCharacters = new ArrayList<Character>();
+	}
 
 // GETTER, SETTER
 

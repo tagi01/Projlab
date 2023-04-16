@@ -30,7 +30,11 @@ public class Network {
 
 	private ArrayList<Pump> pumplist;
 
-	//TODO azert hogy break majd mukodjon
+	public Network() {
+		fields = new ArrayList<Field>();
+		characters = new ArrayList<Character>();
+		pumplist = new ArrayList<Pump>();
+	}
 
 	/**
 	 * Az adott csőre lerakja a pumpát, beállítja az új mezők szomszédságait, létrehozza a plusz csövet, ami az új pumpa és az egyik régi pumpa közt lesz.

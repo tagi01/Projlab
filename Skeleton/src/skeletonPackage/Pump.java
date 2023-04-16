@@ -14,6 +14,7 @@ public class Pump extends BreakableField {
 		super();
 		in = null;
 		out = null;
+		neighbours = new ArrayList<Pipe>();
 	}
 
 	/**
@@ -25,6 +26,7 @@ public class Pump extends BreakableField {
 		super();
 		in = i;
 		out = o;
+		neighbours = new ArrayList<Pipe>();
 	}
 
 	public void setIn(Pipe new_p) {
