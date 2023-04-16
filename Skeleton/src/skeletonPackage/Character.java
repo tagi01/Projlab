@@ -53,12 +53,12 @@ public abstract class Character {
 	public void move(Field f) {
 		Skeleton.printMethod(this, "move");
 		ArrayList<Field> field = new ArrayList<Field>(currentField.getNeighbours());
-		if(field.contains(f)){
+		if(field.contains(f)) {
 			if(f.acceptCharacter()) {
-				currentField.setCurrentCharacters(null);
-				f.setCurrentCharacters(this);
-				currentField=f;
-			} 
+				currentField.offField(this);
+				currentField = f;
+				currentField.onField(this);
+			}
 			else {
 				System.out.println("Nem tudsz ralepni a mezoe, mert mar allnak rajta");
 			}		
