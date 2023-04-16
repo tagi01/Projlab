@@ -16,6 +16,8 @@ public class Skeleton {
 	 */
 	private static Map<Object, String> names;
 	
+	private static int indentation = 0;
+	
 	public static void main(String[] args) {
 		System.out.println("-----------------------------------------------------\n"
 				         + "|    -----    ------    -----    -----    ------    |\n"
@@ -119,12 +121,15 @@ public class Skeleton {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		indentation = 2;
 		if(numb == 1) {
-			boolean hasPump = askQuestion("\tVan pumpa a ciszternan?");
+			boolean hasPump = askQuestion("Van pumpa a ciszternan?");
+			indentation = 3;
 			c.setHasPump(hasPump);
 			p.getPump();
 		} else if(numb == 2) {
-			boolean hasPipe = askQuestion("\tVan cso a ciszternan?");
+			boolean hasPipe = askQuestion("Van cso a ciszternan?");
+			indentation = 3;
 			c.setHasPipe(hasPipe);
 			p.getPipe();
 		}
@@ -141,6 +146,7 @@ public class Skeleton {
 		names.put(currentField, "currentField");
 		Plumber plumber = new Plumber(currentField, network);
 		names.put(plumber, "plumber");
+		indentation = 1;
 		boolean hasPump = askQuestion("Van pumpa a szerelonek?");
 		if(hasPump) {
 			Pump inventoryPump = new Pump();
@@ -153,6 +159,7 @@ public class Skeleton {
 			network.addField(currentField);
 			network.addField(pump2);
 		}
+		indentation = 2;
 		plumber.placePump();
 		System.out.println("Teszt vege");
 		
@@ -161,7 +168,9 @@ public class Skeleton {
 	/** TEST 3 - Szerelo, szabotor mozgatasa masik mezore */
 	public static void three() {
 		System.out.println("TEST 3 - Szerelo, szabotor mozgatasa masik mezore");
-		
+		names = new HashMap<Object, String>();
+		Network network = new Network();
+		names.put(network, "network");
 		System.out.println("\tMelyik karakterrel szerentel lepni: szerelovel(p) vagy szabotorrel(s)? ");
 		// egy karakter bekerese
 		System.out.println("\tMelyik mezon van a karaktered?\n\tForrason(s), elso csovon(p1), pumpan(p), masodik csovon(p2) vagy ciszternan(c)? ");
@@ -186,7 +195,7 @@ public class Skeleton {
 		System.out.println("\tMennyi viz van a bemeneti csoben? (egesz szam) ");
 		int inWater = input.nextInt();
 		while(inWater > inSize || inWater < 0) {
-			System.out.println("Nem megfelelo ertek");
+			System.out.println("\tNem megfelelo ertek");
 			inWater = input.nextInt();
 		}
 		System.out.println("\tMekkora a kimeneti cso merete? (egesz szam) ");
@@ -194,9 +203,11 @@ public class Skeleton {
 		System.out.println("\tMennyi viz van a kimeneti csoben? (egesz szam) ");
 		int outWater = input.nextInt();
 		while(outWater > outSize || outWater < 0) {
-			System.out.println("Nem megfelelo ertek");
+			System.out.println("\tNem megfelelo ertek");
 			outWater = input.nextInt();
 		}
+		indentation = 2;
+		names = new HashMap<Object, String>();
 		Pipe in = new Pipe(inSize, inWater);
 		names.put(in, "in");
 		Pipe out = new Pipe(outSize, outWater);
@@ -318,13 +329,23 @@ public class Skeleton {
 	}
 	
 	/**
+	 * Az indentálásért felelős
+	 */
+	public static void indent() {
+		for(int i = 0; i < indentation; i++) {
+			System.out.print("\t");
+		}
+	}
+	
+	/**
 	 * A felhasznalotol kerdez egy eldontendo kerdest
 	 * @param question Az eldontendo kerdes
 	 * @return a valasz
 	 */
 	public static boolean askQuestion(String question) {
 		boolean answer = false;
-		System.out.println("\t" + question + " I/N");
+		indent();
+		System.out.println(question + " I/N");
 		String line;
 		boolean validAnswer = false;
 		try {
@@ -355,6 +376,7 @@ public class Skeleton {
 	public static String getName(Object object, String method) {
 		String name;
 		name = object.getClass().getSimpleName() + " " + names.get(object);
+		indent();
 		System.out.println(name + "." + method + "()");
 		return name;
 	}
