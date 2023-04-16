@@ -50,9 +50,13 @@ public class Cistern extends Field {
 	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
 	 */
 	public boolean addNeighbour(Pipe p) {
-		if(neighbours.contains(p) || p == null) { return false; }
+		if(neighbours.contains(p) || p == null) { 
+			System.out.println("Nem sikerült hozzáadni a szomszédot a ciszternához.");
+			return false; 
+		}
 		else {
 			neighbours.add(p);
+			System.out.println("Sikerült hozzáadni a szomszédot a ciszternához.");
 			return true;
 		}
 	}
@@ -62,13 +66,15 @@ public class Cistern extends Field {
 	 * @param p, Pipe amit törölnénk a ciszterna szomszédaiból
 	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
 	 */
-	public boolean removeNeighbour(Pipe p) {
+	//TODO Ennek most booleannal kéne visszatérnie vagy nem? + a kiírás
+	public void removeNeighbour(Pipe p) {
 		if(neighbours.contains(p) && p!=null) {
 			neighbours.remove(p);
-			return true;
-		} else {
-			return true;
-			}
+			//return true;
+		} 
+		else {
+			//return false;
+		}
 	}
 
 	/**
@@ -77,6 +83,7 @@ public class Cistern extends Field {
 	public void resetItems() {
 		hasPump = true;
 		hasPipe = true;
+		System.out.println("Újralett töltve a ciszterna csővel és pumpával.");
 	}
 
 	/**
@@ -87,9 +94,11 @@ public class Cistern extends Field {
 		if(hasPump == true) {
 			hasPump = false;
 			Pump pu = new Pump(null, null);
+			System.out.println("Sikerült felvenni a pumpát.");
 			return pu;
 		}
 		else
+			System.out.println("Nem sikerült felvenni a pumpát.");
 			return null;
 	}
 
@@ -100,11 +109,13 @@ public class Cistern extends Field {
 	public Pipe removePipe() {
 		if(hasPipe == true) {
 			hasPipe = false;
-			//Pipe pi = new Pipe(0, null, null, 9999, true, 0); //size-t allitani kell meg, meg a ciszternahoz hozza van kotve 
-			//return pi;
-			return null;
+			//TODO A pipe rendes létrehozása és a ciszterna szomszéd beállitása
+			Pipe pi = new Pipe();
+			System.out.println("Sikerült felvenni a csövet.");
+			return pi;
 		}
 		else
+			System.out.println("Nem sikerült felvenni a csövet.");
 			return null;
 	}
 
@@ -116,7 +127,12 @@ public class Cistern extends Field {
 	public boolean acceptField(Field f) {
 		//TODO cistern melle nem tehetunk pumpot.
 		//egy megoldas, hogyha a networkben a Field, az benne van e pump arraylistben
-		return true;
+		//if(pumplist.contains(f) && f!=null) {
+		//	return false;
+		//} 
+		//else {
+			return true;
+		//}
 	}
 
 	/**
@@ -124,18 +140,57 @@ public class Cistern extends Field {
 	 */
 	public void collectWater() {
 		for(int i = 0; i < neighbours.size() ; i++) {
-			Pipe tmp = (Pipe) neighbours.get(i);
-			int mennyit = 0;// = tmp.getWater();
-			collectedWater += tmp.takeWater(mennyit);
+			int mennyit = neighbours.get(i).getWater();
+			collectedWater += neighbours.get(i).takeWater(mennyit);
 		}
+		System.out.println("Begyűjtöttem a vizet a csövekből.");
 	}
+	
 	@Override
 	public ArrayList<? extends Field> getNeighbours() {
 		return neighbours;
 	}
 
-	public boolean interact(String s) {
+	public boolean interactPump(Plumber p) {
+		
+		return false;
+	}
+	
+	public boolean interactPipe(Plumber p) {
+		
+		return false;
+	}
+	//asd
 
+	@Override
+	public boolean addNeighbour() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean interact() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean interact(Pipe from, Pipe to) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean interactPlumber(Plumber p) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addNeighbour(Field f) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 }
+//asd
+
