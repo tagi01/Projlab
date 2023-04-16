@@ -28,6 +28,7 @@ public class Pipe extends BreakableField {
 	 */
 	public void setTaken(boolean taken) {
 		this.taken = taken;
+		Skeleton.printMethod(this, "setTaken");
 	}
 
 	/**
