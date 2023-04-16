@@ -22,10 +22,10 @@ public class Skeleton {
 	public static void main(String[] args) {
 		System.out.println("-----------------------------------------------------\n"
 				         + "|    -----    ------    -----    -----    ------    |\n"
-				         + "|      |      |         |        \\          |       |\n"
-				         + "|      |      ------    -----     \\         |       |\n"
-				         + "|      |      |             |      \\        |       |\n"
-				         + "|      |      ------    ----     -----      |       |\n"
+				         + "|      |      |         |           /        |      |\n"
+				         + "|      |      ------    -----      /         |      |\n"
+				         + "|      |      |             |     /          |      |\n"
+				         + "|      |      ------    ----     -----       |      |\n"
 				         + "-----------------------------------------------------\n");
 		System.out.println("1.  Pumpa vagy cso felvetele ciszternanal\n"
 						 + "2.  Pumpa lerakasa\n"
@@ -189,7 +189,7 @@ public class Skeleton {
 		fields.add(pump);
 		fields.add(p1);
 		source.addNeighbour(p1);
-		p1.addNeighbour(p1);
+		p1.addNeighbour(source);
 		p1.addNeighbour(pump);
 		pump.addNeighbour(p1);
 		pump.addNeighbour(p2);
@@ -222,57 +222,66 @@ public class Skeleton {
 		}
 
 		indentation = 2;
-		Plumber plumber = new Plumber(p2, network);
-		Saboteur saboteur = new Saboteur(p1, network);
+		Plumber plumber;
+		Saboteur saboteur;
 		switch(numb) {
 		case 1:
+			plumber = new Plumber(p2, network);
+			names.put(plumber, "plumber");
 			p2.onField(plumber);
 			plumber.move(cistern);
 			break;
 		case 2:
-			saboteur.setCurrentField(p2);
+			saboteur = new Saboteur(p2, network);
+			names.put(saboteur, "saboteur");
 			p2.onField(saboteur);
 			saboteur.move(cistern);
 			break;
 		case 3:
-			plumber.setCurrentField(p1);
+			plumber = new Plumber(p1, network);
+			names.put(plumber, "plumber");
 			p1.onField(plumber);
 			plumber.move(source);
 			break;
 		case 4:
-			saboteur.setCurrentField(p1);
+			saboteur = new Saboteur(p1, network);
+			names.put(saboteur, "saboteur");
 			p1.onField(saboteur);
 			saboteur.move(source);
 			break;
 		case 5:
-			plumber.setCurrentField(pump);
+			plumber = new Plumber(pump, network);
+			names.put(plumber, "plumber");
 			pump.onField(plumber);
 			boolean pipeIsNotEmpty = askQuestion("Van mar valaki a csovon?");
 			if(pipeIsNotEmpty) {
-				saboteur.setCurrentField(p1);
+				saboteur = new Saboteur(p1, network);
 				p1.onField(saboteur);
 			}
 			indentation = 3;
 			plumber.move(p1);
 			break;
 		case 6:
-			saboteur.setCurrentField(pump);
+			saboteur = new Saboteur(pump, network);
+			names.put(saboteur, "saboteur");
 			pump.onField(saboteur);
 			pipeIsNotEmpty = askQuestion("Van mar valaki a csovon?");
 			if(pipeIsNotEmpty) {
-				plumber.setCurrentField(p1);
+				plumber = new Plumber(p1, network);
 				p1.onField(plumber);
 			}
 			indentation = 3;
 			saboteur.move(p1);
 			break;
 		case 7:
-			plumber.setCurrentField(p1);
+			plumber = new Plumber(p1, network);
+			names.put(plumber, "plumber");
 			p1.onField(plumber);
 			plumber.move(pump);
 			break;
 		case 8:
-			saboteur.setCurrentField(p1);
+			saboteur = new Saboteur(p1, network);
+			names.put(saboteur, "saboteur");
 			p1.onField(saboteur);
 			saboteur.move(pump);
 			break;
@@ -413,19 +422,107 @@ public class Skeleton {
 	/** TEST 10 - Pumpa beallitasa szerelokent/szabotorkent */
 	public static void ten() {
 		System.out.println("TEST 10 - Pumpa beallitasa szerelokent/szabotorkent");
-		System.out.println("\tMelyik karakterrel szerentel lepni: szerelovel(p) vagy szabotorrel(s)? ");
-		// karakter beolvasasa
+		names = new HashMap<Object, String>();
+		Pipe p1 = new Pipe();
+		names.put(p1, "p1");
+		Pipe p2 = new Pipe();
+		names.put(p2, "p2");
+		Pipe p3 = new Pipe();
+		names.put(p3, "p3");
+		Pipe p4 = new Pipe();
+		names.put(p4, "p4");
+		Pump pump = new Pump();
+		names.put(pump, "pump");
+		Plumber plumber = new Plumber(null, null);
+		names.put(plumber, "plumber");
+		Saboteur saboteur = new Saboteur(null, null);
+		names.put(saboteur, "saboteur");
+		p1.addNeighbour(pump);
+		p2.addNeighbour(pump);
+		p3.addNeighbour(pump);
+		p4.addNeighbour(pump);
+		pump.addNeighbour(p1);
+		pump.addNeighbour(p2);
+		pump.addNeighbour(p3);
+		pump.addNeighbour(p4);
+		pump.setIn(p1);
+		pump.setOut(p2);
+		pump.onField(plumber);
+		plumber.setCurrentField(pump);
+		pump.onField(saboteur);
+		saboteur.setCurrentField(pump);		
+		System.out.println("\tMelyik karakterrel szeretnel lepni: szerelovel(p) vagy szabotorrel(s)? ");
+		char c = ' ';
+		try {
+			boolean validAnswer = false;
+			while(!validAnswer){
+				c = input.next().charAt(0);
+				if(c == 'p' || c == 's'){
+					validAnswer = true;
+				} else {
+					System.out.println("\tValassz a megadott opciok kozul!");
+				}
+			}
+		} catch (InputMismatchException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		indentation = 2;
 		System.out.println("\t4 cso kozul melyik legyen a pumpa bemenete? (1-4) ");
-		// szam beolvasasa
-		System.out.println("\t4 cso kozul melyik legyen a pumpa kimenete? (1-4) ");
-		// szam beolvasasa, ellenorzese, elozovel megegyezik-e
-		
-		// TODO Test 10, Plumber sets pump tesztkornyezet
-		// TODO Test 10, Saboteur sets pump tesztkornyezet
-		
-		// fuggveny meghivasa
-		
-		
+		int inNum = 0;
+		try {
+			boolean validAnswer = false;
+			while(!validAnswer){
+				inNum = input.nextInt();
+				if(inNum >= 1 && inNum <= 4){
+					validAnswer = true;
+				} else {
+					System.out.println("\tValassz a megadott intervallumbol!");
+				}
+			}
+		} catch (InputMismatchException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		System.out.println("\t4 cso kozul melyik masik legyen a pumpa kimenete? (1-4) ");
+		int outNum = 0;
+		try {
+			boolean validAnswer = false;
+			while(!validAnswer){
+				outNum = input.nextInt();
+				if(outNum >= 1 && outNum <= 4 && outNum != inNum){
+					validAnswer = true;
+				} else {
+					System.out.println("\tValassz a megadott intervallumbol!");
+				}
+			}
+		} catch (InputMismatchException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Pipe newIn = null;
+		Pipe newOut = null;
+		switch (inNum) {
+		case 1: newIn = p1; break;
+		case 2: newIn = p2; break;
+		case 3: newIn = p3; break;
+		case 4: newIn = p4; break;
+		}
+		switch (outNum) {
+		case 1: newOut = p1; break;
+		case 2: newOut = p2; break;
+		case 3: newOut = p3; break;
+		case 4: newOut = p4; break;
+		}
+		if(c == 'p') {
+			indentation = 3;
+			plumber.setPump(pump.getIn(), newIn);
+			plumber.setPump(pump.getOut(), newOut);
+		} else if(c == 's') {
+			indentation = 3;
+			saboteur.setPump(pump.getIn(), newIn);
+			saboteur.setPump(pump.getOut(), newOut);
+		}	
 		System.out.println("Teszt vege");
 	}
 	
