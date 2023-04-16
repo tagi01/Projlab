@@ -25,7 +25,6 @@ public abstract class Character {
 	 * @param n, Network, amely hálózatban a karakter és a mező van
 	 */
 	public Character(Field f, Network n) {
-		Skeleton.printMethod(this, "Character");
 		currentField = f;
 		network = n;
 	}

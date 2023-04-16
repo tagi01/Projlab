@@ -222,57 +222,58 @@ public class Skeleton {
 		}
 
 		indentation = 2;
-		Plumber plumber = new Plumber(p2, network);
-		Saboteur saboteur = new Saboteur(p1, network);
+		Plumber plumber;
+		Saboteur saboteur;
 		switch(numb) {
 		case 1:
+			plumber = new Plumber(p2, network);
 			p2.onField(plumber);
 			plumber.move(cistern);
 			break;
 		case 2:
-			saboteur.setCurrentField(p2);
+			saboteur = new Saboteur(p2, network);
 			p2.onField(saboteur);
 			saboteur.move(cistern);
 			break;
 		case 3:
-			plumber.setCurrentField(p1);
+			plumber = new Plumber(p1, network);
 			p1.onField(plumber);
 			plumber.move(source);
 			break;
 		case 4:
-			saboteur.setCurrentField(p1);
+			saboteur = new Saboteur(p1, network);
 			p1.onField(saboteur);
 			saboteur.move(source);
 			break;
 		case 5:
-			plumber.setCurrentField(pump);
+			plumber = new Plumber(pump, network);
 			pump.onField(plumber);
 			boolean pipeIsNotEmpty = askQuestion("Van mar valaki a csovon?");
 			if(pipeIsNotEmpty) {
-				saboteur.setCurrentField(p1);
+				saboteur = new Saboteur(p1, network);
 				p1.onField(saboteur);
 			}
 			indentation = 3;
 			plumber.move(p1);
 			break;
 		case 6:
-			saboteur.setCurrentField(pump);
+			saboteur = new Saboteur(pump, network);
 			pump.onField(saboteur);
 			pipeIsNotEmpty = askQuestion("Van mar valaki a csovon?");
 			if(pipeIsNotEmpty) {
-				plumber.setCurrentField(p1);
+				plumber = new Plumber(p1, network);
 				p1.onField(plumber);
 			}
 			indentation = 3;
 			saboteur.move(p1);
 			break;
 		case 7:
-			plumber.setCurrentField(p1);
+			plumber = new Plumber(p1, network);
 			p1.onField(plumber);
 			plumber.move(pump);
 			break;
 		case 8:
-			saboteur.setCurrentField(p1);
+			saboteur = new Saboteur(p1, network);
 			p1.onField(saboteur);
 			saboteur.move(pump);
 			break;
