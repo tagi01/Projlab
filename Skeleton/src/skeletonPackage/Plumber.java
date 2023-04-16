@@ -36,13 +36,32 @@ public class Plumber extends Character {
 		inventory = null;
 	}
 	*/
+	
+	// TODO visszateres?
+	public boolean setInventoryPump(Pump p) {
+		if(inventoryPump == null && inventoryPipe == null) {
+			inventoryPump = p;
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	// TODO visszateres?
+	public boolean setInventoryPipe(Pipe p) {
+		if(inventoryPipe == null && inventoryPump == null) {
+			inventoryPipe = p;
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	/**
 	 * Publikus metódus, meghívásakor a szerelő megjavítja az elromlott mezőt, amin éppen a játékos áll.
 	 */
 	public void repair() {
-		currentField.getRepaired();
-		//TODO:karakter interakcio, hogy mit szeretne csinalni mivel
+		currentField.interact(this);
 	}
 
 	/**
@@ -51,10 +70,8 @@ public class Plumber extends Character {
 	public void placePipe() {
 		if(inventoryPipe != null) {
 			if(currentField.acceptField(inventoryPipe)) {
-				currentField.addNeighbour(inventoryPipe);
-				//TODO: interakcio
-				inventoryPipe.addNeighbour(currentField);	// (szekvencia diagramon nem igy volt)
-				inventoryPipe = null;
+				boolean placed = currentField.interactPlumber(this, inventoryPipe);
+				if(!placed) System.out.println("Nem sikerult learakni a csovet");
 			} else {
 				System.out.println("Nem sikerult learakni a csovet");
 			}		
@@ -68,7 +85,7 @@ public class Plumber extends Character {
 	 */
 	public void getPump() {
 		if(inventoryPump == null && inventoryPipe == null) {
-			inventoryPump = currentField.removePump();
+			currentField.interactPlumber(this, inventoryPump); // TODO adja hozza a Cistern
 		}
 	}
 
@@ -78,7 +95,7 @@ public class Plumber extends Character {
 	 */
 	public void getPipe() {
 		if(inventoryPipe == null && inventoryPump == null) {
-			inventoryPipe = currentField.removePipe();
+			currentField.interactPlumber(this, inventoryPipe);	// TODO adja hozza a Cistern
 		}
 	}
 
@@ -88,8 +105,7 @@ public class Plumber extends Character {
 	 */
 	public void grabPipe(Pipe p) {
 		if(inventoryPipe == null && inventoryPump == null) {
-			currentField.removeNeighbour(p);
-			inventoryPipe = p;
+			currentField.interactPlumber(this, inventoryPipe);
 		}
 	}
 
@@ -98,8 +114,7 @@ public class Plumber extends Character {
 	 */
 	public void placePump() {
 		if(inventoryPump != null) {
-			network.addPump(inventoryPump, currentField);
-			inventoryPump = null;
+			currentField.interactPlumber(this, inventoryPump);	// TODO cso adja at a Networknek, akit nem ismer!!! :( 
 		}
 	}
 }

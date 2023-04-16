@@ -51,14 +51,14 @@ public class Pump extends BreakableField {
 			return true;
 		} else {
 			return true;
-			}
+		}
 	}
 
 	/**
 	 * Publikus metódus, Field-ből örökölt függvény felülírása. Meghívásakor megadja, hogy a karakter ráléphet-e a ciszternára.
 	 * @return boolean, true, ha ráléphet a ciszternára, false ha nem
 	 */
-	public boolean setPump(Pipe from , Pipe to) {
+	private boolean setPump(Pipe from , Pipe to) {
 		if(!neighbours.contains(to)) {
 			System.out.println("A beallitando cso nem a pumpa szomszedja");
 			return false;
@@ -79,10 +79,10 @@ public class Pump extends BreakableField {
 		}
 	}
 
-		/*
-		 * Field metódus felülírása. Egy Field-et hozzá lehet-e
-		 *csatlakoztatni a meghívott pumpához
-		 */
+	/*
+	 * Field metódus felülírása. Egy Field-et hozzá lehet-e
+	 *csatlakoztatni a meghívott pumpához
+	 */
 	public boolean acceptField(Field f) {
 		if(neighbours.size() < 8) {		//TODO mennyi a max, vagy mi a feltetel??
 			return true;
@@ -91,9 +91,9 @@ public class Pump extends BreakableField {
 		}
 	}
 
-		/**
-		 * Publikus metódus, meghívásakor a pumpa a bemenetéből átpumpálja a megfelelő mennyiségű vizet a kimenetén lévő csőbe.
-		 */
+	/**
+	 * Publikus metódus, meghívásakor a pumpa a bemenetéből átpumpálja a megfelelő mennyiségű vizet a kimenetén lévő csőbe.
+	 */
 	public void pumpWater() {
 		int out_capacity = out.getCapacity();
 		int in_sizeOfWater = in.takeWater(out_capacity);
@@ -105,4 +105,60 @@ public class Pump extends BreakableField {
 		return neighbours;
 	}
 	//TODO javadoc
+
+	@Override
+	public boolean addNeigbhour(Field f) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean removeNeighbour(Field f) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	// TODO delete, BreakableField-beli jó
+	@Override
+	public boolean interact(Plumber plumber) {
+		
+		return false;
+	}
+	
+	@Override
+	public boolean interact(Saboteur saboteur) {		
+		return false;
+	}
+
+	@Override
+	public boolean interact(Pipe from, Pipe to) {
+		return setPump(from, to);
+	}
+
+	@Override
+	public boolean interactPlumber(Plumber p, Pipe pipe) {
+		if(neighbours.contains(pipe)) {
+			boolean removed = removeNeighbour(pipe);
+			if(removed) {
+				pipe.removeNeighbour(this);
+				p.setInventoryPipe(pipe);
+				pipe.setTaken(true);
+			}
+			return removed;
+		}
+		else {
+			boolean added = addNeighbour(pipe);
+			if(added) {
+				pipe.addNeigbhour(this);
+				p.setInventoryPipe(null);
+				pipe.setTaken(false);
+			}
+			return added;
+		}
+	}
+
+	@Override
+	public boolean interactPlumber(Plumber p, Pump pump) {
+		return false;
+	}
 }
