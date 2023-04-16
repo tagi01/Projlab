@@ -52,7 +52,7 @@ public abstract class Field {
 	}
 
 	// ADD AND REMOVE
-	public abstract boolean addNeigbhour(Field f);
+	public abstract boolean addNeighbour(Field f);
 
 	public abstract boolean addNeighbour(Pipe p);
 
