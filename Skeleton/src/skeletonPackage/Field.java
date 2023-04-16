@@ -4,18 +4,35 @@ import java.util.ArrayList;
 /** Field absztrakt osztály */
 public abstract class Field {
 
+// PRIVAT TAGOK
 	/**
 	 * Privát, a mezőn aktuálisan tartózkodó karakterek referenciájának listája
 	 */
 	protected ArrayList<Character> currentCharacters = new ArrayList<Character>();
 
+// GETTER, SETTER
+
+	/**
+	 * Publikus metódus, Field osztály gettere, meghívásakor visszaadja a mezőn álló karakterek listáját
+	 * @return ArrayList, amiben a mezőn álló karakterek vannak
+	 */
+	public ArrayList<Character> getCurrentCharacter() { return currentCharacters; }
+
+	/**
+	 * Publikus metódus, Field osztály settere, meghívásakor hozzáad a mezőn álló karakterek listájához
+	 * @param newChar új Character referenciája, amely a mezőn fog állni
+	 */
+	public void setCurrentCharacters(Character newChar) { currentCharacters.add(newChar); }
+
+// METODUSOK
+	// ACCEPT
 	/**
 	 * Publikus metódus. Megadja, hogy egy karakter ráléphet-e a mezőre. True ha igen, false ha nem.
 	 * @return boolean, true ha ráléphet, false ha nem
 	 */
 	public boolean acceptCharacter() {
 		return true;
-	}
+	} // ugye ez csak a Pipe-nal valtozik
 
 	/**
 	 * Publikus metódus, egy Field-et hozzá lehet-e csatlakoztatni a meghívott mezőhöz.
@@ -26,40 +43,31 @@ public abstract class Field {
 		return true;
 	}
 
-	/**
-	 * Publikus metódus, Field osztály gettere, meghívásakor visszaadja a mezőn álló karakterek listáját
-	 * @return ArrayList, amiben a mezőn álló karakterek vannak
-	 */
-	public ArrayList<Character> getCurrentCharacter() { return currentCharacters; }
+	// ADD AND REMOVE
+	public abstract boolean addNeigbhour(Field f);
 
-	public abstract boolean addNeighbour();
+	public abstract boolean addNeighbour(Pipe p);
 
-	/** NEM JO JAVADOC
-	 * Egy mezőnek eltávolítja az paraméterként kapott mezőt, mint szomszédot
-	 * @param p, Field-ből leszármazó típusú változó, amelyet kitörölnénk a meghívott mező szomszédai közül
-	 * @return boolean, true ha sikeres volt a törlés, false ha nem
-	 */
-	public abstract void removeNeighbour(Pipe p);
+	public abstract boolean removeNeighbour(Field f);
 
-	/**
-	 * Publikus metódus, Field osztály settere, meghívásakor hozzáad a mezőn álló karakterek listájához
-	 * @param newChar új Character referenciája, amely a mezőn fog állni
-	 */
-	public void setCurrentCharacters(Character newChar) { currentCharacters.add(newChar); }
+	public abstract boolean removeNeighbour(Pipe p);
 
+	// INTERACTS
 	public abstract boolean interact();
 
 	public abstract boolean interact(Pipe from, Pipe to);
 
-	public abstract boolean interactPlumber(Plumber p); // TODO itt még kéne egy paraméter, hogy majd pumpát vagy csövet venne fel
+	public abstract boolean interactPlumber(Plumber p, Pipe pipe);
 
+	public abstract boolean interactPlumber(Plumber p, Pump pump);
+
+	// MOVE ON FIELD
 	/**
 	 * A karaktert a mezőre teszi, bekerül a mezőn lévő karakterek listájába.
 	 * @param c Character, aki a meghívott mezőre lépne
 	 */
 	public void onField(Character c) {
 		if(currentCharacters.contains(c) == false) { currentCharacters.add(c); }
-		// TODO visszateresi ertek itt is
 	}
 
 	/**
@@ -68,10 +76,5 @@ public abstract class Field {
 	 */
 	public void offField(Character c) {
 		if (currentCharacters.contains(c)) { currentCharacters.remove(c); }
-		// TODO visszateresi ertek itt is, itt is
 	}
-
-	public abstract boolean addNeighbour(Field f);
-
-	public abstract ArrayList<? extends Field> getNeighbours();
 }
