@@ -53,7 +53,9 @@ public abstract class Field {
 	public abstract boolean removeNeighbour(Pipe p);
 
 	// INTERACTS
-	public abstract boolean interact();
+	public abstract boolean interact(Plumber plumber);
+
+	public abstract boolean interact(Saboteur saboteur);
 
 	public abstract boolean interact(Pipe from, Pipe to);
 
