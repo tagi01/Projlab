@@ -180,4 +180,14 @@ public class Pipe extends BreakableField {
 		return false;
 	}
 
+	@Override
+	public boolean interactPlumber(Plumber p, Pump pump) {
+		if(isBroken) {
+			return false;
+		} else {
+			network.addPump(pump, this);
+			p.setInventoryPump(null);
+			return true;
+		}
+	}
 }

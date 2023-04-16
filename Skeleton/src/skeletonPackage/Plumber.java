@@ -100,7 +100,7 @@ public class Plumber extends Character {
 	 */
 	public void placePump() {
 		if(inventoryPump != null) {
-			currentField.interactPlumber(this, inventoryPump);	// TODO cso adja at a Networknek
+			currentField.interactPlumber(this, inventoryPump);
 		}
 	}
 }
