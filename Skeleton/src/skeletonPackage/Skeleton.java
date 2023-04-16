@@ -335,6 +335,10 @@ public class Skeleton {
 		//System.out.println("\tVan cso csatlakoztatva a ciszternahoz? (i, n) ");
 		System.out.println("\t Mennyi viz van a csoben?");
 		int water = input.nextInt();
+		while(water < 0) {
+			System.out.println("\tNem megfelelo ertek");
+			water = input.nextInt();
+		}
 		names = new HashMap<Object, String>();
 		Pipe p = new Pipe(water, water);
 		names.put(p, "p");
