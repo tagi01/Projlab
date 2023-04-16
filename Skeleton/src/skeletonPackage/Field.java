@@ -32,6 +32,8 @@ public abstract class Field {
 	public Network getNetwork() { return network; }
 	public void setNetwork(Network n) { network = n; }
 
+	public abstract ArrayList<? extends Field> getNeighbours();
+
 // METODUSOK
 	// ACCEPT
 	/**
@@ -47,7 +49,7 @@ public abstract class Field {
 	 * @param f, Field-ből leszármazó típusú változó, amelyet hozzácsatlakoztatnánk a meghívott mezőhöz
 	 * @return boolean, true ha a paraméter hozzácsatlakoztatható, false ha nem
 	 */
-	public boolean acceptField( Field f) {
+	public boolean acceptField(Field f) {
 		return true;
 	}
 
@@ -61,15 +63,15 @@ public abstract class Field {
 	public abstract boolean removeNeighbour(Pipe p);
 
 	// INTERACTS
-	public abstract boolean interact(Plumber plumber);
+	public boolean interact(Plumber plumber) { return false; }
 
-	public abstract boolean interact(Saboteur saboteur);
+	public boolean interact(Saboteur saboteur) { return false; }
 
-	public abstract boolean interact(Pipe from, Pipe to);
+	public boolean interact(Pipe from, Pipe to) { return false; }
 
-	public abstract boolean interactPlumber(Plumber p, Pipe pipe);
+	public boolean interactPlumber(Plumber p, Pipe pipe) { return false; }
 
-	public abstract boolean interactPlumber(Plumber p, Pump pump);
+	public boolean interactPlumber(Plumber p, Pump pump) { return false; }
 
 	// MOVE ON FIELD
 	/**
