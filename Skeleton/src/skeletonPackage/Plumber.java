@@ -23,7 +23,11 @@ public class Plumber extends Character {
 		inventoryPump = null;
 	}
 	
-	// TODO visszateres?
+	/**
+	 * A Plumber inventoryPump-nak az értékét beállítja a parmaéterként kapott Pipe-ra 
+	 * @param p egy Pump objiektum
+	 * @return ha beállítja arra az étékre akkor igazzal tér vissza, ha nem tudja beállítani akkor hamissal
+	 */
 	public boolean setInventoryPump(Pump p) {
 		Skeleton.printMethod(this, "setInventoryPump");
 		if(p == null || (inventoryPump == null && inventoryPipe == null)) {
@@ -34,7 +38,11 @@ public class Plumber extends Character {
 		}
 	}
 
-	// TODO visszateres?
+	/**
+	 * A Plumber inventoryPipe-nak az értékét beállítja a parmaéterként kapott Pipe-ra 
+	 * @param p egy Pipe objiektum
+	 * @return ha beállítja arra az étékre akkor igazzal tér vissza, ha nem tudja beállítani akkor hamissal
+	 */
 	public boolean setInventoryPipe(Pipe p) {
 		Skeleton.printMethod(this, "setInventoryPipe");
 		if(p == null || (inventoryPipe == null && inventoryPump == null)) {

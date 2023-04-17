@@ -30,6 +30,9 @@ public class Network {
 
 	private ArrayList<Pump> pumplist;
 
+	/*
+	 * Konstruktor
+	 */
 	public Network() {
 		fields = new ArrayList<Field>();
 		characters = new ArrayList<Character>();
@@ -62,20 +65,34 @@ public class Network {
 		
 	}
 	
+	/**A field listához hozzáad egy új elemet
+	 * @param f: Field típus
+	 */
 	public void addField(Field f) {
 		Skeleton.printMethod(this, "addField");
 		fields.add(f);
 	}
 	
+	/**A pumplist listához hozzáad egy új elemet
+	 * @param p egy Pump amit a listához adunk
+	 */
 	public void addField(Pump p) {
 		Skeleton.printMethod(this, "addField");
 		pumplist.add(p);
 	}
 	
+	/**
+	 * Beállítja a paraméterben kapott listát a network listájára
+	 * @param f ArrayList<Field> típusu, ami egy Field lista
+	 */
 	public void setField(ArrayList<Field> f) {
 		fields=f;
 	}
 	
+	/**
+	 * Beállítja a network pumplistájára a kapott p listát
+	 * @param p ArrayList<Pump> egy Pump lista
+	 */
 	public void setPumpList(ArrayList<Pump> p) {
 		pumplist=p;
 	}

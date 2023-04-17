@@ -162,6 +162,7 @@ public class Skeleton {
 			currentField.addNeighbour(pump2);
 			currentField.addNeighbour(pump1);
 			pump2.addNeighbour(currentField);
+			pump1.addNeighbour(currentField);
 			network.addField(currentField);
 			network.addField(pump2);
 		}

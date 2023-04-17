@@ -52,8 +52,6 @@ public class Source extends Field {
 	 */
 	public boolean acceptField(Field f) {
 		Skeleton.printMethod(this, "acceptField");
-		//TODO source mellé nem tehetunkk pumppot
-		//egy megoldas, hogyha a networkben a Field, az benne van e pump arraylistben
 		return true;
 	}
 
@@ -67,16 +65,16 @@ public class Source extends Field {
 			neighbours.get(i).flowWater(j);
 		}
 	}
-
+	/**
+	 *Lekérdezi a Source mező szomszédsági listájáts
+	 * @return a Source mező szomszédsági listájával té vissza
+	 */
 	@Override
 	public ArrayList<? extends Field> getNeighbours() {
 		Skeleton.printMethod(this, "getNeighbours");
 		return neighbours;
 	}
-	//TODO: javadoc
 
-	
-	@Override
 	public boolean interactPlumber(Plumber p, Pipe pipe) {
 		Skeleton.printMethod(this, "addNeighbour");
 		if(neighbours.contains(pipe)) {
