@@ -17,8 +17,15 @@ public class Skeleton {
 	 */
 	private static Map<Object, String> names;
 	
+	/**
+	 * Az indentálás mélységét tárolja
+	 */
 	private static int indentation = 0;
 	
+	/**
+	 * Main metódus
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		System.out.println("-----------------------------------------------------\n"
 				         + "|    -----    ------    -----    -----    ------    |\n"
@@ -194,6 +201,7 @@ public class Skeleton {
 		fields.add(p2);
 		fields.add(pump);
 		fields.add(p1);
+		network.setField(fields);
 		source.addNeighbour(p1);
 		p1.addNeighbour(source);
 		p1.addNeighbour(pump);
@@ -202,7 +210,6 @@ public class Skeleton {
 		p2.addNeighbour(pump);
 		p2.addNeighbour(cistern);
 		cistern.addNeighbour(p2);
-		network.setField(fields);
 		System.out.println("\t1. Szerelo lep ciszternara\n"
 							+ "\t2, Szabotor lep ciszternara\n"
 							+ "\t3. Szerelo lep forrasra\n"
