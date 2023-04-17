@@ -14,7 +14,10 @@ public abstract class Field {
 	 * Privát, Network típuső referenciát tárol, vagyis a mező melyik hálózat része
 	 */
 	protected Network network;
-	
+
+	/**
+	 * Field paraméter nélküli konstruktora.
+	 */
 	public Field() {
 		currentCharacters = new ArrayList<Character>();
 	}
@@ -33,9 +36,22 @@ public abstract class Field {
 	 */
 	public void setCurrentCharacters(Character newChar) { currentCharacters.add(newChar); }
 
+	/**
+	 * Getter, megadja, hogy a mező melyik hálózat tagja.
+	 * @return Network típus
+	 */
 	public Network getNetwork() { return network; }
+
+	/**
+	 * Setter, beállítja, melyik hálózat része.
+	 * @param n, Network objektum, amelyik hálózatban van a mező
+	 */
 	public void setNetwork(Network n) { network = n; }
 
+	/**
+	 * Absztrakt metódus, meghívásakor az implementált metódusokban visszaad egy listát, amelyben a mező szomszédjait adja meg.
+	 * @return ArrayList, a leszármazottaktól függ a visszatérési érték típusa
+	 */
 	public abstract ArrayList<? extends Field> getNeighbours();
 
 // METODUSOK
@@ -60,23 +76,72 @@ public abstract class Field {
 	}
 
 	// ADD AND REMOVE
+	/**
+	 * Publikus absztrakt metódus, a paraméterben kapott mezőt hozzáadja a szomszédsági listához.
+	 * @param f, Field típusú objektum, amelyet hozzáadunk a szomszédsági listához
+	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
+	 */
 	public abstract boolean addNeighbour(Field f);
 
+	/**
+	 * Publikus absztrakt metódus, a paraméterben kapott mezőt hozzáadja a szomszédsági listához.
+	 * @param p, Pipe típusú objektum, amelyet hozzáadunk a szomszédsági listához
+	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
+	 */
 	public abstract boolean addNeighbour(Pipe p);
 
+	/**
+	 * Publikus absztrakt metódus, a paraméterben kapott mezőt törölnénk a szomszédsági listából.
+	 * @param f, Field típusú objektum, amelyet törlünk a szomszédsági listából
+	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
+	 */
 	public abstract boolean removeNeighbour(Field f);
 
+	/**
+	 * Publikus absztrakt metódus, a paraméterben kapott mezőt törölnénk a szomszédsági listából.
+	 * @param p, Pipe típusú objektum, amelyet törlünk a szomszédsági listából
+	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
+	 */
 	public abstract boolean removeNeighbour(Pipe p);
 
 	// INTERACTS
+
+	/**
+	 * Publikus metódus, meghívásakor a szerelő interakcióba tud lépni leszármazottnak specifikus módon.
+	 * @param plumber, amelyik szerelő meghívja ezt az interakciót
+	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
+	 */
 	public boolean interact(Plumber plumber) { return false; }
 
+	/**
+	 * Publikus metódus, meghívásakor a szabotőr interakcióba tud lépni leszármazottnak specifikus módon.
+	 * @param saboteur, amelyik szabotőr meghívja az interakciót
+	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
+	 */
 	public boolean interact(Saboteur saboteur) { return false; }
 
+	/**
+	 * Publikus metódus, meghívásakor a karakter interakcióba tud lépni a leszármazottnak specifikus módon.
+	 * @param from, Pipe objektum, valamilyen csövet lecserél
+	 * @param to, Pipe típusú objektum, valamilyen csövet erre cserél
+	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
+	 */
 	public boolean interact(Pipe from, Pipe to) { return false; }
 
+	/**
+	 * Publikus metódus, meghívásakor a szerelő interakcióba lép leszármazottnak specifikus módon.
+	 * @param p, amelyik szerelő meghívja ezt az interakciót
+	 * @param pipe, cső, amelyik szükséges az interakcióhoz
+	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
+	 */
 	public boolean interactPlumber(Plumber p, Pipe pipe) { return false; }
 
+	/**
+	 * Publikus metódus, meghívásakor a szerelő interakcióba lép leszármazottnak specifikus módon.
+	 * @param p, amelyik szerelő meghívja ezt az interakciót
+	 * @param pump, pumpa, amelyik szükséges az interakcióhoz
+	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
+	 */
 	public boolean interactPlumber(Plumber p, Pump pump) { return false; }
 
 	// MOVE ON FIELD
