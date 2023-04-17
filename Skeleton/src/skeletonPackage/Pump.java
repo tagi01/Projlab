@@ -62,7 +62,7 @@ public class Pump extends BreakableField {
 		Skeleton.printMethod(this, "removeNeighbour");
 		if(p == null || !neighbours.contains(p)) {
 			return false;
-		} else if(p == in || p == out || neighbours.size() <= 2) {
+		} else if(p == in || p == out/* || neighbours.size() <= 2*/) {
 			System.out.println("Nem tavolithato el a cso, mert aktiv");
 			return false;
 		} else {
