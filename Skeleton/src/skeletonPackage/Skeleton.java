@@ -127,7 +127,6 @@ public class Skeleton {
 				}
 			}
 		} catch (InputMismatchException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		indentation = 2;
@@ -230,7 +229,6 @@ public class Skeleton {
 				}
 			}
 		} catch (InputMismatchException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -496,7 +494,6 @@ public class Skeleton {
 				}
 			}
 		} catch (InputMismatchException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 		indentation = 2;
@@ -513,7 +510,6 @@ public class Skeleton {
 				}
 			}
 		} catch (InputMismatchException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 		System.out.println("\t A pumpa kimenete jelenleg: 2\n" + "\t4 cso kozul melyik masik legyen a pumpa kimenete? (1-4) ");
@@ -529,7 +525,6 @@ public class Skeleton {
 				}
 			}
 		} catch (InputMismatchException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Pipe newIn = null;
@@ -578,7 +573,6 @@ public class Skeleton {
 			}
 		}
 		} catch (InputMismatchException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 		}	
 		indentation = 2;
@@ -638,7 +632,6 @@ public class Skeleton {
 				}
 			}
 		} catch (InputMismatchException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return answer;

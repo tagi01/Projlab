@@ -149,7 +149,7 @@ public class Pump extends BreakableField {
 	@Override
 	public boolean acceptField(Field f) {
 		Skeleton.printMethod(this, "acceptField");
-		if(neighbours.size() < 8) {		//TODO mennyi a max, vagy mi a feltetel??
+		if(neighbours.size() < 8) {
 			return true;
 		} else {
 			return false;
@@ -181,7 +181,6 @@ public class Pump extends BreakableField {
 	@Override
 	public boolean addNeighbour(Field f) {
 		Skeleton.printMethod(this, "addNeighbour");
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -192,7 +191,6 @@ public class Pump extends BreakableField {
 	@Override
 	public boolean removeNeighbour(Field f) {
 		Skeleton.printMethod(this, "removeNeighbour");
-		// TODO Auto-generated method stub
 		return false;
 	}
 

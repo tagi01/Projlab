@@ -105,7 +105,6 @@ public class Source extends Field {
 	@Override
 	public boolean addNeighbour(Field f) {
 		Skeleton.printMethod(this, "addNeighbour");
-		// TODO Auto-generated method stub
 		return false;
 	}
 	/**
@@ -116,7 +115,6 @@ public class Source extends Field {
 	@Override
 	public boolean removeNeighbour(Field f) {
 		Skeleton.printMethod(this, "removeNeighbour");
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

@@ -84,7 +84,7 @@ public class Plumber extends Character {
 	public void getPump() {
 		Skeleton.printMethod(this, "getPump");
 		if(inventoryPump == null && inventoryPipe == null) {
-			currentField.interactPlumber(this, inventoryPump); // TODO adja hozza a Cistern
+			currentField.interactPlumber(this, inventoryPump);
 		}
 	}
 
@@ -95,7 +95,7 @@ public class Plumber extends Character {
 	public void getPipe() {
 		Skeleton.printMethod(this, "getPipe");
 		if(inventoryPipe == null && inventoryPump == null) {
-			currentField.interactPlumber(this, inventoryPipe);	// TODO adja hozza a Cistern
+			currentField.interactPlumber(this, inventoryPipe);
 		}
 	}
 
