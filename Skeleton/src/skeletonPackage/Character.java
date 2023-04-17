@@ -48,7 +48,7 @@ public abstract class Character {
 
 	/**
 	 * Publikus metódus, amely meghívásával a karaktert mozgatni lehet.
-	 * @param f Field típusú mező, amelyre szerente lépni
+	 * @param f, Field típusú mező, amelyre szerente lépni
 	 */
 	public void move(Field f) {
 		Skeleton.printMethod(this, "move");
@@ -70,8 +70,8 @@ public abstract class Character {
 
 	/**
 	 * Beállítja az adott pumpa mezőn, hogy melyik csőből melyik csőbe pumpáljon a pumpa.
-	 * @param from Pipe típusú mező, amelyik csőből pumpál majd a pumpa
-	 * @param to Pipe típusú mező, amelyik csőbe fog a pumpa pumpálni
+	 * @param from, Pipe típusú mező, amelyik csőből pumpál majd a pumpa
+	 * @param to, Pipe típusú mező, amelyik csőbe fog a pumpa pumpálni
 	 */
 	public void setPump(Pipe from , Pipe to) {
 		Skeleton.printMethod(this, "setPump");

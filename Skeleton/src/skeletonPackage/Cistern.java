@@ -36,10 +36,13 @@ public class Cistern extends Field {
 	}
 
 	/**
-	 * Privát, a ciszterna szomszédos csöveit tárolja.
+	 * Privát ArrayList<>, a ciszterna szomszédos csöveit tárolja.
 	 */
 	private ArrayList<Pipe> neighbours;
 	
+	/**
+	 * Publikus metódus, a ciszterna konstruktora
+	 */
 	public Cistern() {
 		neighbours = new ArrayList<Pipe>();
 	}
@@ -50,6 +53,7 @@ public class Cistern extends Field {
 
 	/**
 	 * Publikus metódus, meghívásakor a paraméterben kapott csövet a szomszédsági listához adja.
+	 * Field-ből örökölt függvény felülírása.
 	 * @param p, Pipe amit hozzáadnánk a ciszterna szomszédaihoz
 	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
 	 */
@@ -65,12 +69,24 @@ public class Cistern extends Field {
 		}
 	}
 	
+	/** 
+	 * Publikus metódus. Hozzáad egy mezőt a neighbours listához. 
+	 * Field-ből örökölt függvény felülírása.
+	 * @param: f, az új szomszéd
+	 * @return: boolean, true ha sikerült, false ha nem
+	 */
 	@Override
 	public boolean addNeighbour(Field f) {
 		Skeleton.printMethod(this, "addNeighbour");
 		return false;
 	}
 
+	/**
+	 * Publikus metódus. Kivesz egy mezőt a neighbours listából.
+	 * Field-ből örökölt függvény felülírása.
+	 * @param: f, az eltávolítandó szomszéd
+	 * @return: boolean, true ha sikerült, false ha nem
+	 */
 	@Override
 	public boolean removeNeighbour(Field f) {
 		Skeleton.printMethod(this, "removeNeighbour");
@@ -79,6 +95,7 @@ public class Cistern extends Field {
 
 	/**
 	 * Publikus metódus,  meghívásakor a paraméterben kapott csövet kitöröljük a szomszédsági listából.
+	 * Field-ből örökölt függvény felülírása.
 	 * @param p, Pipe amit törölnénk a ciszterna szomszédaiból
 	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
 	 */
@@ -127,7 +144,6 @@ public class Cistern extends Field {
 		Skeleton.printMethod(this, "removePipe");
 		if(hasPipe == true) {
 			hasPipe = false;
-			//TODO A pipe rendes létrehozása?
 			Pipe pi = new Pipe();
 			pi.setTaken(true);
 			pi.addNeighbour(this);
@@ -139,9 +155,9 @@ public class Cistern extends Field {
 	}
 
 	/**
-	 * Publikus metódus, Field-ből örökölt függvény felülírása. Meghívásakor megadja, hogy a paraméterben kapott mező hozzáadató-e szomszédnak.
-	 * @param f, Field-ből leszármazó típusú változó, amelyet hozzácsatlakoztatnánk a meghívott mezőhöz
-	 * @return boolean, true ha a paraméter hozzácsatlakoztatható, false ha nem
+	 * Publikus metódus. Meghívásakor megadja, hogy a paraméterben kapott cső hozzáadható-e szomszédnak.
+	 * @param p, egy Pipe referenciája
+	 * @return boolean, true ha hozzácsatlakoztatható, false ha nem
 	 */
 	public boolean acceptField(Pipe p) {
 		Skeleton.printMethod(this, "acceptField"); 
@@ -152,6 +168,12 @@ public class Cistern extends Field {
 			return true;
 		}
 	}
+	
+	/**
+	 * Publikus metódus. Meghívásakor megadja, hogy a paraméterben kapott mező hozzáadható-e szomszédnak.
+	 * @param f, egy mező referenciája
+	 * @return boolean, true ha hozzácsatlakoztatható, false ha nem
+	 */
 	public boolean acceptField(Field f) {
 		Skeleton.printMethod(this, "acceptField");
 		return false;
@@ -170,7 +192,9 @@ public class Cistern extends Field {
 	
 	/**
 	 * Publikus metódus, meghívásakor a plumber inventory-ba helyez egy pipe-ot, ha van a ciszternán pipe. 
+	 * Field-ből örökölt függvény felülírása.
 	 * @param: plumber, aki meghívta a függényt
+	 * @param: p, egy Pipe referenciája
 	 * @return: boolean, true ha feltudta venni a csövet, false ha nem
 	 */
 	@Override
@@ -188,7 +212,9 @@ public class Cistern extends Field {
 	
 	/**
 	 * Publikus metódus, meghívásakor a plumber inventory-ba helyez egy pump-át, ha van a ciszternán pumpa. 
-	 * @param: plumber, aki meghívta a függényt
+	 * Field-ből örökölt függvény felülírása.
+	 * @param: plumber, aki meghívta a függényt 
+	 * @param: p, egy pumpa referenciája
 	 * @return: boolean, true ha feltudta venni a pumpát, false ha nem
 	 */
 	@Override
@@ -204,6 +230,12 @@ public class Cistern extends Field {
 		}
 	}
 
+
+	/** 
+	 * Publikus metódus. Visszaadja a szomszédokat
+	 * Field-ből örökölt függvény felülírása.
+	 * @return ArrayList<>, a cistern szomszédai
+	 */
 	@Override
 	public ArrayList<? extends Field> getNeighbours() {
 		Skeleton.printMethod(this, "getNeighbours");
