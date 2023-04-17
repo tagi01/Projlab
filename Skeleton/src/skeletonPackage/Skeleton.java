@@ -299,6 +299,10 @@ public class Skeleton {
 		System.out.println("TEST 4 - Pumpaban viz mozgatasa");
 		System.out.println("\tMekkora a bemeneti cso merete? (egesz szam) ");
 		int inSize = input.nextInt();
+		while(inSize < 1) {
+			System.out.println("\tNem megfelelo ertek");
+			inSize = input.nextInt();
+		}
 		System.out.println("\tMennyi viz van a bemeneti csoben? (egesz szam) ");
 		int inWater = input.nextInt();
 		while(inWater > inSize || inWater < 0) {
@@ -307,6 +311,10 @@ public class Skeleton {
 		}
 		System.out.println("\tMekkora a kimeneti cso merete? (egesz szam) ");
 		int outSize = input.nextInt();
+		while(outSize < 1) {
+			System.out.println("\tNem megfelelo ertek");
+			outSize = input.nextInt();
+		}
 		System.out.println("\tMennyi viz van a kimeneti csoben? (egesz szam) ");
 		int outWater = input.nextInt();
 		while(outWater > outSize || outWater < 0) {
@@ -415,12 +423,16 @@ public class Skeleton {
 		names = new HashMap<Object, String>();
 		Pipe pipe = new Pipe();
 		names.put(pipe, "pipe");
+
 		Pump pump = new Pump();
 		names.put(pump, "pump");
+
 		Plumber plumber = new Plumber(pump, null);
 		names.put(plumber, "plumber");
+
 		pump.addNeighbour(pipe);
-		pipe.addNeighbour(pump);	
+		pipe.addNeighbour(pump);
+
 		indentation = 2;		
 		boolean empty = askQuestion("Ures az inventory-ja?");		
 		boolean inUse = askQuestion("Hasznalja a pumpa ezt a csovet?");
