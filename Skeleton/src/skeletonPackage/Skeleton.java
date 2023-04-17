@@ -480,7 +480,7 @@ public class Skeleton {
 			e.printStackTrace();
 		}	
 		indentation = 2;
-		System.out.println("\t4 cso kozul melyik legyen a pumpa bemenete? (1-4) ");
+		System.out.println("\t A pumpa bemenete jelenleg: 1\n" + "\t4 cso kozul melyik legyen a pumpa uj bemenete? (1-4) ");
 		int inNum = 0;
 		try {
 			boolean validAnswer = false;
@@ -496,7 +496,7 @@ public class Skeleton {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
-		System.out.println("\t4 cso kozul melyik masik legyen a pumpa kimenete? (1-4) ");
+		System.out.println("\t A pumpa kimenete jelenleg: 2\n" + "\t4 cso kozul melyik masik legyen a pumpa kimenete? (1-4) ");
 		int outNum = 0;
 		try {
 			boolean validAnswer = false;
