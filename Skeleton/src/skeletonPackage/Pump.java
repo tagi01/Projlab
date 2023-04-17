@@ -102,8 +102,10 @@ public class Pump extends BreakableField {
 	}
 
 	/**
-	 * Publikus metódus, Field-ből örökölt függvény felülírása. Meghívásakor megadja, hogy a karakter ráléphet-e a ciszternára.
-	 * @return boolean, true, ha ráléphet a ciszternára, false ha nem
+	 * Privát metódus, megpróbálja kicserélni az egyik aktív csövet egy másikra
+	 * @param from a lecserélendő cső
+	 * @param to a cső, amire cserélnénk 
+	 * @return boolean, true, ha a csere megtörtént, false ha nem
 	 */
 	private boolean setPump(Pipe from , Pipe to) {
 		Skeleton.printMethod(this, "setPump");
@@ -205,9 +207,9 @@ public class Pump extends BreakableField {
 		return setPump(from, to);
 	}
 
-	/** A szerelő használja a képességét, lerak egy csövet
+	/** A szerelő használja a képességét, lerak vagy felvesz egy csövet
 	 * @param p a szerelő
-	 * @param pipe a lerakni való pumpa
+	 * @param pipe a mozgatandó cső
 	 * @return true ha sikerült, false ha nem
 	 */
 	@Override

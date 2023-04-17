@@ -24,9 +24,9 @@ public class Plumber extends Character {
 	}
 	
 	/**
-	 * A Plumber inventoryPump-nak az értékét beállítja a parmaéterként kapott Pipe-ra 
-	 * @param p egy Pump objiektum
-	 * @return ha beállítja arra az étékre akkor igazzal tér vissza, ha nem tudja beállítani akkor hamissal
+	 * A Plumber inventoryPump-nak az értékét beállítja a paraméterként kapott pumpára 
+	 * @param p a beállítandó pumpa
+	 * @return ha beállítja arra az étékre, akkor igazzal tér vissza, ha nem tudja beállítani, akkor hamissal
 	 */
 	public boolean setInventoryPump(Pump p) {
 		Skeleton.printMethod(this, "setInventoryPump");
@@ -39,9 +39,9 @@ public class Plumber extends Character {
 	}
 
 	/**
-	 * A Plumber inventoryPipe-nak az értékét beállítja a parmaéterként kapott Pipe-ra 
-	 * @param p egy Pipe objiektum
-	 * @return ha beállítja arra az étékre akkor igazzal tér vissza, ha nem tudja beállítani akkor hamissal
+	 * A Plumber inventoryPipe-nak az értékét beállítja a paraméterként kapott csőre 
+	 * @param p a beállítandó cső
+	 * @return ha beállítja arra az étékre, akkor igazzal tér vissza, ha nem tudja beállítani, akkor hamissal
 	 */
 	public boolean setInventoryPipe(Pipe p) {
 		Skeleton.printMethod(this, "setInventoryPipe");
@@ -67,12 +67,8 @@ public class Plumber extends Character {
 	public void placePipe() {
 		Skeleton.printMethod(this, "placePipe");
 		if(inventoryPipe != null) {
-			//if(currentField.acceptField(inventoryPipe)) {
-				boolean placed = currentField.interactPlumber(this, inventoryPipe);
-				if(!placed) System.out.println("Nem sikerult learakni a csovet");
-			//} else {
-				//System.out.println("Nem sikerult learakni a csovet");
-			//}		
+			boolean placed = currentField.interactPlumber(this, inventoryPipe);
+			if(!placed) System.out.println("Nem sikerult learakni a csovet");
 		} else {
 			System.out.println("Nincs cso az inventory-ban");
 		}
