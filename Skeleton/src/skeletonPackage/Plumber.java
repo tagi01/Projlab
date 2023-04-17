@@ -98,7 +98,7 @@ public class Plumber extends Character {
 	public void grabPipe(Pipe p) {
 		Skeleton.printMethod(this, "grabPipe");
 		if(inventoryPipe == null && inventoryPump == null) {
-			currentField.interactPlumber(this, inventoryPipe);
+			currentField.interactPlumber(this, p);
 		}
 	}
 
