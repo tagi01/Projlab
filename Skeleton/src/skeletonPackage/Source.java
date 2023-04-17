@@ -97,14 +97,22 @@ public class Source extends Field {
 		}
 	}
 
-
+	/**
+	 * Ad egy új fieldet a neighbours-höz, de mivel a Sourcenak szomszédai csak Pipe ezért mindig false-al tér vissza
+	 * @param f Field típist ad
+	 * @retun False értékkel tér vissza mindíg
+	 */
 	@Override
 	public boolean addNeighbour(Field f) {
 		Skeleton.printMethod(this, "addNeighbour");
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	/**
+	 * Töröl egy új fieldet a neighbours-ből, de mivel a Sourcenak szomszédai csak Pipe ezért mindig false-al tér vissza
+	 * @param f Field típist ad
+	 * @retun False értékkel tér vissza mindíg
+	 */
 	@Override
 	public boolean removeNeighbour(Field f) {
 		Skeleton.printMethod(this, "removeNeighbour");
