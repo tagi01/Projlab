@@ -69,6 +69,7 @@ public class Pipe extends BreakableField {
 
 	/** Hozzáad egy szomszédot a neighbours listához
 	 * @param f Az új szomszéd
+	 * @return true ha sikerült, false ha nem
 	 */
 	@Override
 	public boolean addNeighbour(Field f) {
@@ -83,6 +84,7 @@ public class Pipe extends BreakableField {
 
 	/** Hozzáad egy szomszédot a neighbours listához
 	 * @param f Az új szomszéd
+	 * @return true ha sikerült, false ha nem
 	 */
 	@Override
 	public boolean addNeighbour(Pipe p) {
@@ -92,6 +94,7 @@ public class Pipe extends BreakableField {
 
 	/** Kivesz egy szomszédot a neighbours listából
 	 * @param f Az eltávolítandó szomszéd
+	 * @return true ha sikerült, false ha nem
 	 */
 	public boolean removeNeighbour(Field f) {
 		Skeleton.printMethod(this, "removeNeighbour");
@@ -99,7 +102,7 @@ public class Pipe extends BreakableField {
 			neighbours.remove(f);
 			return true;
 		} else {
-			return true;
+			return false;
 			}
 	}
 
@@ -230,6 +233,7 @@ public class Pipe extends BreakableField {
 	
 	/** Kivesz egy szomszédot a neighbours listából
 	 * @param p Az eltávolítandó szomszéd
+	 * @return true ha sikerült, false ha nem
 	 */
 	@Override
 	public boolean removeNeighbour(Pipe p) {
@@ -240,6 +244,7 @@ public class Pipe extends BreakableField {
 	/** A szerelő használja a képességét, lerak egy pumpát
 	 * @param p a szerelő
 	 * @param pump a lerakni való pumpa
+	 * @return true ha sikerült, false ha nem
 	 */
 	@Override
 	public boolean interactPlumber(Plumber p, Pump pump) {

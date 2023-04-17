@@ -2,14 +2,23 @@ package skeletonPackage;
 
 import java.util.ArrayList;
 
+/**
+ * Pump osztály
+ */
 public class Pump extends BreakableField {
 	/** Privát, Pipe típusú cső referenciáját tárolja, amelyikből folyik be a víz a pumpába. */
 	private Pipe in;
 	/** Privát, Pipe típusú cső referenciáját tárolja, amerre folyik a víz a pumpából*/
 	private Pipe out;
 	
+	/**
+	 * A pumpa szomszédait tárolja
+	 */
 	private ArrayList<Pipe> neighbours;
 	
+	/**
+	 * Konstruktor
+	 */
 	public Pump() {
 		super();
 		in = null;
@@ -18,7 +27,7 @@ public class Pump extends BreakableField {
 	}
 
 	/**
-	 * Publikus metódus, Pump kétparaméteres konstruktora, beállítja a pumpa be- és kimeneteit.
+	 * Konstruktor, Pump kétparaméteres konstruktora, beállítja a pumpa be- és kimeneteit.
 	 * @param i, Pipe cső, amelyik a pumpa bemenete, innen jön a víz a pumpába
 	 * @param o, Pipe cső, amelyik a pumpa kimenete, ide megy a víz a pumpából
 	 */
@@ -29,23 +38,41 @@ public class Pump extends BreakableField {
 		neighbours = new ArrayList<Pipe>();
 	}
 
+	/**
+	 * Beállítja a pumpa bemenetét
+	 * @param new_p Az új bemeneti cső
+	 */
 	public void setIn(Pipe new_p) {
 		Skeleton.printMethod(this, "setIn");
 		if(in == null)		// cserelni nem ezzel kell
 			in = new_p; 
 	}
 
+	/**
+	 * A bemenet gettere
+	 * @return A pumpa bemenete
+	 */
 	public Pipe getIn() { return in; }
 
+	/** A kimenet gettere
+	 * @return A pumpa kimenete
+	 */
 	public Pipe getOut() { return out; }
 	
+	/**
+	 * Beállítja a pumpa kimenetét
+	 * @param new_p Az új kimenet
+	 */
 	public void setOut(Pipe new_p) {
 		Skeleton.printMethod(this, "setOut");
 		if(out == null)		// cserelni nem ezzel kell
 			out = new_p;
 	}
 
-	//TODO javaodc
+	/** Hozzáad egy csövet a szomszédaihoz
+	 * @param p A hozzáadandó cső
+	 * @return true ha sikerült, false ha nem
+	 */
 	@Override
 	public boolean addNeighbour(Pipe p) {
 		Skeleton.printMethod(this, "addNeighbour");
@@ -55,8 +82,11 @@ public class Pump extends BreakableField {
 			return true;
 		}
 	}
-	
-	//TODO javadoc
+
+	/** Elvesz egy csövet a szomszédaiból
+	 * @param p Az eltávolítandó cső
+	 * @return true ha sikerült, false ha nem
+	 */
 	@Override
 	public boolean removeNeighbour(Pipe p) {
 		Skeleton.printMethod(this, "removeNeighbour");
@@ -111,9 +141,10 @@ public class Pump extends BreakableField {
 		}
 	}
 
-	/*
-	 * Field metódus felülírása. Egy Field-et hozzá lehet-e
-	 *csatlakoztatni a meghívott pumpához
+	/**
+	 * Field metódus felülírása. Egy Field-et hozzá lehet-e csatlakoztatni a meghívott pumpához
+	 * @param f a kérdéses mező
+	 * @return true ha igen, false ha nem
 	 */
 	@Override
 	public boolean acceptField(Field f) {
@@ -135,12 +166,18 @@ public class Pump extends BreakableField {
 		out.flowWater(in_sizeOfWater);
 	}
 
+	/** Visszaadja a szomszédokat
+	 * @return a pumpa szomszédai
+	 */
 	@Override
 	public ArrayList<? extends Field> getNeighbours() {
 		return neighbours;
 	}
-	//TODO javadoc
-
+	
+	/** Hozzáad egy szomszédot a neighbours listához
+	 * @param f Az új szomszéd
+	 * @return true ha sikerült, false ha nem
+	 */
 	@Override
 	public boolean addNeighbour(Field f) {
 		Skeleton.printMethod(this, "addNeighbour");
@@ -148,6 +185,10 @@ public class Pump extends BreakableField {
 		return false;
 	}
 
+	/** Kivesz egy szomszédot a neighbours listából
+	 * @param f Az eltávolítandó szomszéd
+	 * @return true ha sikerült, false ha nem
+	 */
 	@Override
 	public boolean removeNeighbour(Field f) {
 		Skeleton.printMethod(this, "removeNeighbour");
@@ -155,12 +196,22 @@ public class Pump extends BreakableField {
 		return false;
 	}
 
+	/** A karakter használja a képességét, átállít egy pumpát
+	 * @param from Amiről átállítja
+	 * @param to Amire átállítja
+	 * @return true ha sikerült, false ha nem
+	 */
 	@Override
 	public boolean interact(Pipe from, Pipe to) {
 		Skeleton.printMethod(this, "interact");
 		return setPump(from, to);
 	}
 
+	/** A szerelő használja a képességét, lerak egy csövet
+	 * @param p a szerelő
+	 * @param pipe a lerakni való pumpa
+	 * @return true ha sikerült, false ha nem
+	 */
 	@Override
 	public boolean interactPlumber(Plumber p, Pipe pipe) {
 		Skeleton.printMethod(this, "interactPlumber");
