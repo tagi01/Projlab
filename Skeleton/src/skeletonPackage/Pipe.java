@@ -40,7 +40,6 @@ public class Pipe extends BreakableField {
 	 * A cső szomszédait tárolja
 	 */
 	private ArrayList<Field> neighbours;
-	//TODO szomszédok amik lehetnek fieldek, mivel barmilyen szomszedja lehet.
 
 	/**
 	 * Konstruktor

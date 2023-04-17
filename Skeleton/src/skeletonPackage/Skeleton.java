@@ -17,8 +17,15 @@ public class Skeleton {
 	 */
 	private static Map<Object, String> names;
 	
+	/**
+	 * Az indentálás mélységét tárolja
+	 */
 	private static int indentation = 0;
 	
+	/**
+	 * Main metódus
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		System.out.println("-----------------------------------------------------\n"
 				         + "|    -----    ------    -----    -----    ------    |\n"
