@@ -1,6 +1,7 @@
 package skeletonPackage;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 /** Pipe osztály */
 public class Pipe extends BreakableField {
@@ -9,6 +10,21 @@ public class Pipe extends BreakableField {
 	 * Privát integer, a lyukas csőből kifolyó víz mennyiségét tárolja.
 	 */
 	private int lostWater;
+	
+	/**
+	 * Privát StateOfPipe, a cső állapotát jelzi
+	 */
+	private StateOfPipe state;
+	
+	/**
+	 * Privát integer, amíg nagyobb nullánál, nem lehet kilyukasztani a csövet. 
+	 */
+	private int cantPuncture;
+	
+	/**
+	 * Privát integer,  csúszós, vagy ragadós cső visszakerül normál állapotba amikor nullára vált
+	 */
+	private int stateTimer;
 
 	/**
 	 * Privát integer, a cső vízbefogadó mértékét tárolja.
@@ -51,6 +67,7 @@ public class Pipe extends BreakableField {
 		taken = false;
 		water = 0;
 		neighbours = new ArrayList<Field>();
+		state = StateOfPipe.NORMAL;
 	}
 
 	/**
@@ -73,7 +90,6 @@ public class Pipe extends BreakableField {
 	 */
 	@Override
 	public boolean addNeighbour(Field f) {
-		Skeleton.printMethod(this, "addNeighbour");
 		if(neighbours.contains(f) || f == null) {
 			return false;
 		}else {
@@ -88,7 +104,6 @@ public class Pipe extends BreakableField {
 	 */
 	@Override
 	public boolean addNeighbour(Pipe p) {
-		Skeleton.printMethod(this, "addNeighbour");
 		return false;
 	}
 
@@ -97,7 +112,6 @@ public class Pipe extends BreakableField {
 	 * @return true ha sikerült, false ha nem
 	 */
 	public boolean removeNeighbour(Field f) {
-		Skeleton.printMethod(this, "removeNeighbour");
 		if(neighbours.contains(f) && f!=null) {
 			neighbours.remove(f);
 			return true;
@@ -112,7 +126,6 @@ public class Pipe extends BreakableField {
 	 */
 	@Override
 	public boolean acceptCharacter() {
-		Skeleton.printMethod(this, "acceptCharacter");
 		if(currentCharacters.size() == 0 && taken == false) {
 			return true;
 		}
@@ -123,11 +136,14 @@ public class Pipe extends BreakableField {
 	 * Publikus metódus, meghívásakor a pumpa kimenetén lévő csőbe odaadódik a paraméterben lévő egész szám.
 	 * @param amount, integer, amennyi víz átkerül a pumpa kimenetén lévő csőbe
 	 */
-	public void flowWater(int amount) {
-		Skeleton.printMethod(this, "flowWater");
+	public void addWater(int amount) {
 		//nem kell megvizsgalni, hogy a cso tulcsordulna, mert csak annyi vizet pumpal majd a pumpa(amount) amennyit tud meg ahhoz,
 		//hogy cso ne csorduljon tul
-		water+=amount;
+		if(isBroken) {
+			lostWater += amount;
+		}else {
+			water += amount;
+		}
 	}
 
 	/**
@@ -135,7 +151,6 @@ public class Pipe extends BreakableField {
 	 * @return integer, amennyi vizet be tud még fogadni
 	 */
 	public int getCapacity() {
-		Skeleton.printMethod(this, "getCapacity");
 		return size-water;
 	}
 
@@ -145,7 +160,6 @@ public class Pipe extends BreakableField {
 	 * @return integer, ténylegesen ennyit tudott ebből adni.
 	 */
 	public int takeWater(int amount){
-		Skeleton.printMethod(this, "takeWater");
 		if(water==0) {
 			return 0;
 		}
@@ -170,7 +184,6 @@ public class Pipe extends BreakableField {
 	 * @return integer, a csőben lévő víz mennyisége
 	 */
 	public int getWater() {
-		Skeleton.printMethod(this, "getWater");
 		return water;
 	}
 
@@ -179,7 +192,6 @@ public class Pipe extends BreakableField {
 	 * @return true ha igen, false ha nem
 	 */
 	public boolean acceptField(Pipe pipe) {
-		Skeleton.printMethod(this, "acceptField");
 		return false;
 	}
 
@@ -188,7 +200,6 @@ public class Pipe extends BreakableField {
 	 * @return true ha igen, false ha nem
 	 */
 	public boolean acceptField(Cistern cistern) {
-		Skeleton.printMethod(this, "acceptField");
 		return true;
 	}
 
@@ -197,7 +208,6 @@ public class Pipe extends BreakableField {
 	 * @return true ha igen, false ha nem
 	 */
 	public boolean acceptField(Source source) {
-		Skeleton.printMethod(this, "acceptField");
 		return true;
 	}
 
@@ -206,7 +216,6 @@ public class Pipe extends BreakableField {
 	 * @return true ha igen, false ha nem
 	 */
 	public boolean acceptField(Pump pump) {
-		Skeleton.printMethod(this, "acceptField");
 		return true;
 	}
 
@@ -214,21 +223,19 @@ public class Pipe extends BreakableField {
 	 * @return a pipe szomszédai
 	 */
 	public ArrayList<? extends Field> getNeighbours() {
-		Skeleton.printMethod(this, "getNeighbours");
 		return neighbours;
 	}
 	
 	/**
 	 * Kicserél két szomszédot a listában
 	 * @param f az eltávolítandó mező
-	 * @param pump a hozzáadandó mező
+	 * @param field a hozzáadandó mező
 	 */
 	public void changeNeighbour(Field f, Field field) {
 		if(neighbours.contains(f) && field != null) {
 			neighbours.remove(f);
 			neighbours.add(field);
 		}
-		Skeleton.printMethod(this, "changeNeighbour");
 	}
 	
 	/** Kivesz egy szomszédot a neighbours listából
@@ -237,7 +244,6 @@ public class Pipe extends BreakableField {
 	 */
 	@Override
 	public boolean removeNeighbour(Pipe p) {
-		Skeleton.printMethod(this, "removeNeighbour");
 		return false;
 	}
 
@@ -247,14 +253,94 @@ public class Pipe extends BreakableField {
 	 * @return true ha sikerült, false ha nem
 	 */
 	@Override
-	public boolean interactPlumber(Plumber p, Pump pump) {
-		Skeleton.printMethod(this, "interactPlumber");
-		if(isBroken) {
-			return false;
-		} else {
+	public void interactPlumber(Plumber p, Pump pump) {
+		if(!isBroken) {
 			network.addPump(pump, this);
 			p.setInventoryPump(null);
-			return true;
+			game.removeActionPoints();
 		}
+	}
+	
+	/**
+	 * Csúszóssá teszi a csövet
+	 */
+	@Override
+	public void interact(Saboteur s) {
+		if(state == StateOfPipe.NORMAL) {
+			state = StateOfPipe.SLIPPERY;
+			stateTimer = 5;
+			game.removeActionPoints();
+		}
+	}
+	
+	/**
+	 * @param i megadja, hogy mit csináljon a függvény, kilyukasztja(1), vagy ragadóssá teszi(2) a csövet
+	 */
+	@Override
+	public void interact(int i) {
+		if(i == 1) {
+			if(!isBroken) {
+				if(cantPuncture == 0) {
+					isBroken = true;
+					game.removeActionPoints();
+				}
+			}
+		}else if(i == 2) {
+			if(state == StateOfPipe.NORMAL) {
+				state = StateOfPipe.SETSTICKY;
+				game.removeActionPoints();
+			}
+		}
+	}
+
+	/**
+	 * Field-ből származó metódus megvalósítása.
+	 * A kifolyt víz mennyiségét hozzáadja a szabotőrök pontjaihoz.
+	 * cantPuncture, stateTimer értékét csökkenti.
+	 */
+	@Override
+	public void flowWater() {
+		game.giveSaboteurPoint(lostWater);
+		lostWater = 0;
+		if(cantPuncture > 0) {
+			cantPuncture -= 1;
+		}
+		if(stateTimer > 0) {
+			stateTimer -= 1;
+			if(stateTimer == 0)
+				state = StateOfPipe.NORMAL;
+		}
+	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public boolean offField(Character c) {
+		if(state == StateOfPipe.STICKY) {
+			return false;
+		}else if(state == StateOfPipe.SETSTICKY) {
+			state = StateOfPipe.STICKY;
+			stateTimer = 5;
+		}
+		if (currentCharacters.contains(c)) {
+			currentCharacters.remove(c);
+		}
+		return true;
+	}
+	
+	/**
+	 * Field metódusának felüldefiniálása. Ha csúszós a cső, akkor a cső egyik szomszédjára kerül a karakter. 
+	 */
+	@Override
+	public void onField(Character c) {
+		if(state == StateOfPipe.SLIPPERY) {
+			Field f = neighbours.get(ThreadLocalRandom.current().nextInt(0, 2));
+			f.onField(c);
+			c.setCurrentField(f);
+		}else if(currentCharacters.contains(c) == false) {
+			currentCharacters.add(c);
+		}
+			
 	}
 }
