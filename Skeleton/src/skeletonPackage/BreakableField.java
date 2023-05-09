@@ -3,22 +3,27 @@ package skeletonPackage;
 /** BreakableField osztály */
 public abstract class BreakableField extends Field {
 
-// PRIVAT TAGOK
+// ATTRIBUTUMOK
 	/**
-	 * Privát tulajdonsága a mezőnek, hogy elvan-e törve, vagy nem.
+	 * Mező tulajdonsága, elvan-e törve, vagy nem.
+	 * Eltörve (true), ha nincs és működik, akkor (false)
 	 */
 	protected boolean isBroken;
 
+// GETTER, SETTER
 	/** Publikus metódus, beállítja, hogy a BreakableField elvan-e törve vagy nem.
 	 * @param isBroken, boolean, true ha eltört a mező, false ha nem.
 	 */
-	public void setBroken(boolean isBroken) {
+	private void setBroken(boolean isBroken) {
 		this.isBroken = isBroken;
 	}
 
-	// GETTER, SETTER
+	/** Getter, megadja, hogy a BreakableField elvan-e törve, vagy nem */
+	public boolean getBroken() { return isBroken; } // nem használtuk eddig, de beírtam, ha kéne
+
+// KONSTRUKTOR
 	/**
-	 * Publikus metódus, BreakableField paraméter nélküli konstruktora.
+	 * Publikus metódus, BreakableField paraméter nélküli konstruktora, isBroken false
 	 */
 	public BreakableField() {
 		isBroken = false;
@@ -35,25 +40,27 @@ public abstract class BreakableField extends Field {
 
 	/**
 	 * Publikus metódus, meghívásakor a szerelő megjavítja a pumpát vagy csövet.
-	 * @param plumber, amelyik szerelő meghívja ezt az interakciót
-	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
+	 * @param p, amelyik szerelő meghívja ezt az interakciót
 	 */
 	@Override
-	public boolean interact(Plumber plumber) {
-		Skeleton.printMethod(this, "interact");
-		if(isBroken) { isBroken = false; return true; }
-		else { return false; }
+	public void interact(Plumber p) {
+		if(isBroken) {
+			isBroken = false;
+			game.removeActionPoints();
+		}
 	}
 
 	/**
 	 * Publikus metódus, meghívásakor a szabotőr elrontja a pumpát vagy kilyukasztja csövet.
-	 * @param plumber, amelyik szabotőr meghívja ezt az interakciót
-	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
+	 * @param n, 1 esetén kilyukasztják
 	 */
 	@Override
-	public boolean interact(Saboteur saboteur) {
-		Skeleton.printMethod(this, "interact");
-		if(!isBroken) { isBroken = true; return true; }
-		else { return false; }
+	public void interact(int n) {
+		if(n == 1) {
+			if (!isBroken) {
+				isBroken = true;
+				game.removeActionPoints();
+			}
+		}
 	}
 }

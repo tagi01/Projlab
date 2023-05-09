@@ -4,17 +4,21 @@ import java.util.ArrayList;
 /** Field absztrakt osztály */
 public abstract class Field {
 
-// PRIVAT TAGOK
+// ATTRIBUTUMOK
 	/**
-	 * Privát, a mezőn aktuálisan tartózkodó karakterek referenciájának listája
+	 * A mezőn aktuálisan tartózkodó karakterek referenciájának listája
 	 */
 	protected ArrayList<Character> currentCharacters = new ArrayList<Character>();
 
 	/**
-	 * Privát, Network típuső referenciát tárol, vagyis a mező melyik hálózat része
+	 * Network típusú referenciát tárol, vagyis a mező melyik hálózat része
 	 */
 	protected Network network;
 
+	/** A játékra mutató referencia */
+	protected Game game;
+
+// KONSTRUKTOR
 	/**
 	 * Field paraméter nélküli konstruktora.
 	 */
@@ -47,6 +51,18 @@ public abstract class Field {
 	 * @param n, Network objektum, amelyik hálózatban van a mező
 	 */
 	public void setNetwork(Network n) { network = n; }
+
+	/**
+	 * Getter, megadja, hogy a mezőt melyik játékban használják
+	 * @return Game típus
+	 */
+	public Game getGame() { return game; }
+
+	/**
+	 * Setter, beállítja, melyik játék része.
+	 * @param game, Game referencia, amelyik játékban van a mező
+	 */
+	public void setGame(Game game) { this.game = game; }
 
 	/**
 	 * Absztrakt metódus, meghívásakor az implementált metódusokban visszaad egy listát, amelyben a mező szomszédjait adja meg.
@@ -106,45 +122,26 @@ public abstract class Field {
 
 	// INTERACTS
 
-	/**
-	 * Publikus metódus, meghívásakor a szerelő interakcióba tud lépni leszármazottnak specifikus módon.
-	 * @param plumber, amelyik szerelő meghívja ezt az interakciót
-	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
-	 */
-	public boolean interact(Plumber plumber) { return false; }
+	/** Cső kilyukasztásához (1), cső ragadóssá tétele (2) */
+	public void interact(int n) {}
 
-	/**
-	 * Publikus metódus, meghívásakor a szabotőr interakcióba tud lépni leszármazottnak specifikus módon.
-	 * @param saboteur, amelyik szabotőr meghívja az interakciót
-	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
-	 */
-	public boolean interact(Saboteur saboteur) { return false; }
+	/** Pumpa átállításához */
+	public void interact(Pipe p1, Pipe p2) {}
 
-	/**
-	 * Publikus metódus, meghívásakor a karakter interakcióba tud lépni a leszármazottnak specifikus módon.
-	 * @param from, Pipe objektum, valamilyen csövet lecserél
-	 * @param to, Pipe típusú objektum, valamilyen csövet erre cserél
-	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
-	 */
-	public boolean interact(Pipe from, Pipe to) { return false; }
+	/** Cső csúszóssá tételéhez */
+	public void interact(Saboteur s) {}
 
-	/**
-	 * Publikus metódus, meghívásakor a szerelő interakcióba lép leszármazottnak specifikus módon.
-	 * @param p, amelyik szerelő meghívja ezt az interakciót
-	 * @param pipe, cső, amelyik szükséges az interakcióhoz
-	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
-	 */
-	public boolean interactPlumber(Plumber p, Pipe pipe) { return false; }
+	/** BreakableField megjavításához (pump vagy pipe) */
+	public  void interact(Plumber p) {}
 
-	/**
-	 * Publikus metódus, meghívásakor a szerelő interakcióba lép leszármazottnak specifikus módon.
-	 * @param p, amelyik szerelő meghívja ezt az interakciót
-	 * @param pump, pumpa, amelyik szükséges az interakcióhoz
-	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
-	 */
-	public boolean interactPlumber(Plumber p, Pump pump) { return false; }
+	/** Cső lehelyezése, felvétele */
+	public void interactPlumber(Plumber p, Pipe pipe) {}
+
+	/** Pumpa lehelyezése, felvétele */
+	public void interactPlumber(Plumber p, Pump pump) {}
 
 	// MOVE ON FIELD
+
 	/**
 	 * A karaktert a mezőre teszi, bekerül a mezőn lévő karakterek listájába.
 	 * @param c Character, aki a meghívott mezőre lépne
@@ -162,4 +159,11 @@ public abstract class Field {
 		Skeleton.printMethod(this, "offField");
 		if (currentCharacters.contains(c)) { currentCharacters.remove(c); }
 	}
+
+	// FLOW WATER
+
+	/** Network-kel interakció, ami ha meghívja, akkor a vizet valamely módon mozgatja.
+	 *  Forrás vizet ad, pumpa vizet vesz el/ad csöveitől, ciszterna begyűjti a vizet.
+	 */
+	public abstract void flowWater();
 }
