@@ -77,4 +77,18 @@ public abstract class Character {
 		Skeleton.printMethod(this, "setPump");
 		currentField.interact(from,to);
 	}
+	
+	/**
+	 * Kilyukasztja a csövet, amin a karakter éppen áll.
+	 */
+	public void puncturePipe() {
+		getField().interact(1);
+	}
+	
+	/**
+	 * Ragadóssá teszi a csövet, amin éppen a karakter áll.
+	 */
+	public void turnPipeSticky() {
+		getField().interact(2);
+	}
 }

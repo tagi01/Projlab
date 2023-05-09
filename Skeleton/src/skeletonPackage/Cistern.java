@@ -124,7 +124,7 @@ public class Cistern extends Field {
 	 * Publikus metódus, meghívásakor a ciszternáról pumpát szeretnénk felvenni, ekkor, ha még van pumpa, akkor visszaadja az új pumpát, ha nincs, akkor egy null-lal visszatér a metódus.
 	 * @return Pump a felvett pumpa referenciája (null, ha nincs felvehető pumpa)
 	 */
-	public Pump removePump() {
+	private Pump removePump() {
 		Skeleton.printMethod(this, "removePump");
 		if(hasPump == true) {
 			hasPump = false;
@@ -140,7 +140,7 @@ public class Cistern extends Field {
 	 * Publikus metódus, meghívásakor a ciszternáról csövet szeretnénk felvenni, ha lehetséges, ekkor visszaadja az új csövet, ha nincs, akkor egy null-lal visszatér a metódus.
 	 * @return Pipe, a felvett cső referenciája (null, ha nincs felvehető cső)
 	 */
-	public Pipe removePipe() {
+	private Pipe removePipe() {
 		Skeleton.printMethod(this, "removePipe");
 		if(hasPipe == true) {
 			hasPipe = false;
@@ -182,7 +182,8 @@ public class Cistern extends Field {
 	/**
 	 * Publikus metódus, meghívásakor a ciszterna elveszi a hozzá beérkező csövektől az összes vizet és eltárolja.
 	 */
-	public void collectWater() {
+	@Override
+	public void flowWater() {
 		Skeleton.printMethod(this, "collectWater");
 		for(int i = 0; i < neighbours.size() ; i++) {
 			int mennyit = neighbours.get(i).getWater();
@@ -198,15 +199,15 @@ public class Cistern extends Field {
 	 * @return: boolean, true ha feltudta venni a csövet, false ha nem
 	 */
 	@Override
-	public boolean interactPlumber(Plumber plumber, Pipe p) {
+	public void interactPlumber(Plumber plumber, Pipe p) {
 		Skeleton.printMethod(this, "interactPlumber");
 		if(hasPipe == true) {
 			p = removePipe();
 			plumber.setInventoryPipe(p);
-			return true;
+			//return true;
 		}
 		else {
-			return false;
+			//return false;
 		}
 	}
 	
@@ -218,15 +219,15 @@ public class Cistern extends Field {
 	 * @return: boolean, true ha feltudta venni a pumpát, false ha nem
 	 */
 	@Override
-	public boolean interactPlumber(Plumber plumber, Pump p) {
+	public void interactPlumber(Plumber plumber, Pump p) {
 		Skeleton.printMethod(this, "interactPlumber");
 		if(hasPump == true) {
 			p = removePump();
 			plumber.setInventoryPump(p);
-			return true;
+			//return true;
 		}
 		else {
-			return false;
+			//return false;
 		}
 	}
 
