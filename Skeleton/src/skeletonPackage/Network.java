@@ -111,5 +111,14 @@ public class Network {
 				break_succed = true;
 		}while(break_succed != true);
 	}
+	
+	/*
+	 * Végig iterál a field listan es meghivja a flowWater metodust
+	 */
+	public void flowWaterOnField() {
+		for(int i=0; i<fields.size(); i++) {
+			fields.get(i).flowWater();
+		}
+	}
 
 }

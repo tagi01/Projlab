@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Skeleton",
+    "\\Skeleton\\src",
+    "\\Skeleton\\src\\skeletonPackage"
   ],
-  "SelectedNode": "\\C:\\Users\\Soma\\Source\\Repos\\Projlab\\new",
+  "SelectedNode": "\\Skeleton\\src\\skeletonPackage\\BreakableField.java",
   "PreviewInSolutionExplorer": false
 }

@@ -58,11 +58,12 @@ public class Source extends Field {
 	/**
 	 * Publikus metódus, meghívásakor a hozzá csatlakoztatott csöveknek maximális mennyiségű vizet ad.
 	 */
-	public void giveWater() {
+	@Override
+	public void flowWater() {
 		Skeleton.printMethod(this, "giveWater");
 		for(int i=0 ; i < neighbours.size() ; i++) {
 			int j = neighbours.get(i).getCapacity();
-			neighbours.get(i).flowWater(j);
+			neighbours.get(i).addWater(j);
 		}
 	}
 	/**
@@ -75,7 +76,7 @@ public class Source extends Field {
 		return neighbours;
 	}
 
-	public boolean interactPlumber(Plumber p, Pipe pipe) {
+	public void interactPlumber(Plumber p, Pipe pipe) {
 		Skeleton.printMethod(this, "addNeighbour");
 		if(neighbours.contains(pipe)) {
 			boolean removed = removeNeighbour(pipe);
@@ -84,7 +85,7 @@ public class Source extends Field {
 				p.setInventoryPipe(pipe);
 				pipe.setTaken(true);
 			}
-			return removed;
+			
 		}
 		else {
 			boolean added = addNeighbour(pipe);
@@ -93,7 +94,7 @@ public class Source extends Field {
 				p.setInventoryPipe(null);
 				pipe.setTaken(false);
 			}
-			return added;
+	
 		}
 	}
 
@@ -117,4 +118,5 @@ public class Source extends Field {
 		Skeleton.printMethod(this, "removeNeighbour");
 		return false;
 	}
+
 }
