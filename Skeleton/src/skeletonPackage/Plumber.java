@@ -7,10 +7,14 @@ public class Plumber extends Character {
 	 */
 	private Pipe inventoryPipe;
 	/**
+	 * Privát, azt jelzi, hogy a szerelőnél lévő csőnek hány vége van nála.
+	 */
+	private int pipeEnds;
+	/**
 	 * Privát, egy Pump referenciát tárol, amely éppen a szerelő birtokában van.
 	 */
 	private Pump inventoryPump;
-
+	
 	/**
 	 * Publikus metódus, Plumber kétparaméteres konstruktora, hasonlóan a Character konstruktorához.
 	 * Beállítja, hogy a szerelőnek létrehozásakor nincs az inventory-ban semmi.
@@ -20,6 +24,7 @@ public class Plumber extends Character {
 	public Plumber(Field f, Network n) {
 		super(f, n);
 		inventoryPipe = null;
+		pipeEnds = 0;
 		inventoryPump = null;
 	}
 	
@@ -29,7 +34,6 @@ public class Plumber extends Character {
 	 * @return ha beállítja arra az étékre, akkor igazzal tér vissza, ha nem tudja beállítani, akkor hamissal
 	 */
 	public boolean setInventoryPump(Pump p) {
-		Skeleton.printMethod(this, "setInventoryPump");
 		if(p == null || (inventoryPump == null && inventoryPipe == null)) {
 			inventoryPump = p;
 			return true;
@@ -43,21 +47,34 @@ public class Plumber extends Character {
 	 * @param p a beállítandó cső
 	 * @return ha beállítja arra az étékre, akkor igazzal tér vissza, ha nem tudja beállítani, akkor hamissal
 	 */
-	public boolean setInventoryPipe(Pipe p) {
-		Skeleton.printMethod(this, "setInventoryPipe");
-		if(p == null || (inventoryPipe == null && inventoryPump == null)) {
-			inventoryPipe = p;
-			return true;
-		} else {
-			return false;
+	public boolean setInventoryPipe(Pipe p) {		
+		if(p == null) {		// egy csővég eltávolítását jelzi
+			if(pipeEnds > 0) {
+				pipeEnds--;
+				if(pipeEnds == 0) {
+					inventoryPipe.setTaken(false);
+					inventoryPipe = p;
+				}
+			}
+			return true;	// akkor is, ha null volt alapból?
 		}
+		if(inventoryPipe == p/* && pipeEnds == 1?*/) {
+			pipeEnds = 2;
+			return true;
+		}
+		if(inventoryPipe == null && inventoryPump == null) {
+			inventoryPipe = p;
+			inventoryPipe.setTaken(true);
+			pipeEnds = 1;
+			return true;
+		}
+		return false;
 	}
 
 	/**
 	 * Publikus metódus, meghívásakor a szerelő megjavítja az elromlott mezőt, amin éppen a játékos áll.
 	 */
 	public void repair() {
-		Skeleton.printMethod(this, "repair");
 		currentField.interact(this);
 	}
 
@@ -65,12 +82,8 @@ public class Plumber extends Character {
 	 * Publikus metódus, meghívásakor az inventory-ból lerakja a csőnek az egyik végét ciszternához, forráshoz vagy pumpához.
 	 */
 	public void placePipe() {
-		Skeleton.printMethod(this, "placePipe");
 		if(inventoryPipe != null) {
-			boolean placed = currentField.interactPlumber(this, inventoryPipe);
-			if(!placed) System.out.println("Nem sikerult learakni a csovet");
-		} else {
-			System.out.println("Nincs cso az inventory-ban");
+			currentField.interactPlumber(this, inventoryPipe);
 		}
 	}
 
@@ -78,7 +91,6 @@ public class Plumber extends Character {
 	 * Publikus metódus, meghívásakor felvesz egy pumpát a ciszternáról.
 	 */
 	public void getPump() {
-		Skeleton.printMethod(this, "getPump");
 		if(inventoryPump == null && inventoryPipe == null) {
 			currentField.interactPlumber(this, inventoryPump);
 		}
@@ -89,7 +101,6 @@ public class Plumber extends Character {
 	 * (Ciszternán állva ajánlott meghívni, csak onnan lehet felvenni)
 	 */
 	public void getPipe() {
-		Skeleton.printMethod(this, "getPipe");
 		if(inventoryPipe == null && inventoryPump == null) {
 			currentField.interactPlumber(this, inventoryPipe);
 		}
@@ -100,7 +111,6 @@ public class Plumber extends Character {
 	 * @param p, Pipe típusú objektum referenciája, amelyik csövet vesszük fel
 	 */
 	public void grabPipe(Pipe p) {
-		Skeleton.printMethod(this, "grabPipe");
 		if(inventoryPipe == null && inventoryPump == null) {
 			currentField.interactPlumber(this, p);
 		}
@@ -110,7 +120,6 @@ public class Plumber extends Character {
 	 * Publikus metódus, meghívásakor lerak egy pumpát az aktuális cső közepére.
 	 */
 	public void placePump() {
-		Skeleton.printMethod(this, "placePump");
 		if(inventoryPump != null) {
 			currentField.interactPlumber(this, inventoryPump);
 		}
