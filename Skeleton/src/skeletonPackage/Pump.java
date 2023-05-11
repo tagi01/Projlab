@@ -202,7 +202,8 @@ public class Pump extends BreakableField {
 	 */
 	@Override
 	public void interact(Pipe from, Pipe to) {
-		setPump(from, to);
+		boolean success = setPump(from, to);
+		if(success) game.removeActionPoints();
 	}
 
 	/** A szerelő használja a képességét, lerak vagy felvesz egy csővéget
@@ -216,12 +217,14 @@ public class Pump extends BreakableField {
 			if(removed) {
 				pipe.removeNeighbour(this);
 				p.setInventoryPipe(pipe);
+				game.removeActionPoints();
 			}
 		} else {
 			boolean added = addNeighbour(pipe);
 			if(added) {
 				pipe.addNeighbour(this);
 				p.setInventoryPipe(null);
+				game.removeActionPoints();
 			}
 		}
 	}
