@@ -55,16 +55,20 @@ public abstract class Character {
 		ArrayList<Field> field = new ArrayList<Field>(currentField.getNeighbours());
 		if(field.contains(f)) {
 			if(f.acceptCharacter()) {
-				currentField.offField(this);
-				currentField = f;
-				currentField.onField(this);
+				if(currentField.offField(this)) {
+					currentField = f;
+					currentField.onField(this);
+				}
+				else{
+					System.out.println("Ragados a mezo, amin allsz. Nem lephetsz le rola.");
+				}	
 			}
 			else {
-				System.out.println("Nem tudsz ralepni a mezoe, mert mar allnak rajta");
+				System.out.println("Nem tudsz ralepni a mezore, mert mar allnak rajta.");
 			}		
 		} 
 		else {
-			System.out.println("Nem szomszedos a valasztott mezo, igy nem tudsz ralepni");
+			System.out.println("Nem szomszedos a valasztott mezo, igy nem tudsz ralepni.");
 		}
 	}
 

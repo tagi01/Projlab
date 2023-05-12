@@ -155,7 +155,7 @@ public abstract class Field {
 	 * A karaktert leveszi a mezőről, kikekerül a mezőn lévő karakterek listájából.
 	 * @param c Character, aki a meghívott mezőre lelépne
 	 */
-	public void offField(Character c) {
+	public boolean offField(Character c) {
 		Skeleton.printMethod(this, "offField");
 		if (currentCharacters.contains(c)) { currentCharacters.remove(c); }
 	}
