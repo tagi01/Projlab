@@ -208,6 +208,7 @@ public class Cistern extends Field {
 		}
 		else {
 			//return false;
+			//valami
 		}
 	}
 	
