@@ -5,7 +5,16 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /** Pipe osztály */
 public class Pipe extends BreakableField {
-
+	//***********************************************************************************************
+	public void setSize(int value) {size=value;}
+	public void setLostWater(int value) {lostWater=value;}
+	public void setWater(int value) {water=value;}
+	public void setCantPuncture(int value) {cantPuncture=value;}
+	public int getCantPuncture() {return cantPuncture;}
+	public void setStateOfPipeSlippery() {state=StateOfPipe.SLIPPERY;}
+	public void setStateOfPipeSticky() {state=StateOfPipe.STICKY;}
+	public void setStateOfPipeNormal() {state=StateOfPipe.NORMAL;}
+	//************************************************************************************************
 	/**
 	 * Privát integer, a lyukas csőből kifolyó víz mennyiségét tárolja.
 	 */
@@ -54,7 +63,7 @@ public class Pipe extends BreakableField {
 	 */
 	public void setTaken(boolean taken) {
 		this.taken = taken;
-		Skeleton.printMethod(this, "setTaken");
+		//Program.printMethod(this, "setTaken");
 	}
 
 	/**
@@ -84,15 +93,6 @@ public class Pipe extends BreakableField {
 		neighbours = new ArrayList<Field>();
 	}
 	
-	//***********************************************************************************************
-	public void setSize(int value) {size=value;}
-	public void setLostWater(int value) {lostWater=value;}
-	public void setWater(int value) {water=value;}
-	public void setCantPuncture(int value) {cantPuncture=value;}
-	public void setStateOfPipeSlippery() {state=StateOfPipe.SLIPPERY;}
-	public void setStateOfPipeSticky() {state=StateOfPipe.STICKY;}
-	public void setStateOfPipeNormal() {state=StateOfPipe.NORMAL;}
-	//************************************************************************************************
 
 	/** Hozzáad egy szomszédot a neighbours listához
 	 * @param f Az új szomszéd

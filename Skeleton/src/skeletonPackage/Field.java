@@ -77,7 +77,7 @@ public abstract class Field {
 	 * @return boolean, true ha ráléphet, false ha nem
 	 */
 	public boolean acceptCharacter() {
-		Skeleton.printMethod(this, "acceptCharacter");
+		//Program.printMethod(this, "acceptCharacter");
 		return true;
 	} // ugye ez csak a Pipe-nal valtozik
 
@@ -87,7 +87,7 @@ public abstract class Field {
 	 * @return boolean, true ha a paraméter hozzácsatlakoztatható, false ha nem
 	 */
 	public boolean acceptField(Field f) {
-		Skeleton.printMethod(this, "acceptField");
+		//Program.printMethod(this, "acceptField");
 		return true;
 	}
 
@@ -147,7 +147,7 @@ public abstract class Field {
 	 * @param c Character, aki a meghívott mezőre lépne
 	 */
 	public void onField(Character c) {
-		Skeleton.printMethod(this, "onField");
+		//Program.printMethod(this, "onField");
 		if(currentCharacters.contains(c) == false) { currentCharacters.add(c); }
 	}
 
@@ -156,8 +156,12 @@ public abstract class Field {
 	 * @param c Character, aki a meghívott mezőre lelépne
 	 */
 	public boolean offField(Character c) {
-		Skeleton.printMethod(this, "offField");
-		if (currentCharacters.contains(c)) { currentCharacters.remove(c); }
+		//Program.printMethod(this, "offField");
+		if (currentCharacters.contains(c)) { 
+			currentCharacters.remove(c); 
+			return true;
+		}
+		return false;
 	}
 
 	// FLOW WATER

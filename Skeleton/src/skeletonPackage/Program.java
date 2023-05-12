@@ -61,7 +61,7 @@ public class Program {
 					
 					break;
 				case "set-pipe":
-					
+					setPipe(splitted);
 					break;
 				case "set-pump":
 					
@@ -69,20 +69,26 @@ public class Program {
 				case "set-cistern":
 					
 					break;
-				case "set-plumber":
+				case "set-p":
 					
 					break;
-				case "set-saboteur":
+				case "set-s":
 					
 					break;
 				case "set-active":
-					
+					setActive(splitted);
 					break;
 				case "set-game":
 					
 					break;
 		//Játékosok akciói
+				case "start":
+					
+					break;
 				case "action-puncture":
+					
+					break;
+				case "action-sticky":
 					
 					break;
 				case "action-slipery":
@@ -101,7 +107,7 @@ public class Program {
 					
 					break;
 				case "action-grapPump":
-					
+					grabPump(splitted);
 					break;
 				case "action-move":
 					
@@ -110,17 +116,20 @@ public class Program {
 					
 					break;
 				case "action-setpump":
-					
+					actionSetPump(splitted);
 					break;
 		//Allapot lekerdezesek
 				case "get-neighbours":
 					
 					break;
+				case "get-hasPipe":
+					getHasPipe(splitted);
+					break;
 				case "get-inventory":
-					
+					getInventory(splitted);
 					break;
 				case "get-actionPoints":
-					
+					getActionPoint(splitted);
 					break;
 				case "get-currentField":
 					
@@ -135,7 +144,7 @@ public class Program {
 					
 					break;
 				case "get-cantPuncture":
-					
+					getCantPuncturePipe(splitted);
 					break;
 				case "get-isBroken":
 					
@@ -146,11 +155,23 @@ public class Program {
 				case "get-connections":
 					
 					break;
+				case "get-water":
+					
+					break;
+				case "get-state":
+					
+					break;
+				case "get-hasPump":
+					
+					break;
 		//Jatek mentes es betoltes
 				case "save":
 					
 					break;
 				case "load":
+					
+					break;
+				case "set-Random":
 					
 					break;
 		//Plusszok meg
@@ -312,7 +333,91 @@ public class Program {
 			}
 		}
 
-		public static void gabPipe(String[] command) {
-			
+		public static void grabPump(String[] command) {
+			 boolean standOnCistern=false;
+			 boolean activeIsPlumber=false;
+			 Cistern temp_cistern = new Cistern();
+			 //Ha cisternan all, akkor meg tudja hivni ezt a parancsot
+			 for (Map.Entry<String, Cistern> set : cisterns.entrySet()) {
+				 if(set.getValue().equals(network.getCurrentCharacter().getField())) {
+					 temp_cistern = set.getValue();
+					 standOnCistern=true;
+				 }
+	        }
+			//Ha az aktive karakter egy plumber akkor tudja meg
+			 for (Map.Entry<String, Plumber> set : plumbers.entrySet()) {
+				 if(set.getValue().equals(network.getCurrentCharacter())) {
+					 activeIsPlumber=true;
+				 }
+			 }
+			 //Ha minden ertek stimmel akkor kap egy uj pumpat az inventoryba a Plumber
+			 if(temp_cistern.getHasPump() && network.getCurrentCharacter().getInventoryPump()==null && standOnCistern && activeIsPlumber ) {
+				 network.getCurrentCharacter().setInventoryPump(new Pump());
+				 System.out.println("Fel tudta venni a pumpat a szerelo");
+			 }
+			 
+		}
+
+		public static void getActionPoint(String[] command) {
+			 System.out.println("A hatralevo akciopontok: " + network.getActionPoint());
+		}
+		
+		public static void getCantPuncturePipe(String[] command) {
+			if(pipes.containsKey(command[1])) {
+				System.out.println("Az hatralevo ido: " + pipes.get(command[2]).getCantPuncture());
+			}
+			else
+				System.out.println("Nincsen ilyen pipe: -1");
+
+		}
+
+		public static void getHasPipe(String[] command) {
+			if(cisterns.containsKey(command[1])) {
+				if(cisterns.get(command[1]).getHasPipe()) {
+					System.out.println("Van felveheto cso ennel a cisternanal");
+				}
+				else
+					System.out.println("Nincsen felveheto cso ennel a cisternanal");
+			}
+			else
+				System.out.println("Nincsen ilyen cisterna.");
+		}
+
+		public static void getInventory(String[] command) {
+			if(plumbers.containsKey(command[1])) {
+				//ha van nala cso
+				if(plumbers.get(command[1]).getInventoryPipe()!=null) {
+					//ha ket veg van nala akkor megkeresi a referenciakat, es kiirja ketszer
+					if(plumbers.get(command[1]).getPipeEnds()==2) {
+						System.out.print("A szerelonel a kovetkezok vannak inventoryba: ");
+						for (Map.Entry<String, Pipe> set : pipes.entrySet()) {
+							 if(set.getValue().equals(plumbers.get(command[1]).getInventoryPipe())) {
+								 System.out.print("["+set.getKey()+"] ["+set.getKey());
+							 }
+				        }	
+					}
+					//ha nem ket veg van nal, akkor csak egyszer irja ki
+					else {
+						System.out.print("A szerelonel a kovetkezok vannak inventoryba: ");
+						for (Map.Entry<String, Pipe> set : pipes.entrySet()) {
+							 if(set.getValue().equals(plumbers.get(command[1]).getInventoryPipe())) {
+								 System.out.print("["+set.getKey()+"]");
+							 }
+				        }
+					}
+						
+				}
+				//ha van nala pumpa
+				if(plumbers.get(command[1]).getInventoryPump()!=null) {
+					for (Map.Entry<String, Pump> set : pumps.entrySet()) {
+						 if(set.getValue().equals(plumbers.get(command[1]).getInventoryPump())) {
+							 System.out.print("["+set.getKey()+"]");
+						 }
+			        }
+				}
+				System.out.println();
+			}
+			else
+				System.out.println("Nincs ilyen karkter");
 		}
 }

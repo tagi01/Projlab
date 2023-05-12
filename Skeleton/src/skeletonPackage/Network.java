@@ -8,7 +8,8 @@ public class Network {
 	/*
 	 * eppen aktiv karakter akcio pontja
 	 */
-	private int actionPoint;
+	private int actionPoint;	
+	
 	/**
 	 * Privát, az éppen aktív játékos referenciája, ő tud cselekedni.
 	 */

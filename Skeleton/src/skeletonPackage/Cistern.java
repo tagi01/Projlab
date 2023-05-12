@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 /** Cistern osztály */
 public class Cistern extends Field {
+	//*****************************************************************
+	public boolean getHasPump() {return hasPump;}
+	public boolean getHasPipe() {return hasPipe;}
+	
+	//*****************************************************************
 	/**
 	 * Privát integer, amely egy játékos köre alatt összegyűjtött víz mennyiségét tárolja
 	 */
@@ -15,18 +20,24 @@ public class Cistern extends Field {
 	private boolean hasPump;
 
 	/**
+	 * Privát ArrayList<>, a ciszterna szomszédos csöveit tárolja.
+	 */
+	private ArrayList<Pipe> neighbours;
+	
+	/**
+	 * Private boolean, amely megadja, hogy van-e felvehető cső a ciszternán. True ha igen, false ha nincs.
+	 */
+	private boolean hasPipe;
+	
+	
+	/**
 	 * Csak a skeletonba kell
 	 * @param hasPump az uj ertek
 	 */
 	public void setHasPump(boolean hasPump) {
 		this.hasPump = hasPump;
 	}
-
-	/**
-	 * Private boolean, amely megadja, hogy van-e felvehető cső a ciszternán. True ha igen, false ha nincs.
-	 */
-	private boolean hasPipe;
-
+	
 	/**
 	 * Csak a skeletonba kell
 	 * @param hasPipe az uj ertek
@@ -35,11 +46,6 @@ public class Cistern extends Field {
 		this.hasPipe = hasPipe;
 	}
 
-	/**
-	 * Privát ArrayList<>, a ciszterna szomszédos csöveit tárolja.
-	 */
-	private ArrayList<Pipe> neighbours;
-	
 	/**
 	 * Publikus metódus, a ciszterna konstruktora
 	 */
@@ -59,7 +65,7 @@ public class Cistern extends Field {
 	 */
 	@Override
 	public boolean addNeighbour(Pipe p) {
-		Skeleton.printMethod(this, "addNeighbour");
+		//Program.printMethod(this, "addNeighbour");
 		if(neighbours.contains(p) || p == null) { 
 			return false; 
 		}
@@ -77,7 +83,7 @@ public class Cistern extends Field {
 	 */
 	@Override
 	public boolean addNeighbour(Field f) {
-		Skeleton.printMethod(this, "addNeighbour");
+		//Program.printMethod(this, "addNeighbour");
 		return false;
 	}
 
@@ -89,7 +95,7 @@ public class Cistern extends Field {
 	 */
 	@Override
 	public boolean removeNeighbour(Field f) {
-		Skeleton.printMethod(this, "removeNeighbour");
+		//Program.printMethod(this, "removeNeighbour");
 		return false;
 	}
 
@@ -101,7 +107,7 @@ public class Cistern extends Field {
 	 */
 	@Override
 	public boolean removeNeighbour(Pipe p) {
-		Skeleton.printMethod(this, "removeNeighbour");
+		//Program.printMethod(this, "removeNeighbour");
 		if(neighbours.contains(p) && p!=null) {
 			neighbours.remove(p);
 			return true;
@@ -115,7 +121,7 @@ public class Cistern extends Field {
 	 * Publikus metódus, amely a hasPump és hasPipe értékeket True-ra állítja, vagyis most már a ciszternáról fel lehet venni pumpát és csövet egyaránt.
 	 */
 	public void resetItems() {
-		Skeleton.printMethod(this, "resetItems");
+		//Program.printMethod(this, "resetItems");
 		hasPump = true;
 		hasPipe = true;
 	}
@@ -125,7 +131,7 @@ public class Cistern extends Field {
 	 * @return Pump a felvett pumpa referenciája (null, ha nincs felvehető pumpa)
 	 */
 	private Pump removePump() {
-		Skeleton.printMethod(this, "removePump");
+		//Program.printMethod(this, "removePump");
 		if(hasPump == true) {
 			hasPump = false;
 			Pump pu = new Pump(null, null);
@@ -141,7 +147,7 @@ public class Cistern extends Field {
 	 * @return Pipe, a felvett cső referenciája (null, ha nincs felvehető cső)
 	 */
 	private Pipe removePipe() {
-		Skeleton.printMethod(this, "removePipe");
+		//Program.printMethod(this, "removePipe");
 		if(hasPipe == true) {
 			hasPipe = false;
 			Pipe pi = new Pipe();
@@ -160,7 +166,7 @@ public class Cistern extends Field {
 	 * @return boolean, true ha hozzácsatlakoztatható, false ha nem
 	 */
 	public boolean acceptField(Pipe p) {
-		Skeleton.printMethod(this, "acceptField"); 
+		//Program.printMethod(this, "acceptField"); 
 		if(neighbours.contains(p) && p!=null) {
 			return false;
 		} 
@@ -175,7 +181,7 @@ public class Cistern extends Field {
 	 * @return boolean, true ha hozzácsatlakoztatható, false ha nem
 	 */
 	public boolean acceptField(Field f) {
-		Skeleton.printMethod(this, "acceptField");
+		//Program.printMethod(this, "acceptField");
 		return false;
 	}
 
@@ -184,7 +190,7 @@ public class Cistern extends Field {
 	 */
 	@Override
 	public void flowWater() {
-		Skeleton.printMethod(this, "collectWater");
+		//Program.printMethod(this, "collectWater");
 		for(int i = 0; i < neighbours.size() ; i++) {
 			int mennyit = neighbours.get(i).getWater();
 			collectedWater += neighbours.get(i).takeWater(mennyit);
@@ -200,7 +206,7 @@ public class Cistern extends Field {
 	 */
 	@Override
 	public void interactPlumber(Plumber plumber, Pipe p) {
-		Skeleton.printMethod(this, "interactPlumber");
+		//Program.printMethod(this, "interactPlumber");
 		if(hasPipe == true) {
 			p = removePipe();
 			plumber.setInventoryPipe(p);
@@ -221,7 +227,7 @@ public class Cistern extends Field {
 	 */
 	@Override
 	public void interactPlumber(Plumber plumber, Pump p) {
-		Skeleton.printMethod(this, "interactPlumber");
+		//Program.printMethod(this, "interactPlumber");
 		if(hasPump == true) {
 			p = removePump();
 			plumber.setInventoryPump(p);
@@ -240,7 +246,7 @@ public class Cistern extends Field {
 	 */
 	@Override
 	public ArrayList<? extends Field> getNeighbours() {
-		Skeleton.printMethod(this, "getNeighbours");
+		//Program.printMethod(this, "getNeighbours");
 		return neighbours;
 	}
 }

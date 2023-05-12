@@ -4,7 +4,12 @@ import java.util.ArrayList;
 
 /** Character osztály */
 public abstract class Character {
-
+	//*******************************************************************************************
+	protected Pump getInventoryPump() {return null;}
+	protected boolean setInventoryPump(Pump p) {return false;};
+	
+	
+	//*******************************************************************************************
 	/**
 	 * Privát Field típusú referencia, amely tárolja, hogy ezen a mezőn van épp a karakter.
 	 */
@@ -42,7 +47,7 @@ public abstract class Character {
 	 * @return Field-ből leszármazó típusú objektum referenciáját, amelyen a karakter áll.
 	 */
 	public Field getField() { 
-		Skeleton.printMethod(this, "getField");
+		//Program.printMethod(this, "getField");
 		return currentField; 
 	}
 
@@ -51,7 +56,7 @@ public abstract class Character {
 	 * @param f, Field típusú mező, amelyre szerente lépni
 	 */
 	public void move(Field f) {
-		Skeleton.printMethod(this, "move");
+		//Program.printMethod(this, "move");
 		ArrayList<Field> field = new ArrayList<Field>(currentField.getNeighbours());
 		if(field.contains(f)) {
 			if(f.acceptCharacter()) {
@@ -78,7 +83,7 @@ public abstract class Character {
 	 * @param to, Pipe típusú mező, amelyik csőbe fog a pumpa pumpálni
 	 */
 	public void setPump(Pipe from , Pipe to) {
-		Skeleton.printMethod(this, "setPump");
+		//Program.printMethod(this, "setPump");
 		currentField.interact(from,to);
 	}
 	
@@ -95,4 +100,6 @@ public abstract class Character {
 	public void turnPipeSticky() {
 		getField().interact(2);
 	}
+
+
 }
