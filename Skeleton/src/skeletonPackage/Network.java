@@ -5,6 +5,10 @@ import java.util.*;
 /** Network osztály */
 public class Network {
 
+	/*
+	 * eppen aktiv karakter akcio pontja
+	 */
+	private int actionPoint;
 	/**
 	 * Privát, az éppen aktív játékos referenciája, ő tud cselekedni.
 	 */
@@ -19,15 +23,7 @@ public class Network {
 	 * Privát, a pályát alkotó mezők listája.
 	 */
 	private ArrayList<Field> fields;
-
-	/**
-	 * Csak a teszteléshez kell
-	 * @param fields az uj ertek
-	 */
-	public void setFields(ArrayList<Field> fields) {
-		this.fields = fields;
-	}
-
+	
 	private ArrayList<Pump> pumplist;
 
 	/*
@@ -38,6 +34,21 @@ public class Network {
 		characters = new ArrayList<Character>();
 		pumplist = new ArrayList<Pump>();
 	}
+	
+	//**************************************************************
+	public void setActiveCharacter(Character value) {activeCharacter=value;}
+	public void setActionPoint(int value) {actionPoint=value;}
+	public int getActionPoint() {return actionPoint;}
+	public Character getCurrentCharacter() {return activeCharacter;}
+	//**************************************************************
+	
+	/**
+	 * Csak a teszteléshez kell
+	 * @param fields az uj ertek
+	 */
+	public void setFields(ArrayList<Field> fields) {
+		this.fields = fields;
+	}
 
 	/**
 	 * Az adott csőre lerakja a pumpát, beállítja az új mezők szomszédságait, létrehozza a plusz csövet, ami az új pumpa és az egyik régi pumpa közt lesz.
@@ -46,7 +57,7 @@ public class Network {
 	 */
 
 	public void addPump(Pump pump, Pipe currentField) {
-		Skeleton.printMethod(this, "addPump");
+		//Program.printMethod(this, "addPump");
 		Pipe p_new = new Pipe();
 		fields.add(p_new);
 
@@ -69,7 +80,7 @@ public class Network {
 	 * @param f: Field típus
 	 */
 	public void addField(Field f) {
-		Skeleton.printMethod(this, "addField");
+		//Program.printMethod(this, "addField");
 		fields.add(f);
 	}
 	
@@ -77,7 +88,7 @@ public class Network {
 	 * @param p egy Pump amit a listához adunk
 	 */
 	public void addField(Pump p) {
-		Skeleton.printMethod(this, "addField");
+		//Program.printMethod(this, "addField");
 		pumplist.add(p);
 	}
 	
@@ -101,7 +112,7 @@ public class Network {
 	 * Publikus metódus, meghívásakor véletlenszerűen eltör egy pumpát a pályán.
 	 */
 	public void breakPump() {
-		Skeleton.printMethod(this, "breakPump");
+		//Program.printMethod(this, "breakPump");
 		Random rn = new Random();
 		boolean break_succed = false;
 		

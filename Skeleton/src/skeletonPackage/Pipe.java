@@ -37,16 +37,7 @@ public class Pipe extends BreakableField {
 	 *     false, ha nem mozgatják egyik végét sem.
 	 */
 	private boolean taken;
-
-	/**
-	 * taken settere
-	 * @param taken az uj ertek
-	 */
-	public void setTaken(boolean taken) {
-		this.taken = taken;
-		Skeleton.printMethod(this, "setTaken");
-	}
-
+	
 	/**
 	 * Privát integer, megadja, hogy a csőben épp mennyi víz van.
 	 */
@@ -56,6 +47,15 @@ public class Pipe extends BreakableField {
 	 * A cső szomszédait tárolja
 	 */
 	private ArrayList<Field> neighbours;
+
+	/**
+	 * taken settere
+	 * @param taken az uj ertek
+	 */
+	public void setTaken(boolean taken) {
+		this.taken = taken;
+		Skeleton.printMethod(this, "setTaken");
+	}
 
 	/**
 	 * Konstruktor
@@ -83,6 +83,16 @@ public class Pipe extends BreakableField {
 		this.water = water;
 		neighbours = new ArrayList<Field>();
 	}
+	
+	//***********************************************************************************************
+	public void setSize(int value) {size=value;}
+	public void setLostWater(int value) {lostWater=value;}
+	public void setWater(int value) {water=value;}
+	public void setCantPuncture(int value) {cantPuncture=value;}
+	public void setStateOfPipeSlippery() {state=StateOfPipe.SLIPPERY;}
+	public void setStateOfPipeSticky() {state=StateOfPipe.STICKY;}
+	public void setStateOfPipeNormal() {state=StateOfPipe.NORMAL;}
+	//************************************************************************************************
 
 	/** Hozzáad egy szomszédot a neighbours listához
 	 * @param f Az új szomszéd

@@ -14,7 +14,7 @@ public abstract class BreakableField extends Field {
 	/** Publikus metódus, beállítja, hogy a BreakableField elvan-e törve vagy nem.
 	 * @param isBroken, boolean, true ha eltört a mező, false ha nem.
 	 */
-	private void setBroken(boolean isBroken) {
+	public void setBroken(boolean isBroken) {
 		this.isBroken = isBroken;
 	}
 

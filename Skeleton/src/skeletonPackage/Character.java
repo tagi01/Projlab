@@ -8,7 +8,7 @@ public abstract class Character {
 	/**
 	 * Privát Field típusú referencia, amely tárolja, hogy ezen a mezőn van épp a karakter.
 	 */
-	protected Field currentField;
+	protected  Field currentField;
 
 	/**
 	 * Privát Network típusú referencia, amely tárolja, hogy ebben a hálózatban van a karakter.
