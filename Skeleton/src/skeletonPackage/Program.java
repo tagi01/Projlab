@@ -69,158 +69,7 @@ public class Program {
 			input_temp = new String();
 			input_temp = input.nextLine();
 			readCommand(input_temp);
-			/*String[] splitted = input_temp.split("\\s+");
-			try {
-				switch (splitted[0]) {
-				// Játék halozat letehozasa, beallitasa
-				case "create-network":
-					String[] command = new String[splitted.length-1];
-					for(int i = 0; i < command.length; i++) {
-						command[i] = splitted[i+1];
-					}
-					createNetwork(command);					
-					break;
-				case "set-pipe":
-					setPipe(splitted);
-					break;
-				case "set-pump":
 
-					break;
-				case "set-cistern":
-
-					break;
-				case "set-p":
-
-					break;
-				case "set-s":
-					command = new String[splitted.length-1];
-					for(int i = 0; i < command.length; i++) {
-						command[i] = splitted[i+1];
-					}
-					setS(command);
-					break;
-				case "set-active":
-					setActive(splitted);
-					break;
-				case "set-game":
-
-					break;
-				// Játékosok akciói
-				case "start":
-
-					break;
-				case "action-puncture":
-
-					break;
-				case "action-sticky":
-					actionSticky();
-					break;
-				case "action-slippery":
-
-					break;
-				case "action-repair":
-
-					break;
-				case "action-placePipe":
-
-					break;
-				case "action-placePump":
-					actionPlacePump();
-					break;
-				case "action-grabPipe":
-
-					break;
-				case "action-grabPump":
-					grabPump(splitted);
-					break;
-				case "action-move":
-
-					break;
-				case "action-pass":
-					actionPass();
-					break;
-				case "action-setpump":
-					actionSetPump(splitted);
-					break;
-				// Allapot lekerdezesek
-				case "get-neighbours":
-					getNeighbours(splitted[1]);
-					break;
-				case "get-hasPipe":
-					getHasPipe(splitted);
-					break;
-				case "get-inventory":
-					getInventory(splitted);
-					break;
-				case "get-actionPoints":
-					getActionPoint(splitted);
-					break;
-				case "get-currentField":
-
-					break;
-				case "get-place":
-
-					break;
-				case "get-sticky":
-
-					break;
-				case "get-slippery":
-					getSlippery(splitted[1]);
-					break;
-				case "get-cantPuncture":
-					getCantPuncturePipe(splitted);
-					break;
-				case "get-isBroken":
-
-					break;
-				case "get-teamPoints":
-
-					break;
-				case "get-connections":
-
-					break;
-				case "get-water":
-
-					break;
-				case "get-state":
-
-					break;
-				case "get-hasPump":
-
-					break;
-				// Jatek mentes es betoltes
-				case "save":
-
-					break;
-				case "load":
-
-					break;
-				case "set-random":
-
-					break;
-				// Plusszok meg
-				case "pumpWater":
-
-					break;
-				case "pumpBreak":
-
-					break;
-				case "flowWater":
-
-					break;
-				case "exit":
-					System.out.println("Proto vege!");
-					input.close();
-					System.exit(0);
-				default:
-					System.out.println("Invalid parancs!");
-					System.out.print("Hibas parancs.");
-
-				}
-
-			} catch (InputMismatchException e) {
-				e.printStackTrace();
-			}*/
 		}
 
 	}
@@ -539,15 +388,18 @@ public class Program {
 			}
 		}
 		// Ha az aktive karakter egy plumber akkor tudja meg
+		Plumber temp_plumber=new Plumber();
+		
 		for (Map.Entry<String, Plumber> set : plumbers.entrySet()) {
 			if (set.getValue().equals(game.getActiveCharacter())) {
 				activeIsPlumber = true;
+				temp_plumber=set.getValue();
 			}
 		}
 		// Ha minden ertek stimmel akkor kap egy uj pumpat az inventoryba a Plumber
-		if (temp_cistern.getHasPump() && game.getActiveCharacter().getInventoryPump() == null && standOnCistern
+		if (temp_cistern.getHasPump() && temp_plumber.getInventoryPump() == null && standOnCistern
 				&& activeIsPlumber) {
-			game.getActiveCharacter().setInventoryPump(new Pump());
+			temp_plumber.setInventoryPump(new Pump());
 			System.out.println("Fel tudta venni a pumpat a szerelo");
 		}
 

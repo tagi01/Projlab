@@ -37,7 +37,7 @@ public class Game {
     //*******************************************************************
 
     public int getPointsOfPlumber() { return pointsOfPlumber; }
-    public int getGetPointsOfSaboteur(){ return pointsOfSaboteur; }
+    public int getPointsOfSaboteur(){ return pointsOfSaboteur; }
     public int getRound() { return round; }
     public int getActionPoints() { return actionPoints; }
     public Character getActiveCharacter() { return characters.get(activeCharacter-1); }

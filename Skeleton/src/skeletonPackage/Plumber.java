@@ -3,7 +3,6 @@ package skeletonPackage;
 /** Plumber osztály */
 public class Plumber extends Character {
 	//***************************************************************************
-	@Override
 	public Pump getInventoryPump() {return inventoryPump;}
 	public Pipe getInventoryPipe() {return inventoryPipe;}
 	public int getPipeEnds() {return pipeEnds;}
@@ -39,7 +38,6 @@ public class Plumber extends Character {
 	 * @param p a beállítandó pumpa
 	 * @return ha beállítja arra az étékre, akkor igazzal tér vissza, ha nem tudja beállítani, akkor hamissal
 	 */
-	@Override
 	public boolean setInventoryPump(Pump p) {
 		if(p == null || (inventoryPump == null && inventoryPipe == null)) {
 			inventoryPump = p;

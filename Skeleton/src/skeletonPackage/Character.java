@@ -4,12 +4,6 @@ import java.util.ArrayList;
 
 /** Character osztály */
 public abstract class Character {
-	//*******************************************************************************************
-	protected Pump getInventoryPump() {return null;}
-	protected boolean setInventoryPump(Pump p) {return false;};
-	
-	
-	//*******************************************************************************************
 	/**
 	 * Privát Field típusú referencia, amely tárolja, hogy ezen a mezőn van épp a karakter.
 	 */

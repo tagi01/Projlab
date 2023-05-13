@@ -10,15 +10,21 @@ public class Network {
 	 * Privát, a pályát alkotó mezők listája.
 	 */
 	private ArrayList<Field> fields;
-	
+	/*
+	 * egy lista a pumpakna
+	 */
 	private ArrayList<Pump> pumplist;
-
+	/*
+	 * allithato parameter a randomnak
+	 */
+	private boolean random;
 	/*
 	 * Konstruktor
 	 */
 	public Network() {
 		fields = new ArrayList<Field>();
 		pumplist = new ArrayList<Pump>();
+		random=false;
 	}
 	/*
 	//**************************************************************
@@ -28,7 +34,14 @@ public class Network {
 	public Character getCurrentCharacter() {return activeCharacter;}
 	//**************************************************************
 	*/
-	
+	/*
+	 * randomsg beállítása
+	 */
+	public void setRandom(boolean value) {random=value;}
+	/*
+	 * randomsag lekerdezése
+	 */
+	public boolean getRandom() {return random;}
 	/**
 	 * Csak a teszteléshez kell
 	 * @param fields az uj ertek
@@ -100,16 +113,19 @@ public class Network {
 	 */
 	public void breakPump() {
 		//Program.printMethod(this, "breakPump");
-		Random rn = new Random();
-		boolean break_succed = false;
-		
-		do {
-		int random = rn.nextInt((pumplist.size()));
-				pumplist.get(random).breakField();
-				break_succed = true;
-		}while(break_succed != true);
+		if(random) {
+			Random rn = new Random();
+			boolean break_succed = false;
+			
+			do {
+			int random = rn.nextInt((pumplist.size()));
+					pumplist.get(random).breakField();
+					break_succed = true;
+			}while(break_succed != true);
+		}
+		else
+			System.out.println("Random pumpa eltores ki van kapcsolva. Elotte kapcsold vissza a randomsagot.");
 	}
-	
 	/*
 	 * Végig iterál a field listan es meghivja a flowWater metodust
 	 */
