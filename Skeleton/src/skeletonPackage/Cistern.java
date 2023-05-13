@@ -187,6 +187,7 @@ public class Cistern extends Field {
 
 	/**
 	 * Publikus metódus, meghívásakor a ciszterna elveszi a hozzá beérkező csövektől az összes vizet és eltárolja.
+	 * Az összegyűjtött vizet odaadja a Game objektumnak és lenullázza az összegyűjtött vizet.
 	 */
 	@Override
 	public void flowWater() {
