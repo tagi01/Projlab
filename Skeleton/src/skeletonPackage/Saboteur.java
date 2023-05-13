@@ -15,9 +15,9 @@ public class Saboteur extends Character {
 	}
 
 	/**
-	 * Publikus metódus, meghívásakor kilyukasztja a csövet, amelyen áll.
+	 * Publikus metódus, meghívásakor csúszóssá teszi a csövet, amelyen áll.
 	 */
-	public void puncturePipe() {
+	public void turnPipeSlippery() {
 		currentField.interact(this);
 	}
 }
