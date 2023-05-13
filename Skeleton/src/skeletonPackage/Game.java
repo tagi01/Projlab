@@ -60,6 +60,12 @@ public class Game {
     public void addCharacter(Character c) { characters.add(c); }
     /** beállíthatjuk a karakter listát */
     public void setCharacters(ArrayList<Character> c) { characters = c; }
+    /** Paraméterben kapott c karaktert beállítja aktív karakternek */
+    public void setActiveCharacter(Character c) {
+        if(characters.contains(c)) {
+            activeCharacter = characters.indexOf(c);
+        }
+    }
 
 // METODUSOK
 
