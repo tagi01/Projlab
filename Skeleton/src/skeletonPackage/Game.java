@@ -71,10 +71,12 @@ public class Game {
         // kovi activeCharacter beállítása
         // ha utolso az activeCharacter volt, akkor round++
         activeCharacter++;
+        actionPoints = default_actionP;
 
         if(activeCharacter == characters.size()) {
             round++;
         }
+
         //networkon flowWater meghívása
         network.flowWaterOnField();
     }
@@ -82,5 +84,10 @@ public class Game {
     /** Győztes meghatározása, játék vége */
     public void gameOver() {
         // ide még nem tudom mit kéne írni
+        if(pointsOfPlumber > pointsOfSaboteur) { System.out.println("Szerelok nyertek!"); }
+        if(pointsOfSaboteur > pointsOfPlumber) { System.out.println("Szabotorok nyertek!"); }
+        else {
+            System.out.println("Dontetlen!");
+        }
     }
 }
