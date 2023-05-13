@@ -892,12 +892,76 @@ public class Program {
 			System.out.println("Nincs ilyen mező a játékban.");
 	}
 
-	public static void setPump(String[] command) { // TODO F set-pump
+	public static void setPump(String[] command) {
+		if(command[2]==null && command[3]==null) {
+			System.out.println("Hibas parancs");
+			return;
+		}
+		String opt = command[2];
+		String param = command[3];
+
+		boolean failed = false;
+		Pump p = new Pump();
+		Pipe pipe = new Pipe();
+
+		if(pumps.containsKey("pump_"+command[1])) {
+			p = pumps.get("pump_"+command[1]);
+		} else { failed = true;	}
+
+		if(opt.equals("-i")) { // pumpa bemenete
+			if(!pipes.containsKey(param)) { failed = true; }
+			else {
+				pipe = pipes.get(param);
+				p.setIn(pipe);
+			}
+		}
+
+		if(opt.equals("-o")) { // pumpa kimenete
+			if(!pipes.containsKey(param)) { failed = true; }
+			else {
+				pipe = pipes.get(param);
+				p.setOut(pipe);
+			}
+		}
+
+		if(opt.equals("-inv")) { // szerelonel van-e, szerelo azonosítója !
+			if(!plumbers.containsKey(param)) { failed = true; }
+			else {
+				Plumber plumber = plumbers.get(param);
+
+				plumber.setInventoryPump(p);
+			}
+		}
+
+		if(opt.equals("-b")) { // pumpa eltörve-e
+			if(param.equals("true") || param.equals("True")) {
+				p.setBroken(true);
+			}
+			if(param.equals("false") || param.equals("False")) {
+				p.setBroken(false);
+			}
+			else { failed = true; }
+		}
+
+		if(failed) {
+			System.out.print("Hibas parancs.");
+		}
 
 	}
 
-	public static void setGame(String[] command) { // TODO F set-game
-		// opciok ellenorzese
+	public static void setGame(String[] command) {
+
+		if(command[2]==null && command[3]==null || Integer.parseInt(command[3]) < 0) {
+			System.out.println("Hibas parancs.");
+			return;
+		}
+
+		int input = Integer.parseInt(command[3]);
+		if(command[2].equals("-r")) { game.setRound(input); }
+		if(command[2].equals("-s")) { game.setPointsOfSaboteur(input); }
+		if(command[2].equals("-p")) { game.setPointsOfPlumber(input); }
+
+		else System.out.println("Hibas parancs.");
 	}
 
 	public static void actionSlippery(String[] command)
@@ -989,6 +1053,7 @@ public class Program {
 
 		if(command[2]==null || Integer.parseInt(command[2]) > pipes.size()-1 || !pipes.containsKey(pipe)) {
 			System.out.println("Hibas parancs");
+			return;
 		}
 
 		System.out.println(pipes.get(pipe).getWater());
@@ -1000,6 +1065,7 @@ public class Program {
 
 		if(command[2]==null || !cisterns.containsKey(c)) {
 			System.out.println("Hibas parancs");
+			return;
 		}
 
 		if(cisterns.containsKey(c)){
@@ -1013,6 +1079,7 @@ public class Program {
 
 		if(command[2]==null || !pumps.containsKey(p)) {
 			System.out.println("Hibas parancs");
+			return;
 		}
 
 		if(pumps.containsKey(p)){

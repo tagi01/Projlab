@@ -6,18 +6,17 @@ import java.util.ArrayList;
  *  tehát konstruktorai private,
  *  egy példányára mutató referenciát tud visszaadni.
  *  Egy metódusa van, ami által létre lehet egyszer hozni (getInstance)
- *
  *  private static variable-ként kell tárolni.
  * */
 public class Game {
 
 // ATTRIBUTUMOK
     /** Szerelő csapat pontszáma */
-    private int pointsOfPlumber;
+    private int pointsOfPlumber = 0;
     /** Szabotőr csapat pontszáma */
-    private int pointsOfSaboteur;
+    private int pointsOfSaboteur = 0;
     /** Kör sorszáma */
-    private int round;
+    private int round = 1;
     /** Aktív játékos akciópontja [0,5] intervallumban */
     private int actionPoints;
 
@@ -30,14 +29,9 @@ public class Game {
     private int activeCharacter; // aktív karakter sorszáma a listában
 
 // GETTER, SETTER
-    //*******************************************************************
-    //Soma irta ezeket bocsi hogy belenyultam osztalyodba
-    public void setActionPoint(int value) {actionPoints=value;}
-
-    //*******************************************************************
 
     public int getPointsOfPlumber() { return pointsOfPlumber; }
-    public int getPointsOfSaboteur(){ return pointsOfSaboteur; }
+    public int getPointsOfSaboteur() { return pointsOfSaboteur; }
     public int getRound() { return round; }
     public int getActionPoints() { return actionPoints; }
     public Character getActiveCharacter() { return characters.get(activeCharacter-1); }
@@ -46,11 +40,13 @@ public class Game {
      * @param n, amennyivel növeljük a pontszámot
      * */
     public void givePlumberPoint(int n) { pointsOfPlumber += n; }
+    public void setPointsOfPlumber(int n) { pointsOfPlumber = n; }
 
     /** Növeli a szabotőrök pontszámát
      * @param n, amennyivel növeljük a pontszámot
      * */
     public void giveSaboteurPoint(int n) { pointsOfSaboteur += n; }
+    public void setPointsOfSaboteur(int n) { pointsOfSaboteur = n; }
 
     /** Beállítja a kör sorszámát
      *  @param round, erre fogja beállítani, egész szám
@@ -60,6 +56,8 @@ public class Game {
     /** Beállítja az aktív karakter akciópontjait max-ra */
     public void resetActionPoints() { actionPoints = default_actionP; }
     public void setNetwork(Network n) { this.network = n; }
+
+    public void setActionPoint(int value) { actionPoints = value; }
 
     /** hozzáadhatunk egy karaktert a karakterek listájához */
     public void addCharacter(Character c) { characters.add(c); }
