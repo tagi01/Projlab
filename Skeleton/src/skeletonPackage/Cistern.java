@@ -195,6 +195,8 @@ public class Cistern extends Field {
 			int mennyit = neighbours.get(i).getWater();
 			collectedWater += neighbours.get(i).takeWater(mennyit);
 		}
+		game.givePlumberPoint(collectedWater);
+		collectedWater = 0;
 	}
 	
 	/**
