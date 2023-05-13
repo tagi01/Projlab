@@ -35,6 +35,11 @@ public class Program {
 	private static int indentation = 0;
 	
 	/**
+	 * tárolja hogy elkezdődött-e már a játék
+	 */
+	private static boolean started;
+	
+	/**
 	 * Main metódus
 	 * @param args
 	 */
@@ -419,5 +424,50 @@ public class Program {
 			}
 			else
 				System.out.println("Nincs ilyen karkter");
+		}
+		
+		public static void setCistern(String[] command) {
+			String cistern = "cistern_";
+			cistern = cistern.concat(command[1]);
+			if (cisterns.containsKey(cistern)) {
+				for (int i = 2; i < command.length; i += 2) {
+					switch(command[i]) {
+					case "-pi":
+						if(command[i+1] == "true") {
+							cisterns.get(cistern).setHasPipe(true);
+							System.out.println("Beallitva");
+						}else if(command[i+1] == "false") {
+							cisterns.get(cistern).setHasPipe(true);
+							System.out.println("Beallitva");
+						}else {
+							System.out.println("Hibas parancs");
+						}
+						break;
+					case "-pu":
+						if(command[i+1] == "true") {
+							cisterns.get(cistern).setHasPump(true);
+							System.out.println("Beallitva");
+						}else if(command[i+1] == "false") {
+							cisterns.get(cistern).setHasPump(true);
+							System.out.println("Beallitva");
+						}else {
+							System.out.println("Hibas parancs");
+						}
+						break;
+					case "-w":
+						int water = Integer.parseInt(command[i+1]);
+						if(water >= 0) {
+							cisterns.get(cistern).setCollectedWater(water);
+							System.out.println("Beallitva");
+						}else
+							System.out.println("Hibas parancs");
+						break;
+					default:
+						System.out.println("Hibas parancs");
+						break;
+					}
+				}
+			}else
+				System.out.println("Hibas parancs");
 		}
 }

@@ -7,7 +7,7 @@ public class Cistern extends Field {
 	//*****************************************************************
 	public boolean getHasPump() {return hasPump;}
 	public boolean getHasPipe() {return hasPipe;}
-	
+	public void setCollectedWater(int water) {collectedWater = water;}
 	//*****************************************************************
 	/**
 	 * Privát integer, amely egy játékos köre alatt összegyűjtött víz mennyiségét tárolja

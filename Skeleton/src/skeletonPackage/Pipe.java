@@ -1,7 +1,7 @@
 package skeletonPackage;
 
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
+//import java.util.concurrent.ThreadLocalRandom;
 
 /** Pipe osztály */
 public class Pipe extends BreakableField {
@@ -63,7 +63,6 @@ public class Pipe extends BreakableField {
 	 */
 	public void setTaken(boolean taken) {
 		this.taken = taken;
-		//Program.printMethod(this, "setTaken");
 	}
 
 	/**
@@ -121,6 +120,7 @@ public class Pipe extends BreakableField {
 	 * @param f Az eltávolítandó szomszéd
 	 * @return true ha sikerült, false ha nem
 	 */
+	@Override
 	public boolean removeNeighbour(Field f) {
 		if(neighbours.contains(f) && f!=null) {
 			neighbours.remove(f);
@@ -197,55 +197,11 @@ public class Pipe extends BreakableField {
 		return water;
 	}
 
-	/** Megmondja hogy hozzá lehet-e adni szomszédként a paramétert
-	 * @param pipe a lehetséges új szomszéd
-	 * @return true ha igen, false ha nem
-	 */
-	public boolean acceptField(Pipe pipe) {
-		return false;
-	}
-
-	/** Megmondja hogy hozzá lehet-e adni szomszédként a paramétert
-	 * @param cistern a lehetséges új szomszéd
-	 * @return true ha igen, false ha nem
-	 */
-	public boolean acceptField(Cistern cistern) {
-		return true;
-	}
-
-	/** Megmondja hogy hozzá lehet-e adni szomszédként a paramétert
-	 * @param source a lehetséges új szomszéd
-	 * @return true ha igen, false ha nem
-	 */
-	public boolean acceptField(Source source) {
-		return true;
-	}
-
-	/** Megmondja hogy hozzá lehet-e adni szomszédként a paramétert
-	 * @param pump a lehetséges új szomszéd
-	 * @return true ha igen, false ha nem
-	 */
-	public boolean acceptField(Pump pump) {
-		return true;
-	}
-
 	/** Visszaadja a szomszédokat
 	 * @return a pipe szomszédai
 	 */
 	public ArrayList<? extends Field> getNeighbours() {
 		return neighbours;
-	}
-	
-	/**
-	 * Kicserél két szomszédot a listában
-	 * @param f az eltávolítandó mező
-	 * @param field a hozzáadandó mező
-	 */
-	public void changeNeighbour(Field f, Field field) {
-		if(neighbours.contains(f) && field != null) {
-			neighbours.remove(f);
-			neighbours.add(field);
-		}
 	}
 	
 	/** Kivesz egy szomszédot a neighbours listából
@@ -345,7 +301,7 @@ public class Pipe extends BreakableField {
 	@Override
 	public void onField(Character c) {
 		if(state == StateOfPipe.SLIPPERY) {
-			Field f = neighbours.get(ThreadLocalRandom.current().nextInt(0, 2));
+			Field f = neighbours.get(0);//ThreadLocalRandom.current().nextInt(0, 2));
 			f.onField(c);
 			c.setCurrentField(f);
 		}else if(currentCharacters.contains(c) == false) {
