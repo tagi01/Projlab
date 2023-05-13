@@ -1,9 +1,11 @@
 package skeletonPackage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class Program {
 
@@ -46,13 +48,13 @@ public class Program {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.out.println("-----------------------------------------------------\n"
-		         + "|   ___    ___    ____  _______  ____  \n"
-		         + "|  |   |  |   |  |    |    |    |    | \n"
-		         + "|  |___|  |___|  |    |    |    |    | \n"
-		         + "|  |      |\\    |    |    |    |    | \n"
-		         + "|  |      | \\   |____|    |    |____| \n"
-		         + "-----------------------------------------------------\n");
+		System.out.println("-----------------------------------------\n"
+		         + "|   ___    ___    ____  _______  ____   |\n"
+		         + "|  |   |  |   |  |    |    |    |    |  |\n"
+		         + "|  |___|  |___|  |    |    |    |    |  |\n"
+		         + "|  |      |\\    |    |    |    |    |  |\n"
+		         + "|  |      | \\   |____|    |    |____|  |\n"
+		         + "-----------------------------------------\n");
 
 		input = new Scanner(System.in);
 		String input_temp;
@@ -64,8 +66,12 @@ public class Program {
 			try {
 				switch (splitted[0]) {
 				// Játék halozat letehozasa, beallitasa
-				case "create-netwrok":
-
+				case "create-network":
+					String[] command = new String[splitted.length-1];
+					for(int i = 0; i < command.length; i++) {
+						command[i] = splitted[i+1];
+					}
+					createNetwork(command);					
 					break;
 				case "set-pipe":
 					setPipe(splitted);
@@ -80,7 +86,11 @@ public class Program {
 
 					break;
 				case "set-s":
-
+					command = new String[splitted.length-1];
+					for(int i = 0; i < command.length; i++) {
+						command[i] = splitted[i+1];
+					}
+					setS(command);
 					break;
 				case "set-active":
 					setActive(splitted);
@@ -96,7 +106,7 @@ public class Program {
 
 					break;
 				case "action-sticky":
-
+					actionSticky();
 					break;
 				case "action-slipery":
 
@@ -108,7 +118,7 @@ public class Program {
 
 					break;
 				case "action-placePump":
-
+					actionPlacePump();
 					break;
 				case "action-grabPipe":
 
@@ -120,14 +130,14 @@ public class Program {
 
 					break;
 				case "action-pass":
-
+					actionPass();
 					break;
 				case "action-setpump":
 					actionSetPump(splitted);
 					break;
 				// Allapot lekerdezesek
 				case "get-neighbours":
-
+					getNeighbours(splitted[1]);
 					break;
 				case "get-hasPipe":
 					getHasPipe(splitted);
@@ -148,7 +158,7 @@ public class Program {
 
 					break;
 				case "get-slippery":
-
+					getSlippery(splitted[1]);
 					break;
 				case "get-cantPuncture":
 					getCantPuncturePipe(splitted);
@@ -488,5 +498,192 @@ public class Program {
 				}
 			}
 		}
+	}
+	
+	
+	
+	
+	public static void createNetwork(String[] command) {	// a paraméterben a parancs nincs benne
+		if(command.length != 5) {
+			System.out.println("Hibás parancs.");
+		}
+		
+		int pipeNum, pumpNum, sourceNum, cisternNum, charNum;
+		try {
+			pipeNum = Integer.parseInt(command[0]);
+			pumpNum = Integer.parseInt(command[1]);
+			sourceNum = Integer.parseInt(command[2]);
+			cisternNum = Integer.parseInt(command[3]);
+			charNum = Integer.parseInt(command[4]);
+		} catch(NumberFormatException ex){
+			System.out.println("Hibás parancs.");		// nem számok
+			return;
+		}
+		if(charNum < 2 || charNum > 3) {
+			System.out.println("Hibás parancs.");		// nem megfelelő a karakterek száma
+			return;
+		}
+		
+		for(int i = 0; i < pipeNum; i++) {
+			Pipe p = new Pipe();
+			pipes.put("pipe_" + (i+1), p);
+			network.addField(p);
+		}
+		for(int i = 0; i < pumpNum; i++) {
+			Pump p = new Pump();
+			pumps.put("pump_" + (i+1), p);
+			network.addField(p);		// TODO a pumpákat a fieldekhez is adja hozzá
+		}
+		for(int i = 0; i < sourceNum; i++) {
+			Source s = new Source();
+			sources.put("source_" + (i+1), s);
+			network.addField(s);
+		}
+		for(int i = 0; i < cisternNum; i++) {
+			Cistern c = new Cistern();
+			cisterns.put("cistern_" + (i+1), c);
+			network.addField(c);
+		}
+		for(int i = 0; i < charNum; i++) {
+			Plumber p = new Plumber(null, network);
+			plumbers.put("Plumber_" + (i+1), p);
+			game.addCharacter(p);
+			Saboteur s = new Saboteur(null, network);
+			saboteurs.put("Saboteur_" + (i+1), s);
+			game.addCharacter(s);
+		}
+	}
+	
+	private static Field getFieldFromMaps(String field) {
+		if(pipes.containsKey(field)) return pipes.get(field);
+		if(pumps.containsKey(field)) return pumps.get(field);
+		if(sources.containsKey(field)) return sources.get(field);
+		if(cisterns.containsKey(field)) return cisterns.get(field);
+		return null;
+	}
+	
+	public static void setS(String[] command) {
+		String saboteur = "Saboteur_" + command[0];
+		Saboteur s = saboteurs.get(saboteur);
+		if(s == null) {
+			System.out.println("Hibás parancs.");	// nincs ennyi szabotőr vagy rosszul van megadva
+		}
+		Field f = getFieldFromMaps(command[1]);
+		if(f != null) {
+			s.setCurrentField(f);
+			System.out.println("Sikeres parancs.");
+		} else {
+			System.out.println("Hibás parancs.");	// nincs ilyen mező
+		}
+	}
+	
+	public static void actionSticky() {
+		game.getActiveCharacter().turnPipeSticky();
+		// TODO ???
+		// System.out.println("Sikeres parancs.");
+		// System.out.println("Akció vége, nincs változás.");
+		// System.out.println("Karakter nem ilyen típusú mezőn áll.");
+		// TODO System.out.println(actionPoints);!!
+	}
+	
+	public static void actionPlacePump() {
+		Plumber active = null;
+		Character current = game.getActiveCharacter();
+		for(Map.Entry<String, Plumber> entry: plumbers.entrySet()) {
+			if(entry.getValue() == current) {
+				active = entry.getValue();
+				break;
+			}
+		}
+		if(active != null) {
+			active.placePump();
+			//TODO println
+		} else {
+			System.out.println("Ehhez a parancshoz nincs hozzáférése.");
+		}
+	}
+	
+	public static void getNeighbours(String field) {
+		ArrayList<? extends Field> ns;
+		Map<String, Field> neighbours = new TreeMap<String, Field>();
+		if(pipes.containsKey(field)) {
+			ns = pipes.get(field).getNeighbours();
+			for(Field n: ns) {
+				for(Map.Entry<String, Pump> entry: pumps.entrySet()) {
+					if(entry.getValue() == n) {
+						neighbours.put(entry.getKey(), n);
+						break;
+					}
+				}
+				for(Map.Entry<String, Source> entry: sources.entrySet()) {
+					if(entry.getValue() == n) {
+						neighbours.put(entry.getKey(), n);
+						break;
+					}
+				}
+				for(Map.Entry<String, Cistern> entry: cisterns.entrySet()) {
+					if(entry.getValue() == n) {
+						neighbours.put(entry.getKey(), n);
+						break;
+					}
+				}
+			}
+		} else if(pumps.containsKey(field)) {
+			ns = pumps.get(field).getNeighbours();
+			for(Field n: ns) {
+				for(Map.Entry<String, Pipe> entry: pipes.entrySet()) {		// TODO a többi mezőfajtát is nézze végig?
+					if(entry.getValue() == n) {
+						neighbours.put(entry.getKey(), n);
+						break;
+					}
+				}
+			}
+		} else if(sources.containsKey(field)) {
+			ns = sources.get(field).getNeighbours();
+			for(Field n: ns) {
+				for(Map.Entry<String, Pipe> entry: pipes.entrySet()) {
+					if(entry.getValue() == n) {
+						neighbours.put(entry.getKey(), n);
+						break;
+					}
+				}
+			}
+		} else if(cisterns.containsKey(field)) {
+			ns = cisterns.get(field).getNeighbours();
+			for(Field n: ns) {
+				for(Map.Entry<String, Pipe> entry: pipes.entrySet()) {
+					if(entry.getValue() == n) {
+						neighbours.put(entry.getKey(), n);
+						break;
+					}
+				}
+			}
+		} else {
+			System.out.println("Hibás parancs.");		// nincs ilyen azonosítójú mező
+		}
+
+		for(Map.Entry<String, Field> entry : neighbours.entrySet()) {
+            System.out.print(entry.getKey() + " ");
+		}
+		System.out.println();
+	}
+	
+	public static void getSlippery(String pipeNum) {
+		String pipe = "pipe_"+ pipeNum;
+		if(pipes.containsKey(pipe)) {
+			Pipe p = pipes.get(pipe);
+			if(p.getState() == StateOfPipe.SLIPPERY) {
+				System.out.println(p.getTimer());
+			} else {
+				System.out.println("0");
+			}
+		} else {
+			System.out.println("Hibás parancs.");	// nem létező cső
+		}
+	}
+	
+	public static void actionPass() {
+		game.nextCharacter();
+		System.out.println("Sikeres parancs.");
 	}
 }
