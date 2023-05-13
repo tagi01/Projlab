@@ -1,9 +1,11 @@
 package skeletonPackage;
 
+import java.util.ArrayList;
+
 /** Game singleton osztály,
  *  tehát konstruktorai private,
- *  egy példányára mutató referenciát tud visszaadni
- *  egy metódusa van, ami által létre lehet egyszer hozni (getInstance)
+ *  egy példányára mutató referenciát tud visszaadni.
+ *  Egy metódusa van, ami által létre lehet egyszer hozni (getInstance)
  *
  *  private static variable-ként kell tárolni.
  * */
@@ -22,12 +24,23 @@ public class Game {
     /** Ennyi akciópontja lehet legfeljebb az aktív karakternek*/
     private static int default_actionP = 5;
 
+    private Network network;
+
+    private ArrayList<Character> characters; // játék sorrendben a játékosok karakterei
+    private int activeCharacter; // aktív karakter sorszáma a listában
+
 // GETTER, SETTER
+    //*******************************************************************
+    //Soma irta ezeket bocsi hogy belenyultam osztalyodba
+    public void setActionPoint(int value) {actionPoints=value;}
+
+    //*******************************************************************
 
     public int getPointsOfPlumber() { return pointsOfPlumber; }
     public int getGetPointsOfSaboteur(){ return pointsOfSaboteur; }
     public int getRound() { return round; }
     public int getActionPoints() { return actionPoints; }
+    public Character getActiveCharacter() { return characters.get(activeCharacter-1); }
 
     /** Növeli a szerelők pontszámát
      * @param n, amennyivel növeljük a pontszámot
@@ -46,13 +59,40 @@ public class Game {
 
     /** Beállítja az aktív karakter akciópontjait max-ra */
     public void resetActionPoints() { actionPoints = default_actionP; }
+    public void setNetwork(Network n) { this.network = n; }
+
+    /** hozzáadhatunk egy karaktert a karakterek listájához */
+    public void addCharacter(Character c) { characters.add(c); }
+    /** beállíthatjuk a karakter listát */
+    public void setCharacters(ArrayList<Character> c) { characters = c; }
+
+// METODUSOK
 
     /** Csökkenti eggyel az aktív karakter akciópontjait */
     public void removeActionPoints() { actionPoints--; }
 
-// METODUSOK
+    /** Következő karakter jön, network-öt meghívva végig megy a víz folyása (flowWater) */
+    public void nextCharacter() {
+        // kovi activeCharacter beállítása
+        // ha utolso az activeCharacter volt, akkor round++
+        activeCharacter++;
+        actionPoints = default_actionP;
 
-    public void nextCharacter() {}
+        if(activeCharacter == characters.size()) {
+            round++;
+        }
 
-    public void gameOver() {}
+        //networkon flowWater meghívása
+        network.flowWaterOnField();
+    }
+
+    /** Győztes meghatározása, játék vége */
+    public void gameOver() {
+        // ide még nem tudom mit kéne írni
+        if(pointsOfPlumber > pointsOfSaboteur) { System.out.println("Szerelok nyertek!"); }
+        if(pointsOfSaboteur > pointsOfPlumber) { System.out.println("Szabotorok nyertek!"); }
+        else {
+            System.out.println("Dontetlen!");
+        }
+    }
 }

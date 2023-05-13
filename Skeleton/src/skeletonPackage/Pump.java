@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Pump extends BreakableField {
 	/** Privát, Pipe típusú cső referenciáját tárolja, amelyikből folyik be a víz a pumpába. */
 	private Pipe in;
-	/** Privát, Pipe típusú cső referenciáját tárolja, amerre folyik a víz a pumpából*/
+	/** Privát, Pipe típusú cső referenciáját tárolja, amerre folyik a víz a pumpából. */
 	private Pipe out;
 	
 	/**
@@ -94,8 +94,7 @@ public class Pump extends BreakableField {
 	public boolean removeNeighbour(Pipe p) {
 		if(p == null || !neighbours.contains(p)) {
 			return false;
-		} else if(p == in || p == out || neighbours.size() <= 2) {
-			System.out.println("Nem tavolithato el a cso, mert aktiv");
+		} else if(p == in || p == out || neighbours.size() <= 2) {		// nem távolítható el a cső, mert aktív
 			return false;
 		} else {
 			neighbours.remove(p);
@@ -110,16 +109,14 @@ public class Pump extends BreakableField {
 	 * @return boolean, true, ha a csere megtörtént, false ha nem
 	 */
 	private boolean setPump(Pipe from , Pipe to) {
-		if(!neighbours.contains(to)) {
-			System.out.println("A beallitando cso nem a pumpa szomszedja");		// TODO ezeket a printeket inkább kommentbe kéne?
+		if(!neighbours.contains(to)) {		// a beállítandó cső nem a pumpa szomszédja
 			return false;
 		}
-		if(!neighbours.contains(from)) {
-			System.out.println("A lecserelendo cso nem a pumpa szomszedja");
+		if(!neighbours.contains(from)) {	// a lecserélendő cső nem a pumpa szomszédja
 			return false;
 		}
 		
-		if(neighbours.size() == 2) {	// ha csak ket cso van
+		if(neighbours.size() == 2) {		// ha csak két cső van
 			if(from.equals(in) && to.equals(out)) {
 				in = to;
 				out = from;
@@ -132,7 +129,7 @@ public class Pump extends BreakableField {
 		}
 		
 		if(to.equals(in) || to.equals(out)) {
-			return false; // to aktiv csove a pumpanak
+			return false; 					// to aktív csöve a pumpának
 		}
 		
 		if(from.equals(in)) {
@@ -142,7 +139,7 @@ public class Pump extends BreakableField {
 			out = to;
 			return true;
 		} else {
-			return false;	// from nem aktiv csove a pumpanak
+			return false;					// from nem aktív csöve a pumpának
 		}
 	}
 
@@ -151,7 +148,7 @@ public class Pump extends BreakableField {
 	 * @param f a kérdéses mező
 	 * @return true ha igen, false ha nem
 	 */
-	@Override
+/*	@Override
 	public boolean acceptField(Field f) {
 		if(neighbours.size() < 8) {
 			return true;
@@ -159,7 +156,7 @@ public class Pump extends BreakableField {
 			return false;
 		}
 	}
-
+TODO delete acceptField*/
 	/**
 	 * Publikus metódus, meghívásakor a pumpa a bemenetéből átpumpálja a megfelelő mennyiségű vizet a kimenetén lévő csőbe.
 	 */

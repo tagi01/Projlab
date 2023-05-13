@@ -5,20 +5,6 @@ import java.util.*;
 /** Network osztály */
 public class Network {
 
-	/*
-	 * eppen aktiv karakter akcio pontja
-	 */
-	private int actionPoint;	
-	
-	/**
-	 * Privát, az éppen aktív játékos referenciája, ő tud cselekedni.
-	 */
-	private Character activeCharacter;
-
-	/**
-	 * Privát, a pályán látható karakterek listája.
-	 */
-	private ArrayList<Character> characters;
 
 	/**
 	 * Privát, a pályát alkotó mezők listája.
@@ -32,16 +18,16 @@ public class Network {
 	 */
 	public Network() {
 		fields = new ArrayList<Field>();
-		characters = new ArrayList<Character>();
 		pumplist = new ArrayList<Pump>();
 	}
-	
+	/*
 	//**************************************************************
 	public void setActiveCharacter(Character value) {activeCharacter=value;}
 	public void setActionPoint(int value) {actionPoint=value;}
 	public int getActionPoint() {return actionPoint;}
 	public Character getCurrentCharacter() {return activeCharacter;}
 	//**************************************************************
+	*/
 	
 	/**
 	 * Csak a teszteléshez kell
