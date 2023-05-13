@@ -92,7 +92,7 @@ public class Program {
 					setPipe(splitted);
 					break;
 				case "pump":
-					
+					setPump(splitted);
 					break;
 				case "p":
 					setP(splitted);
@@ -107,7 +107,7 @@ public class Program {
 					setActive(splitted);
 					break;
 				case "game":
-					
+					setGame(splitted);
 					break;
 				case "random":
 					
@@ -133,8 +133,8 @@ public class Program {
 				case "setpump":
 					actionSetPump(splitted);
 					break;
-				case "slippery":
-					
+					case "slippery":
+					actionSlippery(splitted);
 					break;
 				case "repair":
 					repair();
@@ -182,7 +182,7 @@ public class Program {
 				getActionPoint(splitted);
 				break;
 			case "currentField":
-
+				System.out.println(getKeyFromFieldMaps(game.getActiveCharacter().currentField));
 				break;
 			case "place":
 				getPlace(splitted);
@@ -214,13 +214,13 @@ public class Program {
 				getConnections(splitted[1]);
 				break;
 			case "water":
-
+				getWater(splitted);
 				break;
 			case "state":
 				getState(splitted);
 				break;
 			case "hasPump":
-
+				getHasPump(splitted);
 				break;
 			default:
 				System.out.println("Hibas parancs.");
@@ -237,7 +237,7 @@ public class Program {
 			
 			break;
 		case "pumpWater":
-			
+			pumpWater(splitted);
 			break;
 		case "pumpBreak":
 			
@@ -376,35 +376,6 @@ public class Program {
 		}
 	}
 
-	public static void grabPump(String[] command) {
-		boolean standOnCistern = false;
-		boolean activeIsPlumber = false;
-		Cistern temp_cistern = new Cistern();
-		// Ha cisternan all, akkor meg tudja hivni ezt a parancsot
-		for (Map.Entry<String, Cistern> set : cisterns.entrySet()) {
-			if (set.getValue().equals(game.getActiveCharacter().getField())) {
-				temp_cistern = set.getValue();
-				standOnCistern = true;
-			}
-		}
-		// Ha az aktive karakter egy plumber akkor tudja meg
-		Plumber temp_plumber=new Plumber();
-		
-		for (Map.Entry<String, Plumber> set : plumbers.entrySet()) {
-			if (set.getValue().equals(game.getActiveCharacter())) {
-				activeIsPlumber = true;
-				temp_plumber=set.getValue();
-			}
-		}
-		// Ha minden ertek stimmel akkor kap egy uj pumpat az inventoryba a Plumber
-		if (temp_cistern.getHasPump() && temp_plumber.getInventoryPump() == null && standOnCistern
-				&& activeIsPlumber) {
-			temp_plumber.setInventoryPump(new Pump());
-			System.out.println("Fel tudta venni a pumpat a szerelo");
-		}
-
-	}
-
 	public static void getActionPoint(String[] command) {
 		System.out.println("A hatralevo akciopontok: " + game.getActionPoints());
 	}
@@ -414,7 +385,6 @@ public class Program {
 			System.out.println("Az hatralevo ido: " + pipes.get(command[2]).getCantPuncture());
 		} else
 			System.out.println("Nincsen ilyen pipe: -1");
-
 	}
 
 	public static void getHasPipe(String[] command) {
@@ -561,7 +531,7 @@ public class Program {
 			System.out.println("Hibas parancs.");
 		}
 	}
-	
+
 	public static void getIsBroken(String[] command) {
 		if (pipes.containsKey(command[1])) {
 			System.out.println(pipes.get(command [1]).getBroken());
@@ -594,7 +564,7 @@ public class Program {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void createNetwork(String[] command) {	// a paraméterben a parancs nincs benne
 		if(command.length < 5) {
 			System.out.println("Hibas parancs.");
@@ -654,7 +624,9 @@ public class Program {
 		if(cisterns.containsKey(key)) return cisterns.get(key);
 		return null;
 	}
-	
+
+	/** Visszaadja a felvett Map-ekből a kulcsot
+	 * @param value, bármelyik Field leszármazott */
 	private static String getKeyFromFieldMaps(Field value) {
 		for(Map.Entry<String, Pipe> entry: pipes.entrySet()) {
 			if(entry.getValue() == value) {
@@ -918,5 +890,116 @@ public class Program {
 		}
 		else
 			System.out.println("Nincs ilyen mező a játékban.");
+	}
+
+	public static void setPump(String[] command) { // TODO F set-pump
+
+	}
+
+	public static void setGame(String[] command) { // TODO F set-game
+		// opciok ellenorzese
+	}
+
+	public static void actionSlippery(String[] command)
+	{
+		// cso-e a currentField
+		// saboteur-e
+		boolean isPipe = false, isSaboteur = false;
+		Pipe temp_p = new Pipe();
+
+		for(Map.Entry<String, Pipe> pipe : pipes.entrySet()) {
+			if(pipe.getValue().equals(game.getActiveCharacter().getField())) {
+				if(pipe.getValue().getState()!=StateOfPipe.NORMAL) {
+					System.out.println("Akció vége, nincs változás. \n"+ game.getActionPoints());
+					return;
+				}
+				isPipe = true;
+				temp_p = pipe.getValue();
+			}
+		}
+
+		if(!isPipe) {
+			System.out.println("Karakter nem ilyen típusú mezőn áll.");
+			return;
+		}
+
+		for (Map.Entry<String, Saboteur> s : saboteurs.entrySet()) {
+			if (s.getValue().equals(game.getActiveCharacter())) {
+				isSaboteur = true;
+			}
+		}
+
+		if(!isSaboteur) {
+			System.out.println("Ehhez a parancshoz nincs hozzáférése.");
+			return;
+		}
+
+		Saboteur s = new Saboteur(temp_p, game.getActiveCharacter().network);
+		// s.trunPipeSlippery();
+		System.out.println("Sikeres parancs");
+		System.out.println(game.getActionPoints());
+
+	}
+	public static void grabPump(String[] command) {
+		boolean standOnCistern = false;
+		boolean activeIsPlumber = false;
+		Cistern temp_cistern = new Cistern();
+
+		for (Map.Entry<String, Cistern> cistern : cisterns.entrySet()) {
+			if (cistern.getValue().equals(game.getActiveCharacter().getField())) {
+				temp_cistern = cistern.getValue();
+				standOnCistern = true;
+			}
+		}
+
+		if(!standOnCistern) {
+			System.out.println("Karakter nem ilyen típusú mezőn áll.");
+			return;
+		}
+
+		// Ha az aktive karakter egy plumber akkor tudja meg
+		for (Map.Entry<String, Plumber> plumber : plumbers.entrySet()) {
+			if (plumber.getValue().equals(game.getActiveCharacter())) {
+				activeIsPlumber = true;
+			}
+		}
+
+		if(!activeIsPlumber) {
+			System.out.println("Ehhez a parancshoz nincs hozzáférése.");
+			return;
+		}
+
+		if(standOnCistern && activeIsPlumber) {
+			Plumber temp_plumber = new Plumber(game.getActiveCharacter().getField(), game.getActiveCharacter().network);
+			if(temp_cistern.getHasPump() && temp_plumber.getInventoryPump() == null) {
+				game.getActiveCharacter().getField().interactPlumber(temp_plumber, new Pump());
+				System.out.println("Sikeres parancs");
+				System.out.println(game.getActionPoints());
+			}
+		}
+		else {
+			System.out.println("Hibás parancs");
+			return;
+		}
+	}
+
+	public static void getWater(String[] command) {
+		String pipe = "pipe_";
+		pipe = pipe.concat(command[2]);
+
+		if(command[2]==null || Integer.parseInt(command[2]) > pipes.size()-1 || !pipes.containsKey(pipe)) {
+			System.out.println("Hibas parancs");
+		}
+
+		System.out.println(pipes.get(pipe).getWater());
+	}
+
+	public static void getHasPump(String[] command){
+		// TODO F get hasPump <cistern>
+
+	}
+
+	public static void pumpWater(String[] command) {
+		// TODO F pumpWater <pump>
 	}
 }
