@@ -52,8 +52,8 @@ public class Program {
 		         + "|   ___    ___    ____  _______  ____   |\n"
 		         + "|  |   |  |   |  |    |    |    |    |  |\n"
 		         + "|  |___|  |___|  |    |    |    |    |  |\n"
-		         + "|  |      |\\    |    |    |    |    |  |\n"
-		         + "|  |      | \\   |____|    |    |____|  |\n"
+		         + "|  |      |\\     |    |    |    |    |  |\n"
+		         + "|  |      | \\    |____|    |    |____|  |\n"
 		         + "-----------------------------------------\n");
 
 		input = new Scanner(System.in);
@@ -108,7 +108,7 @@ public class Program {
 				case "action-sticky":
 					actionSticky();
 					break;
-				case "action-slipery":
+				case "action-slippery":
 
 					break;
 				case "action-repair":
@@ -123,7 +123,7 @@ public class Program {
 				case "action-grabPipe":
 
 					break;
-				case "action-grapPump":
+				case "action-grabPump":
 					grabPump(splitted);
 					break;
 				case "action-move":
@@ -188,7 +188,7 @@ public class Program {
 				case "load":
 
 					break;
-				case "set-Random":
+				case "set-random":
 
 					break;
 				// Plusszok meg
@@ -206,7 +206,7 @@ public class Program {
 					input.close();
 					System.exit(0);
 				default:
-					System.out.print("Invalid parancs!");
+					System.out.print("Hibas parancs.");
 				}
 
 			} catch (InputMismatchException e) {
@@ -568,7 +568,7 @@ public class Program {
 	
 	public static void createNetwork(String[] command) {	// a paraméterben a parancs nincs benne
 		if(command.length != 5) {
-			System.out.println("Hibás parancs.");
+			System.out.println("Hibas parancs.");
 		}
 		
 		int pipeNum, pumpNum, sourceNum, cisternNum, charNum;
@@ -579,11 +579,11 @@ public class Program {
 			cisternNum = Integer.parseInt(command[3]);
 			charNum = Integer.parseInt(command[4]);
 		} catch(NumberFormatException ex){
-			System.out.println("Hibás parancs.");		// nem számok
+			System.out.println("Hibas parancs.");		// nem számok
 			return;
 		}
 		if(charNum < 2 || charNum > 3) {
-			System.out.println("Hibás parancs.");		// nem megfelelő a karakterek száma
+			System.out.println("Hibas parancs.");		// nem megfelelő a karakterek száma
 			return;
 		}
 		
@@ -615,6 +615,7 @@ public class Program {
 			saboteurs.put("Saboteur_" + (i+1), s);
 			game.addCharacter(s);
 		}
+		System.out.println("Beallitva.");
 	}
 	
 	private static Field getFieldFromMaps(String field) {
@@ -629,14 +630,14 @@ public class Program {
 		String saboteur = "Saboteur_" + command[0];
 		Saboteur s = saboteurs.get(saboteur);
 		if(s == null) {
-			System.out.println("Hibás parancs.");	// nincs ennyi szabotőr vagy rosszul van megadva
+			System.out.println("Hibas parancs.");	// nincs ennyi szabotőr vagy rosszul van megadva
 		}
 		Field f = getFieldFromMaps(command[1]);
 		if(f != null) {
 			s.setCurrentField(f);
-			System.out.println("Sikeres parancs.");
+			System.out.println("Beallitva.");
 		} else {
-			System.out.println("Hibás parancs.");	// nincs ilyen mező
+			System.out.println("Hibas parancs.");	// nincs ilyen mező
 		}
 	}
 	
@@ -662,7 +663,7 @@ public class Program {
 			active.placePump();
 			//TODO println
 		} else {
-			System.out.println("Ehhez a parancshoz nincs hozzáférése.");
+			System.out.println("Ehhez a parancshoz nincs hozzaferese.");
 		}
 	}
 	
@@ -722,7 +723,7 @@ public class Program {
 				}
 			}
 		} else {
-			System.out.println("Hibás parancs.");		// nincs ilyen azonosítójú mező
+			System.out.println("Hibas parancs.");		// nincs ilyen azonosítójú mező
 		}
 
 		for(Map.Entry<String, Field> entry : neighbours.entrySet()) {
@@ -741,7 +742,7 @@ public class Program {
 				System.out.println("0");
 			}
 		} else {
-			System.out.println("Hibás parancs.");	// nem létező cső
+			System.out.println("Hibas parancs.");	// nem létező cső
 		}
 	}
 	
