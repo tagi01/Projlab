@@ -37,6 +37,14 @@ public class Pipe extends BreakableField {
 	public void setStateOfPipeNormal() {
 		state = StateOfPipe.NORMAL;
 	}
+	
+	public StateOfPipe getState() {
+		return state;
+	}
+	
+	public int getStateTimer() {
+		return stateTimer;
+	}
 
 	// ************************************************************************************************
 	/**

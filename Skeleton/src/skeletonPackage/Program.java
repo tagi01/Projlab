@@ -494,14 +494,77 @@ public class Program {
 		if (plumbers.containsKey(command[1])) {
 			for (Map.Entry<String, Pump> set : pumps.entrySet()) {
 				if (set.getValue().equals(plumbers.get(command[1]).getField())) {
-					System.out.print(set.getKey());
+					System.out.println(set.getKey());
 				}
 			}
+			for (Map.Entry<String, Pipe> set : pipes.entrySet()) {
+				if (set.getValue().equals(plumbers.get(command[1]).getField())) {
+					System.out.println(set.getKey());
+				}
+			}
+			for (Map.Entry<String, Cistern> set : cisterns.entrySet()) {
+				if (set.getValue().equals(plumbers.get(command[1]).getField())) {
+					System.out.println(set.getKey());
+				}
+			}
+			for (Map.Entry<String, Source> set : sources.entrySet()) {
+				if (set.getValue().equals(plumbers.get(command[1]).getField())) {
+					System.out.println(set.getKey());
+				}
+			}
+		} else if (saboteurs.containsKey(command[1])) {
+			for (Map.Entry<String, Pump> set : pumps.entrySet()) {
+				if (set.getValue().equals(saboteurs.get(command[1]).getField())) {
+					System.out.println(set.getKey());
+				}
+			}
+			for (Map.Entry<String, Pipe> set : pipes.entrySet()) {
+				if (set.getValue().equals(saboteurs.get(command[1]).getField())) {
+					System.out.println(set.getKey());
+				}
+			}
+			for (Map.Entry<String, Cistern> set : cisterns.entrySet()) {
+				if (set.getValue().equals(saboteurs.get(command[1]).getField())) {
+					System.out.println(set.getKey());
+				}
+			}
+			for (Map.Entry<String, Source> set : sources.entrySet()) {
+				if (set.getValue().equals(saboteurs.get(command[1]).getField())) {
+					System.out.println(set.getKey());
+				}
+			}
+		} else {
+			System.out.println("Hibas parancs.");
 		}
 	}
 	
+	public static void getState(String[] command) {
+		String pipe = "pipe_";
+		pipe = pipe.concat(command[1]);
+		if (pipes.containsKey(pipe)) {
+			if (pipes.get(pipe).getState() == StateOfPipe.NORMAL) {
+				System.out.println("Normal");
+			} else if (pipes.get(pipe).getState() == StateOfPipe.STICKY) {
+				System.out.println("Sticky");
+			} else if (pipes.get(pipe).getState() == StateOfPipe.SLIPPERY) {
+				System.out.println("Slippery");
+			} else if (pipes.get(pipe).getState() == StateOfPipe.SETSTICKY) {
+				System.out.println("Setsticky");
+			}
+		} else {
+			System.out.println("Hibas parancs.");
+		}
+	}
 	
-	
+	public static void getIsBroken(String[] command) {
+		if (pipes.containsKey(command[1])) {
+			System.out.println(pipes.get(command [1]).getBroken());
+		} else if (pipes.containsKey(command[1])) {
+			System.out.println(pipes.get(command [1]).getBroken());
+		} else {
+			System.out.println("Hibas paramcs.");
+		}
+	}
 	
 	public static void createNetwork(String[] command) {	// a paraméterben a parancs nincs benne
 		if(command.length != 5) {
@@ -673,7 +736,7 @@ public class Program {
 		if(pipes.containsKey(pipe)) {
 			Pipe p = pipes.get(pipe);
 			if(p.getState() == StateOfPipe.SLIPPERY) {
-				System.out.println(p.getTimer());
+				System.out.println(p.getStateTimer());
 			} else {
 				System.out.println("0");
 			}
