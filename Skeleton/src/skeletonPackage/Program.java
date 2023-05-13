@@ -252,7 +252,7 @@ public class Program {
 					setS(Arrays.copyOfRange(splitted, 1, splitted.length));
 					break;
 				case "cistern":
-					
+					setCistern(splitted);
 					break;
 				case "active":
 					setActive(splitted);
@@ -288,7 +288,7 @@ public class Program {
 					
 					break;
 				case "repair":
-					
+					repair();
 					break;
 				case "placePipe":
 					placePipe(splitted);
@@ -336,7 +336,7 @@ public class Program {
 
 				break;
 			case "place":
-
+				getPlace(splitted);
 				break;
 			case "sticky":
 				getSticky(splitted);
@@ -352,7 +352,7 @@ public class Program {
 				getCantPuncturePipe(splitted);
 				break;
 			case "isBroken":
-
+				getIsBroken(splitted);
 				break;
 			case "teamPoints":
 
@@ -368,7 +368,7 @@ public class Program {
 
 				break;
 			case "state":
-
+				getState(splitted);
 				break;
 			case "hasPump":
 
@@ -382,7 +382,7 @@ public class Program {
 			System.out.println("Jatek elinditva");
 			break;
 		case "load":
-			
+			load(splitted);
 			break;
 		case "save":
 			
@@ -682,47 +682,11 @@ public class Program {
 	
 	public static void getPlace(String[] command) {
 		if (plumbers.containsKey(command[1])) {
-			for (Map.Entry<String, Pump> set : pumps.entrySet()) {
-				if (set.getValue().equals(plumbers.get(command[1]).getField())) {
-					System.out.println(set.getKey());
-				}
-			}
-			for (Map.Entry<String, Pipe> set : pipes.entrySet()) {
-				if (set.getValue().equals(plumbers.get(command[1]).getField())) {
-					System.out.println(set.getKey());
-				}
-			}
-			for (Map.Entry<String, Cistern> set : cisterns.entrySet()) {
-				if (set.getValue().equals(plumbers.get(command[1]).getField())) {
-					System.out.println(set.getKey());
-				}
-			}
-			for (Map.Entry<String, Source> set : sources.entrySet()) {
-				if (set.getValue().equals(plumbers.get(command[1]).getField())) {
-					System.out.println(set.getKey());
-				}
-			}
+			String name = getKeyFromFieldMaps(plumbers.get(command[1]).getField());
+			System.out.println(name);
 		} else if (saboteurs.containsKey(command[1])) {
-			for (Map.Entry<String, Pump> set : pumps.entrySet()) {
-				if (set.getValue().equals(saboteurs.get(command[1]).getField())) {
-					System.out.println(set.getKey());
-				}
-			}
-			for (Map.Entry<String, Pipe> set : pipes.entrySet()) {
-				if (set.getValue().equals(saboteurs.get(command[1]).getField())) {
-					System.out.println(set.getKey());
-				}
-			}
-			for (Map.Entry<String, Cistern> set : cisterns.entrySet()) {
-				if (set.getValue().equals(saboteurs.get(command[1]).getField())) {
-					System.out.println(set.getKey());
-				}
-			}
-			for (Map.Entry<String, Source> set : sources.entrySet()) {
-				if (set.getValue().equals(saboteurs.get(command[1]).getField())) {
-					System.out.println(set.getKey());
-				}
-			}
+			String name = getKeyFromFieldMaps(saboteurs.get(command[1]).getField());
+			System.out.println(name);
 		} else {
 			System.out.println("Hibas parancs.");
 		}
