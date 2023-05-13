@@ -1,6 +1,9 @@
 package skeletonPackage;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Map;
@@ -13,6 +16,11 @@ public class Program {
 	 * A felhasznalo inputjainak beolvasasahoz
 	 */
 	private static Scanner input;
+	
+	/**
+	 * A fájl inputjainak beolvasasahoz
+	 */
+	private static Scanner fileInput;
 	
 	private static Game game=new Game();
 
@@ -33,12 +41,6 @@ public class Program {
 	
 	private static Map<String , Plumber> plumbers;
 
-
-
-	/**
-	 * Az indentálás mélységét tárolja
-	 */
-	private static int indentation = 0;
 
 	/**
 	 * tárolja hogy elkezdődött-e már a játék
@@ -68,7 +70,8 @@ public class Program {
 		while (true) {
 			input_temp = new String();
 			input_temp = input.nextLine();
-			String[] splitted = input_temp.split("\\s+");
+			readCommand(input_temp);
+			/*String[] splitted = input_temp.split("\\s+");
 			try {
 				switch (splitted[0]) {
 				// Játék halozat letehozasa, beallitasa
@@ -219,9 +222,185 @@ public class Program {
 
 			} catch (InputMismatchException e) {
 				e.printStackTrace();
-			}
+			}*/
 		}
 
+	}
+	
+	public static void readCommand(String line) {
+		String[] splitted = line.split("\\s+");
+		switch(splitted[0]) {
+		case "create-network":
+			String[] command = new String[splitted.length-2];
+			for(int i = 0; i < command.length; i++) {
+				command[i] = splitted[i+2];
+			}
+			createNetwork(command);					
+			break;
+		case "set":
+			if (!started) {
+				splitted = Arrays.copyOfRange(splitted, 1, splitted.length);
+				switch(splitted[0]) {
+				case "pipe":
+					setPipe(splitted);
+					break;
+				case "pump":
+					
+					break;
+				case "p":
+					
+					break;
+				case "s":
+					command = new String[splitted.length-1];
+					for(int i = 0; i < command.length; i++) {
+						command[i] = splitted[i+1];
+					}
+					setS(command);
+					break;
+				case "cistern":
+					
+					break;
+				case "active":
+					setActive(splitted);
+					break;
+				case "game":
+					
+					break;
+				case "random":
+					
+					break;
+				default:
+					System.out.println("Hibas parancs");
+					break;
+				}
+			} else {
+				System.out.println("Mar elkezdodott a jatek");
+			}
+			break;
+		case "action":
+			if(started) {
+				splitted = Arrays.copyOfRange(splitted, 1, splitted.length);
+				switch(splitted[0]) {
+				case "puncture":
+					
+					break;
+				case "sticky":
+					actionSticky();
+					break;
+				case "setpump":
+					actionSetPump(splitted);
+					break;
+				case "slippery":
+					
+					break;
+				case "repair":
+					
+					break;
+				case "placePipe":
+					
+					break;
+				case "placePump":
+					actionPlacePump();
+					break;
+				case "grabPipe":
+					
+					break;
+				case "grabPump":
+					grabPump(splitted);
+					break;
+				case "move":
+					
+					break;
+				case "pass":
+					actionPass();
+					break;
+				default:
+					System.out.println("Hibas parancs");
+					break;
+				}
+			} else {
+				System.out.println("Meg nem kezdodott el a jatek");
+			}
+			break;
+		case "get":
+			splitted = Arrays.copyOfRange(splitted, 1, splitted.length);
+			switch(splitted[0]) {
+			case "neighbours":
+				getNeighbours(splitted[1]);
+				break;
+			case "hasPipe":
+				getHasPipe(splitted);
+				break;
+			case "inventory":
+				getInventory(splitted);
+				break;
+			case "actionPoints":
+				getActionPoint(splitted);
+				break;
+			case "currentField":
+
+				break;
+			case "place":
+
+				break;
+			case "sticky":
+
+				break;
+			case "slippery":
+				getSlippery(splitted[1]);
+				break;
+			case "cantPuncture":
+				getCantPuncturePipe(splitted);
+				break;
+			case "isBroken":
+
+				break;
+			case "teamPoints":
+
+				break;
+			case "connections":
+
+				break;
+			case "water":
+
+				break;
+			case "state":
+
+				break;
+			case "hasPump":
+
+				break;
+			default:
+				System.out.println("Hibas parancs.");
+				break;
+			}
+		case "start":
+			started = true;
+			System.out.println("Jatek elinditva");
+			break;
+		case "load":
+			
+			break;
+		case "save":
+			
+			break;
+		case "pumpWater":
+			
+			break;
+		case "pumpBreak":
+			
+			break;
+		case "flowWater":
+			
+			break;
+		case "exit":
+			System.out.println("Proto vege!");
+			input.close();
+			System.exit(0);
+		default:
+			System.out.println("Hibas parancs.");
+			break;
+		}
 	}
 
 	// Beállítja egy adott szamú csőnek a paramétereit
@@ -571,6 +750,29 @@ public class Program {
 			System.out.println(pipes.get(command [1]).getBroken());
 		} else {
 			System.out.println("Hibas paramcs.");
+		}
+	}
+	
+	public static void pumpBreak(String[] command) {
+		String pump = "pump_";
+		pump = pump.concat(command[1]);
+		if (pumps.containsKey(pump)) {
+			pumps.get(pump).breakField();
+		}
+	}
+	
+	public static void load(String[] command) {
+		String file = command[2];
+		file = file.concat("/");
+		file = file.concat(command[3]);
+		try {
+			fileInput = new Scanner(new FileInputStream(file));
+			while(fileInput.hasNextLine()) {
+				String line = fileInput.nextLine();
+				readCommand(line);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
 	}
 	
