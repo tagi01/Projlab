@@ -17,7 +17,7 @@ public class Program {
 	/**
 	 * az objektumok neveit tartalmazo map
 	 */
-	private static Map<String , Pipe> pipes;
+	private static Map<String , Pipe> pipes = new HashMap<String , Pipe>();
 	
 	private static Map<String , Pump> pumps;
 	
@@ -39,6 +39,7 @@ public class Program {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		pipes.put("pipe2", new Pipe());
 		System.out.println("-----------------------------------------------------\n"
 				         + "|   ___    ___    ____  _______  ____  \n"
 				         + "|  |   |  |   |  |    |    |    |    | \n"
@@ -189,7 +190,7 @@ public class Program {
 					input.close();
 					System.exit(0);
 				default:
-					System.out.print("Invalid parancs!");
+					System.out.println("Invalid parancs!");
 				}
 				
 			} catch (InputMismatchException e) {
