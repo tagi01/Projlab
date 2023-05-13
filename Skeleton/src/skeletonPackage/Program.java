@@ -248,7 +248,7 @@ public class Program {
 					
 					break;
 				case "p":
-					
+					setP(splitted);
 					break;
 				case "s":
 					command = new String[splitted.length-1];
@@ -282,7 +282,7 @@ public class Program {
 				splitted = Arrays.copyOfRange(splitted, 1, splitted.length);
 				switch(splitted[0]) {
 				case "puncture":
-					
+					puncture(splitted);
 					break;
 				case "sticky":
 					actionSticky();
@@ -297,7 +297,7 @@ public class Program {
 					
 					break;
 				case "placePipe":
-					
+					placePipe(splitted);
 					break;
 				case "placePump":
 					actionPlacePump();
@@ -309,7 +309,7 @@ public class Program {
 					grabPump(splitted);
 					break;
 				case "move":
-					
+					move(splitted);
 					break;
 				case "pass":
 					actionPass();
@@ -344,7 +344,7 @@ public class Program {
 
 				break;
 			case "sticky":
-
+				getSticky(splitted);
 				break;
 			case "slippery":
 				getSlippery(splitted[1]);
@@ -959,5 +959,79 @@ public class Program {
 	public static void actionPass() {
 		game.nextCharacter();
 		System.out.println("Sikeres parancs.");
+	}
+	
+	public static void setP(String[] Command){
+		if(plumbers.containsKey(Command[1])) {
+			if(pipes.containsKey(Command[2])) {
+				Plumber pl_tmp = plumbers.get(Command[1]);
+				pl_tmp.setCurrentField(pipes.get(Command[2]));
+			}
+			else if(pumps.containsKey(Command[2])) {
+				Plumber pl_tmp = plumbers.get(Command[1]);
+				pl_tmp.setCurrentField(pumps.get(Command[2]));
+			}
+			else if(sources.containsKey(Command[2])) {
+				Plumber pl_tmp = plumbers.get(Command[1]);
+				pl_tmp.setCurrentField(sources.get(Command[2]));
+			}
+			else if(cisterns.containsKey(Command[2])) {
+				Plumber pl_tmp = plumbers.get(Command[1]);
+				pl_tmp.setCurrentField(cisterns.get(Command[2]));
+			}
+			else
+				System.out.println("Nincs ilyen mező a játékban.");
+		}
+		else
+			System.out.println("Nincs ilyen szerelő a játékban.");
+	}
+	
+	public static void puncture(String[] Command){
+		if(saboteurs.containsKey(Command[1])) {
+			if(pipes.containsKey(Command[2])) {
+				saboteurs.get(Command[1]).puncturePipe();
+			}
+			else 
+				System.out.println("Nem csövön áll a játékos.");
+		}
+		else if(plumbers.containsKey(Command[1])) {
+			if(pipes.containsKey(Command[2])) {
+				plumbers.get(Command[1]).puncturePipe();
+			}
+			else 
+				System.out.println("Nem csövön áll a játékos.");
+		}
+		else
+			System.out.println("Nincs ilyen karakter a játékban.");
+	}
+	
+	public static void placePipe(String[] Command){
+		
+	}
+	
+	public static void move(String[] Command){
+		if(pipes.containsKey(Command[1])) {
+			game.getActiveCharacter().move(pipes.get(Command[1]));
+		}
+		else if(pumps.containsKey(Command[1])) {
+			game.getActiveCharacter().move(pumps.get(Command[1]));
+		}
+		else if(sources.containsKey(Command[1])) {
+			game.getActiveCharacter().move(sources.get(Command[1]));
+		}
+		else if(cisterns.containsKey(Command[1])) {
+			game.getActiveCharacter().move(cisterns.get(Command[1]));
+		}
+		else
+			System.out.println("Nincs ilyen mező a játékban, amire lépni szeretne.");
+	}
+	
+	public static void getSticky(String[] Command){
+		if(pipes.containsKey(Command[1])) {
+			if(pipes.get(Command[1]).getState() == StateOfPipe.STICKY) {
+				System.out.println("Ennyi ideig ragadós a cső: " + pipes.get(Command[1]).getStateTimer());
+			}
+			System.out.println("Nem ragadós a cső.");
+		}
 	}
 }
