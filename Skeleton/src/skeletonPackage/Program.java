@@ -53,15 +53,13 @@ public class Program {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-
-		pipes.put("pipe2", new Pipe());
-		System.out.println("-----------------------------------------------------\n"
-				         + "|   ___    ___    ____  _______  ____  \n"
-				         + "|  |   |  |   |  |    |    |    |    | \n"
-				         + "|  |___|  |___|  |    |    |    |    | \n"
-				         + "|  |      |\\    |    |    |    |    | \n"
-				         + "|  |      | \\   |____|    |    |____| \n"
-				         + "-----------------------------------------------------\n");
+		System.out.println("-----------------------------------------\n"
+		         + "|   ___    ___    ____  _______  ____   |\n"
+		         + "|  |   |  |   |  |    |    |    |    |  |\n"
+		         + "|  |___|  |___|  |    |    |    |    |  |\n"
+		         + "|  |      |\\     |    |    |    |    |  |\n"
+		         + "|  |      | \\    |____|    |    |____|  |\n"
+		         + "-----------------------------------------\n");
 
 
 		input = new Scanner(System.in);
@@ -230,12 +228,12 @@ public class Program {
 	public static void readCommand(String line) {
 		String[] splitted = line.split("\\s+");
 		switch(splitted[0]) {
-		case "create-network":
-			String[] command = new String[splitted.length-2];
-			for(int i = 0; i < command.length; i++) {
-				command[i] = splitted[i+2];
-			}
-			createNetwork(command);					
+		case "create":
+			if(splitted.length > 1 && splitted[1] == "network") {
+				createNetwork(Arrays.copyOfRange(splitted, 2, splitted.length));	
+			} else {
+				System.out.println("Hibas parancs.");
+			}				
 			break;
 		case "set":
 			if (!started) {
@@ -251,11 +249,7 @@ public class Program {
 					setP(splitted);
 					break;
 				case "s":
-					command = new String[splitted.length-1];
-					for(int i = 0; i < command.length; i++) {
-						command[i] = splitted[i+1];
-					}
-					setS(command);
+					setS(Arrays.copyOfRange(splitted, 1, splitted.length));
 					break;
 				case "cistern":
 					
@@ -270,7 +264,7 @@ public class Program {
 					
 					break;
 				default:
-					System.out.println("Hibas parancs");
+					System.out.println("Hibas parancs.");
 					break;
 				}
 			} else {
@@ -315,7 +309,7 @@ public class Program {
 					actionPass();
 					break;
 				default:
-					System.out.println("Hibas parancs");
+					System.out.println("Hibas parancs.");
 					break;
 				}
 			} else {
@@ -326,7 +320,8 @@ public class Program {
 			splitted = Arrays.copyOfRange(splitted, 1, splitted.length);
 			switch(splitted[0]) {
 			case "neighbours":
-				getNeighbours(splitted[1]);
+				String c = splitted.length > 1 ? splitted[1] : null;
+				getNeighbours(c);
 				break;
 			case "hasPipe":
 				getHasPipe(splitted);
@@ -347,6 +342,10 @@ public class Program {
 				getSticky(splitted);
 				break;
 			case "slippery":
+				if(splitted.length == 1) {
+					System.out.println("Hibas parancs.");
+					break;
+				}
 				getSlippery(splitted[1]);
 				break;
 			case "cantPuncture":
@@ -359,7 +358,11 @@ public class Program {
 
 				break;
 			case "connections":
-
+				if(splitted.length == 1) {
+					System.out.println("Hibas parancs.");
+					break;
+				}
+				getConnections(splitted[1]);
 				break;
 			case "water":
 
@@ -777,7 +780,7 @@ public class Program {
 	}
 	
 	public static void createNetwork(String[] command) {	// a paraméterben a parancs nincs benne
-		if(command.length != 5) {
+		if(command.length < 5) {
 			System.out.println("Hibas parancs.");
 		}
 		
@@ -828,23 +831,51 @@ public class Program {
 		System.out.println("Beallitva.");
 	}
 	
-	private static Field getFieldFromMaps(String field) {
-		if(pipes.containsKey(field)) return pipes.get(field);
-		if(pumps.containsKey(field)) return pumps.get(field);
-		if(sources.containsKey(field)) return sources.get(field);
-		if(cisterns.containsKey(field)) return cisterns.get(field);
+	private static Field getValueFromFieldMaps(String key) {
+		if(pipes.containsKey(key)) return pipes.get(key);
+		if(pumps.containsKey(key)) return pumps.get(key);
+		if(sources.containsKey(key)) return sources.get(key);
+		if(cisterns.containsKey(key)) return cisterns.get(key);
+		return null;
+	}
+	
+	private static String getKeyFromFieldMaps(Field value) {
+		for(Map.Entry<String, Pipe> entry: pipes.entrySet()) {
+			if(entry.getValue() == value) {
+				return entry.getKey();
+			}
+		}
+		for(Map.Entry<String, Pump> entry: pumps.entrySet()) {
+			if(entry.getValue() == value) {
+				return entry.getKey();
+			}
+		}
+		for(Map.Entry<String, Source> entry: sources.entrySet()) {
+			if(entry.getValue() == value) {
+				return entry.getKey();
+			}
+		}
+		for(Map.Entry<String, Cistern> entry: cisterns.entrySet()) {
+			if(entry.getValue() == value) {
+				return entry.getKey();
+			}
+		}
 		return null;
 	}
 	
 	public static void setS(String[] command) {
-		String saboteur = "Saboteur_" + command[0];
-		Saboteur s = saboteurs.get(saboteur);
-		if(s == null) {
+		if(command.length < 2) {
+			System.out.println("Hibas parancs.");
+			return;
+		}
+		String saboteurKey = "Saboteur_" + command[0];
+		Saboteur saboteur = saboteurs.get(saboteurKey);
+		if(saboteur == null) {
 			System.out.println("Hibas parancs.");	// nincs ennyi szabotőr vagy rosszul van megadva
 		}
-		Field f = getFieldFromMaps(command[1]);
+		Field f = getValueFromFieldMaps(command[1]);
 		if(f != null) {
-			s.setCurrentField(f);
+			saboteur.setCurrentField(f);
 			System.out.println("Beallitva.");
 		} else {
 			System.out.println("Hibas parancs.");	// nincs ilyen mező
@@ -878,59 +909,34 @@ public class Program {
 	}
 	
 	public static void getNeighbours(String field) {
+		if(field == null) {
+			field = getKeyFromFieldMaps(game.getActiveCharacter().getField());
+		}
 		ArrayList<? extends Field> ns;
 		Map<String, Field> neighbours = new TreeMap<String, Field>();
 		if(pipes.containsKey(field)) {
 			ns = pipes.get(field).getNeighbours();
 			for(Field n: ns) {
-				for(Map.Entry<String, Pump> entry: pumps.entrySet()) {
-					if(entry.getValue() == n) {
-						neighbours.put(entry.getKey(), n);
-						break;
-					}
-				}
-				for(Map.Entry<String, Source> entry: sources.entrySet()) {
-					if(entry.getValue() == n) {
-						neighbours.put(entry.getKey(), n);
-						break;
-					}
-				}
-				for(Map.Entry<String, Cistern> entry: cisterns.entrySet()) {
-					if(entry.getValue() == n) {
-						neighbours.put(entry.getKey(), n);
-						break;
-					}
-				}
+				String s = getKeyFromFieldMaps(n);
+				if(s != null) neighbours.put(s, n);
 			}
 		} else if(pumps.containsKey(field)) {
 			ns = pumps.get(field).getNeighbours();
 			for(Field n: ns) {
-				for(Map.Entry<String, Pipe> entry: pipes.entrySet()) {		// TODO a többi mezőfajtát is nézze végig?
-					if(entry.getValue() == n) {
-						neighbours.put(entry.getKey(), n);
-						break;
-					}
-				}
+				String s = getKeyFromFieldMaps(n);
+				if(s != null) neighbours.put(s, n);
 			}
 		} else if(sources.containsKey(field)) {
 			ns = sources.get(field).getNeighbours();
 			for(Field n: ns) {
-				for(Map.Entry<String, Pipe> entry: pipes.entrySet()) {
-					if(entry.getValue() == n) {
-						neighbours.put(entry.getKey(), n);
-						break;
-					}
-				}
+				String s = getKeyFromFieldMaps(n);
+				if(s != null) neighbours.put(s, n);
 			}
 		} else if(cisterns.containsKey(field)) {
 			ns = cisterns.get(field).getNeighbours();
 			for(Field n: ns) {
-				for(Map.Entry<String, Pipe> entry: pipes.entrySet()) {
-					if(entry.getValue() == n) {
-						neighbours.put(entry.getKey(), n);
-						break;
-					}
-				}
+				String s = getKeyFromFieldMaps(n);
+				if(s != null) neighbours.put(s, n);
 			}
 		} else {
 			System.out.println("Hibas parancs.");		// nincs ilyen azonosítójú mező
@@ -959,6 +965,38 @@ public class Program {
 	public static void actionPass() {
 		game.nextCharacter();
 		System.out.println("Sikeres parancs.");
+		Character character = game.getActiveCharacter();
+		String nextChar = null;
+		for(Map.Entry<String, Plumber> entry: plumbers.entrySet()) {
+			if(entry.getValue() == character) {
+				nextChar = entry.getKey();
+			}
+		}
+		for(Map.Entry<String, Saboteur> entry: saboteurs.entrySet()) {
+			if(entry.getValue() == character) {
+				nextChar = entry.getKey();
+			}
+		}
+		System.out.println(nextChar);
+	}
+	
+	public static void getConnections(String pumpNum) {
+		String pumpKey = "pump_"+ pumpNum;
+		Pump pump = pumps.get(pumpKey);
+		if(pump == null) {
+			System.out.println("Hibas parancs.");		// cső sorszáma rosszul van megadva
+			return;
+		}
+		String out = null, in = null;
+		for(Map.Entry<String, Pipe> entry: pipes.entrySet()) {
+			if(entry.getValue() == pump.getOut()) {
+				out = entry.getKey();
+			}
+			if(entry.getValue() == pump.getIn()) {
+				in = entry.getKey();
+			}
+		}
+		System.out.println(out + " " + in);		// TODO? szöveg, h melyik a ki és melyik a be
 	}
 	
 	public static void setP(String[] Command){
