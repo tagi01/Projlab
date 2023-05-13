@@ -995,11 +995,28 @@ public class Program {
 	}
 
 	public static void getHasPump(String[] command){
-		// TODO F get hasPump <cistern>
+		String c = "cistern_";
+		c.concat(command[2]);
 
+		if(command[2]==null || !cisterns.containsKey(c)) {
+			System.out.println("Hibas parancs");
+		}
+
+		if(cisterns.containsKey(c)){
+			System.out.println(cisterns.get(c).getHasPump());
+		}
 	}
 
 	public static void pumpWater(String[] command) {
-		// TODO F pumpWater <pump>
+		String p = "cistern_";
+		p.concat(command[2]);
+
+		if(command[2]==null || !pumps.containsKey(p)) {
+			System.out.println("Hibas parancs");
+		}
+
+		if(pumps.containsKey(p)){
+			pumps.get(p).flowWater();
+		}
 	}
 }
