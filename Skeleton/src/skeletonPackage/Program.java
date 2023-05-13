@@ -1008,7 +1008,10 @@ public class Program {
 	}
 	
 	public static void placePipe(String[] Command){
-		
+		if(plumbers.containsKey(game.getActiveCharacter())) {
+			Plumber tmp = plumbers.get(game.getActiveCharacter());
+			tmp.placePipe();
+		}
 	}
 	
 	public static void move(String[] Command){
@@ -1035,5 +1038,33 @@ public class Program {
 			}
 			System.out.println("Nem ragadós a cső.");
 		}
+	}
+	
+	public static void getTeamPoints(String[] Command){
+		if(Command[1] == "-s") {
+			System.out.print("A szerelők pontszáma: " + game.getPointsOfPlumber());
+		}
+		else if(Command[1] == "-p") {
+			System.out.print("A szabotőrök pontszáma: " + game.getPointsOfSaboteur());
+		}
+		else
+			System.out.println("Hibás bemenet!");
+	}
+	
+	public static void flow(String[] Command){
+		if(pipes.containsKey(Command[1])) {
+			pipes.get(Command[1]).flowWater();
+		}
+		else if(pumps.containsKey(Command[1])) {
+			pumps.get(Command[1]).flowWater();
+		}
+		else if(sources.containsKey(Command[1])) {
+			sources.get(Command[1]).flowWater();
+		}
+		else if(cisterns.containsKey(Command[1])) {
+			cisterns.get(Command[1]).flowWater();
+		}
+		else
+			System.out.println("Nincs ilyen mező a játékban.");
 	}
 }
