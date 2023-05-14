@@ -35,6 +35,18 @@ public class Program {
 	private static Map<String , Saboteur> saboteurs = new HashMap<String , Saboteur>();
 	
 	private static Map<String , Plumber> plumbers = new HashMap<String , Plumber>();
+	
+	public static Map<String , Pipe> getPipes() { return pipes; }
+	
+	public static Map<String , Pump> getPumps() { return pumps; }
+	
+	public static Map<String , Source> getSources() { return sources; }
+	
+	public static Map<String, Cistern> getCisterns() { return cisterns; }
+	
+	public static Map<String, Saboteur> getSaboteurs() { return saboteurs; }
+	
+	public static Map<String, Plumber> getPlumbers() { return plumbers; }
 
 
 	/** Tárolja hogy elkezdődött-e már a játék */
@@ -125,10 +137,10 @@ public class Program {
 					System.out.println("Hibas parancs.");
 					break;
 				}
+				System.out.println(game.getActionPoints());
 			} else {
 				System.out.println("Meg nem kezdodott el a jatek");
 			}
-			System.out.println(game.getActionPoints());
 			break;
 		case "get":
 			splitted = Arrays.copyOfRange(splitted, 1, splitted.length);
