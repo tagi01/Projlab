@@ -421,23 +421,26 @@ public class Program {
 			if (plumbers.get(command[1]).getInventoryPipe() != null) {
 				// ha ket veg van nala akkor megkeresi a referenciakat, es kiirja ketszer
 				if (plumbers.get(command[1]).getPipeEnds() == 2) {
-					System.out.print("A szerelonel a kovetkezok vannak inventoryban: ");
 					for (Map.Entry<String, Pipe> set : pipes.entrySet()) {
 						if (set.getValue().equals(plumbers.get(command[1]).getInventoryPipe())) {
 							System.out.print("[" + set.getKey() + "] [" + set.getKey());
 						}
 					}
+					System.out.println("");
 				}
 				// ha nem ket veg van nal, akkor csak egyszer irja ki
 				else {
-					System.out.print("A szerelonel a kovetkezok vannak inventoryban: ");
 					for (Map.Entry<String, Pipe> set : pipes.entrySet()) {
 						if (set.getValue().equals(plumbers.get(command[1]).getInventoryPipe())) {
 							System.out.print("[" + set.getKey() + "]");
 						}
 					}
+					System.out.println("");
 				}
 			}
+			else
+				System.out.println("Nincsen cso az inventoryban");
+			
 			// ha van nala pumpa
 			if (plumbers.get(command[1]).getInventoryPump() != null) {
 				for (Map.Entry<String, Pump> set : pumps.entrySet()) {
@@ -445,7 +448,10 @@ public class Program {
 						System.out.print("[" + set.getKey() + "]");
 					}
 				}
+				System.out.println("");
 			}
+			else
+				System.out.println("Nincsen pumpa az inventoryban");
 			System.out.println();
 		} else
 			System.out.println("Nincs ilyen karkter");
@@ -1308,8 +1314,12 @@ public class Program {
 			Plumber temp_plumber = plumbers.get(plumber_key);
 			if(cisterns.get(cistern_key).getHasPump() && temp_plumber.getInventoryPump() == null) {
 				game.getActiveCharacter().getField().interactPlumber(temp_plumber, new Pump());
-				System.out.println("Sikeres parancs");
-				System.out.println(game.getActionPoints());
+				Pump p = temp_plumber.getInventoryPump();
+				int i=pumps.size();
+				i++;
+				pumps.put("pump_"+i, p);
+				if(temp_plumber.getInventoryPump().equals(p))
+					System.out.println("Sikeres parancs");
 			}
 		}
 		else {
