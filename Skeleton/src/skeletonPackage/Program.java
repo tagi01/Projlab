@@ -458,10 +458,10 @@ public class Program {
 			for (int i = 2; i < command.length; i += 2) {
 				switch (command[i]) {
 				case "-pi":
-					if (command[i + 1] == "true") {
+					if (command[i + 1].equals("true")) {
 						cisterns.get(cistern).setHasPipe(true);
 						//System.out.println("Beallitva.");
-					} else if (command[i + 1] == "false") {
+					} else if (command[i + 1].equals("false")) {
 						cisterns.get(cistern).setHasPipe(true);
 						//System.out.println("Beallitva.");
 					} else {
@@ -470,10 +470,10 @@ public class Program {
 					}
 					break;
 				case "-pu":
-					if (command[i + 1] == "true") {
+					if (command[i + 1].equals("true")) {
 						cisterns.get(cistern).setHasPump(true);
 						//System.out.println("Beallitva.");
-					} else if (command[i + 1] == "false") {
+					} else if (command[i + 1].equals("false")) {
 						cisterns.get(cistern).setHasPump(true);
 						//System.out.println("Beallitva.");
 					} else {
