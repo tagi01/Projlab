@@ -1421,11 +1421,11 @@ public class Program {
 			System.out.println("Hibas parancs.");
 			return;
 		}
-		if(command[1] == "true") {
+		if(command[1].equals("true")) {
 			network.setRandom(true);
 			System.out.println("Beallitva.");
 		}
-		else if(command[1] == "false") {
+		else if(command[1].equals("false")) {
 			network.setRandom(false);
 			System.out.println("Beallitva.");
 		}
