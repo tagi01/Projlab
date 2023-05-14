@@ -1288,7 +1288,7 @@ public class Program {
 		for(Map.Entry<String, Pipe> pipe : pipes.entrySet()) {
 			if(pipe.getValue().equals(game.getActiveCharacter().getField())) {
 				if(pipe.getValue().getState()!=StateOfPipe.NORMAL) {
-					System.out.println("Akció vége, nincs változás. \n"+ game.getActionPoints());
+					System.out.println("Akció vége, nincs változás.");
 					return;
 				}
 				isPipe = true;
