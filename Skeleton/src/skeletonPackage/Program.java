@@ -13,22 +13,16 @@ import java.util.TreeMap;
 
 public class Program {
 
-	/**
-	 * A felhasznalo inputjainak beolvasasahoz
-	 */
+	/** A felhasznalo inputjainak beolvasasahoz */
 	private static Scanner input;
 	
-	/**
-	 * A fájl inputjainak beolvasasahoz
-	 */
+	/** A fájl inputjainak beolvasasahoz */
 	private static Scanner fileInput;
 	
 	private static Game game;
 
 	private static Network network = new Network();
-	/**
-	 * az objektumok neveit tartalmazo map
-	 */
+	/** Az objektumok neveit tartalmazo map */
 
 	private static Map<String , Pipe> pipes = new HashMap<String , Pipe>();
 	
@@ -43,14 +37,10 @@ public class Program {
 	private static Map<String , Plumber> plumbers = new HashMap<String , Plumber>();
 
 
-	/**
-	 * tárolja hogy elkezdődött-e már a játék
-	 */
+	/** Tárolja hogy elkezdődött-e már a játék */
 	private static boolean started = false;
 
-	/**
-	 * Main metódus
-	 * 
+	/** Main metódus
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -968,33 +958,29 @@ public class Program {
 	 * A set-p parancsot valósítja meg, a megadott szerelőt beállitja a megadott mezőre
 	 * @param A parancs szavai
 	 */
-	public static void setP(String[] Command){
-		if(plumbers.containsKey("Plumber_" + Command[1])) {
-			if(pipes.containsKey(Command[2])) {
-				Plumber pl_tmp = plumbers.get("Plumber_" + Command[1]);
-				pl_tmp.setCurrentField(pipes.get(Command[2]));
-				System.out.println("Beallitva.");
-			}
-			else if(pumps.containsKey(Command[2])) {
-				Plumber pl_tmp = plumbers.get("Plumber_" + Command[1]);
-				pl_tmp.setCurrentField(pumps.get(Command[2]));
-				System.out.println("Beallitva.");
-			}
-			else if(sources.containsKey(Command[2])) {
-				Plumber pl_tmp = plumbers.get("Plumber_" + Command[1]);
-				pl_tmp.setCurrentField(sources.get(Command[2]));
-				System.out.println("Beallitva.");
-			}
-			else if(cisterns.containsKey(Command[2])) {
-				Plumber pl_tmp = plumbers.get("Plumber_" + Command[1]);
-				pl_tmp.setCurrentField(cisterns.get(Command[2]));
-				System.out.println("Beallitva.");
-			}
-			else
-				System.out.println("Hibas parancs.");
-		}
-		else
+	public static void setP(String[] command){
+		if(command.length < 3) {
 			System.out.println("Hibas parancs.");
+			return;
+		}
+		String plumberKey = "Plumber_" + command[1];
+		Plumber plumber = plumbers.get(plumberKey);
+		if(plumber == null) {
+			System.out.println("Hibas parancs.");	// nincs ennyi szabotőr vagy rosszul van megadva
+			return;
+		}
+		Field f = getValueFromFieldMaps(command[2]);
+		if(f != null) {
+			if(f.acceptCharacter()) {
+				plumber.setCurrentField(f);
+				f.setCurrentCharacters(plumber);
+				System.out.println("Beallitva.");
+			} else {
+				System.out.println("Hibas parancs.");	// nincs hely a mezőn
+			}
+		} else {
+			System.out.println("Hibas parancs.");	// nincs ilyen mező
+		}
 	}
 	
 	/**
@@ -1112,12 +1098,16 @@ public class Program {
 	 * @param A parancs szavai
 	 */
 	public static void getSticky(String[] Command){
-		if(pipes.containsKey("pipe_" + Command[1])) {
-			if(pipes.get("pipe_" + Command[1]).getState() == StateOfPipe.STICKY) {
-				System.out.println(pipes.get("pipe_" + Command[1]).getStateTimer());
+		try {
+			if (pipes.containsKey("pipe_" + Command[1])) {
+				if (pipes.get("pipe_" + Command[1]).getState() == StateOfPipe.STICKY) {
+					System.out.println(pipes.get("pipe_" + Command[1]).getStateTimer());
+				}
+				System.out.println("0");
 			}
-			System.out.println("0");
+			System.out.println("Hibas parancs.");
 		}
+		catch(Exception e) { System.out.println("Hibas parancs."); }
 	}
 	
 	/**
