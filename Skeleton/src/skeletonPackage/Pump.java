@@ -162,10 +162,12 @@ TODO delete acceptField*/
 	 */
 	@Override
 	public void flowWater() {
-		int out_capacity = out.getCapacity();
-		int in_sizeOfWater = in.takeWater(out_capacity);
-		out.addWater(in_sizeOfWater);
-		System.out.println(in_sizeOfWater);
+		if(!isBroken) {
+			int out_capacity = out.getCapacity();
+			int in_sizeOfWater = in.takeWater(out_capacity);
+			out.addWater(in_sizeOfWater);
+			System.out.println(in_sizeOfWater);
+		}
 	}
 
 	/** Visszaadja a szomszédokat
