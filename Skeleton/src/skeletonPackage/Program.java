@@ -97,7 +97,7 @@ public class Program {
 				splitted = Arrays.copyOfRange(splitted, 1, splitted.length);
 				switch(splitted[0]) {
 				case "puncture":
-					puncture(splitted);
+					puncture();
 					break;
 				case "sticky":
 					actionSticky();
@@ -112,7 +112,7 @@ public class Program {
 					repair();
 					break;
 				case "placePipe":
-					placePipe(splitted);
+					placePipe();
 					break;
 				case "placePump":
 					actionPlacePump();
@@ -935,51 +935,95 @@ public class Program {
 		System.out.println(out + " " + in);
 	}
 	
+	/**
+	 * A set-p parancsot valósítja meg, a megadott szerelőt beállitja a megadott mezőre
+	 * @param A parancs szavai
+	 */
 	public static void setP(String[] Command){
-		if(plumbers.containsKey(Command[1])) {
+		if(plumbers.containsKey("Plumber_" + Command[1])) {
 			if(pipes.containsKey(Command[2])) {
-				Plumber pl_tmp = plumbers.get(Command[1]);
+				Plumber pl_tmp = plumbers.get("Plumber_" + Command[1]);
 				pl_tmp.setCurrentField(pipes.get(Command[2]));
+				System.out.println("Beallitva.");
 			}
 			else if(pumps.containsKey(Command[2])) {
-				Plumber pl_tmp = plumbers.get(Command[1]);
+				Plumber pl_tmp = plumbers.get("Plumber_" + Command[1]);
 				pl_tmp.setCurrentField(pumps.get(Command[2]));
+				System.out.println("Beallitva.");
 			}
 			else if(sources.containsKey(Command[2])) {
-				Plumber pl_tmp = plumbers.get(Command[1]);
+				Plumber pl_tmp = plumbers.get("Plumber_" + Command[1]);
 				pl_tmp.setCurrentField(sources.get(Command[2]));
+				System.out.println("Beallitva.");
 			}
 			else if(cisterns.containsKey(Command[2])) {
-				Plumber pl_tmp = plumbers.get(Command[1]);
+				Plumber pl_tmp = plumbers.get("Plumber_" + Command[1]);
 				pl_tmp.setCurrentField(cisterns.get(Command[2]));
+				System.out.println("Beallitva.");
 			}
 			else
-				System.out.println("Nincs ilyen mező a játékban.");
+				System.out.println("Hibas parancs.");
 		}
 		else
-			System.out.println("Nincs ilyen szerelő a játékban.");
+			System.out.println("Hibas parancs.");
 	}
 	
-	public static void puncture(String[] Command){
-		if(saboteurs.containsKey(Command[1])) {
-			if(pipes.containsKey(Command[2])) {
-				saboteurs.get(Command[1]).puncturePipe();
-			}
-			else 
-				System.out.println("Nem csövön áll a játékos.");
+	/**
+	 * A puncture parancsot valósítja meg, kilyukaszta a csövet, amin áll éppen az aktiv karakter
+	 * @param A parancs szavai
+	 */
+	public static void puncture(){
+		Plumber currentPlumber = null;
+		Saboteur currentSaboteur = null;
+		for (Plumber p : plumbers.values()) {
+			if (game.getActiveCharacter() == p)
+				currentPlumber = p;
 		}
-		else if(plumbers.containsKey(Command[1])) {
-			if(pipes.containsKey(Command[2])) {
-				plumbers.get(Command[1]).puncturePipe();
-			}
-			else 
-				System.out.println("Nem csövön áll a játékos.");
+		for (Saboteur p : saboteurs.values()) {
+			if (game.getActiveCharacter() == p)
+				currentSaboteur = p;
 		}
-		else
-			System.out.println("Nincs ilyen karakter a játékban.");
+		if (currentPlumber != null) {
+			if (pipes.containsValue(game.getActiveCharacter().getField())) {
+				int actionPoint = game.getActionPoints();
+				currentPlumber.puncturePipe();
+				if (actionPoint != game.getActionPoints()) {
+					System.out.println("Sikeres parancs.");
+				}
+				else {
+					System.out.println("Akcio vege, nincs valtozas.");
+				}
+				System.out.println(game.getActionPoints());
+			}
+			else {
+				System.out.println("Karakter nem ilyen tipusu mezon all.");
+			}
+		}
+		else if (currentSaboteur != null) {
+			if (pipes.containsValue(game.getActiveCharacter().getField())) {
+				int actionPoint = game.getActionPoints();
+				currentSaboteur.puncturePipe();
+				if (actionPoint != game.getActionPoints()) {
+					System.out.println("Sikeres parancs.");
+				}
+				else {
+					System.out.println("Akcio vege, nincs valtozas.");
+				}
+				System.out.println(game.getActionPoints());
+			}
+			else {
+				System.out.println("Karakter nem ilyen tipusu mezon all.");
+			}
+		}
+		else {
+			System.out.println("Ehhez a parancshoz nincs hozzaferese.");
+		}
 	}
 	
-	public static void placePipe(String[] Command){
+	/**
+	 * Az action placePipe parancsot valósítja meg, az aktiv szerelő lrak egy csövet
+	 */
+	public static void placePipe(){
 		Plumber currentPlumber = null;
 		for (Plumber p : plumbers.values()) {
 			if (game.getActiveCharacter() == p)
@@ -1006,43 +1050,66 @@ public class Program {
 		}
 	}
 	
-	public static void move(String[] Command){
-		if(pipes.containsKey(Command[1])) {
-			game.getActiveCharacter().move(pipes.get(Command[1]));
+	/**
+	 * Az action move parancsot valósítja meg, a játékos átlép egy általa választott mezőre
+	 * @param A parancs szavai
+	 */
+	public static void move(String[] command){
+		Field tmp = getValueFromFieldMaps(command[1]);
+		if(tmp == null) {
+			System.out.println("Hibas parancs.");
 		}
-		else if(pumps.containsKey(Command[1])) {
-			game.getActiveCharacter().move(pumps.get(Command[1]));
+		boolean sikerult_e = false;
+		for (Field f : game.getActiveCharacter().getField().getNeighbours()) {
+			if (f == tmp) {
+				int actionPoint = game.getActionPoints();
+				game.getActiveCharacter().move(f);
+				if (actionPoint != game.getActionPoints()) {
+					System.out.println("Sikeres parancs.");
+				} 
+				else {
+					System.out.println("Akcio vege, nincs valtozas.");
+				}
+				sikerult_e = false;
+			}
 		}
-		else if(sources.containsKey(Command[1])) {
-			game.getActiveCharacter().move(sources.get(Command[1]));
+		if(!sikerult_e) {
+			System.out.println("Hibas parancs.");
 		}
-		else if(cisterns.containsKey(Command[1])) {
-			game.getActiveCharacter().move(cisterns.get(Command[1]));
-		}
-		else
-			System.out.println("Nincs ilyen mező a jatekban, amire lepni szeretne.");
 	}
 	
+	/**
+	 * A get stiky parancsot valósítja meg, megadja, hogy az adott cső meddig ragadós.
+	 * @param A parancs szavai
+	 */
 	public static void getSticky(String[] Command){
 		if(pipes.containsKey("pipe_" + Command[1])) {
 			if(pipes.get("pipe_" + Command[1]).getState() == StateOfPipe.STICKY) {
-				System.out.println("Ennyi ideig ragados a cso: " + pipes.get("pipe_" + Command[1]).getStateTimer());
+				System.out.println(pipes.get("pipe_" + Command[1]).getStateTimer());
 			}
-			System.out.println("Nem ragados a cso.");
+			System.out.println("0");
 		}
 	}
 	
+	/**
+	 * A get teamPoints parancsot valósítja meg, megadja, hogy az adott csapatnak mennyi pontja van éppen.
+	 * @param A parancs szavai
+	 */
 	public static void getTeamPoints(String[] Command){
 		if(Command[1] == "-s") {
-			System.out.print("A szerelők pontszáma: " + game.getPointsOfPlumber());
+			System.out.print(game.getPointsOfPlumber());
 		}
 		else if(Command[1] == "-p") {
-			System.out.print("A szabotőrök pontszáma: " + game.getPointsOfSaboteur());
+			System.out.print(game.getPointsOfSaboteur());
 		}
 		else
-			System.out.println("Hibás bemenet!");
+			System.out.println("Hibas parancs!");
 	}
 	
+	/**
+	 * A flowWater parancsot valósítja meg, a megadott mezőben folyatja a vizet.
+	 * @param A parancs szavai
+	 */
 	public static void flow(String[] Command){
 		if(pipes.containsKey(Command[1])) {
 			pipes.get(Command[1]).flowWater();
@@ -1057,7 +1124,7 @@ public class Program {
 			cisterns.get(Command[1]).flowWater();
 		}
 		else
-			System.out.println("Nincs ilyen mező a játékban.");
+			System.out.println("Hibas parancs!");
 	}
 
 	public static void setPump(String[] command) {
@@ -1270,14 +1337,20 @@ public class Program {
 		}
 	}
 	
+	/**
+	 * A set random parancsot valósítja meg, beállitja, hogy véletlenszerűen törjenek el a pumpák, vagy nem.
+	 * @param A parancs szavai
+	 */
 	public static void setRandom(String[] command) {
 		if(command[1] == "true") {
 			network.setRandom(true);
+			System.out.println("Beallitva.");
 		}
 		else if(command[1] == "false") {
 			network.setRandom(false);
+			System.out.println("Beallitva.");
 		}
 		else
-			System.out.println("Hibás bemenet!");
+			System.out.println("Hibas parancs!");
 	}
 }
