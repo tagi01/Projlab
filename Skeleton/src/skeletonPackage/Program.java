@@ -664,21 +664,29 @@ public class Program {
 		
 		for(int i = 0; i < pipeNum; i++) {
 			Pipe p = new Pipe();
+			p.setGame(game);
+			p.setNetwork(network);
 			pipes.put("pipe_" + (i+1), p);
 			network.addField(p);
 		}
 		for(int i = 0; i < pumpNum; i++) {
 			Pump p = new Pump();
+			p.setGame(game);
+			p.setNetwork(network);
 			pumps.put("pump_" + (i+1), p);
 			network.addField(p);
 		}
 		for(int i = 0; i < sourceNum; i++) {
 			Source s = new Source();
+			s.setGame(game);
+			s.setNetwork(network);
 			sources.put("source_" + (i+1), s);
 			network.addField(s);
 		}
 		for(int i = 0; i < cisternNum; i++) {
 			Cistern c = new Cistern();
+			c.setGame(game);
+			c.setNetwork(network);
 			cisterns.put("cistern_" + (i+1), c);
 			network.addField(c);
 		}
@@ -783,6 +791,7 @@ public class Program {
 			System.out.println("Sikeres parancs.");
 		}
 		game.getActiveCharacter().turnPipeSticky();
+		System.out.println(game.getActionPoints());
 	}
 	
 	/**
@@ -814,6 +823,7 @@ public class Program {
 				System.out.println("Sikeres parancs.");
 			}
 			active.placePump();
+			System.out.println(game.getActionPoints());
 		} else {
 			System.out.println("Ehhez a parancshoz nincs hozzaferese.");
 		}
