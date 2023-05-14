@@ -332,16 +332,16 @@ public class Program {
 						// ragadosra allitja, ha true az ertek
 						else if (command[i].equals("-st")) {
 							if (command[i + 1].equals("true")) {
-								temp.setStateOfPipeSticky();
+								temp.setState(StateOfPipe.STICKY);
 							} else
-								temp.setStateOfPipeNormal();
+								temp.setState(StateOfPipe.NORMAL);
 						}
 						// csusszossa allitja, ha true az ertek
 						else if (command[i].equals("-sl")) {
 							if (command[i + 1].equals("true")) {
-								temp.setStateOfPipeSlippery();
+								temp.setState(StateOfPipe.SLIPPERY);
 							} else
-								temp.setStateOfPipeNormal();
+								temp.setState(StateOfPipe.NORMAL);
 						}
 					}
 
@@ -511,7 +511,6 @@ public class Program {
 	
 	/**
 	 * repair parancsot valósítja meg
-	 * @param command a parancs szavai
 	 */
 	public static void repair() {
 		Plumber currentPlumber = null;

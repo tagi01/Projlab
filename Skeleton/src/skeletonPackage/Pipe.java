@@ -25,17 +25,9 @@ public class Pipe extends BreakableField {
 	public int getCantPuncture() {
 		return cantPuncture;
 	}
-
-	public void setStateOfPipeSlippery() {
-		state = StateOfPipe.SLIPPERY;
-	}
-
-	public void setStateOfPipeSticky() {
-		state = StateOfPipe.STICKY;
-	}
-
-	public void setStateOfPipeNormal() {
-		state = StateOfPipe.NORMAL;
+	
+	public void setState(StateOfPipe s) {
+		state = s;
 	}
 	
 	public StateOfPipe getState() {
