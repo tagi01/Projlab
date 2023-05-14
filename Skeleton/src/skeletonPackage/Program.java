@@ -982,13 +982,19 @@ public class Program {
 				System.out.println("Hibas parancs.");		// a cső nem szomszédja a mezőnek
 				return;
 			}
-			if(active.getInventoryPump() != null || active.getInventoryPipe() != null || !currentField.removeNeighbour(pipe)) {
+			/*if(active.getInventoryPump() != null || active.getInventoryPipe() != null || !currentField.removeNeighbour(pipe)) {
 				System.out.println("Akcio vege, nincs valtozas.");
 			} else {
 				currentField.addNeighbour(pipe);				// TODO? az if-ben lévő removeNeighbour() miatt... -_- 
 				System.out.println("Sikeres parancs.");
-			}
+			}*/
+			int actionPoint = game.getActionPoints();
 			active.grabPipe(pipe);
+			if (actionPoint != game.getActionPoints()) {
+				System.out.println("Sikeres parancs.");
+			} else {
+				System.out.println("Akcio vege, nincs valtozas.");
+			}
 			//System.out.println(game.getActionPoints());
 		}
 	}
