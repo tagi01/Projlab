@@ -2,6 +2,7 @@ package skeletonPackage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -212,13 +213,13 @@ public class Program {
 			load(splitted);
 			break;
 		case "save":
-			
+			// TODO save(splitted);
 			break;
 		case "pumpWater":
 			pumpWater(splitted);
 			break;
 		case "pumpBreak":
-			
+			pumpBreak(splitted);
 			break;
 		case "flowWater":
 			flow(splitted);
@@ -631,6 +632,29 @@ public class Program {
 	}
 	
 	/**
+	 * TODO
+	 */
+	public static void save(String[] command) {
+		if (command.length < 3) {
+			System.out.println("Hibas parancs.");
+			return;
+		}
+		System.out.println("Sikeres parancs.");
+		
+		String file = command[1];
+		file = file.concat("/");
+		file = file.concat(command[2]);
+		
+		PrintStream fileStream = null;
+		try {
+			fileStream = new PrintStream(file);
+		} catch (FileNotFoundException e) {
+			System.out.println("Hiba tortent.");
+		}
+		System.setOut(fileStream);
+	}
+	
+	/**
 	 * A create network parancsot valósítja meg, létrehozza a pálya elemeit.
 	 * @param command a parancsban megadott értékek tömbje (parancs nélkül)
 	 */
@@ -825,9 +849,16 @@ public class Program {
 				return;
 			}
 			
+			Pump inventoryPump = active.getInventoryPump();
 			int actionPoint = game.getActionPoints();
 			active.placePump();
 			if (actionPoint != game.getActionPoints()) {
+				if(!pipes.containsValue(inventoryPump.getIn()) && inventoryPump.getIn() != null) {
+					pipes.put("pipe_" + pipes.size()+1, inventoryPump.getIn());
+				}
+				if(!pipes.containsValue(inventoryPump.getOut()) && inventoryPump.getOut() != null) {
+					pipes.put("pipe_" + pipes.size()+1, inventoryPump.getOut());
+				}
 				System.out.println("Sikeres parancs.");
 			} else {
 				System.out.println("Akcio vege, nincs valtozas.");
@@ -1174,10 +1205,10 @@ public class Program {
 	 * @param A parancs szavai
 	 */
 	public static void getTeamPoints(String[] Command){
-		if(Command[1] == "-s") {
+		if(Command[1].equals("-s")) {
 			System.out.print(game.getPointsOfPlumber());
 		}
-		else if(Command[1] == "-p") {
+		else if(Command[1].equals("-p")) {
 			System.out.print(game.getPointsOfSaboteur());
 		}
 		else
