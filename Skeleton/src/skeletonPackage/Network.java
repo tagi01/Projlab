@@ -50,6 +50,7 @@ public class Network {
 		p_new.addNeighbour(pump);
 		pump.addNeighbour(p_new);
 		
+		pump.setIn(p_new);
 		
 		p_new.addNeighbour(currentField.getNeighbours().get(0));
 		currentField.getNeighbours().get(0).addNeighbour(p_new);
@@ -59,6 +60,8 @@ public class Network {
 		
 		currentField.addNeighbour(pump);
 		pump.addNeighbour(currentField);
+		
+		pump.setOut(currentField);
 		
 	}
 	
