@@ -271,7 +271,7 @@ public class Program {
 
 	// Beállítja egy adott szamú csőnek a paramétereit
 	public static void setPipe(String[] command) {
-		if (pipes.containsKey("pipe_"+command[1])) {
+		if (pipes.containsKey("pipe_" + command[1])) {
 			Pipe temp = pipes.get("pipe_"+command[1]);
 			if (command[2].equals("-n")) {
 				if (command[3].equals("[") && command[6].equals("]")) {
@@ -394,7 +394,7 @@ public class Program {
 
 	public static void getCantPuncturePipe(String[] command) {
 		if (pipes.containsKey(command[1])) {
-			System.out.println("Az hatralevo ido: " + pipes.get(command[2]).getCantPuncture());
+			System.out.println("Az hatralevo ido: " + pipes.get(command[1]).getCantPuncture());
 		} else
 			System.out.println("Nincsen ilyen pipe: -1");
 	}
@@ -1308,10 +1308,8 @@ public class Program {
 	}
 
 	public static void getHasPump(String[] command){
-		String c = "cistern_";
-		c.concat(command[2]);
-
-		if(command[2]==null || !cisterns.containsKey(c)) {
+		String c = "cistern_" + command[1];
+		if(command[1]==null || !cisterns.containsKey(c)) {
 			System.out.println("Hibas parancs");
 			return;
 		}

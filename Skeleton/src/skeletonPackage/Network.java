@@ -27,14 +27,6 @@ public class Network {
 		random=false;
 	}
 	/*
-	//**************************************************************
-	public void setActiveCharacter(Character value) {activeCharacter=value;}
-	public void setActionPoint(int value) {actionPoint=value;}
-	public int getActionPoint() {return actionPoint;}
-	public Character getCurrentCharacter() {return activeCharacter;}
-	//**************************************************************
-	*/
-	/*
 	 * randomsg beállítása
 	 */
 	public void setRandom(boolean value) {random=value;}
@@ -42,13 +34,7 @@ public class Network {
 	 * randomsag lekerdezése
 	 */
 	public boolean getRandom() {return random;}
-	/**
-	 * Csak a teszteléshez kell
-	 * @param fields az uj ertek
-	 */
-	public void setFields(ArrayList<Field> fields) {
-		this.fields = fields;
-	}
+
 
 	/**
 	 * Az adott csőre lerakja a pumpát, beállítja az új mezők szomszédságait, létrehozza a plusz csövet, ami az új pumpa és az egyik régi pumpa közt lesz.
