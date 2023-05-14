@@ -165,7 +165,7 @@ TODO delete acceptField*/
 		int out_capacity = out.getCapacity();
 		int in_sizeOfWater = in.takeWater(out_capacity);
 		out.addWater(in_sizeOfWater);
-		System.out.println(in_sizeOfWater);
+		// System.out.println(in_sizeOfWater);
 	}
 
 	/** Visszaadja a szomszédokat

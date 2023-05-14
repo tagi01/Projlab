@@ -1233,7 +1233,7 @@ public class Program {
 							break;
 						case "-b": // elvan-e torve
 							if(command[x+1].equals("false")) { p.setBroken(false); }
-							if(command[x+1].equals("true")) { p.setBroken(true); }
+							else if(command[x+1].equals("true")) { p.setBroken(true); }
 							else { throw new InvalidParameterException(); }
 							break;
 						default:
