@@ -448,7 +448,7 @@ public class Program {
 						cisterns.get(cistern).setHasPipe(true);
 						//System.out.println("Beallitva.");
 					} else if (command[i + 1].equals("false")) {
-						cisterns.get(cistern).setHasPipe(true);
+						cisterns.get(cistern).setHasPipe(false);
 						//System.out.println("Beallitva.");
 					} else {
 						System.out.println("Hibas parancs.");
@@ -460,7 +460,7 @@ public class Program {
 						cisterns.get(cistern).setHasPump(true);
 						//System.out.println("Beallitva.");
 					} else if (command[i + 1].equals("false")) {
-						cisterns.get(cistern).setHasPump(true);
+						cisterns.get(cistern).setHasPump(false);
 						//System.out.println("Beallitva.");
 					} else {
 						System.out.println("Hibas parancs.");
@@ -1290,7 +1290,7 @@ public class Program {
 		for(Map.Entry<String, Pipe> pipe : pipes.entrySet()) {
 			if(pipe.getValue().equals(game.getActiveCharacter().getField())) {
 				if(pipe.getValue().getState()!=StateOfPipe.NORMAL) {
-					System.out.println("Akció vége, nincs változás. \n"+ game.getActionPoints());
+					System.out.println("Akció vége, nincs változás.");
 					return;
 				}
 				isPipe = true;
