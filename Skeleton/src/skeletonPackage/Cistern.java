@@ -210,10 +210,28 @@ public class Cistern extends Field {
 	@Override
 	public void interactPlumber(Plumber plumber, Pipe p) {
 		//Program.printMethod(this, "interactPlumber");
-		if(hasPipe == true) {
-			p = removePipe();
-			plumber.setInventoryPipe(p);
-			game.removeActionPoints();
+		if(p == null) {
+			if(hasPipe == true) {
+				p = removePipe();
+				plumber.setInventoryPipe(p);
+				game.removeActionPoints();
+			}
+		} else {
+			if(neighbours.contains(p)) {
+				boolean removed = removeNeighbour(p);
+				if(removed) {
+					p.removeNeighbour(this);
+					plumber.setInventoryPipe(p);
+					game.removeActionPoints();
+				}
+			} else {
+				boolean added = addNeighbour(p);
+				if(added) {
+					p.addNeighbour(this);
+					plumber.setInventoryPipe(null);
+					game.removeActionPoints();
+				}
+			}
 		}
 	}
 	

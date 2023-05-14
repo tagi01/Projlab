@@ -75,6 +75,7 @@ public class Network {
 	 */
 	public void addField(Pump p) {
 		//Program.printMethod(this, "addField");
+		fields.add(p);
 		pumplist.add(p);
 	}
 	

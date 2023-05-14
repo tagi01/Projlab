@@ -109,7 +109,8 @@ public class Program {
 					actionPlacePump();
 					break;
 				case "grabPipe":
-					
+					String c = splitted.length > 1 ? splitted[1] : null;
+					actionGrabPipe(c);
 					break;
 				case "grabPump":
 					grabPump(splitted);
@@ -952,6 +953,71 @@ public class Program {
 			}
 		}
 		System.out.println(out + " " + in);
+	}
+	
+	/**
+	 * Az action grabPipe parancsot valósítja meg, az aktív szerelő felveszi egy cső egyik végét.
+	 * @param pipeNum a felvevendő cső sorszáma string-ként, ha null, ciszternáról veszi fel az új cső végét
+	 */
+	public static void actionGrabPipe(String pipeNum) {
+		Plumber active = null;
+		for(Map.Entry<String, Plumber> entry: plumbers.entrySet()) {
+			if(entry.getValue() == game.getActiveCharacter()) {
+				active = entry.getValue();
+			}
+		}
+		if(active == null) {
+			System.out.println("Ehhez a parancshoz nincs hozzaferese.");
+			return;
+		}
+		
+		if(pipeNum == null) {
+			Cistern currentField = null;
+			for(Map.Entry<String, Cistern> entry: cisterns.entrySet()) {
+				if(entry.getValue() == game.getActiveCharacter().getField()) {
+					currentField = entry.getValue();
+				}
+			}
+			if(currentField == null) {
+				System.out.println("Karakter nem ilyen tipusu mezon all.");
+				return;
+			}
+			
+			if(active.getInventoryPump() != null || active.getInventoryPipe() != null ||  currentField.getHasPipe() == false) {
+				System.out.println("Akcio vege, nincs valtozas.");
+			} else {
+				System.out.println("Sikeres parancs.");
+			}
+			active.getPipe();
+			System.out.println(game.getActionPoints());
+		}
+		
+		else {
+			Field currentField = game.getActiveCharacter().getField();
+			if(pipes.containsValue(currentField)) {
+				System.out.println("Karakter nem ilyen tipusu mezon all.");
+				return;
+			}
+			if(!pipes.containsKey("pipe_" + pipeNum)) {
+				System.out.println("Hibas parancs.");		// cső sorszáma rosszul van megadva
+				return;
+			}
+			
+			Pipe pipe = pipes.get("pipe_" + pipeNum);		
+			ArrayList<? extends Field> pumpNeighbours = currentField.getNeighbours();
+			if(!pumpNeighbours.contains(pipe)) {
+				System.out.println("Hibas parancs.");		// a cső nem szomszédja a mezőnek
+				return;
+			}
+			if(active.getInventoryPump() != null || active.getInventoryPipe() != null || !currentField.removeNeighbour(pipe)) {
+				System.out.println("Akcio vege, nincs valtozas.");
+			} else {
+				currentField.addNeighbour(pipe);				// TODO? az if-ben lévő removeNeighbour() miatt... -_- 
+				System.out.println("Sikeres parancs.");
+			}
+			active.grabPipe(pipe);
+			System.out.println(game.getActionPoints());
+		}
 	}
 	
 	/**
