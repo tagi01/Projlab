@@ -216,7 +216,7 @@ public class Program {
 			System.exit(0);
 		default:
 			String[] first = splitted[0].split("-");
-			if (first[0].contentEquals("set")) {
+			if (first[0].contentEquals("set")  && first.length > 1) {
 				splitted[0] = first[1];
 				if (!started) {
 					//splitted = Arrays.copyOfRange(splitted, 1, splitted.length);/
