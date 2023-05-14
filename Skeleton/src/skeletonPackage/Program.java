@@ -459,7 +459,7 @@ public class Program {
 						cisterns.get(cistern).setHasPump(true);
 						//System.out.println("Beallitva.");
 					} else if (command[i + 1].equals("false")) {
-						cisterns.get(cistern).setHasPump(true);
+						cisterns.get(cistern).setHasPump(false);
 						//System.out.println("Beallitva.");
 					} else {
 						System.out.println("Hibas parancs.");
