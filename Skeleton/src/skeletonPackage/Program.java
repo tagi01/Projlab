@@ -128,6 +128,7 @@ public class Program {
 			} else {
 				System.out.println("Meg nem kezdodott el a jatek");
 			}
+			System.out.println(game.getActionPoints());
 			break;
 		case "get":
 			splitted = Arrays.copyOfRange(splitted, 1, splitted.length);
@@ -268,72 +269,40 @@ public class Program {
 			if (command[2].equals("-n")) {
 				if (command[3].equals("[") && command[6].equals("]")) {
 
-					// Megvizsgalni az eslo szomszedot
-					if (pumps.containsKey(command[4])) {
-						temp.addNeighbour(pumps.get(command[4]));
-					} else if (sources.containsKey(command[4])) {
-						temp.addNeighbour(sources.get(command[4]));
-					} else if (cisterns.containsKey(command[4])) {
-						temp.addNeighbour(cisterns.get(command[4]));
-					} else if (plumbers.containsKey(command[4])) {
+					if(getValueFromFieldMaps(command[4])==null || !plumbers.containsKey(command[4])) {
+						System.out.println("Hibas parancs.");
+					}
+
+					if (plumbers.containsKey(command[4])) {
 						Plumber temp_p = plumbers.get(command[4]);
 						temp_p.setInventoryPipe(temp);
-					} else
-						System.out.println(
-								"Nincs ilyen mezo vagy szerelo elso szomszedkent akihez a csovet hozza tudod rendelni, kotni");
+					}
 
-					// Megvizsgalni a masodik szomszedot
-					if (pumps.containsKey(command[5])) {
-						temp.addNeighbour(pumps.get(command[5]));
-					} else if (sources.containsKey(command[5])) {
-						temp.addNeighbour(sources.get(command[5]));
-					} else if (cisterns.containsKey(command[5])) {
-						temp.addNeighbour(cisterns.get(command[5]));
-					} else if (plumbers.containsKey(command[5])) {
+					temp.addNeighbour(getValueFromFieldMaps(command[4]));
+					getValueFromFieldMaps(command[4]).addNeighbour(temp);
+
+					if(getValueFromFieldMaps(command[5])==null || !plumbers.containsKey(command[5])) {
+						System.out.println("Hibas parancs.");
+					}
+
+					if (plumbers.containsKey(command[5])) {
 						Plumber temp_p = plumbers.get(command[5]);
 						temp_p.setInventoryPipe(temp);
-					} else
-						System.out.println(
-								"Nincs ilyen mezo vagy szerelo masodik szomszedkent akihez a csovet hozza tudod rendelni, kotni");
+					}
+
+					temp.addNeighbour(getValueFromFieldMaps(command[5]));
+					getValueFromFieldMaps(command[5]).addNeighbour(temp);
 
 					// tovabbi parancsok kiertekelese
 					for (int i = 7; i < command.length; i += 2) {
-						// cso meretet allithatod be
-						if (command[i].equals("-s")) {
-							temp.setSize(Integer.parseInt(command[i + 1]));
-						}
-						// csobol mennyi viz folyt ki
-						else if (command[i].equals("-l")) {
-							temp.setLostWater(Integer.parseInt(command[i + 1]));
-						}
-						// csoben mennyi viz van
-						else if (command[i].equals("-w")) {
-							temp.setWater(Integer.parseInt(command[i + 1]));
-						}
-						// cso mennyi ideig nem lyukaszthato meg ki
-						else if (command[i].equals("-p")) {
-							temp.setCantPuncture(Integer.parseInt(command[i + 1]));
-						}
-						// cso ki van e lyukasztva vagy ninics
-						else if (command[i].equals("-b")) {
-							if (command[i + 1].equals("true")) {
-								temp.setBroken(true);
-							} else
-								temp.setBroken(false);
-						}
-						// ragadosra allitja, ha true az ertek
-						else if (command[i].equals("-st")) {
-							if (command[i + 1].equals("true")) {
-								temp.setState(StateOfPipe.STICKY);
-							} else
-								temp.setState(StateOfPipe.NORMAL);
-						}
-						// csusszossa allitja, ha true az ertek
-						else if (command[i].equals("-sl")) {
-							if (command[i + 1].equals("true")) {
-								temp.setState(StateOfPipe.SLIPPERY);
-							} else
-								temp.setState(StateOfPipe.NORMAL);
+						switch(command[1]) {
+							case "-s":  temp.setSize(Integer.parseInt(command[i + 1])); break; // cso meretet allithatod be
+							case "-l": temp.setLostWater(Integer.parseInt(command[i + 1])); break; // csobol mennyi viz folyt ki
+							case "-w": temp.setWater(Integer.parseInt(command[i + 1])); break; // csoben mennyi viz van
+							case "-p": temp.setCantPuncture(Integer.parseInt(command[i + 1])); break; // cso mennyi ideig nem lyukaszthato meg ki
+							case "-b":  if (command[i + 1].equals("true")) { temp.setBroken(true); } break; // cso ki van e lyukasztva vagy nincs
+							case "-st": if(command[i + 1].equals("true")) { temp.setState(StateOfPipe.STICKY); } break; // ragadosra allitja, ha true az ertek
+							case "-sl": if(command[i+1].equals("true")) { temp.setState(StateOfPipe.SLIPPERY); } break; // csusszossa allitja, ha true az ertek
 						}
 					}
 					System.out.println("Beallitva.");
@@ -1140,27 +1109,20 @@ public class Program {
 	 * @param A parancs szavai
 	 */
 	public static void move(String[] command){
-		Field tmp = getValueFromFieldMaps(command[1]);
-		if(tmp == null) {
-			System.out.println("Hibas parancs.");
-		}
-		boolean sikerult_e = false;
-
-		for (Field f : game.getActiveCharacter().getField().getNeighbours()) {
-			if (f == tmp) {
-				int actionPoint = game.getActionPoints();
-				game.getActiveCharacter().move(f);
-				if (actionPoint != game.getActionPoints()) {
-					System.out.println("Sikeres parancs.");
-				} 
-				else {
-					System.out.println("Akcio vege, nincs valtozas.");
-				}
-				sikerult_e = true;
+		try {
+			Field tmp = getValueFromFieldMaps(command[1]);
+			if (tmp == null) {
+				System.out.println("Hibas parancs.");
 			}
-		}
 
-		if(!sikerult_e) {
+			int actionPoint = game.getActionPoints();
+			game.getActiveCharacter().move(tmp);
+			if (actionPoint != game.getActionPoints()) {
+				System.out.println("Sikeres parancs.");
+			} else {
+				System.out.println("Akcio vege, nincs valtozas.");
+			}
+		} catch (Exception e) {
 			System.out.println("Hibas parancs.");
 		}
 	}
