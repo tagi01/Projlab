@@ -68,7 +68,6 @@ public class Program {
 		while (true) {
 			input_temp = new String();
 			input_temp = input.nextLine();
-			System.out.println("Kijutott");
 			try {
 				readCommand(input_temp);
 			}catch(InputMismatchException e) {
