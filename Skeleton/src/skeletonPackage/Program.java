@@ -414,23 +414,21 @@ public class Program {
 				if (plumbers.get(command[1]).getPipeEnds() == 2) {
 					for (Map.Entry<String, Pipe> set : pipes.entrySet()) {
 						if (set.getValue().equals(plumbers.get(command[1]).getInventoryPipe())) {
-							System.out.print("[" + set.getKey() + "] [" + set.getKey());
+							System.out.print("[" + set.getKey() + "] [" + set.getKey() + "]");
 						}
 					}
-					System.out.println("");
 				}
 				// ha nem ket veg van nal, akkor csak egyszer irja ki
-				else {
+				else if (plumbers.get(command[1]).getPipeEnds() == 1) {
 					for (Map.Entry<String, Pipe> set : pipes.entrySet()) {
 						if (set.getValue().equals(plumbers.get(command[1]).getInventoryPipe())) {
-							System.out.print("[" + set.getKey() + "]");
+							System.out.print("[" + set.getKey() + "]" + "[]");
 						}
-					}
-					System.out.println("");
+					}	
 				}
 			}
 			else
-				System.out.println("Nincsen cso az inventoryban");
+				System.out.print("[][]");
 			
 			// ha van nala pumpa
 			if (plumbers.get(command[1]).getInventoryPump() != null) {
@@ -442,7 +440,7 @@ public class Program {
 				System.out.println("");
 			}
 			else
-				System.out.println("Nincsen pumpa az inventoryban");
+				System.out.print("[]");
 			System.out.println();
 		} else
 			System.out.println("Nincs ilyen karkter");
