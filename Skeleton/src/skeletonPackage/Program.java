@@ -783,7 +783,7 @@ public class Program {
 			System.out.println("Sikeres parancs.");
 		}
 		game.getActiveCharacter().turnPipeSticky();
-		System.out.println(game.getActionPoints());
+		//System.out.println(game.getActionPoints());
 	}
 	
 	/**
