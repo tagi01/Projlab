@@ -1269,7 +1269,6 @@ public class Program {
 							plumbers.get(command[x+1]).setInventoryPump(p);
 							break;
 						case "-b": // elvan-e torve
-							System.out.println("ide: "+ command[x+1]);
 							if(command[x+1].equals("false")) { p.setBroken(false); }
 							else if(command[x+1].equals("true")) { p.setBroken(true); }
 							else { throw new InvalidParameterException(); }
@@ -1440,8 +1439,11 @@ public class Program {
 			return;
 		}
 
-		if(pumps.containsKey(p)){
+		if(pumps.containsKey(p)) {
+			int volt = pumps.get(p).getOut().getWater();
 			pumps.get(p).flowWater();
+			int ennyi = pumps.get(p).getOut().getWater() - volt;
+			System.out.println(ennyi); // ennyit pumpalt at
 		}
 	}
 	
