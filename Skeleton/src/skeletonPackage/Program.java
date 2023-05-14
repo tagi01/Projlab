@@ -271,8 +271,8 @@ public class Program {
 
 	// Beállítja egy adott szamú csőnek a paramétereit
 	public static void setPipe(String[] command) {
-		if (pipes.containsKey(command[1])) {
-			Pipe temp = pipes.get(command[1]);
+		if (pipes.containsKey("pipe_"+command[1])) {
+			Pipe temp = pipes.get("pipe_"+command[1]);
 			if (command[2].equals("-n")) {
 				if (command[3].equals("[") && command[6].equals("]")) {
 
@@ -345,7 +345,7 @@ public class Program {
 						}
 					}
 
-					System.out.println("Befejezodtek a beállítások!");
+					System.out.println("Befejezodtek a beallitasok!");
 				} else
 					System.out.println("Nem jo a parameterezes nem helyes vagy hianyzik a <[...]> !");
 			} else
@@ -417,7 +417,7 @@ public class Program {
 			if (plumbers.get(command[1]).getInventoryPipe() != null) {
 				// ha ket veg van nala akkor megkeresi a referenciakat, es kiirja ketszer
 				if (plumbers.get(command[1]).getPipeEnds() == 2) {
-					System.out.print("A szerelonel a kovetkezok vannak inventoryba: ");
+					System.out.print("A szerelonel a kovetkezok vannak inventoryban: ");
 					for (Map.Entry<String, Pipe> set : pipes.entrySet()) {
 						if (set.getValue().equals(plumbers.get(command[1]).getInventoryPipe())) {
 							System.out.print("[" + set.getKey() + "] [" + set.getKey());
@@ -426,7 +426,7 @@ public class Program {
 				}
 				// ha nem ket veg van nal, akkor csak egyszer irja ki
 				else {
-					System.out.print("A szerelonel a kovetkezok vannak inventoryba: ");
+					System.out.print("A szerelonel a kovetkezok vannak inventoryban: ");
 					for (Map.Entry<String, Pipe> set : pipes.entrySet()) {
 						if (set.getValue().equals(plumbers.get(command[1]).getInventoryPipe())) {
 							System.out.print("[" + set.getKey() + "]");
@@ -1011,15 +1011,15 @@ public class Program {
 			game.getActiveCharacter().move(cisterns.get(Command[1]));
 		}
 		else
-			System.out.println("Nincs ilyen mező a játékban, amire lépni szeretne.");
+			System.out.println("Nincs ilyen mező a jatekban, amire lepni szeretne.");
 	}
 	
 	public static void getSticky(String[] Command){
 		if(pipes.containsKey("pipe_" + Command[1])) {
 			if(pipes.get("pipe_" + Command[1]).getState() == StateOfPipe.STICKY) {
-				System.out.println("Ennyi ideig ragadós a cső: " + pipes.get("pipe_" + Command[1]).getStateTimer());
+				System.out.println("Ennyi ideig ragados a cso: " + pipes.get("pipe_" + Command[1]).getStateTimer());
 			}
-			System.out.println("Nem ragadós a cső.");
+			System.out.println("Nem ragados a cso.");
 		}
 	}
 	
@@ -1052,60 +1052,74 @@ public class Program {
 	}
 
 	public static void setPump(String[] command) {
-		if(command[2]==null && command[3]==null) {
-			System.out.println("Hibas parancs");
+		try {
+			if (command[1] == null && command[3] == null) {
+				System.out.println("Hibas parancs");
+				return;
+			}
+			String opt = command[2];
+			String param = command[3];
+
+			boolean failed = false;
+			Pump p = new Pump();
+			Pipe pipe = new Pipe();
+
+			if (pumps.containsKey("pump_" + command[1])) {
+				p = pumps.get("pump_" + command[1]);
+			} else {
+				failed = true;
+			}
+
+			if (opt.equals("-i")) { // pumpa bemenete
+				if (!pipes.containsKey(param)) {
+					failed = true;
+				} else {
+					pipe = pipes.get(param);
+					p.setIn(pipe);
+				}
+			}
+
+			if (opt.equals("-o")) { // pumpa kimenete
+				if (!pipes.containsKey(param)) {
+					failed = true;
+				} else {
+					pipe = pipes.get(param);
+					p.setOut(pipe);
+				}
+			}
+
+			if (opt.equals("-inv")) { // szerelonel van-e, szerelo azonosítója !
+				if (!plumbers.containsKey(param)) {
+					failed = true;
+				} else {
+					Plumber plumber = plumbers.get(param);
+
+					plumber.setInventoryPump(p);
+				}
+			}
+
+			if (opt.equals("-b")) { // pumpa eltörve-e
+				if (param.equals("true") || param.equals("True")) {
+					p.setBroken(true);
+				}
+				if (param.equals("false") || param.equals("False")) {
+					p.setBroken(false);
+				} else {
+					failed = true;
+				}
+			}
+
+			if (failed) {
+				System.out.print("Hibas parancs.");
+				return;
+			}
+
+			System.out.println("Beallitva.");
 			return;
 		}
-		String opt = command[2];
-		String param = command[3];
-
-		boolean failed = false;
-		Pump p = new Pump();
-		Pipe pipe = new Pipe();
-
-		if(pumps.containsKey("pump_"+command[1])) {
-			p = pumps.get("pump_"+command[1]);
-		} else { failed = true;	}
-
-		if(opt.equals("-i")) { // pumpa bemenete
-			if(!pipes.containsKey(param)) { failed = true; }
-			else {
-				pipe = pipes.get(param);
-				p.setIn(pipe);
-			}
+		catch (Exception e) {
+			System.out.println("Hiba tortent.");
 		}
-
-		if(opt.equals("-o")) { // pumpa kimenete
-			if(!pipes.containsKey(param)) { failed = true; }
-			else {
-				pipe = pipes.get(param);
-				p.setOut(pipe);
-			}
-		}
-
-		if(opt.equals("-inv")) { // szerelonel van-e, szerelo azonosítója !
-			if(!plumbers.containsKey(param)) { failed = true; }
-			else {
-				Plumber plumber = plumbers.get(param);
-
-				plumber.setInventoryPump(p);
-			}
-		}
-
-		if(opt.equals("-b")) { // pumpa eltörve-e
-			if(param.equals("true") || param.equals("True")) {
-				p.setBroken(true);
-			}
-			if(param.equals("false") || param.equals("False")) {
-				p.setBroken(false);
-			}
-			else { failed = true; }
-		}
-
-		if(failed) {
-			System.out.print("Hibas parancs.");
-		}
-
 	}
 
 	public static void setGame(String[] command) {
