@@ -140,7 +140,6 @@ public class Program {
 			break;
 		case "get":
 			splitted = Arrays.copyOfRange(splitted, 1, splitted.length);
-			System.out.println("switch " + splitted[0]);
 			switch(splitted[0]) {
 			case "neighbours":
 				String c = splitted.length > 1 ? splitted[1] : null;
@@ -226,7 +225,6 @@ public class Program {
 			System.exit(0);
 		default:
 			String[] first = splitted[0].split("-");
-			System.out.println(first[0] + " " + first[1]);
 			if (first[0].contentEquals("set")) {
 				splitted[0] = first[1];
 				if (!started) {
@@ -610,9 +608,9 @@ public class Program {
 	 * @param command a parancs szavai
 	 */
 	public static void load(String[] command) {
-		String file = command[2];
+		String file = command[1];
 		file = file.concat("/");
-		file = file.concat(command[3]);
+		file = file.concat(command[2]);
 		try {
 			fileInput = new Scanner(new FileInputStream(file));
 			while(fileInput.hasNextLine()) {
