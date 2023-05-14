@@ -110,7 +110,7 @@ public class Program {
 					setGame(splitted);
 					break;
 				case "random":
-					
+					setRandom(splitted);
 					break;
 				default:
 					System.out.println("Hibas parancs.");
@@ -204,7 +204,7 @@ public class Program {
 				getIsBroken(splitted);
 				break;
 			case "teamPoints":
-
+				getTeamPoints(splitted);
 				break;
 			case "connections":
 				if(splitted.length == 1) {
@@ -243,7 +243,7 @@ public class Program {
 			
 			break;
 		case "flowWater":
-			
+			flow(splitted);
 			break;
 		case "exit":
 			System.out.println("Proto vege!");
@@ -1145,5 +1145,16 @@ public class Program {
 		if(pumps.containsKey(p)){
 			pumps.get(p).flowWater();
 		}
+	}
+	
+	public static void setRandom(String[] command) {
+		if(command[1] == "true") {
+			network.setRandom(true);
+		}
+		else if(command[1] == "false") {
+			network.setRandom(false);
+		}
+		else
+			System.out.println("Hibás bemenet!");
 	}
 }
