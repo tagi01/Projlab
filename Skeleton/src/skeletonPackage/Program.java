@@ -359,27 +359,25 @@ public class Program {
 			game.setActiveCharacter(plumbers.get(command[1]));
 			if (command.length == 4) {
 				if (command[2].equals("-p")) {
-					game.setActionPoint(Integer.parseInt(command[4]));
+					game.setActionPoint(Integer.parseInt(command[3]));
 				}
 			} else {
 				game.setActionPoint(5);
-				System.out.println("Sikeresen beallitotta az aktiv karaktert: " + command[1] + " akciopontjai: "
-						+ game.getActionPoints());
 			}
+			System.out.println("Beallitva");
 
 		} else if (saboteurs.containsKey(command[1])) {
 			game.setActiveCharacter(saboteurs.get(command[1]));
 			if (command.length == 4) {
 				if (command[2].equals("-p")) {
-					game.setActionPoint(Integer.parseInt(command[4]));
+					game.setActionPoint(Integer.parseInt(command[3]));
 				}
 			} else {
 				game.setActionPoint(5);
-				System.out.println("Sikeresen beallitotta az aktiv karaktert: " + command[1] + " akciopontjai: "
-						+ game.getActionPoints() );
 			}
+			System.out.println("Beallitva");
 		} else
-			System.out.println("Nincsen ilyen nevu karakter");
+			System.out.println("Hibas parancs.");
 	}
 
 	public static void actionSetPump(String[] command) {
