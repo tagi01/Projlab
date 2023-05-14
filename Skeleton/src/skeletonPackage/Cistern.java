@@ -245,5 +245,5 @@ public class Cistern extends Field {
 		//Program.printMethod(this, "getNeighbours");
 		return neighbours;
 	}
-	//Komment
+
 }

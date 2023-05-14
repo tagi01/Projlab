@@ -22,7 +22,7 @@ public class Program {
 	 */
 	private static Scanner fileInput;
 	
-	private static Game game = new Game();
+	private static Game game=new Game();
 
 	private static Network network = new Network();
 	/**
@@ -627,7 +627,6 @@ public class Program {
 			System.out.println("Betoltes sikertelen. Nincs ilyen fajl.");
 		}
 	}
-	
 	/**
 	 * A create network parancsot valósítja meg, létrehozza a pálya elemeit.
 	 * @param command a parancsban megadott értékek tömbje (parancs nélkül)
@@ -653,16 +652,6 @@ public class Program {
 			System.out.println("Hibas parancs.");		// nem megfelelő a karakterek száma
 			return;
 		}
-		
-		game = new Game();
-		network = new Network();
-		pipes.clear();
-		pumps.clear();
-		sources.clear();
-		cisterns.clear();
-		saboteurs.clear();
-		plumbers.clear();
-		started = false;
 		
 		for(int i = 0; i < pipeNum; i++) {
 			Pipe p = new Pipe();
@@ -749,17 +738,11 @@ public class Program {
 		Saboteur saboteur = saboteurs.get(saboteurKey);
 		if(saboteur == null) {
 			System.out.println("Hibas parancs.");	// nincs ennyi szabotőr vagy rosszul van megadva
-			return;
 		}
 		Field f = getValueFromFieldMaps(command[1]);
 		if(f != null) {
-			if(f.acceptCharacter()) {
-				saboteur.setCurrentField(f);
-				f.setCurrentCharacters(saboteur);
-				System.out.println("Beallitva.");
-			} else {
-				System.out.println("Hibas parancs.");	// nincs hely a mezőn
-			}
+			saboteur.setCurrentField(f);
+			System.out.println("Beallitva.");
 		} else {
 			System.out.println("Hibas parancs.");	// nincs ilyen mező
 		}
@@ -857,7 +840,6 @@ public class Program {
 			}
 		} else {
 			System.out.println("Hibas parancs.");		// nincs ilyen azonosítójú mező
-			return;
 		}
 
 		for(Map.Entry<String, Field> entry : neighbours.entrySet()) {
@@ -973,9 +955,29 @@ public class Program {
 	}
 	
 	public static void placePipe(String[] Command){
-		if(plumbers.containsKey(game.getActiveCharacter())) {
-			Plumber tmp = plumbers.get(game.getActiveCharacter());
-			tmp.placePipe();
+		Plumber currentPlumber = null;
+		for (Plumber p : plumbers.values()) {
+			if (game.getActiveCharacter() == p)
+				currentPlumber = p;
+		}
+		if (currentPlumber != null) {
+			if (pumps.containsValue(game.getActiveCharacter().getField()) || sources.containsValue(game.getActiveCharacter().getField()) || cisterns.containsValue(game.getActiveCharacter().getField())) {
+				int actionPoint = game.getActionPoints();
+				currentPlumber.placePipe();
+				if (actionPoint != game.getActionPoints()) {
+					System.out.println("Sikeres parancs.");
+				} 
+				else {
+					System.out.println("Akcio vege, nincs valtozas.");
+				}
+				System.out.println(game.getActionPoints());
+			} 
+			else {
+				System.out.println("Karakter nem ilyen tipusu mezon all.");
+			}
+		} 
+		else {
+			System.out.println("Ehhez a parancshoz nincs hozzaferese.");
 		}
 	}
 	
@@ -997,9 +999,9 @@ public class Program {
 	}
 	
 	public static void getSticky(String[] Command){
-		if(pipes.containsKey(Command[1])) {
-			if(pipes.get(Command[1]).getState() == StateOfPipe.STICKY) {
-				System.out.println("Ennyi ideig ragadós a cső: " + pipes.get(Command[1]).getStateTimer());
+		if(pipes.containsKey("pipe_" + Command[1])) {
+			if(pipes.get("pipe_" + Command[1]).getState() == StateOfPipe.STICKY) {
+				System.out.println("Ennyi ideig ragadós a cső: " + pipes.get("pipe_" + Command[1]).getStateTimer());
 			}
 			System.out.println("Nem ragadós a cső.");
 		}
