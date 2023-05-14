@@ -456,6 +456,10 @@ public class Program {
 	 * @param command a parancs szavai
 	 */
 	public static void setCistern(String[] command) {
+		if (command.length < 4) {
+			System.out.println("Hibas parancs.");
+			return;
+		}
 		String cistern = "cistern_";
 		cistern = cistern.concat(command[1]);
 		if (cisterns.containsKey(cistern)) {
@@ -545,6 +549,10 @@ public class Program {
 	 * @param command a parancs szavai
 	 */
 	public static void getPlace(String[] command) {
+		if (command.length < 2) {
+			System.out.println("Hibas parancs.");
+			return;
+		}
 		if (plumbers.containsKey(command[1])) {
 			String name = getKeyFromFieldMaps(plumbers.get(command[1]).getField());
 			System.out.println(name);
@@ -553,6 +561,7 @@ public class Program {
 			System.out.println(name);
 		} else {
 			System.out.println("Hibas parancs.");
+			return;
 		}
 	}
 	
@@ -561,6 +570,10 @@ public class Program {
 	 * @param command a parancs szavai
 	 */
 	public static void getState(String[] command) {
+		if (command.length < 2) {
+			System.out.println("Hibas parancs.");
+			return;
+		}
 		String pipe = "pipe_";
 		pipe = pipe.concat(command[1]);
 		if (pipes.containsKey(pipe)) {
@@ -583,6 +596,10 @@ public class Program {
 	 * @param command a parancs szavai
 	 */
 	public static void getIsBroken(String[] command) {
+		if (command.length < 2) {
+			System.out.println("Hibas parancs.");
+			return;
+		}
 		if (pipes.containsKey(command[1])) {
 			System.out.println(pipes.get(command [1]).getBroken());
 		} else if (pumps.containsKey(command[1])) {
@@ -598,6 +615,10 @@ public class Program {
 	 * @param command a parancs szavai
 	 */
 	public static void pumpBreak(String[] command) {
+		if (command.length < 2) {
+			System.out.println("Hibas parancs.");
+			return;
+		}
 		String pump = "pump_";
 		pump = pump.concat(command[1]);
 		if (pumps.containsKey(pump)) {
@@ -610,6 +631,10 @@ public class Program {
 	 * @param command a parancs szavai
 	 */
 	public static void load(String[] command) {
+		if (command.length < 3) {
+			System.out.println("Hibas parancs.");
+			return;
+		}
 		String file = command[1];
 		file = file.concat("/");
 		file = file.concat(command[2]);
@@ -1338,6 +1363,10 @@ public class Program {
 	 * @param A parancs szavai
 	 */
 	public static void setRandom(String[] command) {
+		if (command.length < 2) {
+			System.out.println("Hibas parancs.");
+			return;
+		}
 		if(command[1] == "true") {
 			network.setRandom(true);
 			System.out.println("Beallitva.");
