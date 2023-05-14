@@ -2,6 +2,7 @@ package skeletonPackage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -1126,72 +1127,56 @@ public class Program {
 	}
 
 	public static void setPump(String[] command) {
+
+		Pump p = new Pump();
+
 		try {
-			if (command[1] == null && command[3] == null) {
-				System.out.println("Hibas parancs");
-				return;
-			}
-			String opt = command[2];
-			String param = command[3];
+			if (command.length%2==0 && command.length>=3 && command.length <= 9) { // ha jo hosszusagu a command
 
-			boolean failed = false;
-			Pump p = new Pump();
-			Pipe pipe = new Pipe();
+				if(!pumps.containsKey("pump_"+command[1])) {
+					throw new InvalidParameterException();
+				}
+				p = pumps.get("pump_"+command[1]);
 
-			if (pumps.containsKey("pump_" + command[1])) {
-				p = pumps.get("pump_" + command[1]);
-			} else {
-				failed = true;
-			}
+				int x =2; // elso opcio helye
+				for(int i=0; i<4;i++){
+					switch(command[x]) {
+						case "-i": // pumpa bemenete
+							if(!pipes.containsKey(command[x+1])) { throw new InvalidParameterException(); }
+							p.setIn(pipes.get(command[x+1]));
+							pipes.get(command[x+1]).addNeighbour(p);
+							break;
+						case "-o": // pumpa kimenete
+							if(!pipes.containsKey(command[x+1])) { throw new InvalidParameterException(); }
+							p.setOut(pipes.get(command[x+1]));
+							pipes.get(command[x+1]).addNeighbour(p);
+							break;
+						case "-inv": // szerelonel van-e
+							if(!plumbers.containsKey(command[x+1])) { throw new InvalidParameterException(); }
+							plumbers.get(command[x+1]).setInventoryPump(p);
+							break;
+						case "-b": // elvan-e torve
+							if(command[x+1].equals("false")) { p.setBroken(false); }
+							if(command[x+1].equals("true")) { p.setBroken(true); }
+							else { throw new InvalidParameterException(); }
+							break;
+						default:
+							continue;
+					}
+					x+=2;
 
-			if (opt.equals("-i")) { // pumpa bemenete
-				if (!pipes.containsKey(param)) {
-					failed = true;
-				} else {
-					pipe = pipes.get(param);
-					p.setIn(pipe);
+					if(command.length==x) {
+						System.out.println("Beallitva.");
+						return;
+					}
 				}
 			}
-
-			if (opt.equals("-o")) { // pumpa kimenete
-				if (!pipes.containsKey(param)) {
-					failed = true;
-				} else {
-					pipe = pipes.get(param);
-					p.setOut(pipe);
-				}
-			}
-
-			if (opt.equals("-inv")) { // szerelonel van-e, szerelo azonosítója !
-				if (!plumbers.containsKey(param)) {
-					failed = true;
-				} else {
-					Plumber plumber = plumbers.get(param);
-
-					plumber.setInventoryPump(p);
-				}
-			}
-
-			if (opt.equals("-b")) { // pumpa eltörve-e
-				if (param.equals("true") || param.equals("True")) {
-					p.setBroken(true);
-				}
-				if (param.equals("false") || param.equals("False")) {
-					p.setBroken(false);
-				} else {
-					failed = true;
-				}
-			}
-
-			if (failed) {
-				System.out.print("Hibas parancs.");
-				return;
-			}
-
-			System.out.println("Beallitva.");
-			return;
+			System.out.println("Hibas parancs.");
 		}
-		catch (Exception e) {
+		catch (InvalidParameterException e) {
+			System.out.println("Hibas parancs.");
+		}
+		catch (Exception exc) {
 			System.out.println("Hiba tortent.");
 		}
 	}
