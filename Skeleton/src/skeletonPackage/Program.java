@@ -140,6 +140,7 @@ public class Program {
 			break;
 		case "get":
 			splitted = Arrays.copyOfRange(splitted, 1, splitted.length);
+			System.out.println("switch " + splitted[0]);
 			switch(splitted[0]) {
 			case "neighbours":
 				String c = splitted.length > 1 ? splitted[1] : null;
@@ -225,7 +226,8 @@ public class Program {
 			System.exit(0);
 		default:
 			String[] first = splitted[0].split("-");
-			if (first[0] == "set") {
+			System.out.println(first[0] + " " + first[1]);
+			if (first[0].contentEquals("set")) {
 				splitted[0] = first[1];
 				if (!started) {
 					//splitted = Arrays.copyOfRange(splitted, 1, splitted.length);
@@ -583,8 +585,8 @@ public class Program {
 	public static void getIsBroken(String[] command) {
 		if (pipes.containsKey(command[1])) {
 			System.out.println(pipes.get(command [1]).getBroken());
-		} else if (pipes.containsKey(command[1])) {
-			System.out.println(pipes.get(command [1]).getBroken());
+		} else if (pumps.containsKey(command[1])) {
+			System.out.println(pumps.get(command [1]).getBroken());
 		} else {
 			System.out.println("Hibas parancs.");
 		}
