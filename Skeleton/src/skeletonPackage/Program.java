@@ -295,7 +295,7 @@ public class Program {
 					}
 					// tovabbi parancsok kiertekelese
 					for (int i = 7; i < command.length; i += 2) {
-						switch(command[1]) {
+						switch(command[i]) {
 							case "-s":  temp.setSize(Integer.parseInt(command[i + 1])); break; // cso meretet allithatod be
 							case "-l": temp.setLostWater(Integer.parseInt(command[i + 1])); break; // csobol mennyi viz folyt ki
 							case "-w": temp.setWater(Integer.parseInt(command[i + 1])); break; // csoben mennyi viz van
