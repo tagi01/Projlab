@@ -101,7 +101,12 @@ public class Game {
     }
 
     /** Csökkenti eggyel az aktív karakter akciópontjait */
-    public void removeActionPoints() { actionPoints--; }
+    public void removeActionPoints() {
+        actionPoints--;
+        if(actionPoints==0) {
+            nextCharacter();
+        }
+    }
 
     /** Következő karakter jön, network-öt meghívva végig megy a víz folyása (flowWater) */
     public void nextCharacter() {
