@@ -269,7 +269,7 @@ public class Program {
 			if (command[2].equals("-n")) {
 				if (command[3].equals("[") && command[6].equals("]")) {
 
-					if(getValueFromFieldMaps(command[4])==null || !plumbers.containsKey(command[4])) {
+					if(getValueFromFieldMaps(command[4])==null && !plumbers.containsKey(command[4])) {
 						System.out.println("Hibas parancs.");
 					}
 
@@ -277,22 +277,22 @@ public class Program {
 						Plumber temp_p = plumbers.get(command[4]);
 						temp_p.setInventoryPipe(temp);
 					}
+					else {
+						temp.addNeighbour(getValueFromFieldMaps(command[4]));
+						getValueFromFieldMaps(command[4]).addNeighbour(temp);
+					}
 
-					temp.addNeighbour(getValueFromFieldMaps(command[4]));
-					getValueFromFieldMaps(command[4]).addNeighbour(temp);
-
-					if(getValueFromFieldMaps(command[5])==null || !plumbers.containsKey(command[5])) {
+					if(getValueFromFieldMaps(command[5])==null && !plumbers.containsKey(command[5])) {
 						System.out.println("Hibas parancs.");
 					}
 
 					if (plumbers.containsKey(command[5])) {
 						Plumber temp_p = plumbers.get(command[5]);
 						temp_p.setInventoryPipe(temp);
+					} else {
+						temp.addNeighbour(getValueFromFieldMaps(command[5]));
+						getValueFromFieldMaps(command[5]).addNeighbour(temp);
 					}
-
-					temp.addNeighbour(getValueFromFieldMaps(command[5]));
-					getValueFromFieldMaps(command[5]).addNeighbour(temp);
-
 					// tovabbi parancsok kiertekelese
 					for (int i = 7; i < command.length; i += 2) {
 						switch(command[1]) {
