@@ -19,6 +19,7 @@ public class Game {
     private int pointsOfSaboteur = 0;
     /** Kör sorszáma */
     private int round = 1;
+    private static int max_round = 10;
     /** Aktív játékos akciópontja [0,5] intervallumban */
     private int actionPoints;
 
@@ -28,7 +29,7 @@ public class Game {
     private Network network;
 
     private ArrayList<Character> characters = new ArrayList<Character>(); // játék sorrendben a játékosok karakterei
-    private int activeCharacter; // aktív karakter sorszáma a listában
+    private int activeCharacter; // aktív karakter sorszáma a listában 0-tól kezdve
 
 // GETTER, SETTER
 
@@ -36,7 +37,7 @@ public class Game {
     public int getPointsOfSaboteur() { return pointsOfSaboteur; }
     public int getRound() { return round; }
     public int getActionPoints() { return actionPoints; }
-    public Character getActiveCharacter() { return characters.get(activeCharacter-1); }
+    public Character getActiveCharacter() { return characters.get(activeCharacter); }
 
     /** Növeli a szerelők pontszámát
      * @param n, amennyivel növeljük a pontszámot
@@ -81,7 +82,7 @@ public class Game {
         actionPoints = 5;
         network = new Network();
         characters = new ArrayList<Character>();
-        activeCharacter = 1;
+        activeCharacter = 0;
     }
 
     /** Visszaadja a singelton egyetlen példányát, ha nincs, akkor létrehoz és azt adja vissza */
@@ -107,9 +108,14 @@ public class Game {
         // kovi activeCharacter beállítása
         activeCharacter++;
         actionPoints = default_actionP;
+
         // ha utolso az activeCharacter volt, akkor round++
         if(activeCharacter == characters.size()) {
             round++;
+            if (round > max_round) {
+                gameOver();
+            }
+            activeCharacter=0;
         }
 
         //networkon flowWater meghívása
