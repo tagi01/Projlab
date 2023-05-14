@@ -79,7 +79,7 @@ public class Pump extends BreakableField {
 	 */
 	@Override
 	public boolean addNeighbour(Pipe p) {
-		if(neighbours.contains(p) || p == null || !acceptField(p)) { return false; }
+		if(neighbours.contains(p) || p == null || neighbours.size() >= 8) { return false; }
 		else {
 			neighbours.add(p);
 			return true;

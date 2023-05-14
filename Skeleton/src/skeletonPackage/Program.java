@@ -565,7 +565,11 @@ public class Program {
 		}
 	}
 
-	public static void createNetwork(String[] command) {	// a paraméterben a parancs nincs benne
+	/**
+	 * A create network parancsot valósítja meg, létrehozza a pálya elemeit.
+	 * @param command a parancsban megadott értékek tömbje (parancs nélkül)
+	 */
+	public static void createNetwork(String[] command) {
 		if(command.length < 5) {
 			System.out.println("Hibas parancs.");
 		}
@@ -594,7 +598,7 @@ public class Program {
 		for(int i = 0; i < pumpNum; i++) {
 			Pump p = new Pump();
 			pumps.put("pump_" + (i+1), p);
-			network.addField(p);		// TODO a pumpákat a fieldekhez is adja hozzá
+			network.addField(p);
 		}
 		for(int i = 0; i < sourceNum; i++) {
 			Source s = new Source();
@@ -617,6 +621,11 @@ public class Program {
 		System.out.println("Beallitva.");
 	}
 	
+	/**
+	 * Visszaadja az átadott kulcsú Field-et a Map-ekből
+	 * @param key a keresett Field kulcsa
+	 * @return a Field, ha benne van vmelyik Map-ben, null, ha nincs
+	 */
 	private static Field getValueFromFieldMaps(String key) {
 		if(pipes.containsKey(key)) return pipes.get(key);
 		if(pumps.containsKey(key)) return pumps.get(key);
@@ -625,8 +634,10 @@ public class Program {
 		return null;
 	}
 
-	/** Visszaadja a felvett Map-ekből a kulcsot
-	 * @param value, bármelyik Field leszármazott */
+	/** Visszaadja a felvett mező Map-ekből a kulcsot
+	 * @param value bármelyik Field leszármazott 
+	 * @return a Field kulcsa
+	 * */
 	private static String getKeyFromFieldMaps(Field value) {
 		for(Map.Entry<String, Pipe> entry: pipes.entrySet()) {
 			if(entry.getValue() == value) {
@@ -651,6 +662,10 @@ public class Program {
 		return null;
 	}
 	
+	/**
+	 * A set-s parancsot valósítja meg, ráállítja az adott szabotőrt a mezőre.
+	 * @param command a parancsban megadott értékek tömbje (parancs nélkül)
+	 */
 	public static void setS(String[] command) {
 		if(command.length < 2) {
 			System.out.println("Hibas parancs.");
@@ -670,15 +685,31 @@ public class Program {
 		}
 	}
 	
+	/**
+	 * Az action sticky parancsot valósítja meg, az aktív karakter ragadóssá teszi a csövet, amin áll.
+	 */
 	public static void actionSticky() {
+		Pipe currentPipe = null;
+		for(Map.Entry<String, Pipe> entry: pipes.entrySet()) {
+			if(entry.getValue() == game.getActiveCharacter().getField()) {
+				currentPipe = entry.getValue();
+			}
+		}
+		if(currentPipe == null) {
+			System.out.println("Karakter nem ilyen tipusu mezon all.");
+			return;
+		}
+		if(currentPipe.getState() != StateOfPipe.NORMAL) {
+			System.out.println("Akció vége, nincs változás.");
+		} else {
+			System.out.println("Sikeres parancs.");
+		}
 		game.getActiveCharacter().turnPipeSticky();
-		// TODO ???
-		// System.out.println("Sikeres parancs.");
-		// System.out.println("Akció vége, nincs változás.");
-		// System.out.println("Karakter nem ilyen típusú mezőn áll.");
-		// TODO System.out.println(actionPoints);!!
 	}
 	
+	/**
+	 * Az action placePump parancsot valósítja meg, az aktív szerelő lerakja a pumpáját a csőre, amin áll.
+	 */
 	public static void actionPlacePump() {
 		Plumber active = null;
 		Character current = game.getActiveCharacter();
@@ -689,13 +720,31 @@ public class Program {
 			}
 		}
 		if(active != null) {
+			Pipe currentPipe = null;
+			for(Map.Entry<String, Pipe> entry: pipes.entrySet()) {
+				if(entry.getValue() == active.getField()) {
+					currentPipe = entry.getValue();
+				}
+			}
+			if(currentPipe == null) {
+				System.out.println("Karakter nem ilyen tipusu mezon all.");
+				return;
+			}
+			if(active.getInventoryPump() == null || currentPipe.getBroken()) {
+				System.out.println("Akcio vege, nincs valtozas.");
+			} else {
+				System.out.println("Sikeres parancs.");
+			}
 			active.placePump();
-			//TODO println
 		} else {
 			System.out.println("Ehhez a parancshoz nincs hozzaferese.");
 		}
 	}
 	
+	/**
+	 * A get neighbours parancsot valósítja meg, az aktív karakter vagy a megadott Field szomszédait írja ki ábécé szerint rendezve.
+	 * @param field a lekérdezendő Field azonosítója, ha null, akkor az aktív karakter currentField-je
+	 */
 	public static void getNeighbours(String field) {
 		if(field == null) {
 			field = getKeyFromFieldMaps(game.getActiveCharacter().getField());
@@ -736,6 +785,10 @@ public class Program {
 		System.out.println();
 	}
 	
+	/**
+	 * A get slippery parancsot valósítja meg, a megadott cső csúszóssági időzítőjét írja ki.
+	 * @param pipeNum a cső sorszáma string-ként
+	 */
 	public static void getSlippery(String pipeNum) {
 		String pipe = "pipe_"+ pipeNum;
 		if(pipes.containsKey(pipe)) {
@@ -750,29 +803,36 @@ public class Program {
 		}
 	}
 	
+	/**
+	 * Az action pass parancsot valósítja meg, az aktív játékost a soronkövetkezőre váltja.
+	 */
 	public static void actionPass() {
 		game.nextCharacter();
 		System.out.println("Sikeres parancs.");
-		Character character = game.getActiveCharacter();
+		Character nextCharacter = game.getActiveCharacter();
 		String nextChar = null;
 		for(Map.Entry<String, Plumber> entry: plumbers.entrySet()) {
-			if(entry.getValue() == character) {
+			if(entry.getValue() == nextCharacter) {
 				nextChar = entry.getKey();
 			}
 		}
 		for(Map.Entry<String, Saboteur> entry: saboteurs.entrySet()) {
-			if(entry.getValue() == character) {
+			if(entry.getValue() == nextCharacter) {
 				nextChar = entry.getKey();
 			}
 		}
 		System.out.println(nextChar);
 	}
 	
+	/**
+	 * A get connections parancsot valósítja meg, a megadott pumpa ki- és bemenetét írja ki.
+	 * @param pumpNum a pumpa sorszáma string-ként
+	 */
 	public static void getConnections(String pumpNum) {
 		String pumpKey = "pump_"+ pumpNum;
 		Pump pump = pumps.get(pumpKey);
 		if(pump == null) {
-			System.out.println("Hibas parancs.");		// cső sorszáma rosszul van megadva
+			System.out.println("Hibas parancs.");		// pumpa sorszáma rosszul van megadva
 			return;
 		}
 		String out = null, in = null;
@@ -784,7 +844,7 @@ public class Program {
 				in = entry.getKey();
 			}
 		}
-		System.out.println(out + " " + in);		// TODO? szöveg, h melyik a ki és melyik a be
+		System.out.println(out + " " + in);
 	}
 	
 	public static void setP(String[] Command){

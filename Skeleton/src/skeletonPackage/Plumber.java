@@ -2,11 +2,6 @@ package skeletonPackage;
 
 /** Plumber osztály */
 public class Plumber extends Character {
-	//***************************************************************************
-	public Pump getInventoryPump() {return inventoryPump;}
-	public Pipe getInventoryPipe() {return inventoryPipe;}
-	public int getPipeEnds() {return pipeEnds;}
-	//***************************************************************************
 	/**
 	 * Privát, egy Pipe referenciát tárol, amely éppen a szerelő birtokában van.
 	 */
@@ -34,7 +29,7 @@ public class Plumber extends Character {
 	}
 	
 	/**
-	 * A Plumber inventoryPump-nak az értékét beállítja a paraméterként kapott pumpára 
+	 * A Plumber inventoryPump-nak az értékét beállítja a paraméterként kapott pumpára.
 	 * @param p a beállítandó pumpa
 	 * @return ha beállítja arra az étékre, akkor igazzal tér vissza, ha nem tudja beállítani, akkor hamissal
 	 */
@@ -48,7 +43,13 @@ public class Plumber extends Character {
 	}
 	
 	/**
-	 * A Plumber inventoryPipe-nak az értékét beállítja a paraméterként kapott csőre 
+	 * A Plumber inventoryPump-ját adja vissza.
+	 * @return az inventory-ban lévő pumpa
+	 */
+	public Pump getInventoryPump() { return inventoryPump; }
+	
+	/**
+	 * A Plumber inventoryPipe-nak az értékét beállítja a paraméterként kapott csőre.
 	 * @param p a beállítandó cső
 	 * @return ha beállítja arra az étékre, akkor igazzal tér vissza, ha nem tudja beállítani, akkor hamissal
 	 */
@@ -75,6 +76,18 @@ public class Plumber extends Character {
 		}
 		return false;
 	}
+	
+	/**
+	 * A Plumber inventoryPipe-ját adja vissza.
+	 * @return az inventory-ban lévő pipe
+	 */
+	public Pipe getInventoryPipe() { return inventoryPipe; }
+	
+	/**
+	 * Visszaadja, hogy a Plumber inventory-jában lévő csőnek hány végét fogja.
+	 * @return egész szám, a nála lévő csővégek száma
+	 */
+	public int getPipeEnds() { return pipeEnds; }
 
 	/**
 	 * Publikus metódus, meghívásakor a szerelő megjavítja az elromlott mezőt, amin éppen a játékos áll.
