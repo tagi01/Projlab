@@ -345,14 +345,19 @@ public class Program {
 								temp.setState(StateOfPipe.NORMAL);
 						}
 					}
-
-					System.out.println("Befejezodtek a beallitasok!");
-				} else
-					System.out.println("Nem jo a parameterezes nem helyes vagy hianyzik a <[...]> !");
-			} else
-				System.out.println("Nem jo a parameterezes nem helyes vagy hianyzik a <-n> !");
-		} else
-			System.out.println("Nincs ilyen cso!");
+					System.out.println("Beallitva.");
+				} else {
+					System.out.println("Hibas parancs.");
+					return;
+				}
+			} else {
+				System.out.println("Hibas parancs.");
+				return;
+			}
+		} else {
+			System.out.println("Hibas parancs");
+			return;
+		}
 	}
 
 	public static void setActive(String[] command) {
@@ -1183,17 +1188,25 @@ public class Program {
 
 	public static void setGame(String[] command) {
 
-		if(command[2]==null && command[3]==null || Integer.parseInt(command[3]) < 0) {
-			System.out.println("Hibas parancs.");
-			return;
+		for (int i = 1; i < command.length; i += 2) {
+			if (command[i] == null && command[i + 1] == null || Integer.parseInt(command[i + 1]) < 0) {
+				System.out.println("Hibas parancs.");
+				return;
+			}
+
+			int input = Integer.parseInt(command[i + 1]);
+			if (command[i].equals("-r")) {
+				game.setRound(input);
+			} else if (command[i].equals("-s")) {
+				game.setPointsOfSaboteur(input);
+			} else if (command[i].equals("-p")) {
+				game.setPointsOfPlumber(input);
+			} else {
+				System.out.println("Hibas parancs.");
+				return;
+			}
 		}
-
-		int input = Integer.parseInt(command[3]);
-		if(command[2].equals("-r")) { game.setRound(input); }
-		if(command[2].equals("-s")) { game.setPointsOfSaboteur(input); }
-		if(command[2].equals("-p")) { game.setPointsOfPlumber(input); }
-
-		else System.out.println("Hibas parancs.");
+		System.out.println("Beallitva");
 	}
 
 	public static void actionSlippery(String[] command) {
@@ -1282,9 +1295,9 @@ public class Program {
 
 	public static void getWater(String[] command) {
 		String pipe = "pipe_";
-		pipe = pipe.concat(command[2]);
+		pipe = pipe.concat(command[1]);
 
-		if(command[2]==null || Integer.parseInt(command[2]) > pipes.size()-1 || !pipes.containsKey(pipe)) {
+		if(command[1]==null || !pipes.containsKey(pipe)) {
 			System.out.println("Hibas parancs");
 			return;
 		}
@@ -1307,10 +1320,10 @@ public class Program {
 	}
 
 	public static void pumpWater(String[] command) {
-		String p = "cistern_";
-		p.concat(command[2]);
+		String p = "pump_";
+		p = p.concat(command[1]);
 
-		if(command[2]==null || !pumps.containsKey(p)) {
+		if(command[1]==null || !pumps.containsKey(p)) {
 			System.out.println("Hibas parancs");
 			return;
 		}
