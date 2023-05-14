@@ -627,6 +627,7 @@ public class Program {
 			System.out.println("Betoltes sikertelen. Nincs ilyen fajl.");
 		}
 	}
+	
 	/**
 	 * A create network parancsot valósítja meg, létrehozza a pálya elemeit.
 	 * @param command a parancsban megadott értékek tömbje (parancs nélkül)
@@ -749,11 +750,17 @@ public class Program {
 		Saboteur saboteur = saboteurs.get(saboteurKey);
 		if(saboteur == null) {
 			System.out.println("Hibas parancs.");	// nincs ennyi szabotőr vagy rosszul van megadva
+			return;
 		}
 		Field f = getValueFromFieldMaps(command[1]);
 		if(f != null) {
-			saboteur.setCurrentField(f);
-			System.out.println("Beallitva.");
+			if(f.acceptCharacter()) {
+				saboteur.setCurrentField(f);
+				f.setCurrentCharacters(saboteur);
+				System.out.println("Beallitva.");
+			} else {
+				System.out.println("Hibas parancs.");	// nincs hely a mezőn
+			}
 		} else {
 			System.out.println("Hibas parancs.");	// nincs ilyen mező
 		}
@@ -774,7 +781,7 @@ public class Program {
 			return;
 		}
 		if(currentPipe.getState() != StateOfPipe.NORMAL) {
-			System.out.println("Akció vége, nincs változás.");
+			System.out.println("Akcio vege, nincs valtozas.");
 		} else {
 			System.out.println("Sikeres parancs.");
 		}
@@ -851,6 +858,7 @@ public class Program {
 			}
 		} else {
 			System.out.println("Hibas parancs.");		// nincs ilyen azonosítójú mező
+			return;
 		}
 
 		for(Map.Entry<String, Field> entry : neighbours.entrySet()) {
