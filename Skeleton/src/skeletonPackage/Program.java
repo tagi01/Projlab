@@ -217,7 +217,7 @@ public class Program {
 			System.exit(0);
 		default:
 			String[] first = splitted[0].split("-");
-			if (first[0].contentEquals("set")  && first.length > 1) {
+			if (first[0].contentEquals("set") && first.length > 1) {
 				splitted[0] = first[1];
 				if (!started) {
 					//splitted = Arrays.copyOfRange(splitted, 1, splitted.length);/
@@ -271,6 +271,7 @@ public class Program {
 
 					if(getValueFromFieldMaps(command[4])==null && !plumbers.containsKey(command[4])) {
 						System.out.println("Hibas parancs.");
+						return;
 					}
 
 					if (plumbers.containsKey(command[4])) {
@@ -284,6 +285,7 @@ public class Program {
 
 					if(getValueFromFieldMaps(command[5])==null && !plumbers.containsKey(command[5])) {
 						System.out.println("Hibas parancs.");
+						return;
 					}
 
 					if (plumbers.containsKey(command[5])) {
@@ -315,7 +317,7 @@ public class Program {
 				return;
 			}
 		} else {
-			System.out.println("Hibas parancs");
+			System.out.println("Hibas parancs.");
 			return;
 		}
 	}
