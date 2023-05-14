@@ -1074,12 +1074,10 @@ public class Program {
 		else System.out.println("Hibas parancs.");
 	}
 
-	public static void actionSlippery(String[] command)
-	{
-		// cso-e a currentField
-		// saboteur-e
+	public static void actionSlippery(String[] command) {
 		boolean isPipe = false, isSaboteur = false;
 		Pipe temp_p = new Pipe();
+		String key ="";
 
 		for(Map.Entry<String, Pipe> pipe : pipes.entrySet()) {
 			if(pipe.getValue().equals(game.getActiveCharacter().getField())) {
@@ -1100,6 +1098,7 @@ public class Program {
 		for (Map.Entry<String, Saboteur> s : saboteurs.entrySet()) {
 			if (s.getValue().equals(game.getActiveCharacter())) {
 				isSaboteur = true;
+				key = s.getKey();
 			}
 		}
 
@@ -1108,8 +1107,8 @@ public class Program {
 			return;
 		}
 
-		Saboteur s = new Saboteur(temp_p, game.getActiveCharacter().network);
-		// s.trunPipeSlippery();
+		Saboteur s = saboteurs.get(key);
+		s.turnPipeSlippery();
 		System.out.println("Sikeres parancs");
 		System.out.println(game.getActionPoints());
 
@@ -1117,11 +1116,12 @@ public class Program {
 	public static void grabPump(String[] command) {
 		boolean standOnCistern = false;
 		boolean activeIsPlumber = false;
-		Cistern temp_cistern = new Cistern();
+		String cistern_key ="";
+		String plumber_key="";
 
 		for (Map.Entry<String, Cistern> cistern : cisterns.entrySet()) {
 			if (cistern.getValue().equals(game.getActiveCharacter().getField())) {
-				temp_cistern = cistern.getValue();
+				cistern_key= cistern.getKey();
 				standOnCistern = true;
 			}
 		}
@@ -1135,6 +1135,7 @@ public class Program {
 		for (Map.Entry<String, Plumber> plumber : plumbers.entrySet()) {
 			if (plumber.getValue().equals(game.getActiveCharacter())) {
 				activeIsPlumber = true;
+				plumber_key = plumber.getKey();
 			}
 		}
 
@@ -1144,8 +1145,8 @@ public class Program {
 		}
 
 		if(standOnCistern && activeIsPlumber) {
-			Plumber temp_plumber = new Plumber(game.getActiveCharacter().getField(), game.getActiveCharacter().network);
-			if(temp_cistern.getHasPump() && temp_plumber.getInventoryPump() == null) {
+			Plumber temp_plumber = plumbers.get(plumber_key);
+			if(cisterns.get(cistern_key).getHasPump() && temp_plumber.getInventoryPump() == null) {
 				game.getActiveCharacter().getField().interactPlumber(temp_plumber, new Pump());
 				System.out.println("Sikeres parancs");
 				System.out.println(game.getActionPoints());
