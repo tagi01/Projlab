@@ -42,8 +42,8 @@ public class Source extends Field {
 			neighbours.remove(p);
 			return true;
 		} else {
-			return true;
-			}
+			return false;
+		}
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class Source extends Field {
 			if(removed) {
 				pipe.removeNeighbour(this);
 				p.setInventoryPipe(pipe);
-				pipe.setTaken(true);
+				game.removeActionPoints();
 			}
 			
 		}
@@ -92,7 +92,7 @@ public class Source extends Field {
 			if(added) {
 				pipe.addNeighbour(this);
 				p.setInventoryPipe(null);
-				pipe.setTaken(false);
+				game.removeActionPoints();
 			}
 	
 		}
