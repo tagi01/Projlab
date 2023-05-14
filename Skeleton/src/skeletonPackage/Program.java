@@ -228,7 +228,7 @@ public class Program {
 			if (first[0].contentEquals("set")) {
 				splitted[0] = first[1];
 				if (!started) {
-					//splitted = Arrays.copyOfRange(splitted, 1, splitted.length);
+					//splitted = Arrays.copyOfRange(splitted, 1, splitted.length);/
 					switch(splitted[0]) {
 					case "pipe":
 						setPipe(splitted);
