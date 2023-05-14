@@ -90,6 +90,14 @@ public class Pipe extends BreakableField {
 	public void setTaken(boolean taken) {
 		this.taken = taken;
 	}
+	
+	/**
+	 * taken gettere
+	 * @return taken értéke
+	 */
+	public boolean getTaken() {
+		return taken;
+	}
 
 	/**
 	 * Konstruktor
