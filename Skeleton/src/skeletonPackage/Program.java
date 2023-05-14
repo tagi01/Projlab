@@ -447,7 +447,7 @@ public class Program {
 						cisterns.get(cistern).setHasPipe(true);
 						//System.out.println("Beallitva.");
 					} else if (command[i + 1].equals("false")) {
-						cisterns.get(cistern).setHasPipe(true);
+						cisterns.get(cistern).setHasPipe(false);
 						//System.out.println("Beallitva.");
 					} else {
 						System.out.println("Hibas parancs.");
