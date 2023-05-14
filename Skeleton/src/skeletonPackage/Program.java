@@ -1141,6 +1141,7 @@ public class Program {
 			System.out.println("Hibas parancs.");
 		}
 		boolean sikerult_e = false;
+
 		for (Field f : game.getActiveCharacter().getField().getNeighbours()) {
 			if (f == tmp) {
 				int actionPoint = game.getActionPoints();
@@ -1151,9 +1152,10 @@ public class Program {
 				else {
 					System.out.println("Akcio vege, nincs valtozas.");
 				}
-				sikerult_e = false;
+				sikerult_e = true;
 			}
 		}
+
 		if(!sikerult_e) {
 			System.out.println("Hibas parancs.");
 		}
@@ -1230,15 +1232,18 @@ public class Program {
 						case "-i": // pumpa bemenete
 							if(!pipes.containsKey(command[x+1])) { throw new InvalidParameterException(); }
 							p.setIn(pipes.get(command[x+1]));
+							p.addNeighbour(pipes.get(command[x+1]));
 							pipes.get(command[x+1]).addNeighbour(p);
 							break;
 						case "-o": // pumpa kimenete
 							if(!pipes.containsKey(command[x+1])) { throw new InvalidParameterException(); }
 							p.setOut(pipes.get(command[x+1]));
+							p.addNeighbour(pipes.get(command[x+1]));
 							pipes.get(command[x+1]).addNeighbour(p);
 							break;
 						case "-inv": // szerelonel van-e
 							if(!plumbers.containsKey(command[x+1])) { throw new InvalidParameterException(); }
+							p.setIn(null); p.setOut(null);
 							plumbers.get(command[x+1]).setInventoryPump(p);
 							break;
 						case "-b": // elvan-e torve

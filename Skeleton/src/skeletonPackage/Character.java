@@ -57,6 +57,7 @@ public abstract class Character {
 				if(currentField.offField(this)) {
 					currentField = f;
 					currentField.onField(this);
+					currentField.game.removeActionPoints();
 				}
 				else{
 					System.out.println("Ragados a mezo, amin allsz. Nem lephetsz le rola.");
