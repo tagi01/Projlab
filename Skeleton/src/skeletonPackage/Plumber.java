@@ -130,6 +130,7 @@ public class Plumber extends Character {
 	 */
 	public void grabPipe(Pipe p) {
 		if(inventoryPipe == null && inventoryPump == null || inventoryPipe == p && pipeEnds == 1) {
+			if (!p.getTaken() || inventoryPipe == p && pipeEnds == 1)
 			currentField.interactPlumber(this, p);
 		}
 	}
