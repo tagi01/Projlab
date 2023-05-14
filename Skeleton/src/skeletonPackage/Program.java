@@ -45,7 +45,7 @@ public class Program {
 	/**
 	 * tárolja hogy elkezdődött-e már a játék
 	 */
-	private static boolean started;
+	private static boolean started = false;
 
 	/**
 	 * Main metódus
@@ -68,6 +68,7 @@ public class Program {
 		while (true) {
 			input_temp = new String();
 			input_temp = input.nextLine();
+			System.out.println("Kijutott");
 			try {
 				readCommand(input_temp);
 			}catch(InputMismatchException e) {
@@ -78,6 +79,10 @@ public class Program {
 
 	}
 	
+	/**
+	 * Kezeli a parancsokat a kapott sorban
+	 * @param line a parancsot tartalmazó sor
+	 */
 	public static void readCommand(String line) {
 		String[] splitted = line.split("\\s+");
 		switch(splitted[0]) {
@@ -87,42 +92,6 @@ public class Program {
 			} else {
 				System.out.println("Hibas parancs.");
 			}				
-			break;
-		case "set":
-			if (!started) {
-				splitted = Arrays.copyOfRange(splitted, 1, splitted.length);
-				switch(splitted[0]) {
-				case "pipe":
-					setPipe(splitted);
-					break;
-				case "pump":
-					setPump(splitted);
-					break;
-				case "p":
-					setP(splitted);
-					break;
-				case "s":
-					setS(Arrays.copyOfRange(splitted, 1, splitted.length));
-					break;
-				case "cistern":
-					setCistern(splitted);
-					break;
-				case "active":
-					setActive(splitted);
-					break;
-				case "game":
-					setGame(splitted);
-					break;
-				case "random":
-					setRandom(splitted);
-					break;
-				default:
-					System.out.println("Hibas parancs.");
-					break;
-				}
-			} else {
-				System.out.println("Mar elkezdodott a jatek");
-			}
 			break;
 		case "action":
 			if(started) {
@@ -230,9 +199,10 @@ public class Program {
 				System.out.println("Hibas parancs.");
 				break;
 			}
+			break;
 		case "start":
 			started = true;
-			System.out.println("Jatek elinditva");
+			System.out.println("Sikeres parancs.");
 			break;
 		case "load":
 			load(splitted);
@@ -254,8 +224,49 @@ public class Program {
 			input.close();
 			System.exit(0);
 		default:
-			System.out.println("Hibas parancs.");
-			break;
+			String[] first = splitted[0].split("-");
+			if (first[0] == "set") {
+				splitted[0] = first[1];
+				if (!started) {
+					//splitted = Arrays.copyOfRange(splitted, 1, splitted.length);
+					switch(splitted[0]) {
+					case "pipe":
+						setPipe(splitted);
+						break;
+					case "pump":
+						setPump(splitted);
+						break;
+					case "p":
+						setP(splitted);
+						break;
+					case "s":
+						setS(Arrays.copyOfRange(splitted, 1, splitted.length));
+						break;
+					case "cistern":
+						setCistern(splitted);
+						break;
+					case "active":
+						setActive(splitted);
+						break;
+					case "game":
+						setGame(splitted);
+						break;
+					case "random":
+						setRandom(splitted);
+						break;
+					default:
+						System.out.println("Hibas parancs.");
+						return;
+					}
+				} else {
+					System.out.println("Hibas parancs.");
+					return;
+				}
+				break;
+			} else {
+				System.out.println("Hibas parancs.");
+				return;
+			}
 		}
 	}
 
@@ -506,7 +517,7 @@ public class Program {
 	public static void repair() {
 		Plumber currentPlumber = null;
 		for (Plumber p : plumbers.values()) {
-			if (game.getActiveCharacter().equals(p))
+			if (game.getActiveCharacter() == p)
 				currentPlumber = p;
 		}
 		if (currentPlumber != null) {
@@ -575,7 +586,7 @@ public class Program {
 		} else if (pipes.containsKey(command[1])) {
 			System.out.println(pipes.get(command [1]).getBroken());
 		} else {
-			System.out.println("Hibas paramcs.");
+			System.out.println("Hibas parancs.");
 		}
 	}
 	
