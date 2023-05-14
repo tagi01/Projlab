@@ -129,7 +129,7 @@ public class Plumber extends Character {
 	 * @param p, Pipe típusú objektum referenciája, amelyik csövet vesszük fel
 	 */
 	public void grabPipe(Pipe p) {
-		if(inventoryPipe == null && inventoryPump == null) {
+		if(inventoryPipe == null && inventoryPump == null || inventoryPipe == p && pipeEnds == 1) {
 			currentField.interactPlumber(this, p);
 		}
 	}
