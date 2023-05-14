@@ -96,7 +96,7 @@ public class Program {
 				case "setpump":
 					actionSetPump(splitted);
 					break;
-					case "slippery":
+				case "slippery":
 					actionSlippery(splitted);
 					break;
 				case "repair":
@@ -500,7 +500,6 @@ public class Program {
 				} else {
 					System.out.println("Akcio vege, nincs valtozas.");
 				}
-				System.out.println(game.getActionPoints());
 			} else {
 				System.out.println("Karakter nem ilyen tipusu mezon all.");
 			}
@@ -786,7 +785,6 @@ public class Program {
 		} else {
 			System.out.println("Akcio vege, nincs valtozas.");
 		}
-		System.out.println(game.getActionPoints());
 	}
 	
 	/**
@@ -820,7 +818,6 @@ public class Program {
 			} else {
 				System.out.println("Akcio vege, nincs valtozas.");
 			}
-			System.out.println(game.getActionPoints());
 		} else {
 			System.out.println("Ehhez a parancshoz nincs hozzaferese.");
 		}
@@ -967,7 +964,6 @@ public class Program {
 				System.out.println("Sikeres parancs.");
 			}
 			active.getPipe();
-			//System.out.println(game.getActionPoints());
 		}
 		
 		else {
@@ -1000,7 +996,6 @@ public class Program {
 			} else {
 				System.out.println("Akcio vege, nincs valtozas.");
 			}
-			//System.out.println(game.getActionPoints());
 		}
 	}
 	
@@ -1058,7 +1053,6 @@ public class Program {
 				else {
 					System.out.println("Akcio vege, nincs valtozas.");
 				}
-				System.out.println(game.getActionPoints());
 			}
 			else {
 				System.out.println("Karakter nem ilyen tipusu mezon all.");
@@ -1074,7 +1068,6 @@ public class Program {
 				else {
 					System.out.println("Akcio vege, nincs valtozas.");
 				}
-				System.out.println(game.getActionPoints());
 			}
 			else {
 				System.out.println("Karakter nem ilyen tipusu mezon all.");
@@ -1104,7 +1097,6 @@ public class Program {
 				else {
 					System.out.println("Akcio vege, nincs valtozas.");
 				}
-				System.out.println(game.getActionPoints());
 			}
 			else {
 				System.out.println("Karakter nem ilyen tipusu mezon all.");
@@ -1308,7 +1300,6 @@ public class Program {
 		Saboteur s = saboteurs.get(key);
 		s.turnPipeSlippery();
 		System.out.println("Sikeres parancs");
-		System.out.println(game.getActionPoints());
 
 	}
 	public static void grabPump(String[] command) {
