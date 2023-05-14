@@ -390,15 +390,15 @@ public class Program {
 	}
 
 	public static void getCantPuncturePipe(String[] command) {
-		if (pipes.containsKey(command[1])) {
+		if (pipes.containsKey("pipe_" + command[1])) {
 			System.out.println("Az hatralevo ido: " + pipes.get(command[1]).getCantPuncture());
 		} else
 			System.out.println("Nincsen ilyen pipe: -1");
 	}
 
 	public static void getHasPipe(String[] command) {
-		if (cisterns.containsKey(command[1])) {
-			if (cisterns.get(command[1]).getHasPipe()) {
+		if (cisterns.containsKey("cistern_" + command[1])) {
+			if (cisterns.get("cistern_" + command[1]).getHasPipe()) {
 				System.out.println("Van felveheto cso ennel a cisternanal");
 			} else
 				System.out.println("Nincsen felveheto cso ennel a cisternanal");
