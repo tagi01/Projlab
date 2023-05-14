@@ -22,7 +22,7 @@ public class Program {
 	 */
 	private static Scanner fileInput;
 	
-	private static Game game=new Game();
+	private static Game game = new Game();
 
 	private static Network network = new Network();
 	/**
@@ -627,6 +627,7 @@ public class Program {
 			System.out.println("Betoltes sikertelen. Nincs ilyen fajl.");
 		}
 	}
+	
 	/**
 	 * A create network parancsot valósítja meg, létrehozza a pálya elemeit.
 	 * @param command a parancsban megadott értékek tömbje (parancs nélkül)
@@ -652,6 +653,16 @@ public class Program {
 			System.out.println("Hibas parancs.");		// nem megfelelő a karakterek száma
 			return;
 		}
+		
+		game = new Game();
+		network = new Network();
+		pipes.clear();
+		pumps.clear();
+		sources.clear();
+		cisterns.clear();
+		saboteurs.clear();
+		plumbers.clear();
+		started = false;
 		
 		for(int i = 0; i < pipeNum; i++) {
 			Pipe p = new Pipe();
@@ -738,11 +749,17 @@ public class Program {
 		Saboteur saboteur = saboteurs.get(saboteurKey);
 		if(saboteur == null) {
 			System.out.println("Hibas parancs.");	// nincs ennyi szabotőr vagy rosszul van megadva
+			return;
 		}
 		Field f = getValueFromFieldMaps(command[1]);
 		if(f != null) {
-			saboteur.setCurrentField(f);
-			System.out.println("Beallitva.");
+			if(f.acceptCharacter()) {
+				saboteur.setCurrentField(f);
+				f.setCurrentCharacters(saboteur);
+				System.out.println("Beallitva.");
+			} else {
+				System.out.println("Hibas parancs.");	// nincs hely a mezőn
+			}
 		} else {
 			System.out.println("Hibas parancs.");	// nincs ilyen mező
 		}
@@ -840,6 +857,7 @@ public class Program {
 			}
 		} else {
 			System.out.println("Hibas parancs.");		// nincs ilyen azonosítójú mező
+			return;
 		}
 
 		for(Map.Entry<String, Field> entry : neighbours.entrySet()) {
