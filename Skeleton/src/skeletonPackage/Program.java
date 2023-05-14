@@ -100,7 +100,7 @@ public class Program {
 					actionSlippery(splitted);
 					break;
 				case "repair":
-					repair();
+					actionRepair();
 					break;
 				case "placePipe":
 					placePipe();
@@ -406,7 +406,6 @@ public class Program {
 						System.out.print("[" + set.getKey() + "]");
 					}
 				}
-				System.out.println("");
 			}
 			else
 				System.out.print("[]");
@@ -484,7 +483,7 @@ public class Program {
 	/**
 	 * repair parancsot valósítja meg
 	 */
-	public static void repair() {
+	public static void actionRepair() {
 		Plumber currentPlumber = null;
 		for (Plumber p : plumbers.values()) {
 			if (game.getActiveCharacter() == p)
@@ -962,7 +961,7 @@ public class Program {
 				System.out.println("Sikeres parancs.");
 			}
 			active.getPipe();
-			System.out.println(game.getActionPoints());
+			//System.out.println(game.getActionPoints());
 		}
 		
 		else {
@@ -989,7 +988,7 @@ public class Program {
 				System.out.println("Sikeres parancs.");
 			}
 			active.grabPipe(pipe);
-			System.out.println(game.getActionPoints());
+			//System.out.println(game.getActionPoints());
 		}
 	}
 	
