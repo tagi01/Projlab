@@ -383,9 +383,9 @@ public class Program {
 	public static void getHasPipe(String[] command) {
 		if (cisterns.containsKey("cistern_" + command[1])) {
 			if (cisterns.get("cistern_" + command[1]).getHasPipe()) {
-				System.out.println("Van felveheto cso ennel a cisternanal");
+				System.out.println(cisterns.get("cistern_" + command[1]).getHasPipe());
 			} else
-				System.out.println("Nincsen felveheto cso ennel a cisternanal");
+				System.out.println("false");
 		} else
 			System.out.println("Nincsen ilyen cisterna.");
 	}
@@ -974,10 +974,17 @@ public class Program {
 			
 			if(active.getInventoryPump() != null || active.getInventoryPipe() != null ||  currentField.getHasPipe() == false) {
 				System.out.println("Akcio vege, nincs valtozas.");
-			} else {
+			} 
+			else {
 				System.out.println("Sikeres parancs.");
+				active.getPipe();
+				Pipe pi = new Pipe();
+				pi=active.getInventoryPipe();
+				int i = pipes.size();
+				i++;
+				pipes.put("pipe_"+i, pi);
 			}
-			active.getPipe();
+			
 		}
 		
 		else {
