@@ -2,6 +2,7 @@ package skeletonPackage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -344,14 +345,19 @@ public class Program {
 								temp.setState(StateOfPipe.NORMAL);
 						}
 					}
-
-					System.out.println("Befejezodtek a beallitasok!");
-				} else
-					System.out.println("Nem jo a parameterezes nem helyes vagy hianyzik a <[...]> !");
-			} else
-				System.out.println("Nem jo a parameterezes nem helyes vagy hianyzik a <-n> !");
-		} else
-			System.out.println("Nincs ilyen cso!");
+					System.out.println("Beallitva.");
+				} else {
+					System.out.println("Hibas parancs.");
+					return;
+				}
+			} else {
+				System.out.println("Hibas parancs.");
+				return;
+			}
+		} else {
+			System.out.println("Hibas parancs");
+			return;
+		}
 	}
 
 	public static void setActive(String[] command) {
@@ -450,6 +456,10 @@ public class Program {
 	 * @param command a parancs szavai
 	 */
 	public static void setCistern(String[] command) {
+		if (command.length < 4) {
+			System.out.println("Hibas parancs.");
+			return;
+		}
 		String cistern = "cistern_";
 		cistern = cistern.concat(command[1]);
 		if (cisterns.containsKey(cistern)) {
@@ -539,6 +549,10 @@ public class Program {
 	 * @param command a parancs szavai
 	 */
 	public static void getPlace(String[] command) {
+		if (command.length < 2) {
+			System.out.println("Hibas parancs.");
+			return;
+		}
 		if (plumbers.containsKey(command[1])) {
 			String name = getKeyFromFieldMaps(plumbers.get(command[1]).getField());
 			System.out.println(name);
@@ -547,6 +561,7 @@ public class Program {
 			System.out.println(name);
 		} else {
 			System.out.println("Hibas parancs.");
+			return;
 		}
 	}
 	
@@ -555,6 +570,10 @@ public class Program {
 	 * @param command a parancs szavai
 	 */
 	public static void getState(String[] command) {
+		if (command.length < 2) {
+			System.out.println("Hibas parancs.");
+			return;
+		}
 		String pipe = "pipe_";
 		pipe = pipe.concat(command[1]);
 		if (pipes.containsKey(pipe)) {
@@ -577,6 +596,10 @@ public class Program {
 	 * @param command a parancs szavai
 	 */
 	public static void getIsBroken(String[] command) {
+		if (command.length < 2) {
+			System.out.println("Hibas parancs.");
+			return;
+		}
 		if (pipes.containsKey(command[1])) {
 			System.out.println(pipes.get(command [1]).getBroken());
 		} else if (pumps.containsKey(command[1])) {
@@ -592,6 +615,10 @@ public class Program {
 	 * @param command a parancs szavai
 	 */
 	public static void pumpBreak(String[] command) {
+		if (command.length < 2) {
+			System.out.println("Hibas parancs.");
+			return;
+		}
 		String pump = "pump_";
 		pump = pump.concat(command[1]);
 		if (pumps.containsKey(pump)) {
@@ -604,6 +631,10 @@ public class Program {
 	 * @param command a parancs szavai
 	 */
 	public static void load(String[] command) {
+		if (command.length < 3) {
+			System.out.println("Hibas parancs.");
+			return;
+		}
 		String file = command[1];
 		file = file.concat("/");
 		file = file.concat(command[2]);
@@ -1126,89 +1157,81 @@ public class Program {
 	}
 
 	public static void setPump(String[] command) {
+
+		Pump p = new Pump();
+
 		try {
-			if (command[1] == null && command[3] == null) {
-				System.out.println("Hibas parancs");
-				return;
-			}
-			String opt = command[2];
-			String param = command[3];
+			if (command.length%2==0 && command.length>=3 && command.length <= 9) { // ha jo hosszusagu a command
 
-			boolean failed = false;
-			Pump p = new Pump();
-			Pipe pipe = new Pipe();
+				if(!pumps.containsKey("pump_"+command[1])) {
+					throw new InvalidParameterException();
+				}
+				p = pumps.get("pump_"+command[1]);
 
-			if (pumps.containsKey("pump_" + command[1])) {
-				p = pumps.get("pump_" + command[1]);
-			} else {
-				failed = true;
-			}
+				int x =2; // elso opcio helye
+				for(int i=0; i<4;i++){
+					switch(command[x]) {
+						case "-i": // pumpa bemenete
+							if(!pipes.containsKey(command[x+1])) { throw new InvalidParameterException(); }
+							p.setIn(pipes.get(command[x+1]));
+							pipes.get(command[x+1]).addNeighbour(p);
+							break;
+						case "-o": // pumpa kimenete
+							if(!pipes.containsKey(command[x+1])) { throw new InvalidParameterException(); }
+							p.setOut(pipes.get(command[x+1]));
+							pipes.get(command[x+1]).addNeighbour(p);
+							break;
+						case "-inv": // szerelonel van-e
+							if(!plumbers.containsKey(command[x+1])) { throw new InvalidParameterException(); }
+							plumbers.get(command[x+1]).setInventoryPump(p);
+							break;
+						case "-b": // elvan-e torve
+							if(command[x+1].equals("false")) { p.setBroken(false); }
+							if(command[x+1].equals("true")) { p.setBroken(true); }
+							else { throw new InvalidParameterException(); }
+							break;
+						default:
+							continue;
+					}
+					x+=2;
 
-			if (opt.equals("-i")) { // pumpa bemenete
-				if (!pipes.containsKey(param)) {
-					failed = true;
-				} else {
-					pipe = pipes.get(param);
-					p.setIn(pipe);
+					if(command.length==x) {
+						System.out.println("Beallitva.");
+						return;
+					}
 				}
 			}
-
-			if (opt.equals("-o")) { // pumpa kimenete
-				if (!pipes.containsKey(param)) {
-					failed = true;
-				} else {
-					pipe = pipes.get(param);
-					p.setOut(pipe);
-				}
-			}
-
-			if (opt.equals("-inv")) { // szerelonel van-e, szerelo azonosítója !
-				if (!plumbers.containsKey(param)) {
-					failed = true;
-				} else {
-					Plumber plumber = plumbers.get(param);
-
-					plumber.setInventoryPump(p);
-				}
-			}
-
-			if (opt.equals("-b")) { // pumpa eltörve-e
-				if (param.equals("true") || param.equals("True")) {
-					p.setBroken(true);
-				}
-				if (param.equals("false") || param.equals("False")) {
-					p.setBroken(false);
-				} else {
-					failed = true;
-				}
-			}
-
-			if (failed) {
-				System.out.print("Hibas parancs.");
-				return;
-			}
-
-			System.out.println("Beallitva.");
-			return;
+			System.out.println("Hibas parancs.");
 		}
-		catch (Exception e) {
+		catch (InvalidParameterException e) {
+			System.out.println("Hibas parancs.");
+		}
+		catch (Exception exc) {
 			System.out.println("Hiba tortent.");
 		}
 	}
 
 	public static void setGame(String[] command) {
 
-		if(command[2]==null && command[3]==null || Integer.parseInt(command[3]) < 0) {
-			System.out.println("Hibas parancs.");
-			return;
+		for (int i = 1; i < command.length; i += 2) {
+			if (command[i] == null && command[i + 1] == null || Integer.parseInt(command[i + 1]) < 0) {
+				System.out.println("Hibas parancs.");
+				return;
+			}
+
+			int input = Integer.parseInt(command[i + 1]);
+			if (command[i].equals("-r")) {
+				game.setRound(input);
+			} else if (command[i].equals("-s")) {
+				game.setPointsOfSaboteur(input);
+			} else if (command[i].equals("-p")) {
+				game.setPointsOfPlumber(input);
+			} else {
+				System.out.println("Hibas parancs.");
+				return;
+			}
 		}
-
-		int input = Integer.parseInt(command[3]);
-		if(command[2].equals("-r")) { game.setRound(input); }
-		if(command[2].equals("-s")) { game.setPointsOfSaboteur(input); }
-		if(command[2].equals("-p")) { game.setPointsOfPlumber(input); }
-
-		else System.out.println("Hibas parancs.");
+		System.out.println("Beallitva");
 	}
 
 	public static void actionSlippery(String[] command) {
@@ -1297,9 +1320,9 @@ public class Program {
 
 	public static void getWater(String[] command) {
 		String pipe = "pipe_";
-		pipe = pipe.concat(command[2]);
+		pipe = pipe.concat(command[1]);
 
-		if(command[2]==null || Integer.parseInt(command[2]) > pipes.size()-1 || !pipes.containsKey(pipe)) {
+		if(command[1]==null || !pipes.containsKey(pipe)) {
 			System.out.println("Hibas parancs");
 			return;
 		}
@@ -1320,10 +1343,10 @@ public class Program {
 	}
 
 	public static void pumpWater(String[] command) {
-		String p = "cistern_";
-		p.concat(command[2]);
+		String p = "pump_";
+		p = p.concat(command[1]);
 
-		if(command[2]==null || !pumps.containsKey(p)) {
+		if(command[1]==null || !pumps.containsKey(p)) {
 			System.out.println("Hibas parancs");
 			return;
 		}
@@ -1338,6 +1361,10 @@ public class Program {
 	 * @param A parancs szavai
 	 */
 	public static void setRandom(String[] command) {
+		if (command.length < 2) {
+			System.out.println("Hibas parancs.");
+			return;
+		}
 		if(command[1] == "true") {
 			network.setRandom(true);
 			System.out.println("Beallitva.");
