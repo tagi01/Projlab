@@ -22,7 +22,7 @@ public class Program {
 	 */
 	private static Scanner fileInput;
 	
-	private static Game game=new Game();
+	private static Game game;
 
 	private static Network network = new Network();
 	/**
@@ -653,6 +653,17 @@ public class Program {
 			return;
 		}
 		
+		game = Game.getInstance();
+		network = new Network();
+		game.setNetwork(network);
+		pipes.clear();
+		pumps.clear();
+		sources.clear();
+		cisterns.clear();
+		saboteurs.clear();
+		plumbers.clear();
+		started = false;
+		
 		for(int i = 0; i < pipeNum; i++) {
 			Pipe p = new Pipe();
 			pipes.put("pipe_" + (i+1), p);
@@ -966,16 +977,16 @@ public class Program {
 				currentPlumber.placePipe();
 				if (actionPoint != game.getActionPoints()) {
 					System.out.println("Sikeres parancs.");
-				} 
+				}
 				else {
 					System.out.println("Akcio vege, nincs valtozas.");
 				}
 				System.out.println(game.getActionPoints());
-			} 
+			}
 			else {
 				System.out.println("Karakter nem ilyen tipusu mezon all.");
 			}
-		} 
+		}
 		else {
 			System.out.println("Ehhez a parancshoz nincs hozzaferese.");
 		}

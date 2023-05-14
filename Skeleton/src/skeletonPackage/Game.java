@@ -11,6 +11,8 @@ import java.util.ArrayList;
 public class Game {
 
 // ATTRIBUTUMOK
+    /** Egy példányára mutató referencia */
+    private static Game instance = null;
     /** Szerelő csapat pontszáma */
     private int pointsOfPlumber = 0;
     /** Szabotőr csapat pontszáma */
@@ -72,16 +74,40 @@ public class Game {
 
 // METODUSOK
 
+    private Game() {
+        pointsOfSaboteur = 0;
+        pointsOfPlumber = 0;
+        round = 0;
+        actionPoints = 5;
+        network = new Network();
+        characters = new ArrayList<Character>();
+        activeCharacter = 1;
+    }
+
+    /** Visszaadja a singelton egyetlen példányát, ha nincs, akkor létrehoz és azt adja vissza */
+    public static synchronized Game getInstance() {
+        if(instance==null) {
+            instance = new Game();
+        }
+        return instance;
+    }
+
+    /** Reseteli a példányt az alapbeállításokra */
+    public void resetInstance() {
+        if(instance!=null) {
+            instance = new Game();
+        }
+    }
+
     /** Csökkenti eggyel az aktív karakter akciópontjait */
     public void removeActionPoints() { actionPoints--; }
 
     /** Következő karakter jön, network-öt meghívva végig megy a víz folyása (flowWater) */
     public void nextCharacter() {
         // kovi activeCharacter beállítása
-        // ha utolso az activeCharacter volt, akkor round++
         activeCharacter++;
         actionPoints = default_actionP;
-
+        // ha utolso az activeCharacter volt, akkor round++
         if(activeCharacter == characters.size()) {
             round++;
         }
