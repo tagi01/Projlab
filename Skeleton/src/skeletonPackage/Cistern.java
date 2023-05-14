@@ -213,11 +213,7 @@ public class Cistern extends Field {
 		if(hasPipe == true) {
 			p = removePipe();
 			plumber.setInventoryPipe(p);
-			//return true;
-		}
-		else {
-			//return false;
-			//valami
+			game.removeActionPoints();
 		}
 	}
 	
@@ -234,10 +230,7 @@ public class Cistern extends Field {
 		if(hasPump == true) {
 			p = removePump();
 			plumber.setInventoryPump(p);
-			//return true;
-		}
-		else {
-			//return false;
+			game.removeActionPoints();
 		}
 	}
 
