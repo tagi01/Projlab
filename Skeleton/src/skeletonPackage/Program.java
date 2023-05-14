@@ -68,7 +68,11 @@ public class Program {
 		while (true) {
 			input_temp = new String();
 			input_temp = input.nextLine();
-			readCommand(input_temp);
+			try {
+				readCommand(input_temp);
+			}catch(InputMismatchException e) {
+				System.out.println("Hiba tortent.");
+			}
 
 		}
 
@@ -433,6 +437,10 @@ public class Program {
 			System.out.println("Nincs ilyen karkter");
 	}
 
+	/**
+	 * setCistern parancsot valósítja meg
+	 * @param command a parancs szavai
+	 */
 	public static void setCistern(String[] command) {
 		String cistern = "cistern_";
 		cistern = cistern.concat(command[1]);
@@ -442,42 +450,59 @@ public class Program {
 				case "-pi":
 					if (command[i + 1] == "true") {
 						cisterns.get(cistern).setHasPipe(true);
-						System.out.println("Beallitva.");
+						//System.out.println("Beallitva.");
 					} else if (command[i + 1] == "false") {
 						cisterns.get(cistern).setHasPipe(true);
-						System.out.println("Beallitva.");
+						//System.out.println("Beallitva.");
 					} else {
 						System.out.println("Hibas parancs.");
+						return;
 					}
 					break;
 				case "-pu":
 					if (command[i + 1] == "true") {
 						cisterns.get(cistern).setHasPump(true);
-						System.out.println("Beallitva.");
+						//System.out.println("Beallitva.");
 					} else if (command[i + 1] == "false") {
 						cisterns.get(cistern).setHasPump(true);
-						System.out.println("Beallitva.");
+						//System.out.println("Beallitva.");
 					} else {
 						System.out.println("Hibas parancs.");
+						return;
 					}
 					break;
 				case "-w":
-					int water = Integer.parseInt(command[i + 1]);
+					int water;
+					try {
+						water = Integer.parseInt(command[i + 1]);
+					} catch(NumberFormatException e) {
+						System.out.println("Hibas parancs.");
+						return;
+					}
 					if (water >= 0) {
 						cisterns.get(cistern).setCollectedWater(water);
-						System.out.println("Beallitva.");
-					} else
+						//System.out.println("Beallitva.");
+					} else {
 						System.out.println("Hibas parancs.");
+						return;
+					}
 					break;
 				default:
 					System.out.println("Hibas parancs.");
-					break;
+					return;
 				}
 			}
-		} else
+		} else {
 			System.out.println("Hibas parancs.");
+			return;
+		}
+		System.out.println("Beallitva.");
 	}
 	
+	/**
+	 * repair parancsot valósítja meg
+	 * @param command a parancs szavai
+	 */
 	public static void repair() {
 		Plumber currentPlumber = null;
 		for (Plumber p : plumbers.values()) {
@@ -502,6 +527,10 @@ public class Program {
 		}
 	}
 	
+	/**
+	 * getPlace parancsot valósítja meg
+	 * @param command a parancs szavai
+	 */
 	public static void getPlace(String[] command) {
 		if (plumbers.containsKey(command[1])) {
 			String name = getKeyFromFieldMaps(plumbers.get(command[1]).getField());
@@ -514,6 +543,10 @@ public class Program {
 		}
 	}
 	
+	/**
+	 * getState parancsot valósítja meg
+	 * @param command a parancs szavai
+	 */
 	public static void getState(String[] command) {
 		String pipe = "pipe_";
 		pipe = pipe.concat(command[1]);
@@ -532,6 +565,10 @@ public class Program {
 		}
 	}
 
+	/**
+	 * getIsBroken parancsot valósítja meg
+	 * @param command a parancs szavai
+	 */
 	public static void getIsBroken(String[] command) {
 		if (pipes.containsKey(command[1])) {
 			System.out.println(pipes.get(command [1]).getBroken());
@@ -542,6 +579,11 @@ public class Program {
 		}
 	}
 	
+	
+	/**
+	 * pumpBreak parancsot, pumpa eltörését valósítja meg
+	 * @param command a parancs szavai
+	 */
 	public static void pumpBreak(String[] command) {
 		String pump = "pump_";
 		pump = pump.concat(command[1]);
@@ -550,6 +592,10 @@ public class Program {
 		}
 	}
 	
+	/**
+	 * load parancsot, fájl betöltését valósítja meg
+	 * @param command a parancs szavai
+	 */
 	public static void load(String[] command) {
 		String file = command[2];
 		file = file.concat("/");
@@ -558,13 +604,16 @@ public class Program {
 			fileInput = new Scanner(new FileInputStream(file));
 			while(fileInput.hasNextLine()) {
 				String line = fileInput.nextLine();
-				readCommand(line);
+				try {
+					readCommand(line);
+				}catch(InputMismatchException e) {
+					System.out.println("Hiba tortent.");
+				}
 			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			System.out.println("Betoltes sikertelen. Nincs ilyen fajl.");
 		}
 	}
-
 	/**
 	 * A create network parancsot valósítja meg, létrehozza a pálya elemeit.
 	 * @param command a parancsban megadott értékek tömbje (parancs nélkül)
