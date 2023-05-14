@@ -361,6 +361,7 @@ public class Program {
 	}
 
 	public static void actionSetPump(String[] command) {
+		
 		if (command[1] != null && command[2] != null && pipes.containsKey(command[1])
 				&& pipes.containsKey(command[2])) {
 			game.getActiveCharacter().setPump(pipes.get(command[1]), pipes.get(command[2]));
@@ -1230,8 +1231,9 @@ public class Program {
 							plumbers.get(command[x+1]).setInventoryPump(p);
 							break;
 						case "-b": // elvan-e torve
+							System.out.println("ide: "+ command[x+1]);
 							if(command[x+1].equals("false")) { p.setBroken(false); }
-							if(command[x+1].equals("true")) { p.setBroken(true); }
+							else if(command[x+1].equals("true")) { p.setBroken(true); }
 							else { throw new InvalidParameterException(); }
 							break;
 						default:
@@ -1245,7 +1247,9 @@ public class Program {
 					}
 				}
 			}
-			System.out.println("Hibas parancs.");
+			else {
+				System.out.println("Hibas parancs.");
+			}
 		}
 		catch (InvalidParameterException e) {
 			System.out.println("Hibas parancs.");
