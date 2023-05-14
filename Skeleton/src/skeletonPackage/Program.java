@@ -778,12 +778,14 @@ public class Program {
 			System.out.println("Karakter nem ilyen tipusu mezon all.");
 			return;
 		}
-		if(currentPipe.getState() != StateOfPipe.NORMAL) {
-			System.out.println("Akcio vege, nincs valtozas.");
-		} else {
-			System.out.println("Sikeres parancs.");
-		}
+		
+		int actionPoint = game.getActionPoints();
 		game.getActiveCharacter().turnPipeSticky();
+		if (actionPoint != game.getActionPoints()) {
+			System.out.println("Sikeres parancs.");
+		} else {
+			System.out.println("Akcio vege, nincs valtozas.");
+		}
 		System.out.println(game.getActionPoints());
 	}
 	
@@ -810,12 +812,14 @@ public class Program {
 				System.out.println("Karakter nem ilyen tipusu mezon all.");
 				return;
 			}
-			if(active.getInventoryPump() == null || currentPipe.getBroken()) {
-				System.out.println("Akcio vege, nincs valtozas.");
-			} else {
-				System.out.println("Sikeres parancs.");
-			}
+			
+			int actionPoint = game.getActionPoints();
 			active.placePump();
+			if (actionPoint != game.getActionPoints()) {
+				System.out.println("Sikeres parancs.");
+			} else {
+				System.out.println("Akcio vege, nincs valtozas.");
+			}
 			System.out.println(game.getActionPoints());
 		} else {
 			System.out.println("Ehhez a parancshoz nincs hozzaferese.");
