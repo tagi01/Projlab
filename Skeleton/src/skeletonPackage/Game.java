@@ -25,7 +25,7 @@ public class Game {
 
     private Network network;
 
-    private ArrayList<Character> characters; // játék sorrendben a játékosok karakterei
+    private ArrayList<Character> characters = new ArrayList<Character>(); // játék sorrendben a játékosok karakterei
     private int activeCharacter; // aktív karakter sorszáma a listában
 
 // GETTER, SETTER

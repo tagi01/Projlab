@@ -31,15 +31,15 @@ public class Program {
 
 	private static Map<String , Pipe> pipes = new HashMap<String , Pipe>();
 	
-	private static Map<String , Pump> pumps;
+	private static Map<String , Pump> pumps = new HashMap<String , Pump>();
 	
-	private static Map<String , Source> sources;
+	private static Map<String , Source> sources = new HashMap<String , Source>();
 	
-	private static Map<String , Cistern> cisterns;
+	private static Map<String , Cistern> cisterns = new HashMap<String , Cistern>();
 	
-	private static Map<String , Saboteur> saboteurs;
+	private static Map<String , Saboteur> saboteurs = new HashMap<String , Saboteur>();
 	
-	private static Map<String , Plumber> plumbers;
+	private static Map<String , Plumber> plumbers = new HashMap<String , Plumber>();
 
 
 	/**
@@ -82,7 +82,7 @@ public class Program {
 		String[] splitted = line.split("\\s+");
 		switch(splitted[0]) {
 		case "create":
-			if(splitted.length > 1 && splitted[1] == "network") {
+			if(splitted.length > 1 && splitted[1].equals("network")) {
 				createNetwork(Arrays.copyOfRange(splitted, 2, splitted.length));	
 			} else {
 				System.out.println("Hibas parancs.");
@@ -621,6 +621,7 @@ public class Program {
 	public static void createNetwork(String[] command) {
 		if(command.length < 5) {
 			System.out.println("Hibas parancs.");
+			return;
 		}
 		
 		int pipeNum, pumpNum, sourceNum, cisternNum, charNum;
