@@ -8,7 +8,7 @@ public class RepairPump {
 
 	@Test
 	public void test3() {
-		String[] command = new String[] {"load", "C:\\Users\\Soma\\Desktop\\projlab", "repair_Pump.txt"};
+		String[] command = new String[] {"load", "C:\\Users\\Soma\\Desktop\\projlab", "test3.txt"};
 		Program.load(command);
 		assertSame(Program.getPipes().get("pipe_1").getBroken() , false );
 	}

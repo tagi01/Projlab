@@ -8,7 +8,7 @@ public class StickyAfterSlippery {
 
 	@Test
 	public void test6() {
-		String[] command = new String[] {"load", "C:\\Users\\Soma\\Desktop\\projlab", "S_sticky_after_slippery.txt"};
+		String[] command = new String[] {"load", "C:\\Users\\Soma\\Desktop\\projlab", "test5.txt"};
 		Program.load(command);
 		assertSame(Program.getPipes().get("pipe_1").getState(), StateOfPipe.SLIPPERY);
 		System.out.println("");

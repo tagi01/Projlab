@@ -8,7 +8,7 @@ public class SourceGiveWater {
 
 	@Test
 	public void test1() {
-		String[] command = new String[] {"load", "C:\\Users\\Soma\\Desktop\\projlab", "source_give_water.txt"};
+		String[] command = new String[] {"load", "C:\\Users\\Soma\\Desktop\\projlab", "test1.txt"};
 		Program.load(command);
 		assertSame(Program.getPipes().get("pipe_1").getWater(), 10);
 		assertSame(Program.getPipes().get("pipe_2").getWater(), 10);
