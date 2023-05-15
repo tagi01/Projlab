@@ -23,7 +23,6 @@ public class Source extends Field {
 	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
 	 */
 	public boolean addNeighbour(Pipe p) {
-		//Program.printMethod(this, "addNeighbour");
 		if(neighbours.contains(p) || p == null) { return false; }
 		else {
 			neighbours.add(p);
@@ -37,7 +36,6 @@ public class Source extends Field {
 	 * @return boolean, sikerült-e a művelet, true ha igen, false ha nem
 	 */
 	public boolean removeNeighbour(Pipe p) {
-		//Program.printMethod(this, "removeNeighbour");
 		if(neighbours.contains(p) && p!=null) {
 			neighbours.remove(p);
 			return true;
@@ -47,20 +45,10 @@ public class Source extends Field {
 	}
 
 	/**
-	 * Publikus metódus, meghívásakor megadja, hogy hozzá lehet-e csatlakoztatni mezőt vagy nem. Field metódus felülírása.
-	 * @return boolean, true, ha hozzá lehet csatlakoztatni a mezőt, false, ha nem.
-	 */
-	public boolean acceptField(Field f) {
-		//Program.printMethod(this, "acceptField");
-		return true;
-	}
-
-	/**
 	 * Publikus metódus, meghívásakor a hozzá csatlakoztatott csöveknek maximális mennyiségű vizet ad.
 	 */
 	@Override
 	public void flowWater() {
-		//Program.printMethod(this, "giveWater");
 		for(int i=0 ; i < neighbours.size() ; i++) {
 			int j = neighbours.get(i).getCapacity();
 			neighbours.get(i).addWater(j);
@@ -72,12 +60,10 @@ public class Source extends Field {
 	 */
 	@Override
 	public ArrayList<? extends Field> getNeighbours() {
-		//Program.printMethod(this, "getNeighbours");
 		return neighbours;
 	}
 
 	public void interactPlumber(Plumber p, Pipe pipe) {
-		//Program.printMethod(this, "addNeighbour");
 		if(neighbours.contains(pipe)) {
 			boolean removed = removeNeighbour(pipe);
 			if(removed) {
@@ -105,7 +91,6 @@ public class Source extends Field {
 	 */
 	@Override
 	public boolean addNeighbour(Field f) {
-		//Program.printMethod(this, "addNeighbour");
 		return false;
 	}
 	/**
@@ -115,7 +100,6 @@ public class Source extends Field {
 	 */
 	@Override
 	public boolean removeNeighbour(Field f) {
-		//Program.printMethod(this, "removeNeighbour");
 		return false;
 	}
 
