@@ -854,10 +854,10 @@ public class Program {
 			active.placePump();
 			if (actionPoint != game.getActionPoints()) {
 				if(!pipes.containsValue(inventoryPump.getIn()) && inventoryPump.getIn() != null) {
-					pipes.put("pipe_" + pipes.size()+1, inventoryPump.getIn());
+					pipes.put("pipe_" + (pipes.size()+1), inventoryPump.getIn());
 				}
 				if(!pipes.containsValue(inventoryPump.getOut()) && inventoryPump.getOut() != null) {
-					pipes.put("pipe_" + pipes.size()+1, inventoryPump.getOut());
+					pipes.put("pipe_" + (pipes.size()+1), inventoryPump.getOut());
 				}
 				System.out.println("Sikeres parancs.");
 			} else {
