@@ -49,7 +49,7 @@ public class Program {
 	
 	public static Map<String, Plumber> getPlumbers() { return plumbers; }
 
-
+	public static String save_str = "";
 	/** Tárolja hogy elkezdődött-e már a játék */
 	private static boolean started = false;
 
@@ -77,9 +77,8 @@ public class Program {
 			}catch(InputMismatchException e) {
 				System.out.println("Hiba tortent.");
 			}
-
+			save_str += input_temp + '\n' ;
 		}
-
 	}
 	
 	/**
@@ -214,6 +213,7 @@ public class Program {
 			break;
 		case "save":
 			// TODO save(splitted);
+			save(splitted);
 			break;
 		case "pumpWater":
 			pumpWater(splitted);
@@ -659,6 +659,7 @@ public class Program {
 			System.out.println("Hiba tortent.");
 		}
 		System.setOut(fileStream);
+		System.out.print(save_str);
 	}
 	
 	/**
