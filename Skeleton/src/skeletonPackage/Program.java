@@ -23,8 +23,8 @@ public class Program {
 	private static Game game;
 
 	private static Network network = new Network();
+	
 	/** Az objektumok neveit tartalmazo map */
-
 	private static Map<String , Pipe> pipes = new HashMap<String , Pipe>();
 	
 	private static Map<String , Pump> pumps = new HashMap<String , Pump>();
@@ -49,7 +49,7 @@ public class Program {
 	
 	public static Map<String, Plumber> getPlumbers() { return plumbers; }
 
-	public static String save_str = "";
+
 	/** Tárolja hogy elkezdődött-e már a játék */
 	private static boolean started = false;
 
@@ -77,7 +77,6 @@ public class Program {
 			}catch(InputMismatchException e) {
 				System.out.println("Hiba tortent.");
 			}
-			save_str += input_temp + '\n' ;
 		}
 	}
 	
@@ -212,7 +211,6 @@ public class Program {
 			load(splitted);
 			break;
 		case "save":
-			// TODO save(splitted);
 			save(splitted);
 			break;
 		case "pumpWater":
@@ -275,7 +273,10 @@ public class Program {
 		}
 	}
 
-	// Beállítja egy adott szamú csőnek a paramétereit
+	/**
+	 * A set-pipe parancsot valósítja meg, beállítja egy adott szamú csőnek a paramétereit.
+	 * @param command a parancs szavai
+	 */
 	public static void setPipe(String[] command) {
 		if (pipes.containsKey("pipe_" + command[1])) {
 			Pipe temp = pipes.get("pipe_"+command[1]);
@@ -335,6 +336,10 @@ public class Program {
 		}
 	}
 
+	/**
+	 * A set-active parancs 
+	 * @param command a parancs szavai
+	 */
 	public static void setActive(String[] command) {
 		if (plumbers.containsKey(command[1])) {
 			game.setActiveCharacter(plumbers.get(command[1]));
@@ -361,6 +366,10 @@ public class Program {
 			System.out.println("Hibas parancs.");
 	}
 
+	/**
+	 * Az action setpump parancsot megvalósítja meg, az aktív karakter átállítja a pumpa be- vagy kimenetét.
+	 * @param command a parancs szavai
+	 */
 	public static void actionSetPump(String[] command) {
 		
 		if (command[1] != null && command[2] != null && pipes.containsKey(command[1])
@@ -376,11 +385,18 @@ public class Program {
 			System.out.println("Hibas parancs.");
 		}
 	}
-
+	/**
+	 * A get actionPoints parancsot valósítja meg, az aktív játékos aktuális action point-jainak számát írja ki.
+	 * @param command a parancs szavai
+	 */
 	public static void getActionPoint(String[] command) {
 		System.out.println("A hatralevo akciopontok: " + game.getActionPoints());
 	}
 
+	/**
+	 * A get cantPuncture parancsot valósítja meg, kiírja, hogy a megadott egész számmal jelölt csövet meddig nem lehet még kilyukasztani.
+	 * @param command a parancs szavai
+	 */
 	public static void getCantPuncturePipe(String[] command) {
 		if (pipes.containsKey("pipe_" + command[1])) {
 			System.out.println(pipes.get("pipe_" + command[1]).getCantPuncture());
@@ -388,6 +404,10 @@ public class Program {
 			System.out.println("Hibas parancs.");		// nincs ilyen cső
 	}
 
+	/**
+	 * A get hasPipe parancsot valósítja meg, kiírja, hogy az adott ciszternánál felvehető-e új cső.
+	 * @param command a parancs szavai
+	 */
 	public static void getHasPipe(String[] command) {
 		if (cisterns.containsKey("cistern_" + command[1])) {
 			if (cisterns.get("cistern_" + command[1]).getHasPipe()) {
@@ -398,6 +418,10 @@ public class Program {
 			System.out.println("Nincsen ilyen cisterna.");
 	}
 
+	/**
+	 * A get inventory parancsot valósítja meg, az adott karakter inventory-ját írja ki.
+	 * @param command a parancs szavai
+	 */
 	public static void getInventory(String[] command) {
 		if (plumbers.containsKey(command[1])) {
 			// ha van nala cso
@@ -438,7 +462,7 @@ public class Program {
 	}
 
 	/**
-	 * setCistern parancsot valósítja meg
+	 * set-cistern parancsot valósítja meg
 	 * @param command a parancs szavai
 	 */
 	public static void setCistern(String[] command) {
@@ -504,7 +528,7 @@ public class Program {
 	}
 	
 	/**
-	 * repair parancsot valósítja meg
+	 * action repair parancsot valósítja meg
 	 */
 	public static void actionRepair() {
 		Plumber currentPlumber = null;
@@ -530,7 +554,7 @@ public class Program {
 	}
 	
 	/**
-	 * getPlace parancsot valósítja meg
+	 * get place parancsot valósítja meg
 	 * @param command a parancs szavai
 	 */
 	public static void getPlace(String[] command) {
@@ -551,7 +575,7 @@ public class Program {
 	}
 	
 	/**
-	 * getState parancsot valósítja meg
+	 * get state parancsot valósítja meg
 	 * @param command a parancs szavai
 	 */
 	public static void getState(String[] command) {
@@ -577,7 +601,7 @@ public class Program {
 	}
 
 	/**
-	 * getIsBroken parancsot valósítja meg
+	 * get isBroken parancsot valósítja meg
 	 * @param command a parancs szavai
 	 */
 	public static void getIsBroken(String[] command) {
@@ -639,7 +663,8 @@ public class Program {
 	}
 	
 	/**
-	 * TODO
+	 * A save parancsot valósítja meg, meghívásától a megadott fájlba íródik ki a kimenet.
+	 * @param command a parancs szavai
 	 */
 	public static void save(String[] command) {
 		if (command.length < 3) {
@@ -659,7 +684,6 @@ public class Program {
 			System.out.println("Hiba tortent.");
 		}
 		System.setOut(fileStream);
-		System.out.print(save_str);
 	}
 	
 	/**
@@ -1043,12 +1067,7 @@ public class Program {
 				System.out.println("Hibas parancs.");		// a cső nem szomszédja a mezőnek
 				return;
 			}
-			/*if(active.getInventoryPump() != null || active.getInventoryPipe() != null || !currentField.removeNeighbour(pipe)) {
-				System.out.println("Akcio vege, nincs valtozas.");
-			} else {
-				currentField.addNeighbour(pipe);				// TODO? az if-ben lévő removeNeighbour() miatt... -_- 
-				System.out.println("Sikeres parancs.");
-			}*/
+			
 			int actionPoint = game.getActionPoints();
 			active.grabPipe(pipe);
 			if (actionPoint != game.getActionPoints()) {
@@ -1060,7 +1079,7 @@ public class Program {
 	}
 	
 	/**
-	 * A set-p parancsot valósítja meg, a megadott szerelőt beállitja a megadott mezőre
+	 * A set-p parancsot valósítja meg, a megadott szerelőt beállítja a megadott mezőre
 	 * @param A parancs szavai
 	 */
 	public static void setP(String[] command){
@@ -1089,7 +1108,7 @@ public class Program {
 	}
 	
 	/**
-	 * A puncture parancsot valósítja meg, kilyukaszta a csövet, amin áll éppen az aktiv karakter
+	 * A puncture parancsot valósítja meg, kilyukasztja a csövet, amin áll éppen az aktív karakter
 	 * @param A parancs szavai
 	 */
 	public static void puncture(){
@@ -1139,7 +1158,7 @@ public class Program {
 	}
 	
 	/**
-	 * Az action placePipe parancsot valósítja meg, az aktiv szerelő lrak egy csövet
+	 * Az action placePipe parancsot valósítja meg, az aktiv szerelő lerak egy csövet
 	 */
 	public static void placePipe(){
 		Plumber currentPlumber = null;
@@ -1248,6 +1267,10 @@ public class Program {
 			System.out.println("Hibas parancs!");
 	}
 
+	/**
+	 * A set-pump parancsot valósítja meg, az adott számú pumpa tulajdonságait állítja be.
+	 * @param command a parancs szavai
+	 */
 	public static void setPump(String[] command) {
 
 		Pump p = new Pump();
@@ -1307,7 +1330,11 @@ public class Program {
 			System.out.println("Hiba tortent.");
 		}
 	}
-
+	
+	/**
+	 * A set game parancsot valósítja meg, a játék általános tulajdonságait állítja be.
+	 * @param command a parancs szavai
+	 */
 	public static void setGame(String[] command) {
 
 		for (int i = 1; i < command.length; i += 2) {
@@ -1331,6 +1358,10 @@ public class Program {
 		System.out.println("Beallitva");
 	}
 
+	/**
+	 * Az action slippery parancsot valósítja meg, az aktív szabotőr csúszóssá teszi a csövet, amin áll.
+	 * @param command a parancs szavai
+	 */
 	public static void actionSlippery(String[] command) {
 		boolean isPipe = false, isSaboteur = false;
 		Pipe temp_p = new Pipe();
@@ -1369,6 +1400,11 @@ public class Program {
 		System.out.println("Sikeres parancs");
 
 	}
+	
+	/**
+	 * Az action grabPump függvényt valósítja meg, az aktív szerelő felvesz egy pumpát.
+	 * @param command a parancs szavai
+	 */
 	public static void grabPump(String[] command) {
 		boolean standOnCistern = false;
 		boolean activeIsPlumber = false;
@@ -1418,6 +1454,10 @@ public class Program {
 		}
 	}
 
+	/**
+	 * A get water parancsot valósítja meg, kiírja, hogy az adott csőben mennyi víz van.
+	 * @param command a parancs szavai
+	 */
 	public static void getWater(String[] command) {
 		String pipe = "pipe_";
 		pipe = pipe.concat(command[1]);
@@ -1430,6 +1470,10 @@ public class Program {
 		System.out.println(pipes.get(pipe).getWater());
 	}
 
+	/**
+	 * A get hasPump parancsot valósítja meg, kiírja, hogy van-e az adott ciszternán felvehető pumpa.
+	 * @param command a parancs szavai
+	 */
 	public static void getHasPump(String[] command){
 		String c = "cistern_" + command[1];
 		if(command[1]==null || !cisterns.containsKey(c)) {
@@ -1442,6 +1486,10 @@ public class Program {
 		}
 	}
 
+	/**
+	 * A pumpWater parancsot valósítja meg, meghívja egy pumpán a vízmozgatást.
+	 * @param command a parancs szavai
+	 */
 	public static void pumpWater(String[] command) {
 		String p = "pump_";
 		p = p.concat(command[1]);
