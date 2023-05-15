@@ -31,7 +31,7 @@ public class Pump extends BreakableField {
 	 * @param i, Pipe cső, amelyik a pumpa bemenete, innen jön a víz a pumpába
 	 * @param o, Pipe cső, amelyik a pumpa kimenete, ide megy a víz a pumpából
 	 */
-	public Pump(Pipe i, Pipe o) {		// TODO hiba, ha nem két különböző, nemnull csövet kap?
+	public Pump(Pipe i, Pipe o) {
 		super();
 		in = i;
 		if(i != o) {
@@ -143,20 +143,6 @@ public class Pump extends BreakableField {
 		}
 	}
 
-	/**
-	 * Field metódus felülírása. Egy Field-et hozzá lehet-e csatlakoztatni a meghívott pumpához
-	 * @param f a kérdéses mező
-	 * @return true ha igen, false ha nem
-	 */
-/*	@Override
-	public boolean acceptField(Field f) {
-		if(neighbours.size() < 8) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-TODO delete acceptField*/
 	/**
 	 * Publikus metódus, meghívásakor a pumpa a bemenetéből átpumpálja a megfelelő mennyiségű vizet a kimenetén lévő csőbe.
 	 */

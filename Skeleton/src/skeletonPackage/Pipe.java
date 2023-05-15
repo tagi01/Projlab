@@ -334,7 +334,8 @@ public class Pipe extends BreakableField {
 	}
 
 	/**
-	 * 
+	 * A karakter lelépését valósítja meg
+	 * @param c a lelépő karakter
 	 */
 	@Override
 	public boolean offField(Character c) {
