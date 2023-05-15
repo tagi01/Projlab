@@ -8,7 +8,7 @@ public class StickyFromNormal {
 
 	@Test
 	public void test4() {
-		String[] command = new String[] {"load", "C:\\Users\\Soma\\Desktop\\projlab", "test4.1.txt"};
+		String[] command = new String[] {"load", "C:/Tests", "test4.1.txt"};
 		Program.load(command);
 		assertSame(Program.getPipes().get("pipe_1").getState(), StateOfPipe.SETSTICKY);
 		System.out.println("");
@@ -16,7 +16,7 @@ public class StickyFromNormal {
 	
 	@Test
 	public void test5() {
-		String[] command = new String[] {"load", "C:\\Users\\Soma\\Desktop\\projlab", "test4.txt"};
+		String[] command = new String[] {"load", "C:/Tests", "test4.txt"};
 		Program.load(command);
 		assertSame(Program.getPipes().get("pipe_1").getState(), StateOfPipe.SETSTICKY);
 	}
