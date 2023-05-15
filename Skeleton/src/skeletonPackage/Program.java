@@ -365,8 +365,15 @@ public class Program {
 		
 		if (command[1] != null && command[2] != null && pipes.containsKey(command[1])
 				&& pipes.containsKey(command[2])) {
+			int actionPoint = game.getActionPoints();
 			game.getActiveCharacter().setPump(pipes.get(command[1]), pipes.get(command[2]));
-
+			if (actionPoint != game.getActionPoints()) {
+				System.out.println("Sikeres parancs.");
+			} else {
+				System.out.println("Akcio vege, nincs valtozas.");
+			}
+		} else {
+			System.out.println("Hibas parancs.");
 		}
 	}
 
@@ -1206,10 +1213,10 @@ public class Program {
 	 */
 	public static void getTeamPoints(String[] Command){
 		if(Command[1].equals("-s")) {
-			System.out.print(game.getPointsOfPlumber());
+			System.out.print(game.getPointsOfSaboteur());
 		}
 		else if(Command[1].equals("-p")) {
-			System.out.print(game.getPointsOfSaboteur());
+			System.out.print(game.getPointsOfPlumber());
 		}
 		else
 			System.out.println("Hibas parancs!");
@@ -1222,15 +1229,19 @@ public class Program {
 	public static void flow(String[] Command){
 		if(pipes.containsKey(Command[1])) {
 			pipes.get(Command[1]).flowWater();
+			System.out.println("Sikeres parancs.");
 		}
 		else if(pumps.containsKey(Command[1])) {
 			pumps.get(Command[1]).flowWater();
+			System.out.println("Sikeres parancs.");
 		}
 		else if(sources.containsKey(Command[1])) {
 			sources.get(Command[1]).flowWater();
+			System.out.println("Sikeres parancs.");
 		}
 		else if(cisterns.containsKey(Command[1])) {
 			cisterns.get(Command[1]).flowWater();
+			System.out.println("Sikeres parancs.");
 		}
 		else
 			System.out.println("Hibas parancs!");
@@ -1327,7 +1338,7 @@ public class Program {
 		for(Map.Entry<String, Pipe> pipe : pipes.entrySet()) {
 			if(pipe.getValue().equals(game.getActiveCharacter().getField())) {
 				if(pipe.getValue().getState()!=StateOfPipe.NORMAL) {
-					System.out.println("Akció vége, nincs változás.");
+					System.out.println("Akcio vege, nincs valtozas.");
 					return;
 				}
 				isPipe = true;
@@ -1336,7 +1347,7 @@ public class Program {
 		}
 
 		if(!isPipe) {
-			System.out.println("Karakter nem ilyen típusú mezőn áll.");
+			System.out.println("Karakter nem ilyen tipusu mezon all.");
 			return;
 		}
 
@@ -1348,7 +1359,7 @@ public class Program {
 		}
 
 		if(!isSaboteur) {
-			System.out.println("Ehhez a parancshoz nincs hozzáférése.");
+			System.out.println("Ehhez a parancshoz nincs hozzaferese.");
 			return;
 		}
 
@@ -1371,7 +1382,7 @@ public class Program {
 		}
 
 		if(!standOnCistern) {
-			System.out.println("Karakter nem ilyen típusú mezőn áll.");
+			System.out.println("Karakter nem ilyen tipusu mezon all.");
 			return;
 		}
 
@@ -1384,7 +1395,7 @@ public class Program {
 		}
 
 		if(!activeIsPlumber) {
-			System.out.println("Ehhez a parancshoz nincs hozzáférése.");
+			System.out.println("Ehhez a parancshoz nincs hozzaferese.");
 			return;
 		}
 
