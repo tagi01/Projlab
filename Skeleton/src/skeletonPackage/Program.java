@@ -376,9 +376,9 @@ public class Program {
 
 	public static void getCantPuncturePipe(String[] command) {
 		if (pipes.containsKey("pipe_" + command[1])) {
-			System.out.println("Az hatralevo ido: " + pipes.get(command[1]).getCantPuncture());
+			System.out.println(pipes.get("pipe_" + command[1]).getCantPuncture());
 		} else
-			System.out.println("Nincsen ilyen pipe: -1");
+			System.out.println("Hibas parancs.");		// nincs ilyen cső
 	}
 
 	public static void getHasPipe(String[] command) {
