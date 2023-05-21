@@ -31,10 +31,10 @@ public class GameFrame extends JFrame {
 
     // buttonPanel
     private JButton javit = new JButton("javitas");
-    private JButton pumpa_be = new JButton("bemenet");
-    private JButton pumpa_ki = new JButton("kimenet");
-    private JButton pumpa_fel = new JButton("felvetel");
-    private JButton pumpa_le = new JButton("lerakas");
+    private JButton pumpa_be = new JButton("be");
+    private JButton pumpa_ki = new JButton("ki");
+    private JButton pumpa_fel = new JButton("fel");
+    private JButton pumpa_le = new JButton("le");
     private JButton cso_kilyukad = new JButton("kilyukasztas");
     private JButton cso_ragad = new JButton("ragados legyen");
     private JButton cso_csuszos = new JButton("csuszos legyen");
@@ -57,14 +57,21 @@ public class GameFrame extends JFrame {
 
         // playerPanel
         JPanel playerPanel = new JPanel();
-        playerPanel.setBackground(bcolor);
+        playerPanel.setBackground(background);
         playerPanel.setPreferredSize(new Dimension(200,windowWidth-100));
 
         // buttonPanel
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(background);
-        buttonPanel.setLayout(new BoxLayout(buttonPanel,BoxLayout.Y_AXIS));
+        buttonPanel.setLayout(new FlowLayout());
         buttonPanel.setPreferredSize(new Dimension(150,windowHeight-200));
+        buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // pumpPanel
+        JPanel pumpPanel = new JPanel();
+        pumpPanel.setLayout(new GridLayout(2,2));
+        pumpPanel.setBackground(background);
+        pumpPanel.setMaximumSize(new Dimension(120,50));
 
 
     // ELEMENTS
@@ -80,7 +87,7 @@ public class GameFrame extends JFrame {
         // buttonPanel
 
         Dimension buttonSize = new Dimension(150,25);
-        Dimension bhalf = new Dimension(70,25);
+        Dimension bhalf = new Dimension(60,25);
         setButton(javit, buttonSize);
         setButton(pumpa_be, bhalf);
         setButton(pumpa_ki, bhalf);
@@ -94,11 +101,8 @@ public class GameFrame extends JFrame {
         buttonPanel.add(javit);
             buttonPanel.add(new JLabel(" "));
         buttonPanel.add(new JLabel("Pumpa"));
-        buttonPanel.add(pumpa_be);
-        buttonPanel.add(pumpa_ki);
-            buttonPanel.add(new JLabel(" "));
-        buttonPanel.add(pumpa_fel);
-        buttonPanel.add(pumpa_le);
+        pumpPanel.add(pumpa_be); pumpPanel.add(pumpa_ki); pumpPanel.add(pumpa_fel); pumpPanel.add(pumpa_le);
+        buttonPanel.add(pumpPanel);
             buttonPanel.add(new JLabel(" "));
 
         buttonPanel.add(new JLabel("Cso"));
@@ -107,9 +111,8 @@ public class GameFrame extends JFrame {
         buttonPanel.add(cso_ragad);
             buttonPanel.add(new JLabel(" "));
         buttonPanel.add(cso_csuszos);
-
-
-        // TODO ide a Pumpa es Cso jlabel-ok
+            buttonPanel.add(new JLabel(" "));
+        buttonPanel.add(passz);
 
         // playerPanel
             // TODO jatekos kepet hozzaadni
@@ -146,10 +149,21 @@ public class GameFrame extends JFrame {
 
         init();
 
+        // TODO gombok eltuntetese megfeleloen
+        /*
+        if(game.getActiveCharNum()%2==0) { cso_csuszos.setVisible(false); }
+        else {
+            // inventorypanel is setVisible(false)
+            javit.setVisible(false);
+            pumpa_fel.setVisible(false);
+            pumpa_le.setVisible(false);
+            cso_csuszos.setVisible(true);
+        }
+        */
     }
 
     private void setButton(JButton b, Dimension dim) {
-        b.setMaximumSize(dim);
+        b.setPreferredSize(dim);
         b.setBackground(bcolor);
     }
 
