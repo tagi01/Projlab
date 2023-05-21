@@ -65,7 +65,6 @@ public class Program {
 		         + "|  |      | \\    |____|    |    |____|  |\n"
 		         + "-----------------------------------------\n");
 
-
 		input = new Scanner(System.in);
 		String input_temp;
 
@@ -74,7 +73,7 @@ public class Program {
 			input_temp = input.nextLine();
 			try {
 				readCommand(input_temp);
-			}catch(InputMismatchException e) {
+			} catch(InputMismatchException e) {
 				System.out.println("Hiba tortent.");
 			}
 		}
@@ -759,6 +758,10 @@ public class Program {
 			saboteurs.put("Saboteur_" + (i+1), s);
 			game.addCharacter(s);
 		}
+
+		GameFrame gf = new GameFrame(); // FIXME itt a frame létrehozása
+		gf.setVisible(true);
+
 		System.out.println("Beallitva.");
 	}
 	
