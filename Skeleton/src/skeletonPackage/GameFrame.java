@@ -3,6 +3,7 @@ package skeletonPackage;
 import javax.swing.*;
 import java.awt.*;
 
+
 public class GameFrame extends JFrame {
 
     private int windowWidth = 1280;
@@ -51,7 +52,15 @@ public class GameFrame extends JFrame {
         felulre.setPreferredSize(new Dimension(windowWidth,50));
 
         // gamePanel
-        JPanel gamePanel = new JPanel();
+        JPanel gamePanel = new JPanel(){
+            @Override
+            public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.setColor(Color.BLUE);
+            g.fillRect(50,50,50,50);
+                g.fillRect(150,50,50,50);
+            }
+        };
         gamePanel.setBackground(background);
         gamePanel.setPreferredSize(new Dimension(windowWidth-100,windowHeight-200));
 
@@ -82,7 +91,6 @@ public class GameFrame extends JFrame {
         felulre.add(gameLabel, BorderLayout.CENTER);
 
         // gamePanel
-
 
         // buttonPanel
 

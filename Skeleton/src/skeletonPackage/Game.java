@@ -39,6 +39,8 @@ public class Game {
     public int getActionPoints() { return actionPoints; }
     public Character getActiveCharacter() { return characters.get(activeCharacter); }
 
+    public int getActiveCharNum() { return activeCharacter; }
+
     /** Növeli a szerelők pontszámát
      * @param n, amennyivel növeljük a pontszámot
      * */
