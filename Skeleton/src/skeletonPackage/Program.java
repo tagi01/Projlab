@@ -65,6 +65,8 @@ public class Program {
 		         + "|  |      | \\    |____|    |    |____|  |\n"
 		         + "-----------------------------------------\n");
 
+		initializeGame();
+		
 		input = new Scanner(System.in);
 		String input_temp;
 
@@ -670,7 +672,6 @@ public class Program {
 			System.out.println("Hibas parancs.");
 			return;
 		}
-		System.out.println("Sikeres parancs.");
 		
 		String file = command[1];
 		file = file.concat("/");
@@ -681,7 +682,9 @@ public class Program {
 			fileStream = new PrintStream(file);
 		} catch (FileNotFoundException e) {
 			System.out.println("Hiba tortent.");
+			return;
 		}
+		System.out.println("Sikeres parancs.");
 		System.setOut(fileStream);
 	}
 	
@@ -759,8 +762,8 @@ public class Program {
 			game.addCharacter(s);
 		}
 
-		GameFrame gf = new GameFrame(); // FIXME itt a frame létrehozása
-		gf.setVisible(true);
+		/*GameFrame gf = new GameFrame(); // FIXME itt a frame létrehozása
+		gf.setVisible(true);*/
 
 		System.out.println("Beallitva.");
 	}
@@ -1529,5 +1532,16 @@ public class Program {
 		}
 		else
 			System.out.println("Hibas parancs!");
+	}
+	
+	public static void initializeGame() {
+		// TODO eldönteni, hogy miből mennyi legyen
+		readCommand("create network 2 5 2 2 3");
+		// TODO többi beállítás
+		// TODO koordináták beállítása
+		readCommand("start");
+		
+		GameFrame gf = new GameFrame(); // FIXME itt a frame létrehozása
+		gf.setVisible(true);
 	}
 }

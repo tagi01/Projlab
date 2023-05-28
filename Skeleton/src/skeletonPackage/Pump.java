@@ -6,6 +6,12 @@ import java.util.ArrayList;
  * Pump osztály
  */
 public class Pump extends BreakableField {
+	/** A pumpát kirajzoló view */
+	private PumpView pumpView;
+	
+	/** A pumpa view-jét adja vissza */
+	public /*Pump*/View getView() { return pumpView; }
+	
 	/** Privát, Pipe típusú cső referenciáját tárolja, amelyikből folyik be a víz a pumpába. */
 	private Pipe in;
 	/** Privát, Pipe típusú cső referenciáját tárolja, amerre folyik a víz a pumpából. */
@@ -24,6 +30,7 @@ public class Pump extends BreakableField {
 		in = null;
 		out = null;
 		neighbours = new ArrayList<Pipe>();
+		pumpView = new PumpView(this);
 	}
 
 	/**
@@ -42,6 +49,7 @@ public class Pump extends BreakableField {
 		neighbours = new ArrayList<Pipe>();
 		if(in != null) neighbours.add(in);
 		if(out != null) neighbours.add(out);
+		pumpView = new PumpView(this);
 	}
 
 	/**
@@ -190,6 +198,7 @@ public class Pump extends BreakableField {
 	public void interact(Pipe from, Pipe to) {
 		boolean success = setPump(from, to);
 		if(success) game.removeActionPoints();
+		pumpView.update();
 	}
 
 	/** A szerelő használja a képességét, lerak vagy felvesz egy csővéget
@@ -213,5 +222,31 @@ public class Pump extends BreakableField {
 				game.removeActionPoints();
 			}
 		}
+	}
+	
+	// FIXME view update hívások ősosztályokból örökölve itt?
+	@Override
+	public void interact(Plumber p) {
+		super.interact(p);
+		pumpView.update();
+	}
+	
+	@Override
+	public void breakField() {
+		super.breakField();
+		pumpView.update();
+	}
+	
+	@Override
+	public void onField(Character c) {
+		super.onField(c);
+		pumpView.update();
+	}
+	
+	@Override
+	public boolean offField(Character c) {
+		boolean off = super.offField(c);
+		pumpView.update();
+		return off;
 	}
 }
