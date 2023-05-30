@@ -60,8 +60,7 @@ public class GameFrame extends JFrame implements ActionListener{
         gamePanel = new GamePanel(this);
         gamePanel.setBackground(background);
         gamePanel.setPreferredSize(new Dimension(windowWidth-100,windowHeight-200));
-        gamePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
+        
         // playerPanel
         JPanel playerPanel = new JPanel();
         playerPanel.setBackground(background);
