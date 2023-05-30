@@ -175,7 +175,8 @@ public class PlayerPanelView extends JPanel {
                 	if (f != in)
                 		pipes.add(Program.getKeyFromFieldMaps(f));
                 }
-                FieldChooserFrame fcf = new FieldChooserFrame("",pipes);
+
+                FieldChooserFrame fcf = new FieldChooserFrame("Melyik cso legyen a pumpa bemenete?",pipes);
                 fcf.setVisible(true);
                 // itt már megvan a selectedField
         		Pipe pipe = null;
@@ -202,7 +203,7 @@ public class PlayerPanelView extends JPanel {
                 	if (f != out)
                 		pipes.add(Program.getKeyFromFieldMaps(f));
                 }
-                FieldChooserFrame fcf = new FieldChooserFrame("",pipes);
+                FieldChooserFrame fcf = new FieldChooserFrame("Melyik cso legyen a pumpa kimenete?",pipes);
                 fcf.setVisible(true);
                 // itt már megvan a selectedField
                 Pipe pipe = null;
@@ -275,7 +276,7 @@ public class PlayerPanelView extends JPanel {
                 	pipes.add(Program.getKeyFromFieldMaps(f));
                 }
 
-                FieldChooserFrame fcf = new FieldChooserFrame("",pipes);
+                FieldChooserFrame fcf = new FieldChooserFrame("Melyik csovet szeretned felvenni?",pipes);
                 fcf.setVisible(true);
                 // itt már megvan a selectedField
                 Pipe pipe = null;
@@ -330,19 +331,28 @@ public class PlayerPanelView extends JPanel {
         private JLabel label;
         private ArrayList<String> fieldList;
         public FieldChooserFrame(String szoveg, ArrayList<String> fields) {
-            this.setPreferredSize(new Dimension(200,300));
-            this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+            this.setMinimumSize(new Dimension(300,150));
+            this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             this.setResizable(true);
-            this.setBackground(background);
 
             fieldList = fields;
             buttons = new JPanel();
             buttons.setLayout(new FlowLayout());
             createJRadioButtons();
+
+            JLabel felirat = new JLabel(szoveg);
+            felirat.setHorizontalAlignment(SwingConstants.CENTER);
+            this.add(felirat,BorderLayout.NORTH);
             this.add(buttons, BorderLayout.CENTER);
-            JButton ok = new JButton("Ok");
-            ok.setBackground(bcolor);
-            this.add(ok, BorderLayout.SOUTH);
+
+            JButton megse = new JButton("Megse");
+            megse.setBackground(background);
+            megse.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    selectedField = null;
+                    FieldChooserFrame.this.dispose();
+                }});
+            this.add(megse, BorderLayout.SOUTH);
         }
 
         private void createJRadioButtons() {
@@ -358,9 +368,7 @@ public class PlayerPanelView extends JPanel {
             if(e != null && e.getSource().getClass()==JRadioButton.class) {
                 selectedField = Program.getValueFromFieldMaps(((JRadioButton)e.getSource()).getText());
             }
-            else if(e != null && e.getSource().getClass()==JButton.class){
-                FieldChooserFrame.this.dispose();
-            }
         }
     }
 }
+// TODO mezőre lépés gomb xd
