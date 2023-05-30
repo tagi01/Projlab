@@ -11,4 +11,6 @@ public interface View {
 	public int[] getCoordinates();
 	
 	public void setCoordinates(int i,int j);
+	
+	public GamePanel getGamePanel();
 }

@@ -70,6 +70,9 @@ public abstract class Field {
 	 */
 	public abstract ArrayList<? extends Field> getNeighbours();
 
+
+	public View getView(){ return null;	}
+
 // METODUSOK
 	// ACCEPT
 	/**
@@ -128,8 +131,6 @@ public abstract class Field {
 
 	/** Pumpa lehelyezése, felvétele */
 	public void interactPlumber(Plumber p, Pump pump) {}
-	
-	public View getView() {return null;}
 
 	// MOVE ON FIELD
 

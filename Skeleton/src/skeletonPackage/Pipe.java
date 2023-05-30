@@ -37,8 +37,19 @@ public class Pipe extends BreakableField {
 	public int getStateTimer() {
 		return stateTimer;
 	}
+	
+	public View getView() {
+		return view;
+	}
 
 	// ************************************************************************************************
+	
+
+	/**
+	 * A megjelenítésért felelős view
+	 */
+	private PipeView view;
+	
 	/**
 	 * Privát integer, a lyukas csőből kifolyó víz mennyiségét tárolja.
 	 */
@@ -102,7 +113,7 @@ public class Pipe extends BreakableField {
 	/**
 	 * Konstruktor
 	 */
-	public Pipe() {
+	public Pipe(GamePanel gp) {
 		super();
 		lostWater = 0;
 		size = 1; // default size
@@ -110,6 +121,7 @@ public class Pipe extends BreakableField {
 		water = 0;
 		neighbours = new ArrayList<Field>();
 		state = StateOfPipe.NORMAL;
+		view = new PipeView(this, gp);
 	}
 
 	/**
@@ -118,13 +130,14 @@ public class Pipe extends BreakableField {
 	 * @param siz   a cső mérete
 	 * @param water a csőben lévő víz mennyisége
 	 */
-	public Pipe(int siz, int water) {
+	public Pipe(int siz, int water, GamePanel gp) {
 		super();
 		lostWater = 0;
 		size = siz;
 		taken = false;
 		this.water = water;
 		neighbours = new ArrayList<Field>();
+		view = new PipeView(this, gp);
 	}
 
 	/**
@@ -139,6 +152,7 @@ public class Pipe extends BreakableField {
 			return false;
 		} else {
 			neighbours.add(f);
+			view.update();
 			return true;
 		}
 	}
@@ -164,6 +178,7 @@ public class Pipe extends BreakableField {
 	public boolean removeNeighbour(Field f) {
 		if (neighbours.contains(f) && f != null) {
 			neighbours.remove(f);
+			view.update();
 			return true;
 		} else {
 			return false;
@@ -198,6 +213,7 @@ public class Pipe extends BreakableField {
 			lostWater += amount;
 		} else {
 			water += amount;
+			view.update();
 		}
 	}
 
@@ -279,6 +295,7 @@ public class Pipe extends BreakableField {
 			network.addPump(pump, this);
 			p.setInventoryPump(null);
 			game.removeActionPoints();
+			view.update();
 		}
 	}
 
@@ -291,6 +308,7 @@ public class Pipe extends BreakableField {
 			state = StateOfPipe.SLIPPERY;
 			stateTimer = 5;
 			game.removeActionPoints();
+			view.update();
 		}
 	}
 
@@ -305,12 +323,14 @@ public class Pipe extends BreakableField {
 				if (cantPuncture == 0) {
 					isBroken = true;
 					game.removeActionPoints();
+					view.update();
 				}
 			}
 		} else if (i == 2) {
 			if (state == StateOfPipe.NORMAL) {
 				state = StateOfPipe.SETSTICKY;
 				game.removeActionPoints();
+				view.update();
 			}
 		}
 	}
@@ -328,8 +348,10 @@ public class Pipe extends BreakableField {
 		}
 		if (stateTimer > 0) {
 			stateTimer -= 1;
-			if (stateTimer == 0)
+			if (stateTimer == 0) {
 				state = StateOfPipe.NORMAL;
+				view.update();
+			}
 		}
 	}
 
@@ -347,6 +369,7 @@ public class Pipe extends BreakableField {
 		}
 		if (currentCharacters.contains(c)) {
 			currentCharacters.remove(c);
+			view.update();
 		}
 		return true;
 	}
@@ -363,6 +386,7 @@ public class Pipe extends BreakableField {
 			c.setCurrentField(f);
 		} else if (currentCharacters.contains(c) == false) {
 			currentCharacters.add(c);
+			view.update();
 		}
 
 	}

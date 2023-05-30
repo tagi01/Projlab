@@ -27,12 +27,12 @@ public class Pump extends BreakableField {
 	/**
 	 * Konstruktor
 	 */
-	public Pump(GamePanel jp) {
+	public Pump(GamePanel gp) {
 		super();
 		in = null;
 		out = null;
 		neighbours = new ArrayList<Pipe>();
-		pumpView = new PumpView(this, jp);
+		pumpView = new PumpView(this, gp);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class Pump extends BreakableField {
 	 * @param i, Pipe cső, amelyik a pumpa bemenete, innen jön a víz a pumpába
 	 * @param o, Pipe cső, amelyik a pumpa kimenete, ide megy a víz a pumpából
 	 */
-	public Pump(Pipe i, Pipe o, GamePanel jp) {
+	public Pump(Pipe i, Pipe o, GamePanel gp) {
 		super();
 		in = i;
 		if(i != o) {
@@ -51,7 +51,7 @@ public class Pump extends BreakableField {
 		neighbours = new ArrayList<Pipe>();
 		if(in != null) neighbours.add(in);
 		if(out != null) neighbours.add(out);
-		pumpView = new PumpView(this, jp);
+		pumpView = new PumpView(this, gp);
 	}
 
 	/**

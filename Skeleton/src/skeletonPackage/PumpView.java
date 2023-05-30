@@ -12,20 +12,17 @@ public class PumpView implements View {
 	// FIXME itt legyenek?
 	private static final int width = 40;  // ?
 	private static final int pipeEndWidth = 14;		// ?
-	private static final Color WORKING  = Color.GRAY;
-	private static final Color BROKEN = Color.RED;
-	private static final Color INPIPE = Color.WHITE;
-	private static final Color OUTPIPE = Color.BLACK;
 	
 	private Pump pump;
 	
-	private int x, y;		// középpont vagy bal felső sarok?
+	/** A pumpa bal felső sarkának koordinátái */
+	private int x, y;
 	
 	private GamePanel gamePanel;	// TODO ez jó?
 	
-	public PumpView(Pump p, GamePanel jp) {
+	public PumpView(Pump p, GamePanel gp) {
 		pump = p;
-		gamePanel = jp;
+		gamePanel = gp;
 		//x,y
 	}
 	
@@ -33,20 +30,23 @@ public class PumpView implements View {
 	public void setCoordinates(int x, int y) {
 		this.x = x;
 		this.y = y;
-		gamePanel.paintUpdate(gamePanel.getGraphics());
+		//gamePanel.paintUpdate(gamePanel.getGraphics());
 	}
 	
+	/**
+	 * Visszaadja a pumpa középpontját
+	 */
 	@Override
-	public int[] getCoordinates() {		// középpontot kéne visszaadnia
-		return new int[]{x,y};
+	public int[] getCoordinates() {
+		return new int[]{x + width / 2, y + width / 2};
 	}
 	
-	public void setGamePanel(GamePanel g) { gamePanel = g; }	// TODO meghívni
+	//public void setGamePanel(GamePanel g) { gamePanel = g; }	// TODO meghívni
 	
 	@Override
 	public void update() {
-
-		draw(gamePanel.getGraphics());
+		gamePanel.repaint();
+		//draw(gamePanel.getGraphics());
 	}
 	
 	@Override
@@ -54,53 +54,42 @@ public class PumpView implements View {
 		/*if(x == 0 || y == 0)		ha inventory-ban van, nem kéne kirajzolni
 			return;*/
 		
-		Color color = pump.getBroken() ? BROKEN : WORKING;
+		Color color = pump.getBroken() ? Color.RED : Color.GRAY;
 		g.setColor(color);
 		g.fillOval(x, y, width, width);
-		
-		// ha a cső fel van véve? - kéne a csőnek is egy középpont koordináta?	
+			
 		Pipe in = pump.getIn();
 		if(in != null) {
-			ArrayList<? extends Field> inNeighbours = in.getNeighbours();
-			for(Field f : inNeighbours) {
-				if(f != pump) {
-					int[] inPipeOtherEnd = f.getView().getCoordinates();
-					int[] activeInCoordinates = getActivePipeCoordinates(inPipeOtherEnd);
-					g.setColor(INPIPE);
-	            	g.fillOval(activeInCoordinates[0], activeInCoordinates[1], pipeEndWidth, pipeEndWidth);
-				}
-			}
+			int[] pipeCenter = in.getView().getCoordinates();
+			int[] activeInCoordinates = getActivePipeCoordinates(pipeCenter);
+			g.setColor(Color.WHITE);
+        	g.fillOval(activeInCoordinates[0], activeInCoordinates[1], pipeEndWidth, pipeEndWidth);
 		}
 		
 		Pipe out = pump.getOut();
 		if(out != null) {
-			ArrayList<? extends Field> outNeighbours = out.getNeighbours();
-			for(Field f : outNeighbours) {
-				if(f != pump) {
-					int[] outPipeOtherEnd = f.getView().getCoordinates();
-					int[] activeOutCoordinates = getActivePipeCoordinates(outPipeOtherEnd);
-					g.setColor(OUTPIPE);
-	            	g.fillOval(activeOutCoordinates[0], activeOutCoordinates[1], pipeEndWidth, pipeEndWidth);					
-				}
-			}
+			int[] pipeCenter = out.getView().getCoordinates();
+			int[] activeOutCoordinates = getActivePipeCoordinates(pipeCenter);
+			g.setColor(Color.BLACK);
+        	g.fillOval(activeOutCoordinates[0], activeOutCoordinates[1], pipeEndWidth, pipeEndWidth);
 		}
 		
 		ArrayList<Character> currentCharacters = pump.getCurrentCharacter();
-		//int charNum = currentCharacters.size();	- körbe lehetne rakni őket
+		//int charNum = currentCharacters.size();	- TODO körbe lehetne rakni őket
 		for(Character c : currentCharacters) {
-			///*Character*//*View view = c.getView();
-			//BufferedImage image = view.getImage();
-			//g.drawImage(image, x+width/2, y+width/2, null);		// TODO JPanel null helyére? - gamePanel
+			CharacterView view = c.getView();
+			BufferedImage image = view.getImage();
+			g.drawImage(image, x+width/2, y+width/2, null);		// TODO JPanel null helyére? - gamePanel
 		}
 	}
 	
-	private int[] getActivePipeCoordinates(int[] otherEndCoordinates) {
+	private int[] getActivePipeCoordinates(int[] pipeCenter) {
 		int r = width / 2;
-		// a két field középpontjai (ha nem középpontot kap)
+		// a két field középpontjai
 		int x1 = x + r;
     	int y1 = y + r;
-    	int x2 = otherEndCoordinates[0] + r;		// nem ez, ha nem pump
-    	int y2 = otherEndCoordinates[1] + r;		// nem ez, ha nem pump
+    	int x2 = pipeCenter[0];
+    	int y2 = pipeCenter[1];
 		
     	if(x1 == x2) {
     		int pipeY = (y1 > y2) ? y1 - r : y1 + r;
@@ -134,4 +123,6 @@ public class PumpView implements View {
     	return new int[]{(int)pipeX - pipeEndWidth/2, (int)pipeY - pipeEndWidth/2};
 	}
 	
+	@Override
+	public GamePanel getGamePanel() { return gamePanel; }
 }

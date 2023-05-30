@@ -732,9 +732,6 @@ public class Program {
 		saboteurs.clear();
 		plumbers.clear();
 		started = false;
-		
-		
-		
 
 		for(int i = 0; i < charNum; i++) {
 			Plumber p = new Plumber(null, network);
@@ -747,17 +744,8 @@ public class Program {
 
 		game.setGameFrame();
 		
-		for(int i = 0; i < sourceNum; i++) {
-			Source s = new Source(game.getGameFrame().getGamePanel());
-			s.getView();
-			s.setGame(game);
-			s.setNetwork(network);
-			sources.put("source_" + (i+1), s);
-			network.addField(s);
-		}
-		
 		for(int i = 0; i < pipeNum; i++) {
-			Pipe p = new Pipe();
+			Pipe p = new Pipe(game.getGameFrame().getGamePanel());
 			p.setGame(game);
 			p.setNetwork(network);
 			pipes.put("pipe_" + (i+1), p);
@@ -772,6 +760,14 @@ public class Program {
 			network.addField(p);
 		}
 		
+		for(int i = 0; i < sourceNum; i++) {
+			Source s = new Source(game.getGameFrame().getGamePanel());
+			s.setGame(game);
+			s.setNetwork(network);
+			sources.put("source_" + (i+1), s);
+			network.addField(s);
+		}
+		
 		for(int i = 0; i < cisternNum; i++) {
 			Cistern c = new Cistern(game.getGameFrame().getGamePanel());
 			c.setGame(game);
@@ -781,7 +777,6 @@ public class Program {
 		}
 
 		System.out.println("Beallitva.");
-		
 	}
 	
 	public static void rajz() {
@@ -820,13 +815,18 @@ public class Program {
 		}
 	}
 
-	
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
 	/**
 	 * Visszaadja az átadott kulcsú Field-et a Map-ekből
 	 * @param key a keresett Field kulcsa
 	 * @return a Field, ha benne van vmelyik Map-ben, null, ha nincs
 	 */
-	private static Field getValueFromFieldMaps(String key) {
+	 public static Field getValueFromFieldMaps(String key) {
 		if(pipes.containsKey(key)) return pipes.get(key);
 		if(pumps.containsKey(key)) return pumps.get(key);
 		if(sources.containsKey(key)) return sources.get(key);
@@ -838,7 +838,7 @@ public class Program {
 	 * @param value bármelyik Field leszármazott 
 	 * @return a Field kulcsa
 	 * */
-	private static String getKeyFromFieldMaps(Field value) {
+	public static String getKeyFromFieldMaps(Field value) {
 		for(Map.Entry<String, Pipe> entry: pipes.entrySet()) {
 			if(entry.getValue() == value) {
 				return entry.getKey();
@@ -1100,7 +1100,7 @@ public class Program {
 			else {
 				System.out.println("Sikeres parancs.");
 				active.getPipe();
-				Pipe pi = new Pipe();
+				Pipe pi = new Pipe(null);
 				pi=active.getInventoryPipe();
 				int i = pipes.size();
 				i++;
@@ -1423,7 +1423,7 @@ public class Program {
 	 */
 	public static void actionSlippery(String[] command) {
 		boolean isPipe = false, isSaboteur = false;
-		Pipe temp_p = new Pipe();
+		Pipe temp_p = new Pipe(null);
 		String key ="";
 
 		for(Map.Entry<String, Pipe> pipe : pipes.entrySet()) {
@@ -1592,10 +1592,11 @@ public class Program {
 		readCommand("create network 2 5 2 2 3");
 		// TODO többi beállítás
 		// TODO koordináták beállítása
+		/*Field f = getValueFromFieldMaps("pump_1"); - csak ellenőrzésre
+		f.getView().setCoordinates(100, 100);*/
 		readCommand("start");
 		
-		/*GameFrame gf = new GameFrame(); // FIXME itt a frame létrehozása
-		gf.setVisible(true);*/
-		
+		GameFrame gf = new GameFrame(); // FIXME itt a frame létrehozása
+		gf.setVisible(true);
 	}
 }
