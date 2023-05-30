@@ -35,9 +35,6 @@ public class Network {
 	 */
 	public boolean getRandom() {return random;}
 
-	public ArrayList<Field> getPipes() {return pipes; } // FIXME pipes ArrayList
-
-
 	/**
 	 * Az adott csőre lerakja a pumpát, beállítja az új mezők szomszédságait, létrehozza a plusz csövet, ami az új pumpa és az egyik régi pumpa közt lesz.
 	 * @param pump, a Pump típusú változó referenciája, amelyik pumpát letesszük a csőre

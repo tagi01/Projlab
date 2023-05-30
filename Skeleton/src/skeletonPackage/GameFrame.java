@@ -13,6 +13,10 @@ public class GameFrame extends JFrame {
 
     private Game game;
 
+// View-k
+    private GamePanel gamePanel;
+    private GameView gameView;
+
     // felulre
     private JMenuBar menu = new JMenuBar();
     private JMenuItem[] menuitems = {
@@ -140,14 +144,11 @@ public class GameFrame extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Sivatagi vizhalozat");
         this.setSize(windowWidth,windowHeight);
-        // this.setResizable(false);
+        this.setResizable(false);
 
         game = Game.getInstance();
 
-        round = new String(game.getRound()+". kor");
-        Ppoints = new String("Szerelok: "+game.getPointsOfPlumber());
-        Spoints = new String("Szabotorok: "+game.getPointsOfSaboteur());
-        gameLabel.setText("                                               "+round+"     "+Ppoints+"     "+Spoints);
+        updateGameLabel();
 
         actCharacter = game.getActiveCharacter();
         actChar = new String("Jatekos_Szerelo"); // TODO játékosok neveit hogy mentjük el?
@@ -173,6 +174,14 @@ public class GameFrame extends JFrame {
     private void setButton(JButton b, Dimension dim) {
         b.setPreferredSize(dim);
         b.setBackground(bcolor);
+    }
+
+    /**Felső sorban az ablakban a játék adatait frissíti*/
+    public void updateGameLabel() {
+        round = new String(game.getRound()+". kor");
+        Ppoints = new String("Szerelok: "+game.getPointsOfPlumber());
+        Spoints = new String("Szabotorok: "+game.getPointsOfSaboteur());
+        gameLabel.setText("                                               "+round+"     "+Ppoints+"     "+Spoints);
     }
 
 // ButtonActionListener-ek

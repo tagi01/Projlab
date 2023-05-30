@@ -70,6 +70,9 @@ public abstract class Field {
 	 */
 	public abstract ArrayList<? extends Field> getNeighbours();
 
+
+	public View getView(){ return null;	}
+
 // METODUSOK
 	// ACCEPT
 	/**

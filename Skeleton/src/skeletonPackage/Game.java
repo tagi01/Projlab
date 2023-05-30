@@ -31,6 +31,11 @@ public class Game {
     private ArrayList<Character> characters = new ArrayList<Character>(); // játék sorrendben a játékosok karakterei
     private int activeCharacter; // aktív karakter sorszáma a listában 0-tól kezdve
 
+
+// View
+    private PlayerPanelView playerPanelView;
+    private GameView gameView;
+
 // GETTER, SETTER
 
     public int getPointsOfPlumber() { return pointsOfPlumber; }
@@ -106,6 +111,7 @@ public class Game {
     /** Csökkenti eggyel az aktív karakter akciópontjait */
     public void removeActionPoints() {
         actionPoints--;
+        //TODO getNetwork().getCurrentField().update()
         if(actionPoints==0) {
             nextCharacter();
         }
@@ -132,11 +138,13 @@ public class Game {
 
     /** Győztes meghatározása, játék vége */
     public void gameOver() {
-        // ide még nem tudom mit kéne írni
-        if(pointsOfPlumber > pointsOfSaboteur) { System.out.println("Szerelok nyertek!"); }
-        if(pointsOfSaboteur > pointsOfPlumber) { System.out.println("Szabotorok nyertek!"); }
+        String kimenetel = "";
+        if(pointsOfPlumber > pointsOfSaboteur) { kimenetel = "Szerelok nyertek!"; }
+        if(pointsOfSaboteur > pointsOfPlumber) { kimenetel = "Szabotorok nyertek!"; }
         else {
-            System.out.println("Dontetlen!");
+            kimenetel = "Dontetlen!";
+
         }
+        gameView.gameOver(kimenetel);
     }
 }

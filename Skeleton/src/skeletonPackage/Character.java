@@ -14,6 +14,8 @@ public abstract class Character {
 	 */
 	protected Network network;
 
+	private CharacterView characterView;
+
 	//
 	//METÓDUSOK
 	//
@@ -44,6 +46,8 @@ public abstract class Character {
 		//Program.printMethod(this, "getField");
 		return currentField; 
 	}
+
+	public CharacterView getView() { return characterView; }
 
 	/**
 	 * Publikus metódus, amely meghívásával a karaktert mozgatni lehet.
