@@ -2,8 +2,6 @@ package skeletonPackage;
 
 import java.util.*;
 
-import javax.swing.JPanel;
-
 /** Source osztály */
 public class Source extends Field {
 

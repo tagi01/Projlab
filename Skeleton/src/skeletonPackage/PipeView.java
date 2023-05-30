@@ -40,6 +40,13 @@ public class PipeView implements View {
 
 	@Override
 	public void update() {
+		ArrayList<? extends Field> neighbours = pipe.getNeighbours();
+		if (neighbours.size() > 1) {
+			int[] coord1 = neighbours.get(0).getView().getCoordinates();
+			int[] coord2 = neighbours.get(1).getView().getCoordinates();
+			x = ((coord1[0] + coord2[0]) / 2);
+			y = ((coord1[1] + coord2[1]) / 2);
+		}
 		gamePanel.repaint();
 	}
 

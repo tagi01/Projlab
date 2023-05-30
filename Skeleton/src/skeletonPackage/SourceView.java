@@ -3,8 +3,6 @@ package skeletonPackage;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import javax.swing.JPanel;
-
 public class SourceView implements View{
 
 	private static final int width = 40;

@@ -2,8 +2,6 @@ package skeletonPackage;
 
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
-
 /**
  * Pump osztály
  */
