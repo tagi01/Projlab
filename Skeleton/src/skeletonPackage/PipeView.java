@@ -14,8 +14,25 @@ public class PipeView implements View {
 	 */
 	private Pipe pipe;
 
+	/**
+	 * A cső közepének koordinátái
+	 */
+	private int x, y;
+
+	/**
+	 * Konstruktor
+	 * 
+	 * @param p A megjelenítendő cső
+	 */
 	public PipeView(Pipe p) {
 		pipe = p;
+		ArrayList<? extends Field> neighbours = pipe.getNeighbours();
+		if (neighbours.size() > 1) {
+			int[] coord1 = neighbours.get(0).getView().getCoordinates();
+			int[] coord2 = neighbours.get(1).getView().getCoordinates();
+			x = ((coord1[0] + coord2[0]) / 2);
+			y = ((coord1[1] + coord2[1]) / 2);
+		}
 	}
 
 	@Override
@@ -23,15 +40,23 @@ public class PipeView implements View {
 		// TODO Auto-generated method stub
 	}
 
-	@Override
-	public int[] getCoordinates() {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * Beállítja a koordinátákat
+	 * 
+	 * @param x  a beállítandó x koordináta
+	 * @param ya beállítandó y koordináta
+	 */
+	public void setCoordinates(int x, int y) {
+		this.x = x;
+		this.y = y;
 	}
 
+	/**
+	 * Visszaadja a koordinátákat
+	 */
 	@Override
-	public void setCoordinates(int i, int j) {
-
+	public int[] getCoordinates() {
+		return new int[] { x, y };
 	}
 
 	/**
@@ -62,26 +87,37 @@ public class PipeView implements View {
 			break;
 		}
 		ArrayList<? extends Field> neighbours = pipe.getNeighbours();
-		int[] coord1 = neighbours.get(0).getView().getCoordinates();
-		int[] coord2;
-		if (neighbours.size() > 1) {
-			coord2 = neighbours.get(1).getView().getCoordinates();
-			g2d.drawLine(coord1[0], coord1[1], coord2[0], coord2[1]);
-			if (pipe.getWater() > 0) {
-				if (broken) {
-					g2d.setStroke(
-							new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 9 }, 0));
-				} else {
-					g2d.setStroke(new BasicStroke(1));
-				}
-				g2d.setColor(Color.BLUE);
+		if (neighbours.size() > 0) {
+			int[] coord1 = neighbours.get(0).getView().getCoordinates();
+			if (neighbours.size() > 1) {
+				int[] coord2 = neighbours.get(1).getView().getCoordinates();
 				g2d.drawLine(coord1[0], coord1[1], coord2[0], coord2[1]);
+				if (pipe.getWater() > 0) {
+					if (broken) {
+						g2d.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0,
+								new float[] { 9 }, 0));
+					} else {
+						g2d.setStroke(new BasicStroke(1));
+					}
+					g2d.setColor(Color.BLUE);
+					g2d.drawLine(coord1[0], coord1[1], coord2[0], coord2[1]);
+				}
+			} else {
+				g2d.drawLine(coord1[0], coord1[1], x, y);
+				if (pipe.getWater() > 0) {
+					if (broken) {
+						g2d.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0,
+								new float[] { 9 }, 0));
+					} else {
+						g2d.setStroke(new BasicStroke(1));
+					}
+					g2d.setColor(Color.BLUE);
+					g2d.drawLine(coord1[0], coord1[1], x, y);
+				}
 			}
 		}
 		if (pipe.getCurrentCharacter().size() == 1) {
 			BufferedImage image = pipe.getCurrentCharacter().get(0).getView().getImage();
-			int x = ((coord1[0] + coord2[0]) / 2);
-			int y = ((coord1[1] + coord2[1]) / 2);
 			g2d.drawImage(image, x, y, null);
 		}
 	}
