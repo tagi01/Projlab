@@ -2,6 +2,9 @@ package skeletonPackage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.security.DigestException;
 
 
 public class GameFrame extends JFrame{
@@ -54,7 +57,18 @@ public class GameFrame extends JFrame{
 
         // ELEMENTS
         // felulre
-        for(int i=0; i<3; i++) { menu.add(menuitems[i]); }
+        for(int i=0; i<3; i++) {
+            menu.add(menuitems[i]);
+            if(i==0) {
+                menuitems[i].addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        NewGameFrame ngframe = new NewGameFrame();
+                        ngframe.setVisible(true);
+                    }
+                });
+            }
+        }
         felulre.add(menu, BorderLayout.NORTH);
 
         felulre.add(gameLabel, BorderLayout.CENTER);
@@ -103,7 +117,89 @@ public class GameFrame extends JFrame{
         Program.rajz();
     }*/
 
-// ButtonActionListener-ek
+// felugró ablak, új játék indítása
+// TODO betöltésnél betölti a play.txt-t
 
+    private class NewGameFrame extends JFrame {
+
+        private JLabel error = new JLabel(" ");
+        private JTextField p_1 = new JTextField("Szerelo_1");
+        private JTextField p_2 = new JTextField("Szerelo_2");
+        private JTextField p_3 = new JTextField("Szerelo_3");
+        private JTextField s_1 = new JTextField("Szabotor_1");
+        private JTextField s_2 = new JTextField("Szabotor_2");
+        private JTextField s_3 = new JTextField("Szabotor_3");
+
+        protected NewGameFrame() {
+            this.setMinimumSize(new Dimension(400,300));
+            this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            this.setResizable(true);
+
+            error.setForeground(Color.RED);
+
+            JPanel kozepre = new JPanel();
+            kozepre.setLayout(new GridLayout(6,2));
+
+            JLabel sze_1 = new JLabel("Plumber_1     ");
+            sze_1.setHorizontalAlignment(SwingConstants.RIGHT);
+            JLabel sze_2 = new JLabel("Plumber_2     ");
+            sze_2.setHorizontalAlignment(SwingConstants.RIGHT);
+            JLabel sze_3 = new JLabel("Plumber_3     ");
+            sze_3.setHorizontalAlignment(SwingConstants.RIGHT);
+
+            JLabel sza_1 = new JLabel("Saboteur_1     ");
+            sza_1.setHorizontalAlignment(SwingConstants.RIGHT);
+            JLabel sza_2 = new JLabel("Saboteur_2     ");
+            sza_2.setHorizontalAlignment(SwingConstants.RIGHT);
+            JLabel sza_3 = new JLabel("Saboteur_3     ");
+            sza_3.setHorizontalAlignment(SwingConstants.RIGHT);
+
+            kozepre.add(sze_1);
+            kozepre.add(p_1);
+            kozepre.add(sze_2);
+            kozepre.add(p_2);
+            kozepre.add(sze_3);
+            kozepre.add(p_3);
+
+            kozepre.add(sza_1);
+            kozepre.add(s_1);
+            kozepre.add(sza_2);
+            kozepre.add(s_2);
+            kozepre.add(sza_3);
+            kozepre.add(s_3);
+
+            this.add(error, BorderLayout.NORTH);
+            this.add(kozepre, BorderLayout.CENTER);
+
+            JPanel EscButtons = new JPanel();
+            EscButtons.setLayout(new FlowLayout());
+
+            JButton ok = new JButton("Uj jatek letrehozasa");
+            ok.setBackground(bcolor);
+            ok.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) { // TODO itt a játék létrehozásakor ellenőrizni egyet-s-mást
+                    // ellenorizni hogy megvan-e az elso 4 és ha igen akkor van-e 6 teli text
+                    NewGameFrame.this.dispose(); // meg itt még elmenteni a neveket
+                }
+            });
+
+            JButton megse = new JButton("Megse");
+            megse.setBackground(bcolor);
+            megse.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    NewGameFrame.this.dispose();
+                }
+            });
+
+            EscButtons.add(ok);
+            EscButtons.add(new Label("     "));
+            EscButtons.add(megse);
+
+            this.add(EscButtons, BorderLayout.SOUTH);
+
+        }
+    }
 
 }

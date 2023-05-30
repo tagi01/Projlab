@@ -349,7 +349,6 @@ public class PlayerPanelView extends JPanel {
             this.add(buttons, BorderLayout.CENTER);
 
             JButton megse = new JButton("Megse");
-            megse.setBackground(background);
             megse.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     selectedField = null;
@@ -374,4 +373,3 @@ public class PlayerPanelView extends JPanel {
         }
     }
 }
-// TODO mezőre lépés gomb xd
