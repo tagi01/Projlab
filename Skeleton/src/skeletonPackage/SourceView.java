@@ -26,15 +26,15 @@ public class SourceView implements View{
 
 	@Override
 	public void setCoordinates(int x, int y) {
-		this.x = x - width / 2;
-		this.y = y - height / 2;
+		this.x = x - (width / 2);
+		this.y = y - (height / 2);
 		//gamePanel.paintUpdate(gamePanel.getGraphics());
 	}
 
 	// középpontot ad vissza
 	@Override
 	public int[] getCoordinates() {
-		return new int[]{x + width / 2, y + height / 2};
+		return new int[]{x+ width / 2, y+height/2};
 	}
 
 	@Override
@@ -52,28 +52,16 @@ public class SourceView implements View{
 		if (source.getCurrentCharacter().size() == 1) {
 			BufferedImage image = source.getCurrentCharacter().get(0).getView().getImage();
 			int seg[] = getCoordinates();
-			g2d.drawImage(image, seg[0], seg[1], null);
+			g2d.drawImage(image, seg[0]- width / 2, seg[1]- width / 2, null);
 		}
 		else {
 			for(int i=0; i < source.getCurrentCharacter().size(); i++) {
 				BufferedImage image = source.getCurrentCharacter().get(i).getView().getImage();
 				int seg[] = getCoordinates();
-				g2d.drawImage(image, seg[0]+(i*10), seg[1]+(i*10), null);
+				g2d.drawImage(image, seg[0]- width / 2+(i*10), seg[1]- width / 2+(i*10), null);
 			}
 		}
 
-		ArrayList<Character> currentCharacters = source.getCurrentCharacter();
-		int charNum = currentCharacters.size();
-		int n = 0;
-		if(charNum > 0) n = 360 / charNum;
-		int i = 0;
-		for(Character c : currentCharacters) {
-			CharacterView view = c.getView();
-			BufferedImage image = view.getImage();
-			g.drawImage(image, (int)(x + width / 2 + Math.sin(Math.toRadians(n * i)) * (width / 2 - 6)/* - eltolás*/),
-							   (int)(y + height / 2 + Math.cos(Math.toRadians(n * i)) * (height / 2 - 6)/* - eltolás*/), gamePanel);
-			i++;
-		}
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package skeletonPackage;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -23,8 +24,8 @@ public class CisternView implements View {
 
 	@Override
 	public void setCoordinates(int x, int y) {
-		this.x = x - width / 2;
-		this.y = y - height / 2;
+		this.x = x - (width / 2);
+		this.y = y - (height / 2);
 		//gamePanel.paintUpdate(gamePanel.getGraphics());
 	}
 	
@@ -42,25 +43,29 @@ public class CisternView implements View {
 
 	@Override
 	public void draw(Graphics g) {
-		g.setColor(Color.GREEN);
-		g.fillRect(x, y, width, height);
+		Graphics2D g2d = (Graphics2D)g.create();
+		
+		g2d.setColor(Color.GREEN);
+		g2d.fillRect(x, y, width, height);
+		
+		g2d.setColor(Color.BLACK);
 		if(cistern.getHasPipe()) {
-			g.drawString("pipe", x - 5, y + height + 5);
+			g2d.drawString("pipe", x -5, y + height + 10);
 		}
 		if(cistern.getHasPump()) {
-			g.drawString("pump", x + (width / 2) + 5, y + height + 5);
+			g2d.drawString("pump", x + (width / 2) + 10, y + height + 10);
 		}
-		ArrayList<Character> currentCharacters = cistern.getCurrentCharacter();
-		int charNum = currentCharacters.size();
-		int n = 0;
-		if(charNum > 0) n = 360 / charNum;
-		int i = 0;
-		for(Character c : currentCharacters) {
-			CharacterView view = c.getView();
-			BufferedImage image = view.getImage();
-			g.drawImage(image, (int)(x + width / 2 + Math.sin(Math.toRadians(n * i)) * (width / 2 - 6)/* - eltolás*/),
-							   (int)(y + height / 2 + Math.cos(Math.toRadians(n * i)) * (height / 2 - 6)/* - eltolás*/), gamePanel);
-			i++;
+		if (cistern.getCurrentCharacter().size() == 1) {
+			BufferedImage image = cistern.getCurrentCharacter().get(0).getView().getImage();
+			int seg[] = getCoordinates();
+			g2d.drawImage(image, seg[0]- width / 2, seg[1]- width / 2, null);
+		}
+		else {
+			for(int i=0; i < cistern.getCurrentCharacter().size(); i++) {
+				BufferedImage image = cistern.getCurrentCharacter().get(i).getView().getImage();
+				int seg[] = getCoordinates();
+				g2d.drawImage(image, seg[0]- width / 2+(i*10), seg[1]- width / 2+(i*10), null);
+			}
 		}
 	}
 
