@@ -19,7 +19,7 @@ public class PlayerPanelView extends JPanel {
 
     // buttonPanel
     private InventoryPanel inv_1, inv_2, inv_3; // cső egyik- másik vége, pumpa
-
+    private JButton mozog = new JButton("masik mezore lepes");
     private JButton javit = new JButton("javitas");
     private JButton pumpa_be = new JButton("be");
     private JButton pumpa_ki = new JButton("ki");
@@ -38,7 +38,7 @@ public class PlayerPanelView extends JPanel {
         buttonPanel = new JPanel();
         buttonPanel.setBackground(background);
         buttonPanel.setLayout(new FlowLayout());
-        buttonPanel.setPreferredSize(new Dimension(150,windowHeight-200));
+        buttonPanel.setPreferredSize(new Dimension(150,windowHeight));
         buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // pumpPanel
@@ -56,6 +56,7 @@ public class PlayerPanelView extends JPanel {
         inv_2 = new InventoryPanel(" ");
         inv_3 = new InventoryPanel(" ");
 
+        setButton(mozog, buttonSize);
         setButton(javit, buttonSize);
         setButton(pumpa_be, bhalf);
         setButton(pumpa_ki, bhalf);
@@ -75,6 +76,8 @@ public class PlayerPanelView extends JPanel {
         buttonPanel.add(inv_2);
         buttonPanel.add(inv_3);
 
+
+        buttonPanel.add(mozog);
         buttonPanel.add(javit);
         buttonPanel.add(new JLabel(" "));
         buttonPanel.add(new JLabel("Pumpa"));
@@ -102,7 +105,7 @@ public class PlayerPanelView extends JPanel {
         actCharacter = game.getActiveCharacter();
 
         this.setBackground(background);
-        this.setPreferredSize(new Dimension(200,windowWidth-100));
+        this.setPreferredSize(new Dimension(200,windowWidth));
 
         init();
         updateInfo();
@@ -134,6 +137,8 @@ public class PlayerPanelView extends JPanel {
             pumpa_fel.setVisible(false);
             pumpa_le.setVisible(false);
             cso_csuszos.setVisible(true);
+            cso_felvetel.setVisible(false);
+            cso_ciszternarol.setVisible(false);
         }
     }
 
@@ -142,11 +147,21 @@ public class PlayerPanelView extends JPanel {
         b.setBackground(bcolor);
     }
 
-
-    // pumpán állva cső felvétele
-    // move
-    // pumpa átállítása
     private void addActionListeners() { // TODO ActionListenerek normális megcsinálása
+        mozog.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		ArrayList<String> fields = new ArrayList<>();
+        		for (Field f : actCharacter.getField().getNeighbours()) {
+                	fields.add(Program.getKeyFromFieldMaps(f));
+                }
+        		FieldChooserFrame fcf = new FieldChooserFrame("Hova szeretnel lepni?",fields);
+                fcf.setVisible(true);
+                
+                if (selectedField != null) {
+                	actCharacter.move(selectedField);
+                }
+        }});
+
         javit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //actCharacter.repair();
@@ -264,47 +279,47 @@ public class PlayerPanelView extends JPanel {
         		}
             }});
 
-        passz.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                game.nextCharacter();
-            }});
-        
         cso_felvetel.addActionListener(new ActionListener() { // TODO felugró ablak
             public void actionPerformed(ActionEvent e) {
                 ArrayList<String> pipes = new ArrayList<>();
                 for (Field f : actCharacter.getField().getNeighbours()) {
-                	pipes.add(Program.getKeyFromFieldMaps(f));
+                    pipes.add(Program.getKeyFromFieldMaps(f));
                 }
 
                 FieldChooserFrame fcf = new FieldChooserFrame("Melyik csovet szeretned felvenni?",pipes);
                 fcf.setVisible(true);
                 // itt már megvan a selectedField
                 Pipe pipe = null;
-        		for (Pipe p : Program.getPipes().values()) {
-        			if (selectedField == p)
-        				pipe = p;
-        		}
+                for (Pipe p : Program.getPipes().values()) {
+                    if (selectedField == p)
+                        pipe = p;
+                }
                 Plumber currentPlumber = null;
-        		for (Plumber p : Program.getPlumbers().values()) {
-        			if (game.getActiveCharacter() == p)
-        				currentPlumber = p;
-        		}
-        		if (currentPlumber != null && pipe != null) {
-        			currentPlumber.grabPipe(pipe);
-        		}
+                for (Plumber p : Program.getPlumbers().values()) {
+                    if (game.getActiveCharacter() == p)
+                        currentPlumber = p;
+                }
+                if (currentPlumber != null && pipe != null) {
+                    currentPlumber.grabPipe(pipe);
+                }
             }});
-        
+
         cso_ciszternarol.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //actCharacter.getPipe();
-            	Plumber currentPlumber = null;
-        		for (Plumber p : Program.getPlumbers().values()) {
-        			if (game.getActiveCharacter() == p)
-        				currentPlumber = p;
-        		}
-        		if (currentPlumber != null) {
-        			currentPlumber.getPipe();
-        		}
+                Plumber currentPlumber = null;
+                for (Plumber p : Program.getPlumbers().values()) {
+                    if (game.getActiveCharacter() == p)
+                        currentPlumber = p;
+                }
+                if (currentPlumber != null) {
+                    currentPlumber.getPipe();
+                }
+            }});
+
+        passz.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                game.nextCharacter();
             }});
     }
 
@@ -312,7 +327,7 @@ public class PlayerPanelView extends JPanel {
     private class InventoryPanel extends JPanel {
         private JLabel inventory;
         protected InventoryPanel(String szoveg) {
-            this.setPreferredSize(new Dimension(50, 30));
+            this.setPreferredSize(new Dimension(70, 30));
             this.setBackground(bcolor);
             inventory = new JLabel(szoveg);
             this.add(inventory,BorderLayout.CENTER);
