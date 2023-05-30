@@ -48,7 +48,7 @@ public class Network {
 	 */
 
 	public void addPump(Pump pump, Pipe currentField) {
-		Pipe p_new = new Pipe();
+		Pipe p_new = new Pipe(currentField.getView().getGamePanel());
 		fields.add(p_new);
 
 		p_new.addNeighbour(pump);

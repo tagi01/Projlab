@@ -60,5 +60,7 @@ public class CisternView implements View {
 		}
 	}
 
+	@Override
+	public GamePanel getGamePanel() { return gamePanel; }
 }
 

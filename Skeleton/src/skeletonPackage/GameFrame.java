@@ -83,6 +83,8 @@ public class GameFrame extends JFrame{
     }
 
     public GamePanel getGamePanel() {return gamePanel;}
+    
+    public Game getGame() { return game; }
 
     /**Felső sorban az ablakban a játék adatait frissíti*/
     public void updateGameLabel() {
@@ -99,9 +101,9 @@ public class GameFrame extends JFrame{
     //}
 
     //}
-    public void rePaint() {
+    /*public void rePaint() {
         Program.rajz();
-    }
+    }*/
 
 // ButtonActionListener-ek
 

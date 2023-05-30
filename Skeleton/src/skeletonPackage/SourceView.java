@@ -48,5 +48,6 @@ public class SourceView implements View{
 
 	}
 
-
+	@Override
+	public GamePanel getGamePanel() { return gamePanel; }
 }

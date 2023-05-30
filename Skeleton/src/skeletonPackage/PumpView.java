@@ -20,9 +20,9 @@ public class PumpView implements View {
 	
 	private GamePanel gamePanel;	// TODO ez jó?
 	
-	public PumpView(Pump p, GamePanel jp) {
+	public PumpView(Pump p, GamePanel gp) {
 		pump = p;
-		gamePanel = jp;
+		gamePanel = gp;
 		//x,y
 	}
 	
@@ -122,4 +122,7 @@ public class PumpView implements View {
     	}
     	return new int[]{(int)pipeX - pipeEndWidth/2, (int)pipeY - pipeEndWidth/2};
 	}
+	
+	@Override
+	public GamePanel getGamePanel() { return gamePanel; }
 }

@@ -15,8 +15,10 @@ public class GamePanel extends JPanel {
     // ha marad még idő
     // először a csöveket, utána a többi mezőt
     // a mezők kirajzolják a karaktereket
-    public void paintComponent(Graphics g, Game game) {
-        for(Field f : game.getNetwork().getFields()) {
+    @Override
+    public void paintComponent(Graphics g) {
+    	super.paintComponent(g);
+        for(Field f : gameFrame.getGame().getNetwork().getFields()) {
             f.getView().draw(g);
         }
     }

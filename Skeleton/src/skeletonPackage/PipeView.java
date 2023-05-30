@@ -71,8 +71,11 @@ public class PipeView implements View {
 		Graphics2D g2d = (Graphics2D) g.create();
 		StateOfPipe state = pipe.getState();
 		boolean broken = pipe.getBroken();
+		boolean cantPuncture = pipe.getCantPuncture() > 0 ? true : false;
 		if (broken) {
 			g2d.setStroke(new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 9 }, 0));
+		} else if (cantPuncture) {
+			g2d.setStroke(new BasicStroke(5));
 		} else
 			g2d.setStroke(new BasicStroke(3));
 		switch (state) {
@@ -125,4 +128,6 @@ public class PipeView implements View {
 		}
 	}
 
+	@Override
+	public GamePanel getGamePanel() { return gamePanel; }
 }

@@ -164,7 +164,7 @@ public class Cistern extends Field {
 	private Pipe removePipe() {
 		if(hasPipe == true) {
 			hasPipe = false;
-			Pipe pi = new Pipe();
+			Pipe pi = new Pipe(game.getGameFrame().getGamePanel());
 			pi.setTaken(true);
 			pi.addNeighbour(this);
 			network.addField(pi);

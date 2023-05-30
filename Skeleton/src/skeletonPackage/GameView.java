@@ -37,5 +37,6 @@ public class GameView implements View {
         JOptionPane.showMessageDialog(gf, kimenetel, "Game Over", JOptionPane.PLAIN_MESSAGE);
     }
 
-
+    @Override
+	public GamePanel getGamePanel() { return null; }	// FIXME
 }
