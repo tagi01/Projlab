@@ -49,9 +49,10 @@ public class PlayerPanelView extends JPanel {
         Dimension buttonSize = new Dimension(150,25);
         Dimension bhalf = new Dimension(60,25);
 
-        Dimension invSize = new Dimension(50, 30);
         // inventory panelek, benne egy labellel
-        inv_1 = new InventoryPanel("");
+        inv_1 = new InventoryPanel(" ");
+        inv_2 = new InventoryPanel(" ");
+        inv_3 = new InventoryPanel(" ");
 
         setButton(javit, buttonSize);
         setButton(pumpa_be, bhalf);
@@ -61,9 +62,16 @@ public class PlayerPanelView extends JPanel {
         setButton(cso_kilyukad, buttonSize);
         setButton(cso_ragad, buttonSize);
         setButton(cso_csuszos, buttonSize);
+        setButton(cso_felvetel,buttonSize);
+        setButton(cso_ciszternarol, buttonSize);
         setButton(passz, buttonSize);
 
         addActionListeners();
+
+        // panelhez hozzáadás
+        buttonPanel.add(inv_1);
+        buttonPanel.add(inv_2);
+        buttonPanel.add(inv_3);
 
         buttonPanel.add(javit);
         buttonPanel.add(new JLabel(" "));
@@ -78,6 +86,11 @@ public class PlayerPanelView extends JPanel {
         buttonPanel.add(cso_ragad);
         buttonPanel.add(new JLabel(" "));
         buttonPanel.add(cso_csuszos);
+        buttonPanel.add(new JLabel(" "));
+
+        buttonPanel.add(cso_felvetel);
+        buttonPanel.add(cso_ciszternarol);
+
         buttonPanel.add(new JLabel(" "));
         buttonPanel.add(passz);
     }
@@ -172,14 +185,20 @@ public class PlayerPanelView extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 game.nextCharacter();
             }});
+
+        // TODO ide az ActionListenerek
+        // cso_felvetel
+        // cso_ciszternarol
     }
 
 
     private class InventoryPanel extends JPanel {
         private JLabel inventory;
         protected InventoryPanel(String szoveg) {
+            this.setPreferredSize(new Dimension(50, 30));
+            this.setBackground(bcolor);
             inventory = new JLabel(szoveg);
-            this.add(inventory);
+            this.add(inventory,BorderLayout.CENTER);
         }
 
         protected void updateLabel(String szoveg) {
