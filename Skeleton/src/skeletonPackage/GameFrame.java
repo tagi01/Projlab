@@ -18,9 +18,10 @@ public class GameFrame extends JFrame{
 
     // View-k
     private GamePanel gamePanel;
-    private GameView gameView;
+    private PlayerPanelView playerPanel;
 
     // felulre
+    private JPanel felulre;
     private JMenuBar menu = new JMenuBar();
     private JMenuItem[] menuitems = {
             new JMenuItem("Uj jatek"),
@@ -31,29 +32,18 @@ public class GameFrame extends JFrame{
     private JLabel gameLabel = new JLabel();
     private String round, Ppoints, Spoints;
 
-    // gamePanel
-
-    // playerPanel
-    private String actChar, actionP;
-    private Character actCharacter;
-
     private void init() {
 
         // PANELS
         // felulre
-        JPanel felulre = new JPanel();
         felulre.setBackground(background);
         felulre.setLayout(new BorderLayout());
         felulre.setPreferredSize(new Dimension(windowWidth,50));
 
         // gamePanel
-        gamePanel = new GamePanel(this);
         gamePanel.setBackground(background);
         gamePanel.setPreferredSize(new Dimension(windowWidth-100,windowHeight-200));
         gamePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-        // playerPanel
-        JPanel playerPanel = new PlayerPanelView();
 
         // ELEMENTS
         // felulre
@@ -87,9 +77,13 @@ public class GameFrame extends JFrame{
 
         game = Game.getInstance();
 
-        updateGameLabel();
+        felulre = new JPanel();
+        gamePanel = new GamePanel(this);
+        playerPanel = new PlayerPanelView();
 
-        actCharacter = game.getActiveCharacter();
+        Game.getInstance().setPlayerPanelView(playerPanel);
+
+        updateGameLabel();
 
         init();
     }
@@ -106,16 +100,9 @@ public class GameFrame extends JFrame{
         gameLabel.setText("                                               "+round+"     "+Ppoints+"     "+Spoints);
     }
 
-    //@Override
-    //public void actionPerformed(ActionEvent e) {
-    //if(e.getSource().equals(pumpa_be)) {
-    //this.rePaint();
-    //}
-
-    //}
-    /*public void rePaint() {
-        Program.rajz();
-    }*/
+    public void gameOver(String kimenetel) {
+        JOptionPane.showMessageDialog(GameFrame.this, kimenetel, "Game Over", JOptionPane.PLAIN_MESSAGE);
+    }
 
 // felugró ablak, új játék indítása
     private class NewGameFrame extends JFrame {
@@ -129,8 +116,8 @@ public class GameFrame extends JFrame{
         private JTextField s_3 = new JTextField("Saboteur_3");
 
         protected NewGameFrame() {
-            this.setTitle("Uj jatek letrehozasa - jatekosok elnevezese");
-            this.setMinimumSize(new Dimension(400,300));
+            this.setTitle("Uj jatek letrehozasa");
+            this.setMinimumSize(new Dimension(350,300));
             this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             this.setResizable(true);
 

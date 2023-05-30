@@ -10,12 +10,10 @@ import java.util.ArrayList;
  * */
 public class Game {
 
-// ATTRIBUTUMOK
     /** Egy példányára mutató referencia */
     private static Game instance = null;
-    
-    private static GameFrame gameFrame;
-    
+
+// ATTRIBUTUMOK
     /** Szerelő csapat pontszáma */
     private int pointsOfPlumber = 0;
     /** Szabotőr csapat pontszáma */
@@ -34,21 +32,27 @@ public class Game {
     private ArrayList<Character> characters; // játék sorrendben a játékosok karakterei
     private int activeCharacter; // aktív karakter sorszáma a listában 0-tól kezdve
 
-
 // View
+    private static GameFrame gameView;
     private PlayerPanelView playerPanelView;
-    private GameView gameView;
 
-// GETTER, SETTER
-    public GameFrame getGameFrame() {return gameFrame;}
+    public GameFrame getGameFrame() { return gameView; }
+
+    public void setGameFrame() {
+        gameView = new GameFrame();
+        gameView.setVisible(true);
+    }
+    public void setPlayerPanelView(PlayerPanelView playerPanelView) {
+        this.playerPanelView = playerPanelView;
+    }
+
+    // GETTER, SETTER
     public int getPointsOfPlumber() { return pointsOfPlumber; }
     public int getPointsOfSaboteur() { return pointsOfSaboteur; }
     public int getRound() { return round; }
     public Network getNetwork() { return network; }
     public int getActionPoints() { return actionPoints; }
     public Character getActiveCharacter() { return characters.get(activeCharacter); }
-
-
     public int getActiveCharNum() { return activeCharacter; }
 
     /** Növeli a szerelők pontszámát
@@ -95,7 +99,6 @@ public class Game {
         network = new Network();
         characters = new ArrayList<Character>();
         activeCharacter = 0;
-
     }
 
     /** Visszaadja a singelton egyetlen példányát, ha nincs, akkor létrehoz és azt adja vissza */
@@ -104,11 +107,6 @@ public class Game {
             instance = new Game();
         }
         return instance;
-    }
-    
-    public void setGameFrame() {
-        gameFrame = new GameFrame();
-        gameFrame.setVisible(true);
     }
 
     /** Reseteli a példányt az alapbeállításokra */
@@ -121,10 +119,10 @@ public class Game {
     /** Csökkenti eggyel az aktív karakter akciópontjait */
     public void removeActionPoints() {
         actionPoints--;
-        //TODO getNetwork().getCurrentField().update()
         if(actionPoints==0) {
             nextCharacter();
         }
+        updateViews();
     }
 
     /** Következő karakter jön, network-öt meghívva végig megy a víz folyása (flowWater) */
@@ -142,8 +140,9 @@ public class Game {
             activeCharacter=0;
         }
 
-        //networkon flowWater meghívása
+        //networkon flowWater meghívása, view-k frissitese
         network.flowWaterOnField();
+        updateViews();
     }
 
     /** Győztes meghatározása, játék vége */
@@ -156,5 +155,10 @@ public class Game {
 
         }
         gameView.gameOver(kimenetel);
+    }
+
+    public void updateViews() {
+        gameView.updateGameLabel();
+        playerPanelView.updateInfo();
     }
 }
