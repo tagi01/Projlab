@@ -144,6 +144,14 @@ public class PlayerPanelView extends JPanel {
         javit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //actCharacter.repair();
+            	Plumber currentPlumber = null;
+        		for (Plumber p : Program.getPlumbers().values()) {
+        			if (game.getActiveCharacter() == p)
+        				currentPlumber = p;
+        		}
+        		if (currentPlumber != null) {
+        			currentPlumber.repair();
+        		}
             }});
 
         pumpa_be.addActionListener(new ActionListener() {
@@ -159,11 +167,27 @@ public class PlayerPanelView extends JPanel {
         pumpa_fel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //actCharacter.getPummp();
+            	Plumber currentPlumber = null;
+        		for (Plumber p : Program.getPlumbers().values()) {
+        			if (game.getActiveCharacter() == p)
+        				currentPlumber = p;
+        		}
+        		if (currentPlumber != null) {
+        			currentPlumber.getPump();
+        		}
             }});
 
         pumpa_le.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //actCharacter.placePump();
+            	Plumber currentPlumber = null;
+        		for (Plumber p : Program.getPlumbers().values()) {
+        			if (game.getActiveCharacter() == p)
+        				currentPlumber = p;
+        		}
+        		if (currentPlumber != null) {
+        			currentPlumber.placePump();
+        		}
             }});
 
         cso_kilyukad.addActionListener(new ActionListener() {
@@ -179,6 +203,14 @@ public class PlayerPanelView extends JPanel {
         cso_csuszos.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //actCharacter.turnPipeSlippery();
+            	Saboteur currentSaboteur = null;
+        		for (Saboteur s : Program.getSaboteurs().values()) {
+        			if (game.getActiveCharacter() == s)
+        				currentSaboteur = s;
+        		}
+        		if (currentSaboteur != null) {
+        			currentSaboteur.turnPipeSlippery();
+        		}
             }});
 
         passz.addActionListener(new ActionListener() {
@@ -194,6 +226,14 @@ public class PlayerPanelView extends JPanel {
         cso_ciszternarol.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //actCharacter.getPipe();
+            	Plumber currentPlumber = null;
+        		for (Plumber p : Program.getPlumbers().values()) {
+        			if (game.getActiveCharacter() == p)
+        				currentPlumber = p;
+        		}
+        		if (currentPlumber != null) {
+        			currentPlumber.getPipe();
+        		}
             }});
 
         // TODO ActionListenerek normális megcsinálása
