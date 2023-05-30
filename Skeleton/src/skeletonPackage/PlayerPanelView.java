@@ -185,10 +185,19 @@ public class PlayerPanelView extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 game.nextCharacter();
             }});
+        
+        cso_felvetel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+            }});
+        
+        cso_ciszternarol.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //actCharacter.getPipe();
+            }});
 
-        // TODO ide az ActionListenerek
-        // cso_felvetel
-        // cso_ciszternarol
+        // TODO ActionListenerek normális megcsinálása
+        
     }
 
 
