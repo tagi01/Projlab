@@ -51,10 +51,16 @@ public class CisternView implements View {
 			g.drawString("pump", x + (width / 2) + 5, y + height + 5);
 		}
 		ArrayList<Character> currentCharacters = cistern.getCurrentCharacter();
+		int charNum = currentCharacters.size();
+		int n = 0;
+		if(charNum > 0) n = 360 / charNum;
+		int i = 0;
 		for(Character c : currentCharacters) {
 			CharacterView view = c.getView();
 			BufferedImage image = view.getImage();
-			g.drawImage(image, x+width/2, y+width/2, null);
+			g.drawImage(image, (int)(x + width / 2 + Math.sin(Math.toRadians(n * i)) * (width / 2 - 6)/* - eltolás*/),
+							   (int)(y + height / 2 + Math.cos(Math.toRadians(n * i)) * (height / 2 - 6)/* - eltolás*/), gamePanel);
+			i++;
 		}
 	}
 
