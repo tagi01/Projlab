@@ -79,11 +79,16 @@ public class PumpView implements View {
 		}
 		
 		ArrayList<Character> currentCharacters = pump.getCurrentCharacter();
-		//int charNum = currentCharacters.size();	- TODO körbe lehetne rakni őket
+		int charNum = currentCharacters.size();
+		int n = 0;
+		if(charNum > 0) n = 360 / charNum;
+		int i = 0;
 		for(Character c : currentCharacters) {
 			CharacterView view = c.getView();
 			BufferedImage image = view.getImage();
-			g.drawImage(image, x + diameter / 2, y + diameter / 2, gamePanel);
+			g.drawImage(image, (int)(x + diameter / 2 + Math.sin(Math.toRadians(n * i)) * (diameter / 2 - 6)/* - eltolás*/),
+							   (int)(y + diameter / 2 + Math.cos(Math.toRadians(n * i)) * (diameter / 2 - 6)/* - eltolás*/), gamePanel);
+			i++;
 		}
 	}
 	

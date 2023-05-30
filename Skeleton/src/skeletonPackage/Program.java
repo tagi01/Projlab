@@ -91,6 +91,8 @@ public class Program {
 
 		//initializeGame();
 		
+		
+		
 		input = new Scanner(System.in);
 		String input_temp;
 
@@ -103,6 +105,90 @@ public class Program {
 				System.out.println("Hiba tortent.");
 			}
 		}
+	}
+	
+	public static void createGame(String[] names) {
+		game = Game.getInstance();
+		network = new Network();
+		game.setNetwork(network);
+		pipes.clear();
+		pumps.clear();
+		sources.clear();
+		cisterns.clear();
+		saboteurs.clear();
+		plumbers.clear();
+		
+		for(int i = 0; i < names.length; i+=2) {
+			Plumber p = new Plumber(null, network, imageList.get(i));
+			BufferedImage img = null;
+			try {
+			    img = ImageIO.read(new File("C:/Projlab/Plumber_" + ((i/2)+1) + ".jpg"));
+			} catch (IOException e) {
+			}
+			p.getView().setImage(img);
+			plumbers.put(names[i], p);
+			game.addCharacter(p);
+		}
+		
+		for(int i = 1; i < names.length; i+=2) {
+			Saboteur s = new Saboteur(null, network, imageList.get(+3));
+			BufferedImage img = null;
+			try {
+			    img = ImageIO.read(new File("C:/Projlab/Saboteur_" + ((i+1)/2) + ".jpg"));
+			} catch (IOException e) {
+			}
+			s.getView().setImage(img);
+			saboteurs.put(names[i], s);
+			game.addCharacter(s);
+		}
+		
+		game.setGameFrame();
+		
+		for(int i = 0; i < 18; i++) {
+			Pipe p = new Pipe(game.getGameFrame().getGamePanel());
+			p.setGame(game);
+			p.setNetwork(network);
+			pipes.put("pipe_" + (i+1), p);
+			network.addField(p);
+		}
+		
+		for(int i = 0; i < 8; i++) {
+			Pump p = new Pump(game.getGameFrame().getGamePanel());
+			p.setGame(game);
+			p.setNetwork(network);
+			pumps.put("pump_" + (i+1), p);
+			network.addField(p);
+		}
+		/**pumps.get("pump_1").getView().setCoordinates(50, 200);
+		pumps.get("pump_2").getView().setCoordinates(350, 100);
+		pumps.get("pump_3").getView().setCoordinates(300, 275);
+		pumps.get("pump_4").getView().setCoordinates(500, 200);
+		pumps.get("pump_5").getView().setCoordinates(600, 80);
+		pumps.get("pump_6").getView().setCoordinates(750, 200);
+		pumps.get("pump_7").getView().setCoordinates(850, 120);
+		pumps.get("pump_8").getView().setCoordinates(900, 330);**/
+		
+		for(int i = 0; i < 2; i++) {
+			Source s = new Source(game.getGameFrame().getGamePanel());
+			s.setGame(game);
+			s.setNetwork(network);
+			sources.put("source_" + (i+1), s);
+			network.addField(s);
+		}
+		//sources.get("source_1").getView().setCoordinates(300, 0);
+		//sources.get("source_2").getView().setCoordinates(700, 0);
+		
+		for(int i = 0; i < 3; i++) {
+			Cistern c = new Cistern(game.getGameFrame().getGamePanel());
+			c.setGame(game);
+			c.setNetwork(network);
+			cisterns.put("cistern_" + (i+1), c);
+			network.addField(c);
+		}
+		/**cisterns.get("cistern_1").getView().setCoordinates(200, 400);
+		cisterns.get("cistern_2").getView().setCoordinates(500, 400);
+		cisterns.get("cistern_3").getView().setCoordinates(800, 400);**/
+		load(new String[] {"load", "C:/Projlab", "palya.txt"});
 	}
 	
 	/**

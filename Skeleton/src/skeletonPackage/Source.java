@@ -111,5 +111,17 @@ public class Source extends Field {
 	public boolean removeNeighbour(Field f) {
 		return false;
 	}
-
+	
+	@Override
+	public void onField(Character c) {
+		super.onField(c);
+		sourceView.update();
+	}
+	
+	@Override
+	public boolean offField(Character c) {
+		boolean off = super.offField(c);
+		sourceView.update();
+		return off;
+	}
 }

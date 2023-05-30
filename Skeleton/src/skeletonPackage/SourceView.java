@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class SourceView implements View{
 
@@ -60,6 +62,18 @@ public class SourceView implements View{
 			}
 		}
 
+		ArrayList<Character> currentCharacters = source.getCurrentCharacter();
+		int charNum = currentCharacters.size();
+		int n = 0;
+		if(charNum > 0) n = 360 / charNum;
+		int i = 0;
+		for(Character c : currentCharacters) {
+			CharacterView view = c.getView();
+			BufferedImage image = view.getImage();
+			g.drawImage(image, (int)(x + width / 2 + Math.sin(Math.toRadians(n * i)) * (width / 2 - 6)/* - eltolás*/),
+							   (int)(y + height / 2 + Math.cos(Math.toRadians(n * i)) * (height / 2 - 6)/* - eltolás*/), gamePanel);
+			i++;
+		}
 	}
 
 	@Override

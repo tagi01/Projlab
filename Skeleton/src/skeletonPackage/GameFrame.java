@@ -18,9 +18,10 @@ public class GameFrame extends JFrame{
 
     // View-k
     private GamePanel gamePanel;
-    private GameView gameView;
+    private PlayerPanelView playerPanel;
 
     // felulre
+    private JPanel felulre;
     private JMenuBar menu = new JMenuBar();
     private JMenuItem[] menuitems = {
             new JMenuItem("Uj jatek"),
@@ -31,28 +32,23 @@ public class GameFrame extends JFrame{
     private JLabel gameLabel = new JLabel();
     private String round, Ppoints, Spoints;
 
-    // gamePanel
-
-    // playerPanel
-    private String actChar, actionP;
-    private Character actCharacter;
-
     private void init() {
 
         // PANELS
         // felulre
-        JPanel felulre = new JPanel();
         felulre.setBackground(background);
         felulre.setLayout(new BorderLayout());
         felulre.setPreferredSize(new Dimension(windowWidth,50));
 
         // gamePanel
-        gamePanel = new GamePanel(this);
         gamePanel.setBackground(background);
         gamePanel.setPreferredSize(new Dimension(windowWidth-100,windowHeight-200));
-        
+
         // playerPanel
         JPanel playerPanel = new PlayerPanelView();
+
+        gamePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
 
         // ELEMENTS
         // felulre
@@ -86,13 +82,19 @@ public class GameFrame extends JFrame{
 
         game = Game.getInstance();
 
+        felulre = new JPanel();
+        gamePanel = new GamePanel(this);
+        playerPanel = new PlayerPanelView();
+
+
+        Game.getInstance().setPlayerPanelView(playerPanel);
+
         updateGameLabel();
 
-        
 
         init();
     }
-    public void setGameFrameActivecharacter(Character c){actCharacter = c;}
+
     public GamePanel getGamePanel() {return gamePanel;}
     
     public Game getGame() { return game; }
@@ -105,38 +107,47 @@ public class GameFrame extends JFrame{
         gameLabel.setText("                                               "+round+"     "+Ppoints+"     "+Spoints);
     }
 
+
+    public void gameOver(String kimenetel) {
+        JOptionPane.showMessageDialog(GameFrame.this, kimenetel, "Game Over", JOptionPane.PLAIN_MESSAGE);
+    }
+
+// felugró ablak, új játék indítása
+
     private class NewGameFrame extends JFrame {
 
         private JLabel error = new JLabel(" ");
-        private JTextField p_1 = new JTextField("Szerelo_1");
-        private JTextField p_2 = new JTextField("Szerelo_2");
-        private JTextField p_3 = new JTextField("Szerelo_3");
-        private JTextField s_1 = new JTextField("Szabotor_1");
-        private JTextField s_2 = new JTextField("Szabotor_2");
-        private JTextField s_3 = new JTextField("Szabotor_3");
+        private JTextField p_1 = new JTextField("Plumber_1");
+        private JTextField p_2 = new JTextField("Plumber_2");
+        private JTextField p_3 = new JTextField("Plumber_3");
+        private JTextField s_1 = new JTextField("Saboteur_1");
+        private JTextField s_2 = new JTextField("Saboteur_2");
+        private JTextField s_3 = new JTextField("Saboteur_3");
 
         protected NewGameFrame() {
-            this.setMinimumSize(new Dimension(400,300));
+            this.setTitle("Uj jatek letrehozasa");
+            this.setMinimumSize(new Dimension(350,300));
             this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             this.setResizable(true);
 
             error.setForeground(Color.RED);
+            error.setHorizontalAlignment(SwingConstants.CENTER);
 
             JPanel kozepre = new JPanel();
             kozepre.setLayout(new GridLayout(6,2));
 
-            JLabel sze_1 = new JLabel("Plumber_1     ");
+            JLabel sze_1 = new JLabel("Szerelo 1     ");
             sze_1.setHorizontalAlignment(SwingConstants.RIGHT);
-            JLabel sze_2 = new JLabel("Plumber_2     ");
+            JLabel sze_2 = new JLabel("Szerelo 2     ");
             sze_2.setHorizontalAlignment(SwingConstants.RIGHT);
-            JLabel sze_3 = new JLabel("Plumber_3     ");
+            JLabel sze_3 = new JLabel("Szerelo 3     ");
             sze_3.setHorizontalAlignment(SwingConstants.RIGHT);
 
-            JLabel sza_1 = new JLabel("Saboteur_1     ");
+            JLabel sza_1 = new JLabel("Szabotor 1     ");
             sza_1.setHorizontalAlignment(SwingConstants.RIGHT);
-            JLabel sza_2 = new JLabel("Saboteur_2     ");
+            JLabel sza_2 = new JLabel("Szabotor 2     ");
             sza_2.setHorizontalAlignment(SwingConstants.RIGHT);
-            JLabel sza_3 = new JLabel("Saboteur_3     ");
+            JLabel sza_3 = new JLabel("Szabotor 3     ");
             sza_3.setHorizontalAlignment(SwingConstants.RIGHT);
 
             kozepre.add(sze_1);
@@ -163,20 +174,24 @@ public class GameFrame extends JFrame{
             ok.setBackground(bcolor);
             ok.addActionListener(new ActionListener() {
                 @Override
-                public void actionPerformed(ActionEvent e) { // TODO itt a játék létrehozásakor ellenőrizni egyet-s-mást
+                public void actionPerformed(ActionEvent e) {
                     // ellenorizni hogy megvan-e az elso 4 és ha igen akkor van-e 6 teli text
-                	if (p_1.getText().equals("Szerelo_1") || p_2.getText().equals("Szerelo_2") || s_1.getText().equals("Szabotor_1") || s_2.getText().equals("Szabotor_2")) {
-                		return;
-                	} else {
-                		if (p_3.getText().equals("Szerelo_3") && s_3.getText().equals("Szabotor_3")) {
+                    if (p_1.getText().equals("") || p_2.getText().equals("") || s_1.getText().equals("") || s_2.getText().equals("")) {
+                        error.setText("Nincs eleg jatekos megadva !");
+                        return;
+                    } else {
+                		if (p_3.getText().equals("") && s_3.getText().equals("")) {
                 			String[] names = new String[] {p_1.getText(), p_2.getText(), s_1.getText(), s_2.getText()};
                 			//Program.createGame(names);
                 		} else {
-                			if (p_3.getText().equals("Szerelo_3") || s_3.getText().equals("Szabotor_3")) {
+                			if (p_3.getText().equals("") || s_3.getText().equals("")) {
+                                error.setText("Nincs eleg jatekos megadva !");
                 				return;
                 			} else {
                 				String[] names = new String[] {p_1.getText(), s_1.getText(), p_2.getText(), s_2.getText(), p_3.getText(), s_3.getText()};
-                    			//Program.createGame(names);
+
+                    		    Program.createGame(names);
+
                 			}
                 		}
                 	}

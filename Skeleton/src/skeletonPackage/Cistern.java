@@ -198,6 +198,7 @@ public class Cistern extends Field {
 		if(p == null) {
 			if(hasPipe == true) {
 				p = removePipe();
+				cisternView.update();
 				plumber.setInventoryPipe(p);
 				game.removeActionPoints();
 			}
@@ -206,6 +207,7 @@ public class Cistern extends Field {
 				boolean removed = removeNeighbour(p);
 				if(removed) {
 					p.removeNeighbour(this);
+					cisternView.update();
 					plumber.setInventoryPipe(p);
 					game.removeActionPoints();
 				}
@@ -231,6 +233,7 @@ public class Cistern extends Field {
 	public void interactPlumber(Plumber plumber, Pump p) {
 		if(hasPump == true) {
 			p = removePump();
+			cisternView.update();
 			plumber.setInventoryPump(p);
 			game.removeActionPoints();
 		}
@@ -245,6 +248,35 @@ public class Cistern extends Field {
 	@Override
 	public ArrayList<? extends Field> getNeighbours() {
 		return neighbours;
+	}
+	
+	/**
+	 * Publikus metódus, meghívásakor a megadott karakter rákerül a ciszternáról. 
+	 * Field-ből örökölt függvény felülírása.
+	 * @param: c, a karakter, aki rálép a ciszternára.
+	 */
+	@Override
+	public void onField(Character c) {
+		if(currentCharacters.contains(c) == false) { 
+			currentCharacters.add(c); 
+			cisternView.update();
+		}
+	}
+	
+	/**
+	 * Publikus metódus, meghívásakor az adott karater lekeról a ciszternáról.
+	 * Field-ből örökölt függvény felülírása.
+	 * @param: c, karakter, aki lelép a ciszternáról.
+	 * @return: boolean, true ha letudott lépni a ciszternáról, false ha nem
+	 */
+	@Override
+	public boolean offField(Character c) {
+		if (currentCharacters.contains(c)) { 
+			currentCharacters.remove(c); 
+			cisternView.update();
+			return true;
+		}
+		return false;
 	}
 
 }
