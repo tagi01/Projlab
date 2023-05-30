@@ -1,6 +1,7 @@
 package skeletonPackage;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -44,6 +45,8 @@ public class CisternView implements View {
 	public void draw(Graphics g) {
 		g.setColor(Color.GREEN);
 		g.fillRect(x, y, width, height);
+		
+	    g.setColor(Color.BLACK);
 		if(cistern.getHasPipe()) {
 			g.drawString("pipe", x - 5, y + height + 5);
 		}
