@@ -2,6 +2,8 @@ package skeletonPackage;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -36,13 +38,26 @@ public class CisternView implements View {
 
 	@Override
 	public void update() {
-		draw(gamePanel.getGraphics());
+		gamePanel.repaint();
+		//draw(gamePanel.getGraphics());
 	}
 
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(Color.GREEN);
 		g.fillRect(x, y, width, height);
+		if(cistern.getHasPipe()) {
+			g.drawString("pipe", x - 5, y + height + 5);
+		}
+		if(cistern.getHasPump()) {
+			g.drawString("pump", x + (width / 2) + 5, y + height + 5);
+		}
+		ArrayList<Character> currentCharacters = cistern.getCurrentCharacter();
+		for(Character c : currentCharacters) {
+			CharacterView view = c.getView();
+			BufferedImage image = view.getImage();
+			g.drawImage(image, x+width/2, y+width/2, null);
+		}
 	}
 
 }

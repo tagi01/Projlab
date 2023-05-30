@@ -13,6 +13,8 @@ public class PipeView implements View {
 	 * A megjelenített cső
 	 */
 	private Pipe pipe;
+	
+	private GamePanel gamePanel;
 
 	/**
 	 * A cső közepének koordinátái
@@ -24,8 +26,9 @@ public class PipeView implements View {
 	 * 
 	 * @param p A megjelenítendő cső
 	 */
-	public PipeView(Pipe p) {
+	public PipeView(Pipe p, GamePanel gp) {
 		pipe = p;
+		gamePanel = gp;
 		ArrayList<? extends Field> neighbours = pipe.getNeighbours();
 		if (neighbours.size() > 1) {
 			int[] coord1 = neighbours.get(0).getView().getCoordinates();
@@ -37,7 +40,7 @@ public class PipeView implements View {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		gamePanel.repaint();
 	}
 
 	/**
