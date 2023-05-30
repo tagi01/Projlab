@@ -11,7 +11,8 @@ public class CisternView implements View {
 
 	private Cistern cistern;
 
-	private int x, y;		// középpont vagy bal felső sarok?
+	// bal felső sarok
+	private int x, y;
 
 	private GamePanel gamePanel;
 
@@ -24,12 +25,13 @@ public class CisternView implements View {
 	public void setCoordinates(int x, int y) {
 		this.x = x;
 		this.y = y;
-		gamePanel.paintUpdate(gamePanel.getGraphics());
+		//gamePanel.paintUpdate(gamePanel.getGraphics());
 	}
-
+	
+	// középpontot ad vissza
 	@Override
-	public int[] getCoordinates() {		// középpontot kéne visszaadnia
-		return new int[]{x,y};
+	public int[] getCoordinates() {
+		return new int[]{x + width / 2, y + height / 2};
 	}
 
 	@Override
@@ -39,7 +41,7 @@ public class CisternView implements View {
 
 	@Override
 	public void draw(Graphics g) {
-		g.setColor(Color.RED);
+		g.setColor(Color.GREEN);
 		g.fillRect(x, y, width, height);
 	}
 

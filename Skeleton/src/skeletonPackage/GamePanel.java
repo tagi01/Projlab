@@ -16,11 +16,12 @@ public class GamePanel extends JPanel {
     // először a csöveket, utána a többi mezőt
     // a mezők kirajzolják a karaktereket
     public void paintComponent(Graphics g, Game game) {
-        //for(Field f : game.getNetwork().getPipes()) {
-            //f.getView().draw(g);
-        //}
+        for(Field f : game.getNetwork().getFields()) {
+            f.getView().draw(g);
+        }
     }
 
+    /*
     public void paintUpdate(Graphics g) {
         //for(Field f : game.getNetwork().getPipes()) {
         //f.getView().draw(g);
@@ -28,7 +29,7 @@ public class GamePanel extends JPanel {
         g.fillRect(0, 0, getWidth(), getHeight());
         gameFrame.rePaint();
     }
-
+	*/
 
     // repaint metódus majd újrarajzol ha Update()
 }
