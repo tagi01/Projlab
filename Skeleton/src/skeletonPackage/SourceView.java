@@ -27,7 +27,6 @@ public class SourceView implements View{
 		this.x = x;
 		this.y = y;
 		//gamePanel.paintUpdate(gamePanel.getGraphics());
-
 	}
 
 	// középpontot ad vissza

@@ -1,6 +1,11 @@
 package skeletonPackage;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 /** Character osztály */
 public abstract class Character {
@@ -15,7 +20,7 @@ public abstract class Character {
 	protected Network network;
 
 	private CharacterView characterView;
-
+	
 	//
 	//METÓDUSOK
 	//
@@ -25,7 +30,8 @@ public abstract class Character {
 	 * @param f, Field-ből származót típusú mező, amelyen a karakter áll
 	 * @param n, Network, amely hálózatban a karakter és a mező van
 	 */
-	public Character(Field f, Network n) {
+	public Character(Field f, Network n, BufferedImage im) {
+		characterView = new CharacterView(im ,this);
 		currentField = f;
 		network = n;
 	}

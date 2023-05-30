@@ -139,7 +139,10 @@ public abstract class Field {
 	 * @param c Character, aki a meghívott mezőre lépne
 	 */
 	public void onField(Character c) {
-		if(currentCharacters.contains(c) == false) { currentCharacters.add(c); }
+		if(currentCharacters.contains(c) == false) {
+			currentCharacters.add(c);
+			this.getView().update();
+		}
 	}
 
 	/**

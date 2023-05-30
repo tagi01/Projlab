@@ -2,16 +2,19 @@ package skeletonPackage;
 
 import java.awt.image.BufferedImage;
 
-public class CharacterView {
+public class CharacterView{
 
-    //private Character character;
+    private Character character;
     private BufferedImage image;
     
-    public CharacterView(BufferedImage img) {
-    	image = img;
+   
+    
+    public CharacterView(BufferedImage im, Character cr) {
+    	image=im;
+    	character=cr;
     }
 
     public BufferedImage getImage() {
-        return image;
+    		return image;
     }
 }

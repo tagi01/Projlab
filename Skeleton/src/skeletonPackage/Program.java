@@ -1,7 +1,10 @@
 package skeletonPackage;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -11,6 +14,8 @@ import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
+
+import javax.imageio.ImageIO;
 
 public class Program {
 
@@ -48,6 +53,24 @@ public class Program {
 	public static Map<String, Saboteur> getSaboteurs() { return saboteurs; }
 	
 	public static Map<String, Plumber> getPlumbers() { return plumbers; }
+	
+	private static ArrayList<BufferedImage> imageList;
+
+	private static void initImageList() {
+		imageList=new ArrayList<BufferedImage>();
+		String directoryPath = "C:\\Users\\Soma\\git\\Projlab\\Skeleton\\src\\images";
+		File directory = new File(directoryPath);
+		File[] files = directory.listFiles();
+		
+		for (File file : files) {
+		    try {
+		        BufferedImage image = ImageIO.read(file);
+		        imageList.add(image);
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+		}
+	}
 
 
 	/** Tárolja hogy elkezdődött-e már a játék */
@@ -57,6 +80,7 @@ public class Program {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		initImageList();
 		System.out.println("-----------------------------------------\n"
 		         + "|   ___    ___    ____  _______  ____   |\n"
 		         + "|  |   |  |   |  |    |    |    |    |  |\n"
@@ -734,10 +758,10 @@ public class Program {
 		started = false;
 
 		for(int i = 0; i < charNum; i++) {
-			Plumber p = new Plumber(null, network);
+			Plumber p = new Plumber(null, network, imageList.get(i));
 			plumbers.put("Plumber_" + (i+1), p);
 			game.addCharacter(p);
-			Saboteur s = new Saboteur(null, network);
+			Saboteur s = new Saboteur(null, network, imageList.get(i+3));
 			saboteurs.put("Saboteur_" + (i+1), s);
 			game.addCharacter(s);
 		}

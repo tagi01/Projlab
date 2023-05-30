@@ -1,0 +1,44 @@
+create network 18 8 2 3 2
+set-pipe 1 -n [ source_1 pump_1 ]
+set-pipe 2 -n [ source_1 pump_2 ]
+set-pipe 3 -n [ pump_1 pump_3 ]
+set-pipe 4 -n [ pump_1 cistern_1 ]
+set-pipe 5 -n [ pump_2 pump_3 ]
+set-pipe 6 -n [ pump_3 cistern_1 ]
+set-pipe 7 -n [ pump_2 pump_4 ]
+set-pipe 8 -n [ pump_4 cistern_1 ]
+set-pipe 9 -n [ pump_4 pump_5 ]
+set-pipe 10 -n [ pump_4 pump_6 ]
+set-pipe 11 -n [ pump_4 cistern_2 ]
+set-pipe 12 -n [ pump_5 source_2 ]
+set-pipe 13 -n [ pump_5 pump_6 ]
+set-pipe 14 -n [ pump_6 cistern_2 ]
+set-pipe 15 -n [ source_2 pump_7 ]
+set-pipe 16 -n [ pump_6 pump_7 ]
+set-pipe 17 -n [ pump_6 pump_8 ]
+set-pipe 18 -n [ pump_8 cistern_3 ]
+set-pump 1 -i pipe_1 -o pipe_4
+setCoordinate pump_1 50 200
+set-pump 2 -i pipe_2 -o pipe_5
+setCoordinate pump_2 350 100
+set-pump 3 -i pipe_5 -o pipe_6
+setCoordinate pump_3 300 275 
+set-pump 4 -i pipe_7 -o pipe_11
+setCoordinate pump_4 500 200
+set-pump 5 -i pipe_12 -o pipe_9
+setCoordinate pump_5 600 80
+set-pump 6 -i pipe_16 -o pipe_17
+setCoordinate pump_6 750 200
+set-pump 7 -i pipe_15 -o pipe_16
+setCoordinate pump_7 850 120
+set-pump 8 -i pipe_17 -o pipe_18
+setCoordinate pump_8 900 330
+setCoordinate source_1 300 0
+setCoordinate source_2 700 0
+setCoordinate cistern_1 200 400
+setCoordinate cistern_2 500 400
+setCoordinate cistern_3 800 400
+set-p 1 pump_3
+set-p 2 pump_4
+set-s 1 pipe_1
+set-s 2 pump_6
