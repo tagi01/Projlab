@@ -3,31 +3,16 @@ package skeletonPackage;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class CharacterView implements View {
+public class CharacterView {
 
-    private Character character;
-    private BufferedImage bufferedImage;
-    @Override
-    public void update() {
-
-    }
-
-    @Override
-    public void draw(Graphics g) {
-
-    }
-
-    @Override
-    public int[] getCoordinates() {
-        return new int[0];
-    }
-
-    @Override
-    public void setCoordinates(int i, int j) {
-
+    //private Character character;
+    private BufferedImage image;
+    
+    public CharacterView(BufferedImage img) {
+    	image = img;
     }
 
     public BufferedImage getImage() {
-        return bufferedImage;
+        return image;
     }
 }
