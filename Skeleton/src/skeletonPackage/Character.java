@@ -28,6 +28,7 @@ public abstract class Character {
 	public Character(Field f, Network n) {
 		currentField = f;
 		network = n;
+		characterView = new CharacterView();
 	}
 
 	/**

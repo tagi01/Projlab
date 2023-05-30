@@ -1,7 +1,10 @@
 package skeletonPackage;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -11,6 +14,8 @@ import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
+
+import javax.imageio.ImageIO;
 
 public class Program {
 
@@ -96,12 +101,24 @@ public class Program {
 		
 		for(int i = 0; i < names.length; i+=2) {
 			Plumber p = new Plumber(null, network);
+			BufferedImage img = null;
+			try {
+			    img = ImageIO.read(new File("C:/Projlab/Plumber_" + ((i/2)+1) + ".jpg"));
+			} catch (IOException e) {
+			}
+			p.getView().setImage(img);
 			plumbers.put(names[i], p);
 			game.addCharacter(p);
 		}
 		
 		for(int i = 1; i < names.length; i+=2) {
 			Saboteur s = new Saboteur(null, network);
+			BufferedImage img = null;
+			try {
+			    img = ImageIO.read(new File("C:/Projlab/Saboteur_" + ((i+1)/2) + ".jpg"));
+			} catch (IOException e) {
+			}
+			s.getView().setImage(img);
 			saboteurs.put(names[i], s);
 			game.addCharacter(s);
 		}
