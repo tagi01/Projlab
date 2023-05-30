@@ -77,19 +77,8 @@ public abstract class Field {
 	 * @return boolean, true ha ráléphet, false ha nem
 	 */
 	public boolean acceptCharacter() {
-		//Program.printMethod(this, "acceptCharacter");
 		return true;
 	} // ugye ez csak a Pipe-nal valtozik
-
-	/**
-	 * Publikus metódus, egy Field-et hozzá lehet-e csatlakoztatni a meghívott mezőhöz.
-	 * @param f, Field-ből leszármazó típusú változó, amelyet hozzácsatlakoztatnánk a meghívott mezőhöz
-	 * @return boolean, true ha a paraméter hozzácsatlakoztatható, false ha nem
-	 */
-	public boolean acceptField(Field f) {
-		//Program.printMethod(this, "acceptField");
-		return true;
-	}
 
 	// ADD AND REMOVE
 	/**
@@ -149,7 +138,6 @@ public abstract class Field {
 	 * @param c Character, aki a meghívott mezőre lépne
 	 */
 	public void onField(Character c) {
-		//Program.printMethod(this, "onField");
 		if(currentCharacters.contains(c) == false) { currentCharacters.add(c); }
 	}
 
@@ -158,7 +146,6 @@ public abstract class Field {
 	 * @param c Character, aki a meghívott mezőre lelépne
 	 */
 	public boolean offField(Character c) {
-		//Program.printMethod(this, "offField");
 		if (currentCharacters.contains(c)) { 
 			currentCharacters.remove(c); 
 			return true;

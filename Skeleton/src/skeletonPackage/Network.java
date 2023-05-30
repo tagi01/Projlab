@@ -45,7 +45,6 @@ public class Network {
 	 */
 
 	public void addPump(Pump pump, Pipe currentField) {
-		//Program.printMethod(this, "addPump");
 		Pipe p_new = new Pipe();
 		fields.add(p_new);
 
@@ -71,7 +70,6 @@ public class Network {
 	 * @param f: Field típus
 	 */
 	public void addField(Field f) {
-		//Program.printMethod(this, "addField");
 		fields.add(f);
 	}
 	
@@ -79,7 +77,6 @@ public class Network {
 	 * @param p egy Pump amit a listához adunk
 	 */
 	public void addField(Pump p) {
-		//Program.printMethod(this, "addField");
 		fields.add(p);
 		pumplist.add(p);
 	}
@@ -104,7 +101,6 @@ public class Network {
 	 * Publikus metódus, meghívásakor véletlenszerűen eltör egy pumpát a pályán.
 	 */
 	public void breakPump() {
-		//Program.printMethod(this, "breakPump");
 		if(random) {
 			Random rn = new Random();
 			boolean break_succed = false;

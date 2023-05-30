@@ -8,7 +8,7 @@ public class TestPuncturePipe {
 
     @Test
     public void testBreakPump() {
-        String[] fileload = new String[] { "load", "C:/tests", "test19.txt" };
+        String[] fileload = new String[] { "load", "C:/Tests", "test19.txt" };
         Program.load(fileload);
         assertEquals(true,Program.getPipes().get("pipe_1").getBroken());
     }
