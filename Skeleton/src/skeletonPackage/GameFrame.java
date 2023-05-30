@@ -54,6 +54,7 @@ public class GameFrame extends JFrame{
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         NewGameFrame ngframe = new NewGameFrame();
+                        ngframe.setLocationRelativeTo(null);
                         ngframe.setVisible(true);
                     }
                 });

@@ -159,16 +159,17 @@ public class PlayerPanelView extends JPanel {
                 	fields.add(Program.getKeyFromFieldMaps(f));
                 }
                 JButton button = new JButton("Ok");
+                FieldChooserFrame fcf = new FieldChooserFrame("Hova szeretnel lepni?",fields,button);
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (selectedField != null) {
                             actCharacter.move(selectedField);
                         }
+                        fcf.dispose();
                     }
                 });
-
-        		FieldChooserFrame fcf = new FieldChooserFrame("Hova szeretnel lepni?",fields,button);
+                fcf.setLocationRelativeTo(null);
                 fcf.setVisible(true);
         }});
 
@@ -202,6 +203,7 @@ public class PlayerPanelView extends JPanel {
                 }
 
                 JButton button = new JButton("Ok");
+                FieldChooserFrame fcf = new FieldChooserFrame("Melyik cso legyen a pumpa bemenete?",pipes,button);
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -214,10 +216,10 @@ public class PlayerPanelView extends JPanel {
                             if(pipe != null && in != null)
                                 actCharacter.setPump(in, pipe);
                         }
+                        fcf.dispose();
                     }
                 });
-
-                FieldChooserFrame fcf = new FieldChooserFrame("Melyik cso legyen a pumpa bemenete?",pipes,button);
+                fcf.setLocationRelativeTo(null);
                 fcf.setVisible(true);
             }});
 
@@ -239,6 +241,7 @@ public class PlayerPanelView extends JPanel {
 
 
                 JButton button = new JButton("Ok");
+                FieldChooserFrame fcf = new FieldChooserFrame("Melyik cso legyen a pumpa kimenete?",pipes,button);
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -251,10 +254,10 @@ public class PlayerPanelView extends JPanel {
                             if(pipe != null && out != null)
                                 actCharacter.setPump(out, pipe);
                         }
+                        fcf.dispose();
                     }
                 });
-
-                FieldChooserFrame fcf = new FieldChooserFrame("Melyik cso legyen a pumpa kimenete?",pipes,button);
+                fcf.setLocationRelativeTo(null);
                 fcf.setVisible(true);
             }});
 
@@ -314,8 +317,10 @@ public class PlayerPanelView extends JPanel {
                     pipes.add(Program.getKeyFromFieldMaps(f));
                 }
 
-
                 JButton button = new JButton("Ok");
+
+                FieldChooserFrame fcf = new FieldChooserFrame("Melyik csovet szeretned felvenni?",pipes,button);
+
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -335,10 +340,10 @@ public class PlayerPanelView extends JPanel {
                                 currentPlumber.grabPipe(pipe);
                             }
                         }
+                        fcf.dispose();
                     }
                 });
-
-                FieldChooserFrame fcf = new FieldChooserFrame("Melyik csovet szeretned felvenni?",pipes,button);
+                fcf.setLocationRelativeTo(null);
                 fcf.setVisible(true);
             }});
 
