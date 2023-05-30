@@ -165,6 +165,21 @@ public class GameFrame extends JFrame{
                 @Override
                 public void actionPerformed(ActionEvent e) { // TODO itt a játék létrehozásakor ellenőrizni egyet-s-mást
                     // ellenorizni hogy megvan-e az elso 4 és ha igen akkor van-e 6 teli text
+                	if (p_1.getText().equals("Szerelo_1") || p_2.getText().equals("Szerelo_2") || s_1.getText().equals("Szabotor_1") || s_2.getText().equals("Szabotor_2")) {
+                		return;
+                	} else {
+                		if (p_3.getText().equals("Szerelo_3") && s_3.getText().equals("Szabotor_3")) {
+                			String[] names = new String[] {p_1.getText(), p_2.getText(), s_1.getText(), s_2.getText()};
+                			Program.createGame(names);
+                		} else {
+                			if (p_3.getText().equals("Szerelo_3") || s_3.getText().equals("Szabotor_3")) {
+                				return;
+                			} else {
+                				String[] names = new String[] {p_1.getText(), s_1.getText(), p_2.getText(), s_2.getText(), p_3.getText(), s_3.getText()};
+                    			Program.createGame(names);
+                			}
+                		}
+                	}
                     NewGameFrame.this.dispose(); // meg itt még elmenteni a neveket
                 }
             });
