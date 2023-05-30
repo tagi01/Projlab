@@ -7,7 +7,7 @@ public class CharacterView {
     //private Character character;
     private BufferedImage image;
     
-    public CharacterView(BufferedImage img) {
+    public void setImage(BufferedImage img) {
     	image = img;
     }
 
