@@ -2,9 +2,11 @@ package skeletonPackage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
-public class GameFrame extends JFrame {
+public class GameFrame extends JFrame implements ActionListener{
 
     private int windowWidth = 1280;
     private int windowHeight = 600;
@@ -56,17 +58,10 @@ public class GameFrame extends JFrame {
         felulre.setPreferredSize(new Dimension(windowWidth,50));
 
         // gamePanel
-        JPanel gamePanel = new JPanel(){
-            @Override
-            public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            g.setColor(Color.BLUE);
-            g.fillRect(50,50,50,50);
-                g.fillRect(150,50,50,50);
-            }
-        };
+        gamePanel = new GamePanel(this);
         gamePanel.setBackground(background);
         gamePanel.setPreferredSize(new Dimension(windowWidth-100,windowHeight-200));
+        gamePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         // playerPanel
         JPanel playerPanel = new JPanel();
@@ -101,14 +96,23 @@ public class GameFrame extends JFrame {
         Dimension buttonSize = new Dimension(150,25);
         Dimension bhalf = new Dimension(60,25);
         setButton(javit, buttonSize);
+            javit.addActionListener(this);
         setButton(pumpa_be, bhalf);
+            pumpa_be.addActionListener(this);
         setButton(pumpa_ki, bhalf);
+            pumpa_ki.addActionListener(this);
         setButton(pumpa_fel, bhalf);
+            pumpa_fel.addActionListener(this);
         setButton(pumpa_le, bhalf);
+            pumpa_le.addActionListener(this);
         setButton(cso_kilyukad, buttonSize);
+            cso_kilyukad.addActionListener(this);
         setButton(cso_ragad, buttonSize);
+            cso_ragad.addActionListener(this);
         setButton(cso_csuszos, buttonSize);
+            cso_csuszos.addActionListener(this);
         setButton(passz, buttonSize);
+            passz.addActionListener(this);
 
         buttonPanel.add(javit);
             buttonPanel.add(new JLabel(" "));
@@ -171,6 +175,8 @@ public class GameFrame extends JFrame {
         */
     }
 
+    public GamePanel getGamePanel() {return gamePanel;}
+
     private void setButton(JButton b, Dimension dim) {
         b.setPreferredSize(dim);
         b.setBackground(bcolor);
@@ -182,6 +188,17 @@ public class GameFrame extends JFrame {
         Ppoints = new String("Szerelok: "+game.getPointsOfPlumber());
         Spoints = new String("Szabotorok: "+game.getPointsOfSaboteur());
         gameLabel.setText("                                               "+round+"     "+Ppoints+"     "+Spoints);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource().equals(pumpa_be)) {
+            this.rePaint();
+        }
+
+    }
+    public void rePaint() {
+        Program.rajz();
     }
 
 // ButtonActionListener-ek

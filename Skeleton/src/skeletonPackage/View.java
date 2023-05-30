@@ -9,4 +9,6 @@ public interface View {
 	public void draw(Graphics g);
 	
 	public int[] getCoordinates();
+	
+	public void setCoordinates(int i,int j);
 }

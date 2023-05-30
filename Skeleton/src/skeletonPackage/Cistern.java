@@ -2,13 +2,30 @@ package skeletonPackage;
 
 import java.util.ArrayList;
 
+import javax.swing.JPanel;
+
 /** Cistern osztály */
 public class Cistern extends Field {
 	//*****************************************************************
+	/**
+	 * hasPump gettere
+	 * @return a hasPump értéke
+	 */
 	public boolean getHasPump() {return hasPump;}
+	
+	/**
+	 * hasPipe gettere
+	 * @return a hasPipe értéke
+	 */
 	public boolean getHasPipe() {return hasPipe;}
+	
+	/**
+	 * collectedWater settere
+	 * @param water a beállítandó érték
+	 */
 	public void setCollectedWater(int water) {collectedWater = water;}
 	//*****************************************************************
+	
 	/**
 	 * Privát integer, amely egy játékos köre alatt összegyűjtött víz mennyiségét tárolja
 	 */
@@ -29,6 +46,9 @@ public class Cistern extends Field {
 	 */
 	private boolean hasPipe;
 	
+	private CisternView cisternView;
+	
+	public View getView() {return cisternView;}
 	
 	/**
 	 * Csak a skeletonba kell
@@ -49,8 +69,9 @@ public class Cistern extends Field {
 	/**
 	 * Publikus metódus, a ciszterna konstruktora
 	 */
-	public Cistern() {
+	public Cistern(GamePanel jp) {
 		neighbours = new ArrayList<Pipe>();
+		cisternView = new CisternView(this, jp);
 	}
 	
 	//
@@ -65,7 +86,6 @@ public class Cistern extends Field {
 	 */
 	@Override
 	public boolean addNeighbour(Pipe p) {
-		//Program.printMethod(this, "addNeighbour");
 		if(neighbours.contains(p) || p == null) { 
 			return false; 
 		}
@@ -83,7 +103,6 @@ public class Cistern extends Field {
 	 */
 	@Override
 	public boolean addNeighbour(Field f) {
-		//Program.printMethod(this, "addNeighbour");
 		return false;
 	}
 
@@ -95,7 +114,6 @@ public class Cistern extends Field {
 	 */
 	@Override
 	public boolean removeNeighbour(Field f) {
-		//Program.printMethod(this, "removeNeighbour");
 		return false;
 	}
 
@@ -107,7 +125,6 @@ public class Cistern extends Field {
 	 */
 	@Override
 	public boolean removeNeighbour(Pipe p) {
-		//Program.printMethod(this, "removeNeighbour");
 		if(neighbours.contains(p) && p!=null) {
 			neighbours.remove(p);
 			return true;
@@ -121,7 +138,6 @@ public class Cistern extends Field {
 	 * Publikus metódus, amely a hasPump és hasPipe értékeket True-ra állítja, vagyis most már a ciszternáról fel lehet venni pumpát és csövet egyaránt.
 	 */
 	public void resetItems() {
-		//Program.printMethod(this, "resetItems");
 		hasPump = true;
 		hasPipe = true;
 	}
@@ -131,10 +147,9 @@ public class Cistern extends Field {
 	 * @return Pump a felvett pumpa referenciája (null, ha nincs felvehető pumpa)
 	 */
 	private Pump removePump() {
-		//Program.printMethod(this, "removePump");
 		if(hasPump == true) {
 			hasPump = false;
-			Pump pu = new Pump(null, null);
+			Pump pu = new Pump(null, null, game.getGameFrame().getGamePanel());
 			network.addField(pu);
 			return pu;
 		}
@@ -147,7 +162,6 @@ public class Cistern extends Field {
 	 * @return Pipe, a felvett cső referenciája (null, ha nincs felvehető cső)
 	 */
 	private Pipe removePipe() {
-		//Program.printMethod(this, "removePipe");
 		if(hasPipe == true) {
 			hasPipe = false;
 			Pipe pi = new Pipe();
@@ -161,37 +175,11 @@ public class Cistern extends Field {
 	}
 
 	/**
-	 * Publikus metódus. Meghívásakor megadja, hogy a paraméterben kapott cső hozzáadható-e szomszédnak.
-	 * @param p, egy Pipe referenciája
-	 * @return boolean, true ha hozzácsatlakoztatható, false ha nem
-	 */
-	public boolean acceptField(Pipe p) {
-		//Program.printMethod(this, "acceptField"); 
-		if(neighbours.contains(p) && p!=null) {
-			return false;
-		} 
-		else {
-			return true;
-		}
-	}
-	
-	/**
-	 * Publikus metódus. Meghívásakor megadja, hogy a paraméterben kapott mező hozzáadható-e szomszédnak.
-	 * @param f, egy mező referenciája
-	 * @return boolean, true ha hozzácsatlakoztatható, false ha nem
-	 */
-	public boolean acceptField(Field f) {
-		//Program.printMethod(this, "acceptField");
-		return false;
-	}
-
-	/**
 	 * Publikus metódus, meghívásakor a ciszterna elveszi a hozzá beérkező csövektől az összes vizet és eltárolja.
 	 * Az összegyűjtött vizet odaadja a Game objektumnak és lenullázza az összegyűjtött vizet.
 	 */
 	@Override
 	public void flowWater() {
-		//Program.printMethod(this, "collectWater");
 		for(int i = 0; i < neighbours.size() ; i++) {
 			int mennyit = neighbours.get(i).getWater();
 			collectedWater += neighbours.get(i).takeWater(mennyit);
@@ -209,7 +197,6 @@ public class Cistern extends Field {
 	 */
 	@Override
 	public void interactPlumber(Plumber plumber, Pipe p) {
-		//Program.printMethod(this, "interactPlumber");
 		if(p == null) {
 			if(hasPipe == true) {
 				p = removePipe();
@@ -244,7 +231,6 @@ public class Cistern extends Field {
 	 */
 	@Override
 	public void interactPlumber(Plumber plumber, Pump p) {
-		//Program.printMethod(this, "interactPlumber");
 		if(hasPump == true) {
 			p = removePump();
 			plumber.setInventoryPump(p);
@@ -260,7 +246,6 @@ public class Cistern extends Field {
 	 */
 	@Override
 	public ArrayList<? extends Field> getNeighbours() {
-		//Program.printMethod(this, "getNeighbours");
 		return neighbours;
 	}
 

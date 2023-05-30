@@ -7,13 +7,13 @@ import static org.junit.Assert.assertEquals;
 public class PumpTester {
 
     public void loadfile(String text) {
-        String[] fileload = new String[] { "load", "C:/tests/6.2.16", "" };
+        String[] fileload = new String[] { "load", "C:/Tests/test16", "" };
         fileload[2] = text;
         Program.load(fileload);
     }
 
     public void loadbroken(String text){
-        String[] fileload = new String[] { "load", "C:/tests/6.2.17", "" };
+        String[] fileload = new String[] { "load", "C:/Tests/test17", "" };
         fileload[2] = text;
         Program.load(fileload);
     }
@@ -72,7 +72,7 @@ public class PumpTester {
     /** 8.2.18 Pumpa eltörik */
     @Test
     public void testPumpBreak() {
-        String[] fileload = new String[] { "load", "C:/tests", "6.2.18.txt" };
+        String[] fileload = new String[] { "load", "C:/Tests", "test18.txt" };
         Program.load(fileload);
         assertEquals(false,Program.getPumps().get("pump_1").getBroken());
     }

@@ -43,7 +43,6 @@ public abstract class Character {
 	 * @return Field-ből leszármazó típusú objektum referenciáját, amelyen a karakter áll.
 	 */
 	public Field getField() { 
-		//Program.printMethod(this, "getField");
 		return currentField; 
 	}
 
@@ -54,7 +53,6 @@ public abstract class Character {
 	 * @param f, Field típusú mező, amelyre szerente lépni
 	 */
 	public void move(Field f) {
-		//Program.printMethod(this, "move");
 		ArrayList<Field> field = new ArrayList<Field>(currentField.getNeighbours());
 		if(field.contains(f)) {
 			if(f.acceptCharacter()) {
@@ -82,7 +80,6 @@ public abstract class Character {
 	 * @param to, Pipe típusú mező, amelyik csőbe fog a pumpa pumpálni
 	 */
 	public void setPump(Pipe from , Pipe to) {
-		//Program.printMethod(this, "setPump");
 		currentField.interact(from,to);
 	}
 	

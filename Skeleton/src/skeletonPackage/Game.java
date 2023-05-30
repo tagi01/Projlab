@@ -13,6 +13,9 @@ public class Game {
 // ATTRIBUTUMOK
     /** Egy példányára mutató referencia */
     private static Game instance = null;
+    
+    private static GameFrame gameFrame;
+    
     /** Szerelő csapat pontszáma */
     private int pointsOfPlumber = 0;
     /** Szabotőr csapat pontszáma */
@@ -28,7 +31,7 @@ public class Game {
 
     private Network network;
 
-    private ArrayList<Character> characters = new ArrayList<Character>(); // játék sorrendben a játékosok karakterei
+    private ArrayList<Character> characters; // játék sorrendben a játékosok karakterei
     private int activeCharacter; // aktív karakter sorszáma a listában 0-tól kezdve
 
 
@@ -37,13 +40,14 @@ public class Game {
     private GameView gameView;
 
 // GETTER, SETTER
-
+    public GameFrame getGameFrame() {return gameFrame;}
     public int getPointsOfPlumber() { return pointsOfPlumber; }
     public int getPointsOfSaboteur() { return pointsOfSaboteur; }
     public int getRound() { return round; }
     public Network getNetwork() { return network; }
     public int getActionPoints() { return actionPoints; }
     public Character getActiveCharacter() { return characters.get(activeCharacter); }
+
 
     public int getActiveCharNum() { return activeCharacter; }
 
@@ -91,6 +95,7 @@ public class Game {
         network = new Network();
         characters = new ArrayList<Character>();
         activeCharacter = 0;
+
     }
 
     /** Visszaadja a singelton egyetlen példányát, ha nincs, akkor létrehoz és azt adja vissza */
@@ -99,6 +104,11 @@ public class Game {
             instance = new Game();
         }
         return instance;
+    }
+    
+    public void setGameFrame() {
+        gameFrame = new GameFrame(this);
+        gameFrame.setVisible(true);
     }
 
     /** Reseteli a példányt az alapbeállításokra */
