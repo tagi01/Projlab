@@ -21,10 +21,10 @@ public class CisternView implements View {
 		this.gamePanel=gamePanel;
 	}
 
-	//@Override?
+	@Override
 	public void setCoordinates(int x, int y) {
-		this.x = x;
-		this.y = y;
+		this.x = x - width / 2;
+		this.y = y - height / 2;
 		//gamePanel.paintUpdate(gamePanel.getGraphics());
 	}
 	
