@@ -29,6 +29,11 @@ public class PipeView implements View {
 		return null;
 	}
 
+	@Override
+	public void setCoordinates(int i, int j) {
+
+	}
+
 	/**
 	 * Kirajzolja a csövet
 	 * 

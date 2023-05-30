@@ -131,8 +131,6 @@ public abstract class Field {
 
 	/** Pumpa lehelyezése, felvétele */
 	public void interactPlumber(Plumber p, Pump pump) {}
-	
-	public View getView() {return null;}
 
 	// MOVE ON FIELD
 

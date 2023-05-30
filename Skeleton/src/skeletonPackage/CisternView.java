@@ -34,7 +34,6 @@ public class CisternView implements View {
 
 	@Override
 	public void update() {
-
 		draw(gamePanel.getGraphics());
 	}
 

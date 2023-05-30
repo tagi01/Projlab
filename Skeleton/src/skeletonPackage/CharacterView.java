@@ -22,6 +22,11 @@ public class CharacterView implements View {
         return new int[0];
     }
 
+    @Override
+    public void setCoordinates(int i, int j) {
+
+    }
+
     public BufferedImage getImage() {
         return bufferedImage;
     }

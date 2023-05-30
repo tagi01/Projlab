@@ -107,7 +107,7 @@ public class Game {
     }
     
     public void setGameFrame() {
-        gameFrame = new GameFrame(this);
+        gameFrame = new GameFrame();
         gameFrame.setVisible(true);
     }
 
