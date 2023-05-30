@@ -32,6 +32,10 @@ public class PlayerPanelView extends JPanel {
     private JButton cso_ciszternarol = new JButton("ciszternarol");
     private JButton passz = new JButton("passz");
 
+
+    private Pipe in = null;
+    private Pipe out = null;
+
     private void init() {
 
         // buttonPanel
@@ -154,12 +158,18 @@ public class PlayerPanelView extends JPanel {
         		for (Field f : actCharacter.getField().getNeighbours()) {
                 	fields.add(Program.getKeyFromFieldMaps(f));
                 }
-        		FieldChooserFrame fcf = new FieldChooserFrame("Hova szeretnel lepni?",fields);
+                JButton button = new JButton("Ok");
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (selectedField != null) {
+                            actCharacter.move(selectedField);
+                        }
+                    }
+                });
+
+        		FieldChooserFrame fcf = new FieldChooserFrame("Hova szeretnel lepni?",fields,button);
                 fcf.setVisible(true);
-                
-                if (selectedField != null) {
-                	actCharacter.move(selectedField);
-                }
         }});
 
         javit.addActionListener(new ActionListener() {
@@ -182,7 +192,7 @@ public class PlayerPanelView extends JPanel {
         			if (actCharacter.getField() == p)
         				pump = p;
         		}
-        		Pipe in = null;
+
         		if (pump != null)
         			in = pump.getIn();
                 ArrayList<String> pipes = new ArrayList<>();
@@ -191,16 +201,24 @@ public class PlayerPanelView extends JPanel {
                 		pipes.add(Program.getKeyFromFieldMaps(f));
                 }
 
-                FieldChooserFrame fcf = new FieldChooserFrame("Melyik cso legyen a pumpa bemenete?",pipes);
+                JButton button = new JButton("Ok");
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if(selectedField!=null) {
+                            Pipe pipe = null;
+                            for (Pipe p : Program.getPipes().values()) {
+                                if (selectedField == p)
+                                    pipe = p;
+                            }
+                            if(pipe != null && in != null)
+                                actCharacter.setPump(in, pipe);
+                        }
+                    }
+                });
+
+                FieldChooserFrame fcf = new FieldChooserFrame("Melyik cso legyen a pumpa bemenete?",pipes,button);
                 fcf.setVisible(true);
-                // itt már megvan a selectedField
-        		Pipe pipe = null;
-        		for (Pipe p : Program.getPipes().values()) {
-        			if (selectedField == p)
-        				pipe = p;
-        		}
-        		if(pipe != null && in != null)
-        			actCharacter.setPump(in, pipe);
             }});
 
         pumpa_ki.addActionListener(new ActionListener() { // TODO felugró ablak
@@ -210,7 +228,7 @@ public class PlayerPanelView extends JPanel {
         			if (actCharacter.getField() == p)
         				pump = p;
         		}
-        		Pipe out = null;
+
         		if (pump != null)
         			out = pump.getOut();
                 ArrayList<String> pipes = new ArrayList<>();
@@ -218,16 +236,26 @@ public class PlayerPanelView extends JPanel {
                 	if (f != out)
                 		pipes.add(Program.getKeyFromFieldMaps(f));
                 }
-                FieldChooserFrame fcf = new FieldChooserFrame("Melyik cso legyen a pumpa kimenete?",pipes);
+
+
+                JButton button = new JButton("Ok");
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (selectedField != null) {
+                            Pipe pipe = null;
+                            for (Pipe p : Program.getPipes().values()) {
+                                if (selectedField == p)
+                                    pipe = p;
+                            }
+                            if(pipe != null && out != null)
+                                actCharacter.setPump(out, pipe);
+                        }
+                    }
+                });
+
+                FieldChooserFrame fcf = new FieldChooserFrame("Melyik cso legyen a pumpa kimenete?",pipes,button);
                 fcf.setVisible(true);
-                // itt már megvan a selectedField
-                Pipe pipe = null;
-        		for (Pipe p : Program.getPipes().values()) {
-        			if (selectedField == p)
-        				pipe = p;
-        		}
-        		if(pipe != null && out != null)
-        			actCharacter.setPump(out, pipe);
             }});
 
         pumpa_fel.addActionListener(new ActionListener() {
@@ -286,22 +314,32 @@ public class PlayerPanelView extends JPanel {
                     pipes.add(Program.getKeyFromFieldMaps(f));
                 }
 
-                FieldChooserFrame fcf = new FieldChooserFrame("Melyik csovet szeretned felvenni?",pipes);
+
+                JButton button = new JButton("Ok");
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (selectedField != null) {
+                            // itt már megvan a selectedField
+                            Pipe pipe = null;
+                            for (Pipe p : Program.getPipes().values()) {
+                                if (selectedField == p)
+                                    pipe = p;
+                            }
+                            Plumber currentPlumber = null;
+                            for (Plumber p : Program.getPlumbers().values()) {
+                                if (game.getActiveCharacter() == p)
+                                    currentPlumber = p;
+                            }
+                            if (currentPlumber != null && pipe != null) {
+                                currentPlumber.grabPipe(pipe);
+                            }
+                        }
+                    }
+                });
+
+                FieldChooserFrame fcf = new FieldChooserFrame("Melyik csovet szeretned felvenni?",pipes,button);
                 fcf.setVisible(true);
-                // itt már megvan a selectedField
-                Pipe pipe = null;
-                for (Pipe p : Program.getPipes().values()) {
-                    if (selectedField == p)
-                        pipe = p;
-                }
-                Plumber currentPlumber = null;
-                for (Plumber p : Program.getPlumbers().values()) {
-                    if (game.getActiveCharacter() == p)
-                        currentPlumber = p;
-                }
-                if (currentPlumber != null && pipe != null) {
-                    currentPlumber.grabPipe(pipe);
-                }
             }});
 
         cso_ciszternarol.addActionListener(new ActionListener() {
@@ -345,7 +383,7 @@ public class PlayerPanelView extends JPanel {
         private JPanel buttons;
         private JLabel label;
         private ArrayList<String> fieldList;
-        public FieldChooserFrame(String szoveg, ArrayList<String> fields) {
+        public FieldChooserFrame(String szoveg, ArrayList<String> fields, JButton jbutton) {
             this.setMinimumSize(new Dimension(300,150));
             this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             this.setResizable(true);
@@ -360,13 +398,19 @@ public class PlayerPanelView extends JPanel {
             this.add(felirat,BorderLayout.NORTH);
             this.add(buttons, BorderLayout.CENTER);
 
+            JPanel alul = new JPanel();
+            alul.setLayout(new FlowLayout());
+
             JButton megse = new JButton("Megse");
             megse.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     selectedField = null;
                     FieldChooserFrame.this.dispose();
                 }});
-            this.add(megse, BorderLayout.SOUTH);
+
+            alul.add(jbutton);
+            alul.add(megse);
+            this.add(alul, BorderLayout.SOUTH);
         }
 
         private void createJRadioButtons() {
