@@ -12,7 +12,8 @@ public class SourceView implements View{
 
 	private Source source;
 
-	private int x, y;		// középpont vagy bal felső sarok?
+	//bal felső sarok
+	private int x, y;
 
 	private GamePanel gamePanel;
 
@@ -25,13 +26,14 @@ public class SourceView implements View{
 	public void setCoordinates(int x, int y) {
 		this.x = x;
 		this.y = y;
-		gamePanel.paintUpdate(gamePanel.getGraphics());
+		//gamePanel.paintUpdate(gamePanel.getGraphics());
 
 	}
 
+	// középpontot ad vissza
 	@Override
-	public int[] getCoordinates() {		// középpontot kéne visszaadnia
-		return new int[]{x,y};
+	public int[] getCoordinates() {
+		return new int[]{x + width / 2, y + height / 2};
 	}
 
 	@Override

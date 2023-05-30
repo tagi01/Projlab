@@ -34,6 +34,12 @@ public class Network {
 	 * randomsag lekerdezése
 	 */
 	public boolean getRandom() {return random;}
+	
+	/**
+	 * A vízhálózat mezőit adja vissza
+	 * @return a mezők
+	 */
+	public ArrayList<Field> getFields() { return fields; }
 
 		/**
 	 * Az adott csőre lerakja a pumpát, beállítja az új mezők szomszédságait, létrehozza a plusz csövet, ami az új pumpa és az egyik régi pumpa közt lesz.
