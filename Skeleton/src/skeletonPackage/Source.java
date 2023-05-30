@@ -76,6 +76,7 @@ public class Source extends Field {
 			if(removed) {
 				pipe.removeNeighbour(this);
 				p.setInventoryPipe(pipe);
+				pipe.getView().update();
 				game.removeActionPoints();
 			}
 			
@@ -84,6 +85,7 @@ public class Source extends Field {
 			boolean added = addNeighbour(pipe);
 			if(added) {
 				pipe.addNeighbour(this);
+				pipe.getView().update();
 				p.setInventoryPipe(null);
 				game.removeActionPoints();
 			}

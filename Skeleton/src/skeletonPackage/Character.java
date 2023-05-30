@@ -78,6 +78,7 @@ public abstract class Character {
 		else {
 			System.out.println("Nem szomszedos a valasztott mezo, igy nem tudsz ralepni.");
 		}
+		
 	}
 
 	/**

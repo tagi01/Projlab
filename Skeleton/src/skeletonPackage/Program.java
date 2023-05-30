@@ -814,6 +814,9 @@ public class Program {
 			for(Map.Entry<String, Pump> entry: pumps.entrySet()) {
 				entry.getValue().getView().update();
 			}
+			for(Map.Entry<String, Pipe> entry: pipes.entrySet()) {
+				entry.getValue().getView().update();
+			}
 		}
 	}
 	

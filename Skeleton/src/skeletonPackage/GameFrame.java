@@ -88,11 +88,11 @@ public class GameFrame extends JFrame{
 
         updateGameLabel();
 
-        actCharacter = game.getActiveCharacter();
+        
 
         init();
     }
-
+    public void setGameFrameActivecharacter(Character c){actCharacter = c;}
     public GamePanel getGamePanel() {return gamePanel;}
     
     public Game getGame() { return game; }
@@ -170,13 +170,13 @@ public class GameFrame extends JFrame{
                 	} else {
                 		if (p_3.getText().equals("Szerelo_3") && s_3.getText().equals("Szabotor_3")) {
                 			String[] names = new String[] {p_1.getText(), p_2.getText(), s_1.getText(), s_2.getText()};
-                			Program.createGame(names);
+                			//Program.createGame(names);
                 		} else {
                 			if (p_3.getText().equals("Szerelo_3") || s_3.getText().equals("Szabotor_3")) {
                 				return;
                 			} else {
                 				String[] names = new String[] {p_1.getText(), s_1.getText(), p_2.getText(), s_2.getText(), p_3.getText(), s_3.getText()};
-                    			Program.createGame(names);
+                    			//Program.createGame(names);
                 			}
                 		}
                 	}

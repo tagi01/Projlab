@@ -42,3 +42,5 @@ set-p 1 pump_3
 set-p 2 pump_4
 set-s 1 pipe_1
 set-s 2 pump_6
+set-active Plumber_1
+start

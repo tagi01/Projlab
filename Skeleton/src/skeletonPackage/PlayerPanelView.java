@@ -154,12 +154,20 @@ public class PlayerPanelView extends JPanel {
         		for (Field f : actCharacter.getField().getNeighbours()) {
                 	fields.add(Program.getKeyFromFieldMaps(f));
                 }
-        		FieldChooserFrame fcf = new FieldChooserFrame("Hova szeretnel lepni?",fields);
+        		JButton ok = new JButton("OK");
+        		FieldChooserFrame fcf = new FieldChooserFrame("Hova szeretnel lepni?", fields);
+        		fcf.add(ok, BorderLayout.SOUTH);
                 fcf.setVisible(true);
                 
-                if (selectedField != null) {
-                	actCharacter.move(selectedField);
-                }
+                
+                ok.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                    	if (selectedField != null) {
+                        	actCharacter.move(selectedField);
+        		    	}
+                        fcf.dispose();
+                    }});
+                
         }});
 
         javit.addActionListener(new ActionListener() {
@@ -361,12 +369,13 @@ public class PlayerPanelView extends JPanel {
             this.add(buttons, BorderLayout.CENTER);
 
             JButton megse = new JButton("Megse");
+
             megse.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     selectedField = null;
                     FieldChooserFrame.this.dispose();
                 }});
-            this.add(megse, BorderLayout.SOUTH);
+            this.add(megse, BorderLayout.NORTH);
         }
 
         private void createJRadioButtons() {

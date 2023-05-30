@@ -152,6 +152,7 @@ public abstract class Field {
 	public boolean offField(Character c) {
 		if (currentCharacters.contains(c)) { 
 			currentCharacters.remove(c); 
+			this.getView().update();
 			return true;
 		}
 		return false;
