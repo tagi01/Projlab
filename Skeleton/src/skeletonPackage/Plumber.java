@@ -1,5 +1,7 @@
 package skeletonPackage;
 
+import java.awt.image.BufferedImage;
+
 /** Plumber osztály */
 public class Plumber extends Character {
 	/**
@@ -21,8 +23,8 @@ public class Plumber extends Character {
 	 * @param f, Field-ből származót típusú mező, amelyen a karakter áll
 	 * @param n, Network, amely hálózatban a karakter és a mező van
 	 */
-	public Plumber(Field f, Network n) {
-		super(f, n);
+	public Plumber(Field f, Network n, BufferedImage im) {
+		super(f, n, im);
 		inventoryPipe = null;
 		pipeEnds = 0;
 		inventoryPump = null;

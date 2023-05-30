@@ -1,5 +1,7 @@
 package skeletonPackage;
 
+import java.awt.image.BufferedImage;
+
 /** Saboteur osztály */
 public class Saboteur extends Character {
 
@@ -10,8 +12,8 @@ public class Saboteur extends Character {
 	 * @param f, Field-ből származót típusú mező, amelyen a karakter áll
 	 * @param n, Network, amely hálózatban a karakter és a mező van
 	 */
-	public Saboteur(Field f, Network n) {
-		super(f, n);
+	public Saboteur(Field f, Network n, BufferedImage im) {
+		super(f, n, im);
 	}
 
 	/**

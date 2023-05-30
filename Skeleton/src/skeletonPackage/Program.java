@@ -53,6 +53,24 @@ public class Program {
 	public static Map<String, Saboteur> getSaboteurs() { return saboteurs; }
 	
 	public static Map<String, Plumber> getPlumbers() { return plumbers; }
+	
+	private static ArrayList<BufferedImage> imageList;
+
+	private static void initImageList() {
+		imageList=new ArrayList<BufferedImage>();
+		String directoryPath = "C:\\Users\\Soma\\git\\Projlab\\Skeleton\\src\\images";
+		File directory = new File(directoryPath);
+		File[] files = directory.listFiles();
+		
+		for (File file : files) {
+		    try {
+		        BufferedImage image = ImageIO.read(file);
+		        imageList.add(image);
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+		}
+	}
 
 
 	/** Tárolja hogy elkezdődött-e már a játék */
@@ -62,6 +80,7 @@ public class Program {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		initImageList();
 		System.out.println("-----------------------------------------\n"
 		         + "|   ___    ___    ____  _______  ____   |\n"
 		         + "|  |   |  |   |  |    |    |    |    |  |\n"
@@ -100,7 +119,7 @@ public class Program {
 		plumbers.clear();
 		
 		for(int i = 0; i < names.length; i+=2) {
-			Plumber p = new Plumber(null, network);
+			Plumber p = new Plumber(null, network, imageList.get(i));
 			BufferedImage img = null;
 			try {
 			    img = ImageIO.read(new File("C:/Projlab/Plumber_" + ((i/2)+1) + ".jpg"));
@@ -112,7 +131,7 @@ public class Program {
 		}
 		
 		for(int i = 1; i < names.length; i+=2) {
-			Saboteur s = new Saboteur(null, network);
+			Saboteur s = new Saboteur(null, network, imageList.get(+3));
 			BufferedImage img = null;
 			try {
 			    img = ImageIO.read(new File("C:/Projlab/Saboteur_" + ((i+1)/2) + ".jpg"));
@@ -825,10 +844,10 @@ public class Program {
 		started = false;
 
 		for(int i = 0; i < charNum; i++) {
-			Plumber p = new Plumber(null, network);
+			Plumber p = new Plumber(null, network, imageList.get(i));
 			plumbers.put("Plumber_" + (i+1), p);
 			game.addCharacter(p);
-			Saboteur s = new Saboteur(null, network);
+			Saboteur s = new Saboteur(null, network, imageList.get(i+3));
 			saboteurs.put("Saboteur_" + (i+1), s);
 			game.addCharacter(s);
 		}
@@ -879,6 +898,9 @@ public class Program {
 				entry.getValue().getView().update();
 			}
 			for(Map.Entry<String, Pump> entry: pumps.entrySet()) {
+				entry.getValue().getView().update();
+			}
+			for(Map.Entry<String, Pipe> entry: pipes.entrySet()) {
 				entry.getValue().getView().update();
 			}
 		}

@@ -43,7 +43,12 @@ public class GameFrame extends JFrame{
         // gamePanel
         gamePanel.setBackground(background);
         gamePanel.setPreferredSize(new Dimension(windowWidth-100,windowHeight-200));
+
+        // playerPanel
+        JPanel playerPanel = new PlayerPanelView();
+
         gamePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
 
         // ELEMENTS
         // felulre
@@ -82,9 +87,11 @@ public class GameFrame extends JFrame{
         gamePanel = new GamePanel(this);
         playerPanel = new PlayerPanelView();
 
+
         Game.getInstance().setPlayerPanelView(playerPanel);
 
         updateGameLabel();
+
 
         init();
     }
@@ -101,11 +108,13 @@ public class GameFrame extends JFrame{
         gameLabel.setText("                                               "+round+"     "+Ppoints+"     "+Spoints);
     }
 
+
     public void gameOver(String kimenetel) {
         JOptionPane.showMessageDialog(GameFrame.this, kimenetel, "Game Over", JOptionPane.PLAIN_MESSAGE);
     }
 
 // felugró ablak, új játék indítása
+
     private class NewGameFrame extends JFrame {
 
         private JLabel error = new JLabel(" ");
@@ -174,14 +183,16 @@ public class GameFrame extends JFrame{
                     } else {
                 		if (p_3.getText().equals("") && s_3.getText().equals("")) {
                 			String[] names = new String[] {p_1.getText(), p_2.getText(), s_1.getText(), s_2.getText()};
-                			Program.createGame(names);
+                			//Program.createGame(names);
                 		} else {
                 			if (p_3.getText().equals("") || s_3.getText().equals("")) {
                                 error.setText("Nincs eleg jatekos megadva !");
                 				return;
                 			} else {
                 				String[] names = new String[] {p_1.getText(), s_1.getText(), p_2.getText(), s_2.getText(), p_3.getText(), s_3.getText()};
+
                     		    Program.createGame(names);
+
                 			}
                 		}
                 	}

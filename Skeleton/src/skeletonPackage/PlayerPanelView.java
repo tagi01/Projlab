@@ -407,6 +407,7 @@ public class PlayerPanelView extends JPanel {
             alul.setLayout(new FlowLayout());
 
             JButton megse = new JButton("Megse");
+
             megse.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     selectedField = null;
