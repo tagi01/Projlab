@@ -148,7 +148,19 @@ public class PlayerPanelView extends JPanel {
     }
 
     private void addActionListeners() { // TODO ActionListenerek normális megcsinálása
-        mozog.addActionListener(null); // TODO lepes actionListener-je
+        mozog.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		ArrayList<String> fields = new ArrayList<>();
+        		for (Field f : actCharacter.getField().getNeighbours()) {
+                	fields.add(Program.getKeyFromFieldMaps(f));
+                }
+        		FieldChooserFrame fcf = new FieldChooserFrame("Hova szeretnel lepni?",fields);
+                fcf.setVisible(true);
+                
+                if (selectedField != null) {
+                	actCharacter.move(selectedField);
+                }
+        }});
 
         javit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
