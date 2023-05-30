@@ -2,6 +2,8 @@ package skeletonPackage;
 
 import java.util.*;
 
+import javax.swing.JPanel;
+
 /** Source osztály */
 public class Source extends Field {
 
@@ -9,13 +11,20 @@ public class Source extends Field {
 	 * Privát, a forrás szomszédos csöveit tároló lista.
 	 */
 	private ArrayList<Pipe> neighbours;
+	private SourceView sourceView;
 
 	/**
 	 * Publikus metódus, Source paraméter nélküli konstruktora.
 	 */
-	public Source() {
+	public Source(GamePanel jp) {
+		super();
 		neighbours=new ArrayList<Pipe>();
+		sourceView = new SourceView(this, jp);
 	}
+	
+	/*Getterek*/
+	public View getView() {return sourceView;}
+
 
 	/**
 	 * Publikus metódus, meghívásakor a paraméterben kapott csövet a szomszédsági listához adja.

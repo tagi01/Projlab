@@ -2,6 +2,8 @@ package skeletonPackage;
 
 import java.util.ArrayList;
 
+import javax.swing.JPanel;
+
 /** Cistern osztály */
 public class Cistern extends Field {
 	//*****************************************************************
@@ -29,6 +31,9 @@ public class Cistern extends Field {
 	 */
 	private boolean hasPipe;
 	
+	private CisternView cisternView;
+	
+	public View getView() {return cisternView;}
 	
 	/**
 	 * Csak a skeletonba kell
@@ -49,8 +54,9 @@ public class Cistern extends Field {
 	/**
 	 * Publikus metódus, a ciszterna konstruktora
 	 */
-	public Cistern() {
+	public Cistern(GamePanel jp) {
 		neighbours = new ArrayList<Pipe>();
+		cisternView = new CisternView(this, jp);
 	}
 	
 	//
@@ -134,7 +140,7 @@ public class Cistern extends Field {
 		//Program.printMethod(this, "removePump");
 		if(hasPump == true) {
 			hasPump = false;
-			Pump pu = new Pump(null, null);
+			Pump pu = new Pump(null, null, game.getGameFrame().getGamePanel());
 			network.addField(pu);
 			return pu;
 		}

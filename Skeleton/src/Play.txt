@@ -1,0 +1,19 @@
+create network 3 3 3 3 2 
+set-pipe 1 -n [ pump_1 pump_2 ]
+set-pipe 2 -n [ source_1 pump_1 ]
+set-pipe 3 -n [ cistern_1 pump_2 ]
+set-pump 3 -inv Plumber_1 
+setCoordinate pump_1 250 150
+setCoordinate pump_2 350 100
+setCoordinate pump_3 300 150
+setCoordinate source_1 100 50
+setCoordinate source_2 200 50
+setCoordinate source_3 300 50
+setCoordinate cistern_1 200 350
+setCoordinate cistern_2 300 350
+setCoordinate cistern_3 250 350
+set-p 1 pipe_1 
+set-p 2 pump_1 
+set-s 1 pump_1 
+set-s 2 pump_1 
+set-active Plumber_1

@@ -35,7 +35,7 @@ public class Network {
 	 */
 	public boolean getRandom() {return random;}
 
-	public ArrayList<Field> getPipes() {return pipes; } // FIXME pipes ArrayList
+	//public ArrayList<Field> getPipes() {return pipes; } // FIXME pipes ArrayList
 
 
 	/**

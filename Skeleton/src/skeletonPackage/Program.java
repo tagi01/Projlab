@@ -65,7 +65,7 @@ public class Program {
 		         + "|  |      | \\    |____|    |    |____|  |\n"
 		         + "-----------------------------------------\n");
 
-		initializeGame();
+		//initializeGame();
 		
 		input = new Scanner(System.in);
 		String input_temp;
@@ -88,6 +88,12 @@ public class Program {
 	public static void readCommand(String line) {
 		String[] splitted = line.split("\\s+");
 		switch(splitted[0]) {
+		case "setCoordinate":
+			setCord(splitted);
+			break;
+		case "rajz":
+			rajz();
+			break;
 		case "create":
 			if(splitted.length > 1 && splitted[1].equals("network")) {
 				createNetwork(Arrays.copyOfRange(splitted, 2, splitted.length));	
@@ -206,6 +212,7 @@ public class Program {
 			break;
 		case "start":
 			started = true;
+			rajz();
 			System.out.println("Sikeres parancs.");
 			break;
 		case "load":
@@ -661,6 +668,7 @@ public class Program {
 		} catch (FileNotFoundException e) {
 			System.out.println("Betoltes sikertelen. Nincs ilyen fajl.");
 		}
+		System.out.println("Sikeres volt a betoltes.");
 	}
 	
 	/**
@@ -725,34 +733,9 @@ public class Program {
 		plumbers.clear();
 		started = false;
 		
-		for(int i = 0; i < pipeNum; i++) {
-			Pipe p = new Pipe();
-			p.setGame(game);
-			p.setNetwork(network);
-			pipes.put("pipe_" + (i+1), p);
-			network.addField(p);
-		}
-		for(int i = 0; i < pumpNum; i++) {
-			Pump p = new Pump();
-			p.setGame(game);
-			p.setNetwork(network);
-			pumps.put("pump_" + (i+1), p);
-			network.addField(p);
-		}
-		for(int i = 0; i < sourceNum; i++) {
-			Source s = new Source();
-			s.setGame(game);
-			s.setNetwork(network);
-			sources.put("source_" + (i+1), s);
-			network.addField(s);
-		}
-		for(int i = 0; i < cisternNum; i++) {
-			Cistern c = new Cistern();
-			c.setGame(game);
-			c.setNetwork(network);
-			cisterns.put("cistern_" + (i+1), c);
-			network.addField(c);
-		}
+		
+		
+
 		for(int i = 0; i < charNum; i++) {
 			Plumber p = new Plumber(null, network);
 			plumbers.put("Plumber_" + (i+1), p);
@@ -762,11 +745,81 @@ public class Program {
 			game.addCharacter(s);
 		}
 
-		/*GameFrame gf = new GameFrame(); // FIXME itt a frame létrehozása
-		gf.setVisible(true);*/
+		game.setGameFrame();
+		
+		for(int i = 0; i < sourceNum; i++) {
+			Source s = new Source(game.getGameFrame().getGamePanel());
+			s.getView();
+			s.setGame(game);
+			s.setNetwork(network);
+			sources.put("source_" + (i+1), s);
+			network.addField(s);
+		}
+		
+		for(int i = 0; i < pipeNum; i++) {
+			Pipe p = new Pipe();
+			p.setGame(game);
+			p.setNetwork(network);
+			pipes.put("pipe_" + (i+1), p);
+			network.addField(p);
+		}
+		
+		for(int i = 0; i < pumpNum; i++) {
+			Pump p = new Pump(game.getGameFrame().getGamePanel());
+			p.setGame(game);
+			p.setNetwork(network);
+			pumps.put("pump_" + (i+1), p);
+			network.addField(p);
+		}
+		
+		for(int i = 0; i < cisternNum; i++) {
+			Cistern c = new Cistern(game.getGameFrame().getGamePanel());
+			c.setGame(game);
+			c.setNetwork(network);
+			cisterns.put("cistern_" + (i+1), c);
+			network.addField(c);
+		}
 
 		System.out.println("Beallitva.");
+		
 	}
+	
+	public static void rajz() {
+		if(sources.size()!=0 && cisterns.size()!=0 && pumps.size()!=0) {
+			for(Map.Entry<String, Source> entry: sources.entrySet()) {
+					entry.getValue().getView().update();
+				}
+			for(Map.Entry<String, Cistern> entry: cisterns.entrySet()) {
+				entry.getValue().getView().update();
+			}
+			for(Map.Entry<String, Pump> entry: pumps.entrySet()) {
+				entry.getValue().getView().update();
+			}
+		}
+	}
+	
+	public static void setCord(String[] command) {
+		String value = command[1];
+		for(Map.Entry<String, Pump> entry: pumps.entrySet()) {
+			if(entry.getKey().equals(value)) {
+				entry.getValue().getView().setCoordinates(Integer.parseInt(command[2]), Integer.parseInt(command[3]));
+				System.out.println("Beallitva.");
+			}
+		}
+		for(Map.Entry<String, Source> entry: sources.entrySet()) {
+			if(entry.getKey().equals(value)) {
+				entry.getValue().getView().setCoordinates(Integer.parseInt(command[2]), Integer.parseInt(command[3]));
+				System.out.println("Beallitva.");
+			}
+		}
+		for(Map.Entry<String, Cistern> entry: cisterns.entrySet()) {
+			if(entry.getKey().equals(value)) {
+				entry.getValue().getView().setCoordinates(Integer.parseInt(command[2]), Integer.parseInt(command[3]));
+				System.out.println("Beallitva.");
+			}
+		}
+	}
+
 	
 	/**
 	 * Visszaadja az átadott kulcsú Field-et a Map-ekből
@@ -1279,7 +1332,7 @@ public class Program {
 	 */
 	public static void setPump(String[] command) {
 
-		Pump p = new Pump();
+		Pump p = new Pump(game.getGameFrame().getGamePanel());
 
 		try {
 			if (command.length%2==0 && command.length>=3 && command.length <= 9) { // ha jo hosszusagu a command
@@ -1445,7 +1498,7 @@ public class Program {
 		if(standOnCistern && activeIsPlumber) {
 			Plumber temp_plumber = plumbers.get(plumber_key);
 			if(cisterns.get(cistern_key).getHasPump() && temp_plumber.getInventoryPump() == null) {
-				game.getActiveCharacter().getField().interactPlumber(temp_plumber, new Pump());
+				game.getActiveCharacter().getField().interactPlumber(temp_plumber, new Pump(game.getGameFrame().getGamePanel()));
 				Pump p = temp_plumber.getInventoryPump();
 				int i=pumps.size();
 				i++;
@@ -1541,7 +1594,8 @@ public class Program {
 		// TODO koordináták beállítása
 		readCommand("start");
 		
-		GameFrame gf = new GameFrame(); // FIXME itt a frame létrehozása
-		gf.setVisible(true);
+		/*GameFrame gf = new GameFrame(); // FIXME itt a frame létrehozása
+		gf.setVisible(true);*/
+		
 	}
 }

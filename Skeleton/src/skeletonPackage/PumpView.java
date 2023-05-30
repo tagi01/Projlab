@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import javax.swing.JPanel;
+
 // TODO dokumentálás
 public class PumpView implements View {
 	// FIXME itt legyenek?
@@ -21,8 +23,9 @@ public class PumpView implements View {
 	
 	private GamePanel gamePanel;	// TODO ez jó?
 	
-	public PumpView(Pump p) {
+	public PumpView(Pump p, GamePanel jp) {
 		pump = p;
+		gamePanel = jp;
 		//x,y
 	}
 	
@@ -30,6 +33,7 @@ public class PumpView implements View {
 	public void setCoordinates(int x, int y) {
 		this.x = x;
 		this.y = y;
+		gamePanel.paintUpdate(gamePanel.getGraphics());
 	}
 	
 	@Override
@@ -41,7 +45,8 @@ public class PumpView implements View {
 	
 	@Override
 	public void update() {
-		gamePanel.repaint();
+
+		draw(gamePanel.getGraphics());
 	}
 	
 	@Override
@@ -83,7 +88,7 @@ public class PumpView implements View {
 		ArrayList<Character> currentCharacters = pump.getCurrentCharacter();
 		//int charNum = currentCharacters.size();	- körbe lehetne rakni őket
 		for(Character c : currentCharacters) {
-			///*Character*/View view = c.getView();
+			///*Character*//*View view = c.getView();
 			//BufferedImage image = view.getImage();
 			//g.drawImage(image, x+width/2, y+width/2, null);		// TODO JPanel null helyére? - gamePanel
 		}
@@ -128,4 +133,5 @@ public class PumpView implements View {
     	}
     	return new int[]{(int)pipeX - pipeEndWidth/2, (int)pipeY - pipeEndWidth/2};
 	}
+	
 }
