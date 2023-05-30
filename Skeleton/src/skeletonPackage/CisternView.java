@@ -5,8 +5,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
-
 public class CisternView implements View {
 	private static final int width = 40;
 	private static final int height = 40;

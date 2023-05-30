@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 
 // TODO dokumentálás
 public class PumpView implements View {
-	// FIXME itt legyenek?
 	private static final int width = 40;  // ?
 	private static final int pipeEndWidth = 14;		// ?
 	
@@ -28,8 +27,8 @@ public class PumpView implements View {
 	
 	//@Override?
 	public void setCoordinates(int x, int y) {
-		this.x = x;
-		this.y = y;
+		this.x = x - width / 2;
+		this.y = y - width / 2;
 		//gamePanel.paintUpdate(gamePanel.getGraphics());
 	}
 	
@@ -40,8 +39,6 @@ public class PumpView implements View {
 	public int[] getCoordinates() {
 		return new int[]{x + width / 2, y + width / 2};
 	}
-	
-	//public void setGamePanel(GamePanel g) { gamePanel = g; }	// TODO meghívni
 	
 	@Override
 	public void update() {
@@ -79,7 +76,7 @@ public class PumpView implements View {
 		for(Character c : currentCharacters) {
 			CharacterView view = c.getView();
 			BufferedImage image = view.getImage();
-			g.drawImage(image, x+width/2, y+width/2, null);		// TODO JPanel null helyére? - gamePanel
+			g.drawImage(image, x+width/2, y+width/2, gamePanel);
 		}
 	}
 	

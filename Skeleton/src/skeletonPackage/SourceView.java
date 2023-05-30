@@ -5,8 +5,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import javax.swing.JPanel;
-
 public class SourceView implements View{
 
 	private static final int width = 40;

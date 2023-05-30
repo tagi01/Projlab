@@ -162,26 +162,56 @@ public class PlayerPanelView extends JPanel {
 
         pumpa_be.addActionListener(new ActionListener() { // TODO felugró ablak
             public void actionPerformed(ActionEvent e) {
+            	Pump pump = null;
+        		for (Pump p : Program.getPumps().values()) {
+        			if (actCharacter.getField() == p)
+        				pump = p;
+        		}
+        		Pipe in = null;
+        		if (pump != null)
+        			in = pump.getIn();
                 ArrayList<String> pipes = new ArrayList<>();
-                // lehetséges mezők kikeresése
-                // getValueFromKey or something
-
+                for (Field f : actCharacter.getField().getNeighbours()) {
+                	if (f != in)
+                		pipes.add(Program.getKeyFromFieldMaps(f));
+                }
                 FieldChooserFrame fcf = new FieldChooserFrame("",pipes);
                 fcf.setVisible(true);
                 // itt már megvan a selectedField
-                // TODO pumpa bemenetének beállítása selectedField-re
+        		Pipe pipe = null;
+        		for (Pipe p : Program.getPipes().values()) {
+        			if (selectedField == p)
+        				pipe = p;
+        		}
+        		if(pipe != null && in != null)
+        			actCharacter.setPump(in, pipe);
             }});
 
         pumpa_ki.addActionListener(new ActionListener() { // TODO felugró ablak
             public void actionPerformed(ActionEvent e) {
+            	Pump pump = null;
+        		for (Pump p : Program.getPumps().values()) {
+        			if (actCharacter.getField() == p)
+        				pump = p;
+        		}
+        		Pipe out = null;
+        		if (pump != null)
+        			out = pump.getOut();
                 ArrayList<String> pipes = new ArrayList<>();
-                // lehetséges mezők kikeresése
-                // getValueFromKey or something
-
+                for (Field f : actCharacter.getField().getNeighbours()) {
+                	if (f != out)
+                		pipes.add(Program.getKeyFromFieldMaps(f));
+                }
                 FieldChooserFrame fcf = new FieldChooserFrame("",pipes);
                 fcf.setVisible(true);
                 // itt már megvan a selectedField
-                // TODO pumpa kimenetének beállítása selectedField-re
+                Pipe pipe = null;
+        		for (Pipe p : Program.getPipes().values()) {
+        			if (selectedField == p)
+        				pipe = p;
+        		}
+        		if(pipe != null && out != null)
+        			actCharacter.setPump(out, pipe);
             }});
 
         pumpa_fel.addActionListener(new ActionListener() {
@@ -241,13 +271,26 @@ public class PlayerPanelView extends JPanel {
         cso_felvetel.addActionListener(new ActionListener() { // TODO felugró ablak
             public void actionPerformed(ActionEvent e) {
                 ArrayList<String> pipes = new ArrayList<>();
-                // lehetséges mezők kikeresése
-                // getValueFromKey or something
+                for (Field f : actCharacter.getField().getNeighbours()) {
+                	pipes.add(Program.getKeyFromFieldMaps(f));
+                }
 
                 FieldChooserFrame fcf = new FieldChooserFrame("",pipes);
                 fcf.setVisible(true);
                 // itt már megvan a selectedField
-                // TODO selectedField cső felvétele a pumpán
+                Pipe pipe = null;
+        		for (Pipe p : Program.getPipes().values()) {
+        			if (selectedField == p)
+        				pipe = p;
+        		}
+                Plumber currentPlumber = null;
+        		for (Plumber p : Program.getPlumbers().values()) {
+        			if (game.getActiveCharacter() == p)
+        				currentPlumber = p;
+        		}
+        		if (currentPlumber != null && pipe != null) {
+        			currentPlumber.grabPipe(pipe);
+        		}
             }});
         
         cso_ciszternarol.addActionListener(new ActionListener() {

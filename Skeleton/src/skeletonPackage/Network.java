@@ -67,6 +67,8 @@ public class Network {
 		
 		pump.setOut(currentField);
 		
+		int[] pumpCoordinates = currentField.getView().getCoordinates();		// TODO ellenőrizni
+		pump.getView().setCoordinates(pumpCoordinates[0], pumpCoordinates[1]);
 	}
 	
 	/**A field listához hozzáad egy új elemet
