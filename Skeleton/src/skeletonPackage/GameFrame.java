@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class GameFrame extends JFrame implements ActionListener{
+public class GameFrame extends JFrame{
 
     private int windowWidth = 1280;
     private int windowHeight = 600;
@@ -96,23 +96,50 @@ public class GameFrame extends JFrame implements ActionListener{
         Dimension buttonSize = new Dimension(150,25);
         Dimension bhalf = new Dimension(60,25);
         setButton(javit, buttonSize);
-            javit.addActionListener(this);
+        javit.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		//actCharacter.repair();
+        	}});
         setButton(pumpa_be, bhalf);
-            pumpa_be.addActionListener(this);
+        pumpa_be.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		
+        	}});
         setButton(pumpa_ki, bhalf);
-            pumpa_ki.addActionListener(this);
+        pumpa_ki.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		
+        	}});
         setButton(pumpa_fel, bhalf);
-            pumpa_fel.addActionListener(this);
+        pumpa_fel.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		//actCharacter.getPummp();
+        	}});
         setButton(pumpa_le, bhalf);
-            pumpa_le.addActionListener(this);
+        pumpa_le.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		//actCharacter.placePump();
+        	}});
         setButton(cso_kilyukad, buttonSize);
-            cso_kilyukad.addActionListener(this);
+        cso_kilyukad.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		actCharacter.puncturePipe();
+        	}});
         setButton(cso_ragad, buttonSize);
-            cso_ragad.addActionListener(this);
+        cso_ragad.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		actCharacter.turnPipeSticky();
+        	}});
         setButton(cso_csuszos, buttonSize);
-            cso_csuszos.addActionListener(this);
+        cso_csuszos.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		//actCharacter.turnPipeSlippery();
+        	}});
         setButton(passz, buttonSize);
-            passz.addActionListener(this);
+        passz.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		game.nextCharacter();
+        	}});
 
         buttonPanel.add(javit);
             buttonPanel.add(new JLabel(" "));
@@ -190,13 +217,13 @@ public class GameFrame extends JFrame implements ActionListener{
         gameLabel.setText("                                               "+round+"     "+Ppoints+"     "+Spoints);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource().equals(pumpa_be)) {
-            this.rePaint();
-        }
+    //@Override
+    //public void actionPerformed(ActionEvent e) {
+        //if(e.getSource().equals(pumpa_be)) {
+            //this.rePaint();
+        //}
 
-    }
+    //}
     public void rePaint() {
         Program.rajz();
     }
