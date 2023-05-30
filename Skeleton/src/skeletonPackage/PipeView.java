@@ -46,8 +46,8 @@ public class PipeView implements View {
 	/**
 	 * Beállítja a koordinátákat
 	 * 
-	 * @param x  a beállítandó x koordináta
-	 * @param ya beállítandó y koordináta
+	 * @param x a beállítandó x koordináta
+	 * @param y a beállítandó y koordináta
 	 */
 	public void setCoordinates(int x, int y) {
 		this.x = x;

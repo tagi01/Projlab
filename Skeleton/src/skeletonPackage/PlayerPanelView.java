@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class PlayerPanelView extends JPanel {
     private Game game;
@@ -14,6 +15,7 @@ public class PlayerPanelView extends JPanel {
     private final Color bcolor = new Color(242,242,242);
 
     private JPanel buttonPanel;
+    private Field selectedField;
 
     // buttonPanel
     private InventoryPanel inv_1, inv_2, inv_3; // cső egyik- másik vége, pumpa
@@ -140,7 +142,11 @@ public class PlayerPanelView extends JPanel {
         b.setBackground(bcolor);
     }
 
-    private void addActionListeners() {
+
+    // pumpán állva cső felvétele
+    // move
+    // pumpa átállítása
+    private void addActionListeners() { // TODO ActionListenerek normális megcsinálása
         javit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //actCharacter.repair();
@@ -154,19 +160,33 @@ public class PlayerPanelView extends JPanel {
         		}
             }});
 
-        pumpa_be.addActionListener(new ActionListener() {
+        pumpa_be.addActionListener(new ActionListener() { // TODO felugró ablak
             public void actionPerformed(ActionEvent e) {
+                ArrayList<String> pipes = new ArrayList<>();
+                // lehetséges mezők kikeresése
+                // getValueFromKey or something
 
+                FieldChooserFrame fcf = new FieldChooserFrame("",pipes);
+                fcf.setVisible(true);
+                // itt már megvan a selectedField
+                // TODO pumpa bemenetének beállítása selectedField-re
             }});
 
-        pumpa_ki.addActionListener(new ActionListener() {
+        pumpa_ki.addActionListener(new ActionListener() { // TODO felugró ablak
             public void actionPerformed(ActionEvent e) {
+                ArrayList<String> pipes = new ArrayList<>();
+                // lehetséges mezők kikeresése
+                // getValueFromKey or something
 
+                FieldChooserFrame fcf = new FieldChooserFrame("",pipes);
+                fcf.setVisible(true);
+                // itt már megvan a selectedField
+                // TODO pumpa kimenetének beállítása selectedField-re
             }});
 
         pumpa_fel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //actCharacter.getPummp();
+                //actCharacter.getPump();
             	Plumber currentPlumber = null;
         		for (Plumber p : Program.getPlumbers().values()) {
         			if (game.getActiveCharacter() == p)
@@ -218,9 +238,16 @@ public class PlayerPanelView extends JPanel {
                 game.nextCharacter();
             }});
         
-        cso_felvetel.addActionListener(new ActionListener() {
+        cso_felvetel.addActionListener(new ActionListener() { // TODO felugró ablak
             public void actionPerformed(ActionEvent e) {
-                
+                ArrayList<String> pipes = new ArrayList<>();
+                // lehetséges mezők kikeresése
+                // getValueFromKey or something
+
+                FieldChooserFrame fcf = new FieldChooserFrame("",pipes);
+                fcf.setVisible(true);
+                // itt már megvan a selectedField
+                // TODO selectedField cső felvétele a pumpán
             }});
         
         cso_ciszternarol.addActionListener(new ActionListener() {
@@ -235,12 +262,9 @@ public class PlayerPanelView extends JPanel {
         			currentPlumber.getPipe();
         		}
             }});
-
-        // TODO ActionListenerek normális megcsinálása
-        
     }
 
-
+    /** Inventory-kat megjelenítő panelek, ebben csak egy label van, amit be lehet állítani, frissíteni */
     private class InventoryPanel extends JPanel {
         private JLabel inventory;
         protected InventoryPanel(String szoveg) {
@@ -250,8 +274,50 @@ public class PlayerPanelView extends JPanel {
             this.add(inventory,BorderLayout.CENTER);
         }
 
+        /** Frissíti a panelen lévő szöveget */
         protected void updateLabel(String szoveg) {
             inventory.setText(szoveg);
+        }
+    }
+
+    /** Felugró ablak, itt lehet megfelelő akcióhoz kiválasztani azt a csövet, amin végrehajtódik a játékos akciója. */
+    public class FieldChooserFrame extends JFrame implements ActionListener {
+
+        private JPanel buttons;
+        private JLabel label;
+        private ArrayList<String> fieldList;
+        public FieldChooserFrame(String szoveg, ArrayList<String> fields) {
+            this.setPreferredSize(new Dimension(200,300));
+            this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+            this.setResizable(true);
+            this.setBackground(background);
+
+            fieldList = fields;
+            buttons = new JPanel();
+            buttons.setLayout(new FlowLayout());
+            createJRadioButtons();
+            this.add(buttons, BorderLayout.CENTER);
+            JButton ok = new JButton("Ok");
+            ok.setBackground(bcolor);
+            this.add(ok, BorderLayout.SOUTH);
+        }
+
+        private void createJRadioButtons() {
+            for(String s :fieldList) {
+                JRadioButton button = new JRadioButton(s);
+                button.addActionListener(this);
+                buttons.add(button);
+            }
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(e != null && e.getSource().getClass()==JRadioButton.class) {
+                selectedField = Program.getValueFromFieldMaps(((JRadioButton)e.getSource()).getText());
+            }
+            else if(e != null && e.getSource().getClass()==JButton.class){
+                FieldChooserFrame.this.dispose();
+            }
         }
     }
 }

@@ -820,13 +820,18 @@ public class Program {
 		}
 	}
 
-	
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
 	/**
 	 * Visszaadja az átadott kulcsú Field-et a Map-ekből
 	 * @param key a keresett Field kulcsa
 	 * @return a Field, ha benne van vmelyik Map-ben, null, ha nincs
 	 */
-	private static Field getValueFromFieldMaps(String key) {
+	 public static Field getValueFromFieldMaps(String key) {
 		if(pipes.containsKey(key)) return pipes.get(key);
 		if(pumps.containsKey(key)) return pumps.get(key);
 		if(sources.containsKey(key)) return sources.get(key);
@@ -838,7 +843,7 @@ public class Program {
 	 * @param value bármelyik Field leszármazott 
 	 * @return a Field kulcsa
 	 * */
-	private static String getKeyFromFieldMaps(Field value) {
+	public static String getKeyFromFieldMaps(Field value) {
 		for(Map.Entry<String, Pipe> entry: pipes.entrySet()) {
 			if(entry.getValue() == value) {
 				return entry.getKey();
