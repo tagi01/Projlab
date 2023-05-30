@@ -93,18 +93,6 @@ public class GameFrame extends JFrame{
         gameLabel.setText("                                               "+round+"     "+Ppoints+"     "+Spoints);
     }
 
-    //@Override
-    //public void actionPerformed(ActionEvent e) {
-    //if(e.getSource().equals(pumpa_be)) {
-    //this.rePaint();
-    //}
-
-    //}
-    /*public void rePaint() {
-        Program.rajz();
-    }*/
-
-// ButtonActionListener-ek
 
 
 }
