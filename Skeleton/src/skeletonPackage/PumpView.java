@@ -83,14 +83,14 @@ public class PumpView implements View {
 		int charNum = currentCharacters.size();
 		int n = 0;
 		if(charNum > 0) n = 360 / charNum;
-		int i = 0;
+		int i = 1;
 		for(Character c : currentCharacters) {
 			CharacterView view = c.getView();
 			BufferedImage image = view.getImage();
 			//g2d.drawImage(image, (int)(x + diameter / 2 + Math.sin(Math.toRadians(n * i)) * (diameter / 2 - 6)/* - eltolás*/),
 						//	   (int)(y + diameter / 2 + Math.cos(Math.toRadians(n * i)) * (diameter / 2 - 6)/* - eltolás*/), gamePanel);
 			int[] asd = getCoordinates();
-			g2d.drawImage(image, asd[0], asd[1]-diameter, null);
+			g2d.drawImage(image, asd[0]-(i*5), asd[1]-diameter-(i*5), null);
 			i++;
 	
 		}

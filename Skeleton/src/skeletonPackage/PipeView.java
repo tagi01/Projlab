@@ -131,7 +131,7 @@ public class PipeView implements View {
 		}
 		if (pipe.getCurrentCharacter().size() == 1) {
 			BufferedImage image = pipe.getCurrentCharacter().get(0).getView().getImage();
-			g2d.drawImage(image, x-15, y-45, gamePanel);
+			g2d.drawImage(image, x-15, y-37, gamePanel);
 		}
 	}
 
