@@ -225,6 +225,9 @@ public class Pump extends BreakableField {
 	}
 	
 	@Override
+	public void interact(int n) { }
+	
+	@Override
 	public void interact(Plumber p) {
 		super.interact(p);
 		pumpView.update();
