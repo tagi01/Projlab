@@ -14,6 +14,8 @@ public class PlayerPanelView extends JPanel {
     private final Color background = new Color(229,202,162);
     private final Color bcolor = new Color(242,242,242);
 
+    private Dimension buttonSize = new Dimension();
+
     private JPanel buttonPanel;
     private Field selectedField;
 
@@ -117,22 +119,32 @@ public class PlayerPanelView extends JPanel {
     }
 
     public void updateInfo() {
-        // TODO jatekos kepet hozzaadni
-        this.add(new Label("Jatekos neve"+"     "+game.getActionPoints()));
+        actCharacter = game.getActiveCharacter();
+        this.add(new JLabel(new ImageIcon(game.getActiveCharacter().getView().getImage())));
+        this.add(new Label(Program.getNameOfCharacter(game.getActiveCharacter())+""+"     "+game.getActionPoints()));
         this.add(new Label("\n"));
         this.add(buttonPanel, BorderLayout.CENTER);
         showButtons();
     }
 
     public void showButtons() {
-        // TODO gombok eltuntetese megfeleloen
-        if(game.getActiveCharNum()%2==0) {              // ha szerelo
-            cso_csuszos.setVisible(false);
+        if(game.getActiveCharNum()%2==0) { // ha szerelo
             //inv_1.updateLabel();
             //inv_2.updateLabel();
             //inv_3.updateLabel();
 
-        } else {                                        // ha szabotor
+            inv_1.setVisible(true);
+            inv_2.setVisible(true);
+            inv_3.setVisible(true);
+
+            javit.setVisible(true);
+            pumpa_fel.setVisible(true);
+            pumpa_le.setVisible(true);
+            cso_csuszos.setVisible(false);
+            cso_felvetel.setVisible(true);
+            cso_ciszternarol.setVisible(true);
+
+        } else { // ha szabotor
             inv_1.setVisible(false);
             inv_2.setVisible(false);
             inv_3.setVisible(false);
@@ -151,7 +163,7 @@ public class PlayerPanelView extends JPanel {
         b.setBackground(bcolor);
     }
 
-    private void addActionListeners() { // TODO ActionListenerek normális megcsinálása
+    private void addActionListeners() {
         mozog.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		ArrayList<String> fields = new ArrayList<>();
@@ -186,7 +198,7 @@ public class PlayerPanelView extends JPanel {
         		}
             }});
 
-        pumpa_be.addActionListener(new ActionListener() { // TODO felugró ablak
+        pumpa_be.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	Pump pump = null;
         		for (Pump p : Program.getPumps().values()) {
@@ -223,7 +235,7 @@ public class PlayerPanelView extends JPanel {
                 fcf.setVisible(true);
             }});
 
-        pumpa_ki.addActionListener(new ActionListener() { // TODO felugró ablak
+        pumpa_ki.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	Pump pump = null;
         		for (Pump p : Program.getPumps().values()) {
@@ -310,7 +322,7 @@ public class PlayerPanelView extends JPanel {
         		}
             }});
 
-        cso_felvetel.addActionListener(new ActionListener() { // TODO felugró ablak
+        cso_felvetel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ArrayList<String> pipes = new ArrayList<>();
                 for (Field f : actCharacter.getField().getNeighbours()) {

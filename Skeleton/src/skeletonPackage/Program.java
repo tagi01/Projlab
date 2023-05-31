@@ -1712,5 +1712,22 @@ public class Program {
 		GameFrame gf = new GameFrame(); // FIXME itt a frame létrehozása
 		gf.setLocationRelativeTo(null);
 		gf.setVisible(true);
+		gf.updateGame();
+	}
+
+	public static String getNameOfCharacter(Character value) {
+		for(Map.Entry<String, Plumber> entry: plumbers.entrySet()) {
+			if(entry.getValue() == value) {
+				return entry.getKey();
+			}
+		}
+
+		for(Map.Entry<String, Saboteur> entry: saboteurs.entrySet()) {
+			if(entry.getValue() == value) {
+				return entry.getKey();
+			}
+		}
+
+		return null;
 	}
 }

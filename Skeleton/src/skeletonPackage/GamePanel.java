@@ -24,4 +24,8 @@ public class GamePanel extends JPanel {
     
     }
 
+    public void update(Graphics g){
+        paintComponent(g);
+    }
+
 }
