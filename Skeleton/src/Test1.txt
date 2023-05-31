@@ -33,11 +33,13 @@ set-pump 7 -i pipe_15 -o pipe_16
 setCoordinate pump_7 850 120
 set-pump 8 -i pipe_17 -o pipe_18
 setCoordinate pump_8 900 330
-setCoordinate source_1 300 0
-setCoordinate source_2 700 0
+setCoordinate source_1 300 20
+setCoordinate source_2 700 20
 setCoordinate cistern_1 200 400
 setCoordinate cistern_2 500 400
 setCoordinate cistern_3 800 400
+set-cistern 1 -pu true
+set-cistern 2 -pi true
 set-p 1 pump_3
 set-p 2 pump_4
 set-s 1 pipe_1

@@ -58,7 +58,7 @@ public class Program {
 
 	private static void initImageList() {
 		imageList=new ArrayList<BufferedImage>();
-		String directoryPath = "C:/Projlab/images";
+		String directoryPath = "C:\\Users\\Soma\\git\\Projlab\\Skeleton\\src\\images";
 		File directory = new File(directoryPath);
 		File[] files = directory.listFiles();
 		
