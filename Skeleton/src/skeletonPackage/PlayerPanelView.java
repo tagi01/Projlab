@@ -331,6 +331,19 @@ public class PlayerPanelView extends JPanel {
                     updateInfo();
         		}
             }});
+        
+        cso_lerakas.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	Plumber currentPlumber = null;
+        		for (Plumber p : Program.getPlumbers().values()) {
+        			if (game.getActiveCharacter() == p)
+        				currentPlumber = p;
+        		}
+        		if (currentPlumber != null) {
+        			currentPlumber.placePipe();
+                    updateInfo();
+        		}
+            }});
 
         cso_felvetel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
