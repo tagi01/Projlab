@@ -374,7 +374,7 @@ public class PlayerPanelView extends JPanel {
 
         passz.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                game.nextCharacter();
+                Program.actionPass();
             }});
     }
 

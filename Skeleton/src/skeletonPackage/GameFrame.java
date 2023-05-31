@@ -10,7 +10,7 @@ import java.security.DigestException;
 public class GameFrame extends JFrame{
 
     private int windowWidth = 1280;
-    private int windowHeight = 675;
+    private int windowHeight = 600;
     private Color background = new Color(229,202,162);
     private Color bcolor = new Color(242,242,242);
 
@@ -37,6 +37,11 @@ public class GameFrame extends JFrame{
         gamePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         // ADD TO FRAME
+        JPanel filler = new JPanel();
+        filler.setMinimumSize(new Dimension(100,100));
+        filler.add(gameLabel,BorderLayout.CENTER);
+        filler.setBackground(background);
+        add(filler, BorderLayout.NORTH);
         add(gamePanel, BorderLayout.CENTER);
         add(playerPanel, BorderLayout.EAST);
     }
@@ -46,6 +51,7 @@ public class GameFrame extends JFrame{
         this.setTitle("Sivatagi vizhalozat");
         this.setSize(windowWidth,windowHeight);
         this.setResizable(true);
+        this.setBackground(background);
 
         game = Game.getInstance();
 
