@@ -80,11 +80,11 @@ public class PipeView implements View {
 		boolean broken = pipe.getBroken();
 		boolean cantPuncture = pipe.getCantPuncture() > 0 ? true : false;
 		if (broken) {
-			g2d.setStroke(new BasicStroke(5, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 9 }, 0));
+			g2d.setStroke(new BasicStroke(7, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 9 }, 0));
 		} else if (cantPuncture) {
-			g2d.setStroke(new BasicStroke(8));
+			g2d.setStroke(new BasicStroke(10));
 		} else
-			g2d.setStroke(new BasicStroke(5));
+			g2d.setStroke(new BasicStroke(7));
 		switch (state) {
 		case NORMAL:
 			g2d.setColor(Color.GRAY);
@@ -110,7 +110,7 @@ public class PipeView implements View {
 						g2d.setStroke(new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0,
 								new float[] { 9 }, 0));
 					} else {
-						g2d.setStroke(new BasicStroke(1));
+						g2d.setStroke(new BasicStroke(3));
 					}
 					g2d.setColor(Color.BLUE);
 					g2d.drawLine(coord1[0], coord1[1], coord2[0], coord2[1]);

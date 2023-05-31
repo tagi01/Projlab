@@ -6,9 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
-
-// TODO dokumentálás
 public class PumpView implements View {
 	/** A pumpát ábrázoló kör átmérője */
 	private static final int diameter = 40;
@@ -27,7 +24,6 @@ public class PumpView implements View {
 	public PumpView(Pump p, GamePanel gp) {
 		pump = p;
 		gamePanel = gp;
-		//x,y
 	}
 	
 	/**
@@ -37,7 +33,6 @@ public class PumpView implements View {
 	public void setCoordinates(int x, int y) {
 		this.x = x - diameter / 2;
 		this.y = y - diameter / 2;
-		//gamePanel.paintUpdate(gamePanel.getGraphics());
 	}
 	
 	/**
@@ -51,7 +46,6 @@ public class PumpView implements View {
 	@Override
 	public void update() {
 		gamePanel.repaint();
-		//draw(gamePanel.getGraphics());
 	}
 	
 	@Override
