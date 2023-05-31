@@ -10,7 +10,7 @@ import java.security.DigestException;
 public class GameFrame extends JFrame{
 
     private int windowWidth = 1280;
-    private int windowHeight = 600;
+    private int windowHeight = 675;
     private Color background = new Color(229,202,162);
     private Color bcolor = new Color(242,242,242);
 
@@ -79,7 +79,7 @@ public class GameFrame extends JFrame{
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Sivatagi vizhalozat");
         this.setSize(windowWidth,windowHeight);
-        this.setResizable(false);
+        this.setResizable(true);
 
         game = Game.getInstance();
 
@@ -96,9 +96,14 @@ public class GameFrame extends JFrame{
         init();
     }
 
-    public GamePanel getGamePanel() {return gamePanel;}
+    public GamePanel getGamePanel() { return gamePanel; }
     
     public Game getGame() { return game; }
+
+    public void updateGame(){
+        gamePanel.update(getGraphics());
+        playerPanel.updateInfo();
+    }
 
     /**Felső sorban az ablakban a játék adatait frissíti*/
     public void updateGameLabel() {
@@ -107,7 +112,6 @@ public class GameFrame extends JFrame{
         Spoints = new String("Szabotorok: "+game.getPointsOfSaboteur());
         gameLabel.setText("                                               "+round+"     "+Ppoints+"     "+Spoints);
     }
-
 
     public void gameOver(String kimenetel) {
         JOptionPane.showMessageDialog(GameFrame.this, kimenetel, "Game Over", JOptionPane.PLAIN_MESSAGE);
