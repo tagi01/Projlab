@@ -14,8 +14,8 @@ public class Source extends Field {
 	/**
 	 * Publikus metódus, Source paraméter nélküli konstruktora.
 	 */
-	public Source(GamePanel jp) {
-		super();
+	public Source(GamePanel jp, Game f) {
+		super(f);
 		neighbours=new ArrayList<Pipe>();
 		sourceView = new SourceView(this, jp);
 	}

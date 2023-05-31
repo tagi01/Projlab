@@ -113,8 +113,8 @@ public class Pipe extends BreakableField {
 	/**
 	 * Konstruktor
 	 */
-	public Pipe(GamePanel gp) {
-		super();
+	public Pipe(GamePanel gp, Game g) {
+		super(g);
 		lostWater = 0;
 		size = 1; // default size
 		taken = false;
@@ -130,8 +130,8 @@ public class Pipe extends BreakableField {
 	 * @param siz   a cső mérete
 	 * @param water a csőben lévő víz mennyisége
 	 */
-	public Pipe(int siz, int water, GamePanel gp) {
-		super();
+	public Pipe(int siz, int water, GamePanel gp, Game g) {
+		super(g);
 		lostWater = 0;
 		size = siz;
 		taken = false;
