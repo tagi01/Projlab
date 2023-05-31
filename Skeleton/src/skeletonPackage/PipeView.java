@@ -35,9 +35,6 @@ public class PipeView implements View {
 			int[] coord2 = neighbours.get(1).getView().getCoordinates();
 			x = ((coord1[0] + coord2[0]) / 2);
 			y = ((coord1[1] + coord2[1]) / 2);
-		} else {
-			x = 0;
-			y = 0;
 		}
 	}
 

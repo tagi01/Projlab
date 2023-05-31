@@ -168,6 +168,8 @@ public class Cistern extends Field {
 			Pipe pi = new Pipe(game.getGameFrame().getGamePanel(), game);
 			pi.setTaken(true);
 			pi.addNeighbour(this);
+			int[] cs = this.getView().getCoordinates();
+			pi.getView().setCoordinates(cs[0], cs[1] - 35);
 			network.addField(pi);
 			return pi;
 		}
