@@ -241,6 +241,7 @@ public class Pipe extends BreakableField {
 			return amount;
 		} else if (amount == water) {
 			water = 0;
+			view.update();
 			return amount;
 		} else {
 			// azert kell egy seged valtozo, mert ha a vizemennyiseget meg az elott
@@ -390,5 +391,11 @@ public class Pipe extends BreakableField {
 			view.update();
 		}
 
+	}
+	
+	@Override
+	public void interact(Plumber p) {
+		super.interact(p);
+		view.update();
 	}
 }
