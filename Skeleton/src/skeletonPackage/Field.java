@@ -22,7 +22,8 @@ public abstract class Field {
 	/**
 	 * Field paraméter nélküli konstruktora.
 	 */
-	public Field() {
+	public Field(Game g) {
+		game=g;
 		currentCharacters = new ArrayList<Character>();
 	}
 

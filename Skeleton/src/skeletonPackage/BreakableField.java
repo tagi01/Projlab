@@ -25,7 +25,8 @@ public abstract class BreakableField extends Field {
 	/**
 	 * Publikus metódus, BreakableField paraméter nélküli konstruktora, isBroken false
 	 */
-	public BreakableField() {
+	public BreakableField(Game g) {
+		super(g);
 		isBroken = false;
 	}
 

@@ -67,7 +67,8 @@ public class Cistern extends Field {
 	/**
 	 * Publikus metódus, a ciszterna konstruktora
 	 */
-	public Cistern(GamePanel jp) {
+	public Cistern(GamePanel jp, Game g) {
+		super(g);
 		neighbours = new ArrayList<Pipe>();
 		cisternView = new CisternView(this, jp);
 		hasPipe = true;
@@ -149,7 +150,7 @@ public class Cistern extends Field {
 	private Pump removePump() {
 		if(hasPump == true) {
 			hasPump = false;
-			Pump pu = new Pump(null, null, game.getGameFrame().getGamePanel());
+			Pump pu = new Pump(null, null, game.getGameFrame().getGamePanel(), game);
 			network.addField(pu);
 			return pu;
 		}
@@ -164,7 +165,7 @@ public class Cistern extends Field {
 	private Pipe removePipe() {
 		if(hasPipe == true) {
 			hasPipe = false;
-			Pipe pi = new Pipe(game.getGameFrame().getGamePanel());
+			Pipe pi = new Pipe(game.getGameFrame().getGamePanel(), game);
 			pi.setTaken(true);
 			pi.addNeighbour(this);
 			network.addField(pi);

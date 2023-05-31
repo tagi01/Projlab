@@ -145,7 +145,7 @@ public class Program {
 		game.setGameFrame();
 		
 		for(int i = 0; i < 18; i++) {
-			Pipe p = new Pipe(game.getGameFrame().getGamePanel());
+			Pipe p = new Pipe(game.getGameFrame().getGamePanel(),game);
 			p.setGame(game);
 			p.setNetwork(network);
 			pipes.put("pipe_" + (i+1), p);
@@ -153,7 +153,7 @@ public class Program {
 		}
 		
 		for(int i = 0; i < 8; i++) {
-			Pump p = new Pump(game.getGameFrame().getGamePanel());
+			Pump p = new Pump(game.getGameFrame().getGamePanel(),game);
 			p.setGame(game);
 			p.setNetwork(network);
 			pumps.put("pump_" + (i+1), p);
@@ -169,7 +169,7 @@ public class Program {
 		pumps.get("pump_8").getView().setCoordinates(900, 330);**/
 		
 		for(int i = 0; i < 2; i++) {
-			Source s = new Source(game.getGameFrame().getGamePanel());
+			Source s = new Source(game.getGameFrame().getGamePanel(),game);
 			s.setGame(game);
 			s.setNetwork(network);
 			sources.put("source_" + (i+1), s);
@@ -179,7 +179,7 @@ public class Program {
 		//sources.get("source_2").getView().setCoordinates(700, 0);
 		
 		for(int i = 0; i < 3; i++) {
-			Cistern c = new Cistern(game.getGameFrame().getGamePanel());
+			Cistern c = new Cistern(game.getGameFrame().getGamePanel(),game);
 			c.setGame(game);
 			c.setNetwork(network);
 			cisterns.put("cistern_" + (i+1), c);
@@ -855,7 +855,7 @@ public class Program {
 		game.setGameFrame();
 		
 		for(int i = 0; i < pipeNum; i++) {
-			Pipe p = new Pipe(game.getGameFrame().getGamePanel());
+			Pipe p = new Pipe(game.getGameFrame().getGamePanel(),game);
 			p.setGame(game);
 			p.setNetwork(network);
 			pipes.put("pipe_" + (i+1), p);
@@ -863,7 +863,7 @@ public class Program {
 		}
 		
 		for(int i = 0; i < pumpNum; i++) {
-			Pump p = new Pump(game.getGameFrame().getGamePanel());
+			Pump p = new Pump(game.getGameFrame().getGamePanel(),game);
 			p.setGame(game);
 			p.setNetwork(network);
 			pumps.put("pump_" + (i+1), p);
@@ -871,7 +871,7 @@ public class Program {
 		}
 		
 		for(int i = 0; i < sourceNum; i++) {
-			Source s = new Source(game.getGameFrame().getGamePanel());
+			Source s = new Source(game.getGameFrame().getGamePanel(),game);
 			s.setGame(game);
 			s.setNetwork(network);
 			sources.put("source_" + (i+1), s);
@@ -879,7 +879,7 @@ public class Program {
 		}
 		
 		for(int i = 0; i < cisternNum; i++) {
-			Cistern c = new Cistern(game.getGameFrame().getGamePanel());
+			Cistern c = new Cistern(game.getGameFrame().getGamePanel(),game);
 			c.setGame(game);
 			c.setNetwork(network);
 			cisterns.put("cistern_" + (i+1), c);
@@ -1213,7 +1213,7 @@ public class Program {
 			else {
 				System.out.println("Sikeres parancs.");
 				active.getPipe();
-				Pipe pi = new Pipe(null);
+				Pipe pi = new Pipe(null,game);
 				pi=active.getInventoryPipe();
 				int i = pipes.size();
 				i++;
@@ -1445,7 +1445,7 @@ public class Program {
 	 */
 	public static void setPump(String[] command) {
 
-		Pump p = new Pump(game.getGameFrame().getGamePanel());
+		Pump p = new Pump(game.getGameFrame().getGamePanel(),game);
 
 		try {
 			if (command.length%2==0 && command.length>=3 && command.length <= 9) { // ha jo hosszusagu a command
@@ -1536,7 +1536,7 @@ public class Program {
 	 */
 	public static void actionSlippery(String[] command) {
 		boolean isPipe = false, isSaboteur = false;
-		Pipe temp_p = new Pipe(null);
+		Pipe temp_p = new Pipe(null,game);
 		String key ="";
 
 		for(Map.Entry<String, Pipe> pipe : pipes.entrySet()) {
@@ -1611,7 +1611,7 @@ public class Program {
 		if(standOnCistern && activeIsPlumber) {
 			Plumber temp_plumber = plumbers.get(plumber_key);
 			if(cisterns.get(cistern_key).getHasPump() && temp_plumber.getInventoryPump() == null) {
-				game.getActiveCharacter().getField().interactPlumber(temp_plumber, new Pump(game.getGameFrame().getGamePanel()));
+				game.getActiveCharacter().getField().interactPlumber(temp_plumber, new Pump(game.getGameFrame().getGamePanel(),game));
 				Pump p = temp_plumber.getInventoryPump();
 				int i=pumps.size();
 				i++;

@@ -25,8 +25,8 @@ public class Pump extends BreakableField {
 	/**
 	 * Konstruktor
 	 */
-	public Pump(GamePanel gp) {
-		super();
+	public Pump(GamePanel gp, Game g) {
+		super(g);
 		in = null;
 		out = null;
 		neighbours = new ArrayList<Pipe>();
@@ -38,8 +38,8 @@ public class Pump extends BreakableField {
 	 * @param i, Pipe cső, amelyik a pumpa bemenete, innen jön a víz a pumpába
 	 * @param o, Pipe cső, amelyik a pumpa kimenete, ide megy a víz a pumpából
 	 */
-	public Pump(Pipe i, Pipe o, GamePanel gp) {
-		super();
+	public Pump(Pipe i, Pipe o, GamePanel gp, Game g) {
+		super(g);
 		in = i;
 		if(i != o) {
 			out = o;
