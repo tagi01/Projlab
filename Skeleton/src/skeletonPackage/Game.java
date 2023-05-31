@@ -149,7 +149,7 @@ public class Game {
     public void gameOver() {
         String kimenetel = "";
         if(pointsOfPlumber > pointsOfSaboteur) { kimenetel = "Szerelok nyertek!"; }
-        if(pointsOfSaboteur > pointsOfPlumber) { kimenetel = "Szabotorok nyertek!"; }
+        else if(pointsOfSaboteur > pointsOfPlumber) { kimenetel = "Szabotorok nyertek!"; }
         else {
             kimenetel = "Dontetlen!";
 
