@@ -1710,6 +1710,7 @@ public class Program {
 		readCommand("start");
 		
 		GameFrame gf = new GameFrame(); // FIXME itt a frame létrehozása
+		gf.setLocationRelativeTo(null);
 		gf.setVisible(true);
 	}
 }

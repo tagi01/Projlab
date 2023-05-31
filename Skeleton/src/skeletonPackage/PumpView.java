@@ -2,6 +2,7 @@ package skeletonPackage;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -57,25 +58,25 @@ public class PumpView implements View {
 	public void draw(Graphics g) {
 		/*if(x == 0 || y == 0)		ha inventory-ban van, nem kéne kirajzolni
 			return;*/
-		
+		Graphics2D g2d = (Graphics2D) g.create();
 		Color color = pump.getBroken() ? Color.RED : Color.GRAY;
-		g.setColor(color);
-		g.fillOval(x, y, diameter, diameter);
+		g2d.setColor(color);
+		g2d.fillOval(x, y, diameter, diameter);
 			
 		Pipe in = pump.getIn();
 		if(in != null) {
 			int[] pipeCenter = in.getView().getCoordinates();
 			int[] activeInCoordinates = getActivePipeCoordinates(pipeCenter);
-			g.setColor(Color.WHITE);
-        	g.fillOval(activeInCoordinates[0], activeInCoordinates[1], pipeEndDiameter, pipeEndDiameter);
+			g2d.setColor(Color.WHITE);
+        	g2d.fillOval(activeInCoordinates[0], activeInCoordinates[1], pipeEndDiameter, pipeEndDiameter);
 		}
 		
 		Pipe out = pump.getOut();
 		if(out != null) {
 			int[] pipeCenter = out.getView().getCoordinates();
 			int[] activeOutCoordinates = getActivePipeCoordinates(pipeCenter);
-			g.setColor(Color.BLACK);
-        	g.fillOval(activeOutCoordinates[0], activeOutCoordinates[1], pipeEndDiameter, pipeEndDiameter);
+			g2d.setColor(Color.BLACK);
+        	g2d.fillOval(activeOutCoordinates[0], activeOutCoordinates[1], pipeEndDiameter, pipeEndDiameter);
 		}
 		
 		ArrayList<Character> currentCharacters = pump.getCurrentCharacter();
@@ -86,9 +87,12 @@ public class PumpView implements View {
 		for(Character c : currentCharacters) {
 			CharacterView view = c.getView();
 			BufferedImage image = view.getImage();
-			g.drawImage(image, (int)(x + diameter / 2 + Math.sin(Math.toRadians(n * i)) * (diameter / 2 - 6)/* - eltolás*/),
-							   (int)(y + diameter / 2 + Math.cos(Math.toRadians(n * i)) * (diameter / 2 - 6)/* - eltolás*/), gamePanel);
+			//g2d.drawImage(image, (int)(x + diameter / 2 + Math.sin(Math.toRadians(n * i)) * (diameter / 2 - 6)/* - eltolás*/),
+						//	   (int)(y + diameter / 2 + Math.cos(Math.toRadians(n * i)) * (diameter / 2 - 6)/* - eltolás*/), gamePanel);
+			int[] asd = getCoordinates();
+			g2d.drawImage(image, asd[0], asd[1]-diameter, null);
 			i++;
+	
 		}
 	}
 	

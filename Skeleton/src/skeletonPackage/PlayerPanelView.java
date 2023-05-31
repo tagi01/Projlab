@@ -158,11 +158,9 @@ public class PlayerPanelView extends JPanel {
         		for (Field f : actCharacter.getField().getNeighbours()) {
                 	fields.add(Program.getKeyFromFieldMaps(f));
                 }
-
-
                 JButton button = new JButton("Ok");
-        		FieldChooserFrame fcf = new FieldChooserFrame("Hova szeretnel lepni?",fields,button);
-        		button.addActionListener(new ActionListener() {
+                FieldChooserFrame fcf = new FieldChooserFrame("Hova szeretnel lepni?",fields,button);
+                button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (selectedField != null) {
@@ -171,7 +169,8 @@ public class PlayerPanelView extends JPanel {
                         fcf.dispose();
                     }
                 });
-                fcf.setVisible(true);                
+                fcf.setLocationRelativeTo(null);
+                fcf.setVisible(true);
         }});
 
         javit.addActionListener(new ActionListener() {
@@ -204,6 +203,7 @@ public class PlayerPanelView extends JPanel {
                 }
 
                 JButton button = new JButton("Ok");
+                FieldChooserFrame fcf = new FieldChooserFrame("Melyik cso legyen a pumpa bemenete?",pipes,button);
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -216,10 +216,10 @@ public class PlayerPanelView extends JPanel {
                             if(pipe != null && in != null)
                                 actCharacter.setPump(in, pipe);
                         }
+                        fcf.dispose();
                     }
                 });
-
-                FieldChooserFrame fcf = new FieldChooserFrame("Melyik cso legyen a pumpa bemenete?",pipes,button);
+                fcf.setLocationRelativeTo(null);
                 fcf.setVisible(true);
             }});
 
@@ -241,6 +241,7 @@ public class PlayerPanelView extends JPanel {
 
 
                 JButton button = new JButton("Ok");
+                FieldChooserFrame fcf = new FieldChooserFrame("Melyik cso legyen a pumpa kimenete?",pipes,button);
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -253,10 +254,10 @@ public class PlayerPanelView extends JPanel {
                             if(pipe != null && out != null)
                                 actCharacter.setPump(out, pipe);
                         }
+                        fcf.dispose();
                     }
                 });
-
-                FieldChooserFrame fcf = new FieldChooserFrame("Melyik cso legyen a pumpa kimenete?",pipes,button);
+                fcf.setLocationRelativeTo(null);
                 fcf.setVisible(true);
             }});
 
@@ -316,8 +317,10 @@ public class PlayerPanelView extends JPanel {
                     pipes.add(Program.getKeyFromFieldMaps(f));
                 }
 
-
                 JButton button = new JButton("Ok");
+
+                FieldChooserFrame fcf = new FieldChooserFrame("Melyik csovet szeretned felvenni?",pipes,button);
+
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -337,10 +340,10 @@ public class PlayerPanelView extends JPanel {
                                 currentPlumber.grabPipe(pipe);
                             }
                         }
+                        fcf.dispose();
                     }
                 });
-
-                FieldChooserFrame fcf = new FieldChooserFrame("Melyik csovet szeretned felvenni?",pipes,button);
+                fcf.setLocationRelativeTo(null);
                 fcf.setVisible(true);
             }});
 
@@ -411,13 +414,9 @@ public class PlayerPanelView extends JPanel {
                     FieldChooserFrame.this.dispose();
                 }});
 
-            this.add(megse, BorderLayout.NORTH);
-
-
             alul.add(jbutton);
             alul.add(megse);
             this.add(alul, BorderLayout.SOUTH);
-
         }
 
         private void createJRadioButtons() {

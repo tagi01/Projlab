@@ -249,6 +249,7 @@ public class Pipe extends BreakableField {
 			// csoben levo vizmennyiseg
 			int temp_water = water;
 			water = 0;
+			view.update();
 			return temp_water;
 		}
 	}

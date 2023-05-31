@@ -1,6 +1,7 @@
 package skeletonPackage;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -43,12 +44,13 @@ public class CisternView implements View {
 
 	@Override
 	public void draw(Graphics g) {
-		Graphics2D g2d = (Graphics2D)g.create();
 		
+		Graphics2D g2d = (Graphics2D)g.create();
 		g2d.setColor(Color.GREEN);
 		g2d.fillRect(x, y, width, height);
 		
-		g2d.setColor(Color.BLACK);
+	    g2d.setColor(Color.BLACK);
+
 		if(cistern.getHasPipe()) {
 			g2d.drawString("pipe", x -5, y + height + 10);
 		}

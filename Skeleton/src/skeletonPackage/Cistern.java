@@ -70,6 +70,8 @@ public class Cistern extends Field {
 	public Cistern(GamePanel jp) {
 		neighbours = new ArrayList<Pipe>();
 		cisternView = new CisternView(this, jp);
+		hasPipe = true;
+		hasPump = true;
 	}
 	
 	//
@@ -184,6 +186,7 @@ public class Cistern extends Field {
 		}
 		game.givePlumberPoint(collectedWater);
 		collectedWater = 0;
+		resetItems();
 	}
 	
 	/**
