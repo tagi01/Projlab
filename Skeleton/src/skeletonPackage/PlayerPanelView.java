@@ -412,8 +412,6 @@ public class PlayerPanelView extends JPanel {
                 }
             }});
 
-        // TODO cso_lerakas.addActionListener()
-
         passz.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 game.nextCharacter();
@@ -441,6 +439,7 @@ public class PlayerPanelView extends JPanel {
     public class FieldChooserFrame extends JFrame implements ActionListener {
 
         private JPanel buttons;
+        private ButtonGroup jradiobuttons;
         private JLabel label;
         private ArrayList<String> fieldList;
         public FieldChooserFrame(String szoveg, ArrayList<String> fields, JButton jbutton) {
@@ -451,6 +450,7 @@ public class PlayerPanelView extends JPanel {
             fieldList = fields;
             buttons = new JPanel();
             buttons.setLayout(new FlowLayout());
+            jradiobuttons = new ButtonGroup();
             createJRadioButtons();
 
             JLabel felirat = new JLabel(szoveg);
@@ -476,8 +476,10 @@ public class PlayerPanelView extends JPanel {
 
         private void createJRadioButtons() {
             for(String s :fieldList) {
-                JRadioButton button = new JRadioButton(s);
+
+                JRadioButton button = new JRadioButton(s,false);
                 button.addActionListener(this);
+                jradiobuttons.add(button);
                 buttons.add(button);
             }
         }
