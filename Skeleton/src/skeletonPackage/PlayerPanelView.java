@@ -13,6 +13,7 @@ public class PlayerPanelView extends JPanel {
     private final int windowHeight = 600;
     private final Color background = new Color(229,202,162);
     private final Color bcolor = new Color(242,242,242);
+    private ImageIcon image;
 
     private Dimension buttonSize = new Dimension();
 
@@ -32,6 +33,7 @@ public class PlayerPanelView extends JPanel {
     private JButton cso_csuszos = new JButton("csuszos legyen");
     private JButton cso_felvetel = new JButton("cso felvetel");
     private JButton cso_ciszternarol = new JButton("ciszternarol");
+    private JButton cso_lerakas = new JButton();
     private JButton passz = new JButton("passz");
 
 
@@ -73,6 +75,7 @@ public class PlayerPanelView extends JPanel {
         setButton(cso_csuszos, buttonSize);
         setButton(cso_felvetel,buttonSize);
         setButton(cso_ciszternarol, buttonSize);
+        setButton(cso_lerakas,buttonSize);
         setButton(passz, buttonSize);
 
         addActionListeners();
@@ -101,6 +104,7 @@ public class PlayerPanelView extends JPanel {
 
         buttonPanel.add(cso_felvetel);
         buttonPanel.add(cso_ciszternarol);
+        buttonPanel.add(cso_lerakas);
 
         buttonPanel.add(new JLabel(" "));
         buttonPanel.add(passz);
@@ -379,6 +383,8 @@ public class PlayerPanelView extends JPanel {
                     updateInfo();
                 }
             }});
+
+        // TODO cso_lerakas.addActionListener()
 
         passz.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
