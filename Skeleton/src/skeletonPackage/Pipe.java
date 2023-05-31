@@ -382,7 +382,9 @@ public class Pipe extends BreakableField {
 	 */
 	@Override
 	public void onField(Character c) {
-		if (state == StateOfPipe.SLIPPERY) {
+		if(taken) {
+			return;
+		} else if (state == StateOfPipe.SLIPPERY) {
 			Field f = neighbours.get(0);// ThreadLocalRandom.current().nextInt(0, 2));
 			f.onField(c);
 			c.setCurrentField(f);
@@ -395,7 +397,11 @@ public class Pipe extends BreakableField {
 	
 	@Override
 	public void interact(Plumber p) {
-		super.interact(p);
-		view.update();
+		if(isBroken) {
+			isBroken = false;
+			cantPuncture = 10;
+			game.removeActionPoints();
+			view.update();
+		}
 	}
 }
