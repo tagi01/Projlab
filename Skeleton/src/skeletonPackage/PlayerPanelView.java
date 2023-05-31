@@ -24,7 +24,7 @@ public class PlayerPanelView extends JPanel {
     private JLabel karakterszoveg = new JLabel();
 
     // buttonPanel
-    private InventoryPanel inv_1, inv_2, inv_3; // cső egyik- másik vége, pumpa
+    private JLabel inv_1, inv_2, inv_3; // cső egyik- másik vége, pumpa
     private JButton mozog = new JButton("masik mezore lepes");
     private JButton javit = new JButton("javitas");
     private JButton pumpa_be = new JButton("be");
@@ -63,9 +63,12 @@ public class PlayerPanelView extends JPanel {
         Dimension bhalf = new Dimension(60,25);
 
         // inventory panelek, benne egy labellel
-        inv_1 = new InventoryPanel(" ");
-        inv_2 = new InventoryPanel(" ");
-        inv_3 = new InventoryPanel(" ");
+        inv_1 = new JLabel(" ");
+        inv_1.setBackground(bcolor);
+        inv_2 = new JLabel(" ");
+        inv_2.setBackground(bcolor);
+        inv_3 = new JLabel(" ");
+        inv_3.setBackground(bcolor);
 
         setButton(mozog, buttonSize);
         setButton(javit, buttonSize);
@@ -143,34 +146,41 @@ public class PlayerPanelView extends JPanel {
         actCharacter = game.getActiveCharacter();
         karakterszoveg.setText(Program.getNameOfCharacter(game.getActiveCharacter())+""+"     "+game.getActionPoints());
         updateImage();
+
+        if(game.getActiveCharNum()%2==0) {
+            Plumber currentPlumber = null;
+            for (Plumber p : Program.getPlumbers().values()) {
+                if (game.getActiveCharacter() == p) {
+                    currentPlumber = p;
+                }
+            }
+            Pipe pipe = currentPlumber.getInventoryPipe();
+            String pipeS;
+            if (pipe != null) {
+                pipeS = Program.getKeyFromFieldMaps(pipe);
+                inv_1.setText(pipeS);
+                if (currentPlumber.getPipeEnds() == 2) {
+                    inv_2.setText(pipeS);
+                }
+            }
+            Pump pump = currentPlumber.getInventoryPump();
+            String pumpS;
+            if (pump != null) {
+                pumpS = Program.getKeyFromFieldMaps(pump);
+                inv_3.setText(pumpS);
+            }
+        }
+        else {
+            inv_1.setText("");
+            inv_2.setText("");
+            inv_3.setText("");
+        }
+
         showButtons();
     }
 
     public void showButtons() {
         if(game.getActiveCharNum()%2==0) { // ha szerelo
-        	Plumber currentPlumber = null;
-    		for (Plumber p : Program.getPlumbers().values()) {
-    			if (game.getActiveCharacter() == p)
-    				currentPlumber = p;
-    		}
-    		Pipe pipe = currentPlumber.getInventoryPipe();
-    		String pipeS;
-    		if (pipe != null) {
-    			pipeS = Program.getKeyFromFieldMaps(pipe);
-				inv_1.updateLabel(pipeS);
-    			if (currentPlumber.getPipeEnds() == 2) {
-    				inv_2.updateLabel(pipeS);
-    			}
-    		}
-    		Pump pump = currentPlumber.getInventoryPump();
-    		String pumpS;
-    		if (pump != null) {
-    			pumpS = Program.getKeyFromFieldMaps(pump);
-				inv_3.updateLabel(pumpS);
-    		}
-            //inv_1.updateLabel();
-            //inv_2.updateLabel();
-            //inv_3.updateLabel();
 
             inv_1.setVisible(true);
             inv_2.setVisible(true);
@@ -437,22 +447,6 @@ public class PlayerPanelView extends JPanel {
                 game.nextCharacter();
                 updateInfo();
             }});
-    }
-
-    /** Inventory-kat megjelenítő panelek, ebben csak egy label van, amit be lehet állítani, frissíteni */
-    private class InventoryPanel extends JPanel {
-        private JLabel inventory;
-        protected InventoryPanel(String szoveg) {
-            this.setPreferredSize(new Dimension(70, 30));
-            this.setBackground(bcolor);
-            inventory = new JLabel(szoveg);
-            this.add(inventory,BorderLayout.CENTER);
-        }
-
-        /** Frissíti a panelen lévő szöveget */
-        protected void updateLabel(String szoveg) {
-            inventory.setText(szoveg);
-        }
     }
 
     /** Felugró ablak, itt lehet megfelelő akcióhoz kiválasztani azt a csövet, amin végrehajtódik a játékos akciója. */

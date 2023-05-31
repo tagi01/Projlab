@@ -66,7 +66,7 @@ public class Program {
 
 	private static void initImageList() {
 		imageList=new ArrayList<BufferedImage>();
-		String directoryPath = "C:\\Users\\Soma\\git\\Projlab\\Skeleton\\src\\images";
+		String directoryPath = "C:/Projlab/images";
 		File directory = new File(directoryPath);
 		File[] files = directory.listFiles();
 		
@@ -1735,7 +1735,13 @@ public class Program {
 				return entry.getKey();
 			}
 		}
-
 		return null;
 	}
+
+	public static Character getCharacterFromName(String name) {
+		if(plumbers.containsKey(name)) { return plumbers.get(name); }
+		if(saboteurs.containsKey(name)) { return saboteurs.get(name); }
+		return null;
+	}
+
 }
