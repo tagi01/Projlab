@@ -148,6 +148,26 @@ public class PlayerPanelView extends JPanel {
 
     public void showButtons() {
         if(game.getActiveCharNum()%2==0) { // ha szerelo
+        	Plumber currentPlumber = null;
+    		for (Plumber p : Program.getPlumbers().values()) {
+    			if (game.getActiveCharacter() == p)
+    				currentPlumber = p;
+    		}
+    		Pipe pipe = currentPlumber.getInventoryPipe();
+    		String pipeS;
+    		if (pipe != null) {
+    			pipeS = Program.getKeyFromFieldMaps(pipe);
+				inv_1.updateLabel(pipeS);
+    			if (currentPlumber.getPipeEnds() == 2) {
+    				inv_2.updateLabel(pipeS);
+    			}
+    		}
+    		Pump pump = currentPlumber.getInventoryPump();
+    		String pumpS;
+    		if (pump != null) {
+    			pumpS = Program.getKeyFromFieldMaps(pump);
+				inv_3.updateLabel(pumpS);
+    		}
             //inv_1.updateLabel();
             //inv_2.updateLabel();
             //inv_3.updateLabel();
