@@ -119,7 +119,7 @@ public class PlayerPanelView extends JPanel {
     }
 
     public void updateInfo() {
-        // TODO jatekos kepet hozzaadni
+        actCharacter = game.getActiveCharacter();
         this.add(new JLabel(new ImageIcon(game.getActiveCharacter().getView().getImage())));
         this.add(new Label(Program.getNameOfCharacter(game.getActiveCharacter())+""+"     "+game.getActionPoints()));
         this.add(new Label("\n"));
@@ -128,7 +128,6 @@ public class PlayerPanelView extends JPanel {
     }
 
     public void showButtons() {
-        // TODO gombok eltuntetese megfeleloen
         if(game.getActiveCharNum()%2==0) { // ha szerelo
             //inv_1.updateLabel();
             //inv_2.updateLabel();

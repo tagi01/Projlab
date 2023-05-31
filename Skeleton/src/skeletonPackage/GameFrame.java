@@ -20,25 +20,12 @@ public class GameFrame extends JFrame{
     private GamePanel gamePanel;
     private PlayerPanelView playerPanel;
 
-    // felulre
-    private JPanel felulre;
-    private JMenuBar menu = new JMenuBar();
-    private JMenuItem[] menuitems = {
-            new JMenuItem("Uj jatek"),
-            new JMenuItem("Mentes"),
-            new JMenuItem("Betoltes")
-    };
-
     private JLabel gameLabel = new JLabel();
     private String round, Ppoints, Spoints;
 
     private void init() {
 
         // PANELS
-        // felulre
-        felulre.setBackground(background);
-        felulre.setLayout(new BorderLayout());
-        felulre.setPreferredSize(new Dimension(windowWidth,50));
 
         // gamePanel
         gamePanel.setBackground(background);
@@ -49,28 +36,7 @@ public class GameFrame extends JFrame{
 
         gamePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-
-        // ELEMENTS
-        // felulre
-        for(int i=0; i<3; i++) {
-            menu.add(menuitems[i]);
-            if(i==0) {
-                menuitems[i].addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        NewGameFrame ngframe = new NewGameFrame();
-                        ngframe.setLocationRelativeTo(null);
-                        ngframe.setVisible(true);
-                    }
-                });
-            }
-        }
-        felulre.add(menu, BorderLayout.NORTH);
-
-        felulre.add(gameLabel, BorderLayout.CENTER);
-
         // ADD TO FRAME
-        add(felulre, BorderLayout.NORTH);
         add(gamePanel, BorderLayout.CENTER);
         add(playerPanel, BorderLayout.EAST);
     }
@@ -83,15 +49,12 @@ public class GameFrame extends JFrame{
 
         game = Game.getInstance();
 
-        felulre = new JPanel();
         gamePanel = new GamePanel(this);
         playerPanel = new PlayerPanelView();
-
 
         Game.getInstance().setPlayerPanelView(playerPanel);
 
         updateGameLabel();
-
 
         init();
     }
