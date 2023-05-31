@@ -27,7 +27,7 @@ public class Program {
 	
 	private static Game game;
 
-	private static Network network = new Network();
+	private static Network network;
 	
 	/** Az objektumok neveit tartalmazo map */
 	private static Map<String , Pipe> pipes = new HashMap<String , Pipe>();
@@ -44,7 +44,15 @@ public class Program {
 	
 	public static Map<String , Pipe> getPipes() { return pipes; }
 	
+	public static void setNewPipe(Pipe p) {
+		pipes.put("pipe_"+(pipes.size()+1), p);
+	}
+	
 	public static Map<String , Pump> getPumps() { return pumps; }
+	
+	public static void setNewPump(Pump p) {
+		pumps.put("pump_"+(pumps.size()+1), p);
+	}
 	
 	public static Map<String , Source> getSources() { return sources; }
 	

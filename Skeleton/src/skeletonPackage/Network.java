@@ -18,6 +18,7 @@ public class Network {
 	 * allithato parameter a randomnak
 	 */
 	private boolean random;
+	
 	/*
 	 * Konstruktor
 	 */
@@ -48,10 +49,14 @@ public class Network {
 	 */
 
 	public void addPump(Pump pump, Pipe currentField) {
+		int[] pumpCoordinates = currentField.getView().getCoordinates();		// TODO ellenőrizni
+		pump.getView().setCoordinates(pumpCoordinates[0], pumpCoordinates[1]);
+		Program.setNewPump(pump);
+		
 		Pipe p_new = new Pipe(currentField.getView().getGamePanel(), currentField.getGame());
+		Program.setNewPipe(p_new);
 		fields.add(p_new);
-		int [] segcor = currentField.getView().getCoordinates();
-		pump.getView().setCoordinates(segcor[0], segcor[1]);
+		
 		p_new.addNeighbour(pump);
 		pump.addNeighbour(p_new);
 		
@@ -68,8 +73,9 @@ public class Network {
 		
 		pump.setOut(currentField);
 		
-		int[] pumpCoordinates = currentField.getView().getCoordinates();		// TODO ellenőrizni
-		pump.getView().setCoordinates(pumpCoordinates[0], pumpCoordinates[1]);
+		
+		
+		
 	}
 	
 	/**A field listához hozzáad egy új elemet
