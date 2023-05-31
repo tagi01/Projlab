@@ -224,7 +224,6 @@ public class Pump extends BreakableField {
 		}
 	}
 	
-	// FIXME view update hívások ősosztályokból örökölve itt?
 	@Override
 	public void interact(Plumber p) {
 		super.interact(p);

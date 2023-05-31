@@ -56,8 +56,9 @@ public class PumpView implements View {
 	
 	@Override
 	public void draw(Graphics g) {
-		/*if(x == 0 || y == 0)		ha inventory-ban van, nem kéne kirajzolni
-			return;*/
+		if(x == 0 || y == 0)		//ha inventory-ban van, nem rajzolja ki
+			return;
+		
 		Graphics2D g2d = (Graphics2D) g.create();
 		Color color = pump.getBroken() ? Color.RED : Color.GRAY;
 		g2d.setColor(color);
