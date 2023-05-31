@@ -20,6 +20,8 @@ public class PlayerPanelView extends JPanel {
     private JPanel buttonPanel;
     private Field selectedField;
 
+    private JLabel karakterszoveg = new JLabel();
+
     // buttonPanel
     private InventoryPanel inv_1, inv_2, inv_3; // cső egyik- másik vége, pumpa
     private JButton mozog = new JButton("masik mezore lepes");
@@ -33,7 +35,7 @@ public class PlayerPanelView extends JPanel {
     private JButton cso_csuszos = new JButton("csuszos legyen");
     private JButton cso_felvetel = new JButton("cso felvetel");
     private JButton cso_ciszternarol = new JButton("ciszternarol");
-    private JButton cso_lerakas = new JButton();
+    private JButton cso_lerakas = new JButton("cso lerakasa");
     private JButton passz = new JButton("passz");
 
 
@@ -85,6 +87,94 @@ public class PlayerPanelView extends JPanel {
         buttonPanel.add(inv_2);
         buttonPanel.add(inv_3);
 
+        buttonPanel.add(mozog);
+        buttonPanel.add(javit);
+        buttonPanel.add(new JLabel(" "));
+        buttonPanel.add(new JLabel("Pumpa"));
+        pumpPanel.add(pumpa_be); pumpPanel.add(pumpa_ki); pumpPanel.add(pumpa_fel); pumpPanel.add(pumpa_le);
+        buttonPanel.add(pumpPanel);
+        buttonPanel.add(new JLabel(" "));
+
+        buttonPanel.add(new JLabel("Cso"));
+        buttonPanel.add(cso_kilyukad);
+        buttonPanel.add(new JLabel(" "));
+        buttonPanel.add(cso_ragad);
+        buttonPanel.add(new JLabel(" "));
+        buttonPanel.add(cso_csuszos);
+        buttonPanel.add(new JLabel(" "));
+
+        buttonPanel.add(cso_felvetel);
+        buttonPanel.add(cso_ciszternarol);
+        buttonPanel.add(cso_lerakas);
+
+        buttonPanel.add(new JLabel(" "));
+        buttonPanel.add(passz);
+        this.add(new JLabel(new ImageIcon(game.getActiveCharacter().getView().getImage())));
+        add(karakterszoveg);
+        add(buttonPanel, BorderLayout.CENTER);
+    }
+
+    public PlayerPanelView() {
+        game = Game.getInstance();
+        actCharacter = game.getActiveCharacter();
+
+        this.setBackground(background);
+        this.setPreferredSize(new Dimension(200,windowWidth));
+
+        init();
+        updateInfo();
+        showButtons();
+    }
+
+    public void updateInfo() {
+        removeAll();
+
+        actCharacter = game.getActiveCharacter();
+        image = new ImageIcon(actCharacter.getView().getImage());
+        karakterszoveg.setText(Program.getNameOfCharacter(game.getActiveCharacter())+""+"     "+game.getActionPoints());
+
+        // buttonPanel
+        buttonPanel = new JPanel();
+        buttonPanel.setBackground(background);
+        buttonPanel.setLayout(new FlowLayout());
+        buttonPanel.setPreferredSize(new Dimension(150,windowHeight));
+        buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // pumpPanel
+        JPanel pumpPanel = new JPanel();
+        pumpPanel.setLayout(new GridLayout(2,2));
+        pumpPanel.setBackground(background);
+        pumpPanel.setMaximumSize(new Dimension(120,50));
+
+        // buttonPanel
+        Dimension buttonSize = new Dimension(150,25);
+        Dimension bhalf = new Dimension(60,25);
+
+        // inventory panelek, benne egy labellel
+        inv_1 = new InventoryPanel(" ");
+        inv_2 = new InventoryPanel(" ");
+        inv_3 = new InventoryPanel(" ");
+
+        setButton(mozog, buttonSize);
+        setButton(javit, buttonSize);
+        setButton(pumpa_be, bhalf);
+        setButton(pumpa_ki, bhalf);
+        setButton(pumpa_fel, bhalf);
+        setButton(pumpa_le, bhalf);
+        setButton(cso_kilyukad, buttonSize);
+        setButton(cso_ragad, buttonSize);
+        setButton(cso_csuszos, buttonSize);
+        setButton(cso_felvetel,buttonSize);
+        setButton(cso_ciszternarol, buttonSize);
+        setButton(cso_lerakas,buttonSize);
+        setButton(passz, buttonSize);
+
+        addActionListeners();
+
+        // panelhez hozzáadás
+        buttonPanel.add(inv_1);
+        buttonPanel.add(inv_2);
+        buttonPanel.add(inv_3);
 
         buttonPanel.add(mozog);
         buttonPanel.add(javit);
@@ -108,26 +198,10 @@ public class PlayerPanelView extends JPanel {
 
         buttonPanel.add(new JLabel(" "));
         buttonPanel.add(passz);
-    }
-
-    public PlayerPanelView() {
-        game = Game.getInstance();
-        actCharacter = game.getActiveCharacter();
-
-        this.setBackground(background);
-        this.setPreferredSize(new Dimension(200,windowWidth));
-
-        init();
-        updateInfo();
-        showButtons();
-    }
-
-    public void updateInfo() {
-        actCharacter = game.getActiveCharacter();
         this.add(new JLabel(new ImageIcon(game.getActiveCharacter().getView().getImage())));
-        this.add(new Label(Program.getNameOfCharacter(game.getActiveCharacter())+""+"     "+game.getActionPoints()));
-        this.add(new Label("\n"));
-        this.add(buttonPanel, BorderLayout.CENTER);
+        add(karakterszoveg);
+        add(buttonPanel, BorderLayout.CENTER);
+
         showButtons();
     }
 
