@@ -177,6 +177,7 @@ public class PlayerPanelView extends JPanel {
                     public void actionPerformed(ActionEvent e) {
                         if (selectedField != null) {
                             actCharacter.move(selectedField);
+                            updateInfo();
                         }
                         fcf.dispose();
                     }
@@ -195,6 +196,7 @@ public class PlayerPanelView extends JPanel {
         		}
         		if (currentPlumber != null) {
         			currentPlumber.repair();
+                    updateInfo();
         		}
             }});
 
@@ -225,8 +227,8 @@ public class PlayerPanelView extends JPanel {
                                 if (selectedField == p)
                                     pipe = p;
                             }
-                            if(pipe != null && in != null)
-                                actCharacter.setPump(in, pipe);
+                            if(pipe != null && in != null) { actCharacter.setPump(in, pipe); }
+                            updateInfo();
                         }
                         fcf.dispose();
                     }
@@ -251,7 +253,6 @@ public class PlayerPanelView extends JPanel {
                 		pipes.add(Program.getKeyFromFieldMaps(f));
                 }
 
-
                 JButton button = new JButton("Ok");
                 FieldChooserFrame fcf = new FieldChooserFrame("Melyik cso legyen a pumpa kimenete?",pipes,button);
                 button.addActionListener(new ActionListener() {
@@ -263,8 +264,8 @@ public class PlayerPanelView extends JPanel {
                                 if (selectedField == p)
                                     pipe = p;
                             }
-                            if(pipe != null && out != null)
-                                actCharacter.setPump(out, pipe);
+                            if(pipe != null && out != null) { actCharacter.setPump(out, pipe); }
+                            updateInfo();
                         }
                         fcf.dispose();
                     }
@@ -283,6 +284,7 @@ public class PlayerPanelView extends JPanel {
         		}
         		if (currentPlumber != null) {
         			currentPlumber.getPump();
+                    updateInfo();
         		}
             }});
 
@@ -296,17 +298,20 @@ public class PlayerPanelView extends JPanel {
         		}
         		if (currentPlumber != null) {
         			currentPlumber.placePump();
+                    updateInfo();
         		}
             }});
 
         cso_kilyukad.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 actCharacter.puncturePipe();
+                updateInfo();
             }});
 
         cso_ragad.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 actCharacter.turnPipeSticky();
+                updateInfo();
             }});
 
         cso_csuszos.addActionListener(new ActionListener() {
@@ -319,6 +324,7 @@ public class PlayerPanelView extends JPanel {
         		}
         		if (currentSaboteur != null) {
         			currentSaboteur.turnPipeSlippery();
+                    updateInfo();
         		}
             }});
 
@@ -350,6 +356,7 @@ public class PlayerPanelView extends JPanel {
                             }
                             if (currentPlumber != null && pipe != null) {
                                 currentPlumber.grabPipe(pipe);
+                                updateInfo();
                             }
                         }
                         fcf.dispose();
@@ -369,12 +376,14 @@ public class PlayerPanelView extends JPanel {
                 }
                 if (currentPlumber != null) {
                     currentPlumber.getPipe();
+                    updateInfo();
                 }
             }});
 
         passz.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Program.actionPass();
+                game.nextCharacter();
+                updateInfo();
             }});
     }
 
